@@ -118,37 +118,47 @@ func Start(r chi.Router) error {
 		return err
 	}
 
-	tag.NewController(tag.NewRepository(pgx)).Mount(r)
-	route.NewController(route.NewRepository(pgx)).Mount(r)
-	group.NewController(group.NewRepository(pgx)).Mount(r)
-	grouproute.NewController(grouproute.NewRepository(pgx)).Mount(r)
-	user.NewController(user.NewRepository(pgx)).Mount(r)
-	usergroup.NewController(usergroup.NewRepository(pgx)).Mount(r)
-	userroute.NewController(userroute.NewRepository(pgx)).Mount(r)
+	var (
+		tagRepository        = tag.NewRepository(pgx)
+		routeRepository      = route.NewRepository(pgx)
+		groupRepository      = group.NewRepository(pgx)
+		groupRouteRepository = grouproute.NewRepository(pgx)
+		userRepository       = user.NewRepository(pgx)
+		userGroupRepository  = usergroup.NewRepository(pgx)
+		userRouteRepository  = userroute.NewRepository(pgx)
+	)
+
+	tag.NewController(tagRepository).Mount(r)
+	route.NewController(routeRepository).Mount(r)
+	group.NewController(groupRepository).Mount(r)
+	grouproute.NewController(groupRouteRepository).Mount(r)
+	user.NewController(userRepository).Mount(r)
+	usergroup.NewController(userGroupRepository).Mount(r)
+	userroute.NewController(userRouteRepository).Mount(r)
 
 	ctx := context.Background()
 
-	u, err := resolveUser(ctx, user.NewRepository(pgx))
+	u, err := resolveUser(ctx, userRepository)
 	if err != nil {
 		return err
 	}
-	g, err := resolveGroup(ctx, group.NewRepository(pgx))
+	g, err := resolveGroup(ctx, groupRepository)
 	if err != nil {
 		return err
 	}
-	err = resolveUserAndGroup(ctx, usergroup.NewRepository(pgx), u.Id, g.Id)
+	err = resolveUserAndGroup(ctx, userGroupRepository, u.Id, g.Id)
 	if err != nil {
 		return err
 	}
 
 	rs := buildRoutes(r)
 
-	rs, err = resolveRoutes(ctx, route.NewRepository(pgx), rs)
+	rs, err = resolveRoutes(ctx, routeRepository, rs)
 	if err != nil {
 		return err
 	}
 
-	err = resolveGroupAndRoutes(ctx, grouproute.NewRepository(pgx), rs, g.Id)
+	err = resolveGroupAndRoutes(ctx, groupRouteRepository, rs, g.Id)
 	if err != nil {
 		return err
 	}

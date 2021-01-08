@@ -10,6 +10,10 @@ create table if not exists ad.groups (
      unique (code, deleted_at)
 );
 
+create unique index groups_code_deleted_at
+    on ad.groups (code, (deleted_at is null))
+    where deleted_at is null;
+
 -- +goose Down
 
 drop table if exists ad.groups;

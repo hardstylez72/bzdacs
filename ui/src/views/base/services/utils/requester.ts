@@ -1,5 +1,7 @@
-import axios, { Method } from 'axios';
-import { uuid } from 'uuidv4';
+import axios, { AxiosError, Method } from 'axios';
+import { v4 as uuid } from 'uuid';
+// eslint-disable-next-line import/no-cycle
+import store from '@/views/base/store';
 
 const instance = axios.create();
 
@@ -21,13 +23,14 @@ const requester = (req: Request): Promise<any> => {
     url: req.url,
     data: req.data,
     headers,
-
     withCredentials: true,
     timeout: 30000,
   })
-    .then((res: { data: any }) => res.data)
-    .catch(async (err: Error) => {
-      console.error(err);
+    .then((res) => res.data)
+    .catch(async (err: AxiosError) => {
+      if (err.response) {
+        store.commit.showError(err.response.data.error.message);
+      }
       throw err;
     });
 };

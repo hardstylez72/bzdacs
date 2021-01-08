@@ -8,8 +8,12 @@ create table if not exists ad.routes (
    updated_at timestamp default null,
    created_at timestamp not null default now(),
    deleted_at timestamp default null,
-   unique (method, route, deleted_at)
+   unique (route, method, deleted_at)
 );
+
+create unique index routes_method_route_deleted_at
+    on ad.routes (method, route, (deleted_at is null))
+    where deleted_at is null;
 
 
 -- +goose Down

@@ -38,16 +38,16 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 	var req insertRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusBadRequest).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
 	routes, err := c.rep.Insert(ctx, insertRequestConvert(req))
 	if err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusInternalServerError).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
-	util.NewResp(w).Status(http.StatusOK).Json(routes).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(routes).Send()
 }
 
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
@@ -56,12 +56,12 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	var req listRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusBadRequest).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
 	if err := c.validator.Struct(req); err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusBadRequest).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
@@ -75,10 +75,10 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusInternalServerError).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
-	util.NewResp(w).Status(http.StatusOK).Json(newListResponse(list)).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list)).Send()
 }
 
 func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
@@ -87,24 +87,24 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	var req []Pair
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusBadRequest).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
 	rr := deleteRequest{Params: req}
 
 	if err := c.validator.Struct(rr); err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusBadRequest).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
 	err := c.rep.Delete(ctx, req)
 	if err != nil {
-		util.NewResp(w).Error(err).Status(http.StatusInternalServerError).Send()
+		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	util.NewResp(w).Status(http.StatusOK).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Send()
 }
 
 func (c *controller) Mount(r chi.Router) {

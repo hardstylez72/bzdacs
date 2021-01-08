@@ -55,7 +55,7 @@ import HttpMethodBox from '../../base/components/HttpMethodBox.vue';
   },
 })
 export default class TabRouteTable extends DictTable<Route> {
-  readonly title = 'Маршруты'
+  readonly title = 'Теги'
 
   mounted() {
     this.$store.direct.dispatch.tag.GetList();

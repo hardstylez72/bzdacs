@@ -19,6 +19,8 @@ Vue.use(Vuex);
 
 export interface State{
   isAuthorized: boolean;
+  showSnackbar: boolean;
+  snackbarMessage: string;
 }
 
 const {
@@ -31,13 +33,26 @@ const {
 
   state: {
     isAuthorized: false,
+    showSnackbar: false,
+    snackbarMessage: '',
   } as State,
   getters: {
     isAuthorized(state) {
       return state.isAuthorized;
     },
+    snackbarMessage(state) {
+      return state.snackbarMessage;
+    },
   },
   mutations: {
+    setShowSnackbar(state, show: boolean) {
+      state.showSnackbar = show;
+    },
+    showError(state, msg: string) {
+      state.snackbarMessage = msg;
+      state.showSnackbar = true;
+    },
+
     setAuthorized(state, isAuthorized: boolean) {
       state.isAuthorized = isAuthorized;
     },
@@ -60,7 +75,6 @@ const {
           commit.setAuthorized(true);
         })
         .catch((err) => {
-          console.error(err);
           commit.setAuthorized(false);
         });
     },
