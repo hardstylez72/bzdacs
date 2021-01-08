@@ -6,10 +6,12 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	"github.com/hardstylez72/bzdacs/pkg/acs"
 	"github.com/hardstylez72/bzdacs/pkg/group"
 	"github.com/hardstylez72/bzdacs/pkg/grouproute"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
+	"github.com/hardstylez72/bzdacs/pkg/mwv"
 	"github.com/hardstylez72/bzdacs/pkg/route"
 	"github.com/hardstylez72/bzdacs/pkg/tag"
 	"github.com/hardstylez72/bzdacs/pkg/user"
@@ -88,11 +90,7 @@ func (s *Server) Handler() chi.Router {
 		Debug:            true,
 	})
 	r.Use(c)
-
-	r.Use(middleware.RequestID)
 	r.Use(logger.Inject(s.log))
-	r.Use(middleware.Timeout(60 * time.Second))
-	r.Mount(apiPathPrefix, r)
 
 	err := Start(r)
 	if err != nil {
@@ -101,6 +99,14 @@ func (s *Server) Handler() chi.Router {
 	s.log.Info("app is successfully running")
 
 	return r
+}
+
+func extractLogin(req *http.Request) string {
+	return user.GetLoginFromContext(req.Context())
+}
+
+func extractRouteAndMethod(req *http.Request) (route, method string) {
+	return req.URL.Path, req.Method
 }
 
 func Start(r chi.Router) error {
@@ -128,13 +134,24 @@ func Start(r chi.Router) error {
 		userRouteRepository  = userroute.NewRepository(pgx)
 	)
 
-	tag.NewController(tagRepository).Mount(r)
-	route.NewController(routeRepository).Mount(r)
-	group.NewController(groupRepository).Mount(r)
-	grouproute.NewController(groupRouteRepository).Mount(r)
-	user.NewController(userRepository).Mount(r)
-	usergroup.NewController(userGroupRepository).Mount(r)
-	userroute.NewController(userRouteRepository).Mount(r)
+	r.Use(middleware.RequestID)
+	r.Use(middleware.Timeout(60 * time.Second))
+	r.Mount(apiPathPrefix, r)
+
+	r.Group(func(public chi.Router) {
+		r.Group(func(private chi.Router) {
+			private.Use(user.Auth())
+			private.Use(mwv.AccessCheck(mwv.NewService("http://localhost:3000"), extractLogin, extractRouteAndMethod))
+			acs.NewController(userRouteRepository, userRepository, userGroupRepository).Mount(public)
+			tag.NewController(tagRepository).Mount(private)
+			route.NewController(routeRepository).Mount(private)
+			group.NewController(groupRepository).Mount(private)
+			grouproute.NewController(groupRouteRepository).Mount(private)
+			user.NewController(userRepository).Mount(private, public)
+			usergroup.NewController(userGroupRepository).Mount(private)
+			userroute.NewController(userRouteRepository).Mount(private)
+		})
+	})
 
 	ctx := context.Background()
 

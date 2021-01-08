@@ -16,8 +16,8 @@ type Pair struct {
 }
 
 type Repository interface {
-	List(ctx context.Context, groupId int) ([]Group, error)
-	ListNotInGroup(ctx context.Context, groupId int) ([]Group, error)
+	ListUserGroups(ctx context.Context, userId int) ([]Group, error)
+	ListUserNotInGroups(ctx context.Context, groupId int) ([]Group, error)
 	Insert(ctx context.Context, params []Pair) ([]Group, error)
 	Delete(ctx context.Context, params []Pair) error
 }
@@ -71,9 +71,9 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if req.BelongToUser {
-		list, err = c.rep.List(ctx, req.UserId)
+		list, err = c.rep.ListUserGroups(ctx, req.UserId)
 	} else {
-		list, err = c.rep.ListNotInGroup(ctx, req.UserId)
+		list, err = c.rep.ListUserNotInGroups(ctx, req.UserId)
 	}
 
 	if err != nil {

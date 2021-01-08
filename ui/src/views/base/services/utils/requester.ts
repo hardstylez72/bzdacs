@@ -29,7 +29,17 @@ const requester = (req: Request): Promise<any> => {
     .then((res) => res.data)
     .catch(async (err: AxiosError) => {
       if (err.response) {
-        store.commit.showError(err.response.data.error.message);
+        if (err.response.status === 401) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          this.$router.push({ name: 'Guest' });
+        } else if (err.response.status === 403) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          store.commit.showError('user does not have permissions to do this operation');
+        } else {
+          store.commit.showError(err.response.data);
+        }
       }
       throw err;
     });

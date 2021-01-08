@@ -1,15 +1,14 @@
 <template>
-  <div v-if="!loading">
+  <div v-if="isAuthorized">
     <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
-    <MainTabs v-if="isAuthorized"/>
-    <LoginPage v-else/>
+    <MainTabs/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import MainTabs from '@/views/base/pages/Main.vue';
-import LoginPage from '@/views/LoginPage.vue';
+import LoginPage from '@/views/AdminPage.vue';
 
 @Component({
   components: {
@@ -34,12 +33,10 @@ export default class Home extends Vue {
      this.$store.direct.commit.setShowSnackbar(val);
   }
 
-  loading = true
-
   created() {
-      this.$store.direct.dispatch.login().finally(() => {
-        this.loading = false;
-      });
+    this.$store.direct.dispatch.userSession().finally(() => {
+      console.log('2');
+    });
   }
 }
 </script>

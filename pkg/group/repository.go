@@ -178,7 +178,8 @@ func GetByCodeDb(ctx context.Context, conn *sqlx.DB, code string) (*Group, error
 			   updated_at,
 			   deleted_at
 		from ad.groups
-	   where code = $1
+	   where deleted_at is null
+	     and code = $1
 `
 	var group Group
 	err := conn.GetContext(ctx, &group, query, code)

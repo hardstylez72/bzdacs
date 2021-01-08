@@ -5,9 +5,9 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/route"
 )
 
-type Route struct {
-	IsExcluded bool `json:"isExcluded" db:"is_excluded"`
+type UserRoute struct {
 	route.Route
+	IsExcluded bool `json:"isExcluded" db:"is_excluded"`
 }
 
 type RouteWithGroups struct {
@@ -16,7 +16,8 @@ type RouteWithGroups struct {
 }
 
 type RouteExt struct {
-	Route
+	route.Route
+	IsExcluded    bool `json:"isExcluded" db:"is_excluded"`
 	IsOverwritten bool `json:"isOverwritten"`
 	IsIndependent bool `json:"isIndependent"`
 }

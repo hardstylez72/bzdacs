@@ -5,10 +5,11 @@ import (
 	"database/sql"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 )
 
 var ErrEntityAlreadyExists = util.ErrEntityAlreadyExists
-var ErrEntityNotFound = util.ErrEntityNotFound
+var ErrEntityNotFound = errors.New("entity not found")
 
 type repository struct {
 	conn *sqlx.DB

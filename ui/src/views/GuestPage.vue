@@ -6,12 +6,6 @@
           required
           label="Логин"
         />
-        <v-text-field
-          v-model="password"
-          required
-          type="password"
-          label="Пароль"
-        />
       <v-btn @click="loginAction">Войти</v-btn>
     </v-form>
   </div>
@@ -27,10 +21,17 @@ import {
 export default class LoginPage extends Vue {
   login = ''
 
-  password = ''
-
   loginAction() {
-    this.$store.direct.dispatch.login({ login: this.login, password: this.password });
+    this.$store.direct.dispatch.guestLogin(this.login)
+      .then(() => {
+        if (this.$store.direct.getters.isAuthorized) {
+          this.$router.push({ name: 'Home' });
+        }
+      });
+  }
+
+  created() {
+    this.loginAction();
   }
 }
 </script>

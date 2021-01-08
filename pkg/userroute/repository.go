@@ -47,7 +47,7 @@ func (r *repository) Delete(ctx context.Context, params []params) error {
 	return nil
 }
 
-func (r *repository) Update(ctx context.Context, params params) (*Route, error) {
+func (r *repository) Update(ctx context.Context, params params) (*UserRoute, error) {
 
 	query := `
 	with insert_row as (
@@ -67,7 +67,7 @@ func (r *repository) Update(ctx context.Context, params params) (*Route, error) 
 
 	rows := r.conn.QueryRowxContext(ctx, query, params.IsExcluded, params.UserId, params.RouteId)
 
-	var route Route
+	var route UserRoute
 	err := rows.StructScan(&route)
 	if err != nil {
 		return nil, err
@@ -76,7 +76,7 @@ func (r *repository) Update(ctx context.Context, params params) (*Route, error) 
 	return &route, nil
 }
 
-func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, userId int, isExcluded bool) (*Route, error) {
+func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, userId int, isExcluded bool) (*UserRoute, error) {
 	query := `
 		with insert_row as (
 			insert into ad.users_routes (
@@ -102,7 +102,7 @@ func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, userId int, isExclude
 `
 
 	rows := tx.QueryRowxContext(ctx, query, userId, routeId, isExcluded)
-	var route Route
+	var route UserRoute
 	err := rows.StructScan(&route)
 	if err != nil {
 		return nil, err
@@ -111,7 +111,7 @@ func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, userId int, isExclude
 	return &route, nil
 }
 
-func (r *repository) Insert(ctx context.Context, params []params) ([]Route, error) {
+func (r *repository) Insert(ctx context.Context, params []params) ([]UserRoute, error) {
 
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
@@ -122,7 +122,7 @@ func (r *repository) Insert(ctx context.Context, params []params) ([]Route, erro
 		}
 	}()
 
-	routes := make([]Route, 0)
+	routes := make([]UserRoute, 0)
 	for _, pair := range params {
 
 		route, err := insertPair(ctx, tx, pair.RouteId, pair.UserId, pair.IsExcluded)
@@ -145,7 +145,8 @@ func (r *repository) RoutesNotBelongUser(ctx context.Context, userId int) ([]Rou
 
 	for i := range routes {
 		routesExt = append(routesExt, RouteExt{
-			Route:         routes[i],
+
+			Route:         routes[i].Route,
 			IsOverwritten: false,
 		})
 	}
@@ -215,7 +216,7 @@ func ListRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]R
 
 	for i := range groupRoutes {
 		routes = append(routes, RouteExt{
-			Route:         groupRoutes[i],
+			Route:         groupRoutes[i].Route,
 			IsOverwritten: false,
 		})
 	}
@@ -230,7 +231,7 @@ func ListRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]R
 		}
 
 		routes = append(routes, RouteExt{
-			Route:         overwrittenRoutes[i],
+			Route:         overwrittenRoutes[i].Route,
 			IsOverwritten: false,
 			IsIndependent: true,
 		})
@@ -248,7 +249,7 @@ func contains(routes []RouteExt, id int) (bool, int) {
 	return false, -1
 }
 
-func ListGroupRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]Route, error) {
+func ListGroupRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]UserRoute, error) {
 	query := `
 select r.id,
 			   r.route,
@@ -266,7 +267,7 @@ select r.id,
          and g.deleted_at is null
     group by r.id
 `
-	routes := make([]Route, 0)
+	routes := make([]UserRoute, 0)
 	err := conn.SelectContext(ctx, &routes, query, userId)
 	if err != nil {
 		return nil, err
@@ -275,7 +276,7 @@ select r.id,
 	return routes, nil
 }
 
-func ListOverwrittenRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]Route, error) {
+func ListOverwrittenRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]UserRoute, error) {
 	query := `
 		select rg.route_id as id,
 			   r.route,
@@ -290,7 +291,7 @@ func ListOverwrittenRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userI
         where rg.user_id = $1
           and deleted_at is null
 `
-	routes := make([]Route, 0)
+	routes := make([]UserRoute, 0)
 	err := conn.SelectContext(ctx, &routes, query, userId)
 	if err != nil {
 		return nil, err
@@ -299,7 +300,7 @@ func ListOverwrittenRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userI
 	return routes, nil
 }
 
-func ListRoutesNotBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]Route, error) {
+func ListRoutesNotBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]UserRoute, error) {
 	query := `
 	    select r.id,
 			   r.route,
@@ -326,7 +327,7 @@ func ListRoutesNotBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) (
                     group by r.id
            )
 `
-	routes := make([]Route, 0)
+	routes := make([]UserRoute, 0)
 	err := conn.SelectContext(ctx, &routes, query, userId)
 	if err != nil {
 		return nil, err

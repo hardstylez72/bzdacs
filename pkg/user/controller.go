@@ -2,22 +2,18 @@ package user
 
 import (
 	"context"
-	"encoding/base64"
 	"encoding/json"
-	"errors"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 	"github.com/hardstylez72/bzdacs/pkg/util"
-	"github.com/spf13/viper"
 	"net/http"
-	"time"
 )
 
 type Repository interface {
 	GetById(ctx context.Context, id int) (*User, error)
 	GetByExternalId(ctx context.Context, id string) (*User, error)
 	List(ctx context.Context) ([]User, error)
-	Insert(ctx context.Context, group *User) (*User, error)
+	Insert(ctx context.Context, user *User) (*User, error)
 	Delete(ctx context.Context, id int) error
 }
 
@@ -88,69 +84,6 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Json(newListResponse(list)).Status(http.StatusOK).Send()
 }
 
-func (c *controller) login(w http.ResponseWriter, r *http.Request) {
-
-	token, err := getTokenFromRequest(r)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusUnauthorized).Send()
-		return
-	}
-
-	isValid, err := validateToken(token)
-	if err != nil || !isValid {
-		util.NewResp(w, r).Error(err).Status(http.StatusUnauthorized).Send()
-		return
-	}
-
-	http.SetCookie(w, &http.Cookie{
-		Name:     "bzdacs-token",
-		Value:    token,
-		Path:     "/",
-		Domain:   "",
-		Expires:  time.Now().Add(time.Hour * 24),
-		SameSite: 2,
-	})
-
-	util.NewResp(w, r).Status(http.StatusOK).Send()
-}
-
-func getTokenFromRequest(r *http.Request) (string, error) {
-	var token string
-
-	for _, cookie := range r.Cookies() {
-		if cookie.Name == "bzdacs-token" {
-			token = cookie.Value
-		}
-	}
-
-	if token != "" {
-		return token, nil
-	}
-
-	token = r.Header.Get("token")
-	if token != "" {
-		return token, nil
-	}
-
-	return "", errors.New("token not found")
-}
-
-func validateToken(token string) (bool, error) {
-	var (
-		login    = viper.GetString("user.login")
-		password = viper.GetString("user.password")
-	)
-	tokenB, err := base64.StdEncoding.DecodeString(token)
-	if err != nil {
-		return false, err
-	}
-	if string(tokenB) != login+":"+password {
-		return false, errors.New("wrong credentials")
-	}
-
-	return true, nil
-}
-
 func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -175,11 +108,12 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Send()
 }
 
-func (c *controller) Mount(r chi.Router) {
-	r.Post("/v1/user/list", c.list)
-	r.Post("/v1/user/get", c.getById)
-	r.Post("/v1/user/create", c.create)
-	r.Post("/v1/user/delete", c.delete)
-	r.Post("/v1/user/login", c.login)
-
+func (c *controller) Mount(private, public chi.Router) {
+	private.Post("/v1/user/list", c.list)
+	private.Post("/v1/user/get", c.getById)
+	private.Post("/v1/user/create", c.create)
+	private.Post("/v1/user/delete", c.delete)
+	public.Post("/v1/user/admin/login", c.admin)
+	public.Post("/v1/user/guest/login", c.guest)
+	public.Post("/v1/user/session/get", c.session)
 }

@@ -23,6 +23,11 @@ export interface State{
   snackbarMessage: string;
 }
 
+export interface Session {
+  isAdmin: boolean;
+  login: string;
+}
+
 const {
   store,
   rootActionContext,
@@ -58,14 +63,61 @@ const {
     },
   },
   actions: {
-    login(context, payload?: {login: string; password: string}): Promise<void> {
+    async userSession(context): Promise<Session> {
+      const { commit } = actionContext(context);
+      const req: Request = {
+        data: {},
+        method: 'POST',
+        url: '/api/v1/user/session/get',
+      };
+
+      let session: Session = {
+        isAdmin: false,
+        login: '',
+      };
+
+      await makeRequest(req)
+        .then((s: Session) => {
+          console.log('sssss', s);
+          session = s;
+          if (s.login !== '') {
+            commit.setAuthorized(true);
+          }
+        })
+        .catch((err) => {
+          commit.setAuthorized(false);
+        });
+
+      return session;
+    },
+
+    guestLogin(context, login): Promise<void> {
       const { state, commit } = actionContext(context);
       const req: Request = {
         data: {},
         method: 'POST',
-        url: '/api/v1/user/login',
+        url: '/api/v1/user/guest/login',
       };
+      if (login) {
+        req.headers = { login };
+      }
 
+      return makeRequest(req)
+        .then(() => {
+          commit.setAuthorized(true);
+        })
+        .catch((err) => {
+          commit.setAuthorized(false);
+        });
+    },
+    adminLogin(context, payload?: {login: string; password: string}): Promise<void> {
+      const { state, commit } = actionContext(context);
+      const req: Request = {
+        data: {},
+        method: 'POST',
+        url: '/api/v1/user/admin/login',
+      };
+      console.log('fdefwewf');
       if (payload) {
         req.headers = { token: window.btoa(`${payload.login}:${payload.password}`) };
       }

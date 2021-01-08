@@ -19,9 +19,9 @@ type params struct {
 type Repository interface {
 	RoutesBelongUser(ctx context.Context, userId int) ([]RouteWithGroups, error)
 	RoutesNotBelongUser(ctx context.Context, userId int) ([]RouteWithGroups, error)
-	Insert(ctx context.Context, params []params) ([]Route, error)
+	Insert(ctx context.Context, params []params) ([]UserRoute, error)
 	Delete(ctx context.Context, params []params) error
-	Update(ctx context.Context, params params) (*Route, error)
+	Update(ctx context.Context, params params) (*UserRoute, error)
 }
 
 type controller struct {

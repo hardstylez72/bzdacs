@@ -100,7 +100,7 @@ func (r *repository) Insert(ctx context.Context, params []Pair) ([]Group, error)
 	return routes, nil
 }
 
-func (r *repository) ListNotInGroup(ctx context.Context, groupId int) ([]Group, error) {
+func (r *repository) ListUserNotInGroups(ctx context.Context, groupId int) ([]Group, error) {
 	query := `
 		select r.id,
 			   r.code,
@@ -121,7 +121,7 @@ func (r *repository) ListNotInGroup(ctx context.Context, groupId int) ([]Group, 
 	return routes, nil
 }
 
-func (r *repository) List(ctx context.Context, groupId int) ([]Group, error) {
+func (r *repository) ListUserGroups(ctx context.Context, userId int) ([]Group, error) {
 	query := `
 		select rg.group_id as id,
 			   r.code,
@@ -135,7 +135,7 @@ func (r *repository) List(ctx context.Context, groupId int) ([]Group, error) {
           and deleted_at is null
 `
 	routes := make([]Group, 0)
-	err := r.conn.SelectContext(ctx, &routes, query, groupId)
+	err := r.conn.SelectContext(ctx, &routes, query, userId)
 	if err != nil {
 		return nil, err
 	}
