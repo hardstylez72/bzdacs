@@ -1,8 +1,8 @@
 package userroute
 
 import (
-	"github.com/hardstylez72/bblog/ad/pkg/group"
-	"github.com/hardstylez72/bblog/ad/pkg/route"
+	"github.com/hardstylez72/bzdacs/pkg/group"
+	"github.com/hardstylez72/bzdacs/pkg/route"
 )
 
 type Route struct {

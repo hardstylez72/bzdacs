@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("/home/hs/go/src/github.com/hardstylez72/bblog/ad/ui/dist"))
+	fs := http.FileServer(http.Dir("/home/hs/go/src/github.com/hardstylez72/bzdacs/ui/dist"))
 	http.Handle("/", fs)
 
 	go func() {

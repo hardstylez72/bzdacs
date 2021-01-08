@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	"github.com/go-chi/chi"
-	"github.com/hardstylez72/bblog/ad/pkg/group"
-	"github.com/hardstylez72/bblog/ad/pkg/grouproute"
-	"github.com/hardstylez72/bblog/ad/pkg/route"
-	"github.com/hardstylez72/bblog/ad/pkg/user"
-	"github.com/hardstylez72/bblog/ad/pkg/usergroup"
+	"github.com/hardstylez72/bzdacs/pkg/group"
+	"github.com/hardstylez72/bzdacs/pkg/grouproute"
+	"github.com/hardstylez72/bzdacs/pkg/route"
+	"github.com/hardstylez72/bzdacs/pkg/user"
+	"github.com/hardstylez72/bzdacs/pkg/usergroup"
 	"github.com/spf13/viper"
 	"net/http"
 )

@@ -3,7 +3,7 @@ package routetag
 import (
 	"context"
 	"database/sql"
-	"github.com/hardstylez72/bblog/ad/pkg/tag"
+	"github.com/hardstylez72/bzdacs/pkg/tag"
 	"github.com/jmoiron/sqlx"
 )
 

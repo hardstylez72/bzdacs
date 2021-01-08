@@ -6,15 +6,15 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
-	"github.com/hardstylez72/bblog/ad/pkg/group"
-	"github.com/hardstylez72/bblog/ad/pkg/grouproute"
-	"github.com/hardstylez72/bblog/ad/pkg/infra/logger"
-	"github.com/hardstylez72/bblog/ad/pkg/infra/storage"
-	"github.com/hardstylez72/bblog/ad/pkg/route"
-	"github.com/hardstylez72/bblog/ad/pkg/tag"
-	"github.com/hardstylez72/bblog/ad/pkg/user"
-	"github.com/hardstylez72/bblog/ad/pkg/usergroup"
-	"github.com/hardstylez72/bblog/ad/pkg/userroute"
+	"github.com/hardstylez72/bzdacs/pkg/group"
+	"github.com/hardstylez72/bzdacs/pkg/grouproute"
+	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
+	"github.com/hardstylez72/bzdacs/pkg/route"
+	"github.com/hardstylez72/bzdacs/pkg/tag"
+	"github.com/hardstylez72/bzdacs/pkg/user"
+	"github.com/hardstylez72/bzdacs/pkg/usergroup"
+	"github.com/hardstylez72/bzdacs/pkg/userroute"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"log"
@@ -57,7 +57,7 @@ func NewServer(log *zap.SugaredLogger) *Server {
 
 func (s *Server) Run() error {
 
-	configPath := flag.String("config", "/home/hs/go/src/github.com/hardstylez72/bblog/ad/cmd/server/config.yaml", "path to config file")
+	configPath := flag.String("config", "/home/hs/go/src/github.com/hardstylez72/bzdacs/cmd/server/config.yaml", "path to config file")
 	flag.Parse()
 
 	err := Load(*configPath)
@@ -113,7 +113,7 @@ func Start(r chi.Router) error {
 	if err != nil {
 		return err
 	}
-	err = storage.RunMigrations(pg, "ad/migrations")
+	err = storage.RunMigrations(pg, "./migrations")
 	if err != nil {
 		return err
 	}

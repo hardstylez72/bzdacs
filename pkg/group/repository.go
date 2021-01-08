@@ -3,8 +3,8 @@ package group
 import (
 	"context"
 	"database/sql"
-	"github.com/hardstylez72/bblog/ad/pkg/grouproute"
-	"github.com/hardstylez72/bblog/ad/pkg/util"
+	"github.com/hardstylez72/bzdacs/pkg/grouproute"
+	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
 )
 

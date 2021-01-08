@@ -2,8 +2,8 @@ package userroute
 
 import (
 	"context"
-	"github.com/hardstylez72/bblog/ad/pkg/group"
-	"github.com/hardstylez72/bblog/ad/pkg/grouproute"
+	"github.com/hardstylez72/bzdacs/pkg/group"
+	"github.com/hardstylez72/bzdacs/pkg/grouproute"
 	"github.com/jmoiron/sqlx"
 )
 

@@ -2,7 +2,7 @@ package grouproute
 
 import (
 	"context"
-	"github.com/hardstylez72/bblog/ad/pkg/util"
+	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
 )
 

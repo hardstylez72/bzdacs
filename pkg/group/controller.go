@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
-	"github.com/hardstylez72/bblog/ad/pkg/util"
+	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
 )
 

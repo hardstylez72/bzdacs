@@ -5,9 +5,9 @@ import (
 	"database/sql"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/hardstylez72/bblog/ad/pkg/routetag"
-	"github.com/hardstylez72/bblog/ad/pkg/tag"
-	"github.com/hardstylez72/bblog/ad/pkg/util"
+	"github.com/hardstylez72/bzdacs/pkg/routetag"
+	"github.com/hardstylez72/bzdacs/pkg/tag"
+	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
 	"strings"
 )
