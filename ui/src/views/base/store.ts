@@ -4,9 +4,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { createDirectStore } from 'direct-vuex';
-import GroupRouteService from '@/views/group/services/grouproute';
-import { Route } from '@/views/route/service';
-import { makeRequest, Request } from '@/views/base/services/utils/requester';
 import routeModule from '../route/store';
 import groupModule from '../group/store/group';
 import userModule from '../user/store/store';
@@ -14,6 +11,7 @@ import groupRouteModule from '../group/store/grouproute';
 import userGroupModule from '../user/store/usergroup';
 import userRouteModule from '../user/store/userroute';
 import tagModule from '../tag/store';
+import AuthService, { Session } from './user';
 
 Vue.use(Vuex);
 
@@ -21,11 +19,7 @@ export interface State{
   isAuthorized: boolean;
   showSnackbar: boolean;
   snackbarMessage: string;
-}
-
-export interface Session {
-  isAdmin: boolean;
-  login: string;
+  service: AuthService;
 }
 
 const {
@@ -40,6 +34,7 @@ const {
     isAuthorized: false,
     showSnackbar: false,
     snackbarMessage: '',
+    service: new AuthService(),
   } as State,
   getters: {
     isAuthorized(state) {
@@ -63,66 +58,36 @@ const {
     },
   },
   actions: {
-    async userSession(context): Promise<Session> {
-      const { commit } = actionContext(context);
-      const req: Request = {
-        data: {},
-        method: 'POST',
-        url: '/api/v1/user/session/get',
-      };
+    async userSession(context): Promise<Session | Error> {
+      const { commit, state } = actionContext(context);
 
-      let session: Session = {
-        isAdmin: false,
-        login: '',
-      };
-
-      await makeRequest(req)
+      return state.service.userSession()
         .then((s: Session) => {
-          console.log('sssss', s);
-          session = s;
           if (s.login !== '') {
             commit.setAuthorized(true);
+            return s;
           }
         })
         .catch((err) => {
           commit.setAuthorized(false);
+          return err;
         });
-
-      return session;
     },
 
     guestLogin(context, login): Promise<void> {
       const { state, commit } = actionContext(context);
-      const req: Request = {
-        data: {},
-        method: 'POST',
-        url: '/api/v1/user/guest/login',
-      };
-      if (login) {
-        req.headers = { login };
-      }
 
-      return makeRequest(req)
-        .then(() => {
-          commit.setAuthorized(true);
-        })
+      return state.service.guestLogin(login).then(() => {
+        commit.setAuthorized(true);
+      })
         .catch((err) => {
           commit.setAuthorized(false);
         });
     },
     adminLogin(context, payload?: {login: string; password: string}): Promise<void> {
       const { state, commit } = actionContext(context);
-      const req: Request = {
-        data: {},
-        method: 'POST',
-        url: '/api/v1/user/admin/login',
-      };
-      console.log('fdefwewf');
-      if (payload) {
-        req.headers = { token: window.btoa(`${payload.login}:${payload.password}`) };
-      }
 
-      return makeRequest(req)
+      return state.service.adminLogin(payload)
         .then(() => {
           commit.setAuthorized(true);
         })

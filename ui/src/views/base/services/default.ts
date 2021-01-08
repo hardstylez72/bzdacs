@@ -1,5 +1,4 @@
 import { Method } from 'axios';
-import { Entity } from '@/views/base/services/entity';
 import { makeRequest, Request } from './utils/requester';
 import Service from './service';
 

@@ -3,7 +3,6 @@
 
 import { defineModule } from 'direct-vuex';
 import { moduleActionContext } from '../base/store';
-import DefaultService from '../base/services/default';
 import RouteService, { Filter, Route } from './service';
 
 export interface State {

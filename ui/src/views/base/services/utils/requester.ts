@@ -1,7 +1,5 @@
 import axios, { AxiosError, Method } from 'axios';
 import { v4 as uuid } from 'uuid';
-// eslint-disable-next-line import/no-cycle
-import store from '@/views/base/store';
 
 const instance = axios.create();
 
@@ -36,9 +34,11 @@ const requester = (req: Request): Promise<any> => {
         } else if (err.response.status === 403) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
-          store.commit.showError('user does not have permissions to do this operation');
+          this.$store.commit.showError('user does not have permissions to do this operation');
         } else {
-          store.commit.showError(err.response.data);
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          this.$store.commit.showError(err.response.data);
         }
       }
       throw err;
