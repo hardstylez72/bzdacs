@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import {
-  Component, Vue,
+  Component, Vue, Watch,
 } from 'vue-property-decorator';
 
 @Component
@@ -29,6 +29,17 @@ export default class LoginPage extends Vue {
 
   password = ''
 
+  get isAuthorized(): boolean {
+    return this.$store.direct.getters.isAuthorized;
+  }
+
+  @Watch('isAuthorized')
+  onUserAuthChange(isAuthorized: boolean) {
+    if (isAuthorized) {
+      this.$router.push({ name: 'Home' });
+    }
+  }
+
   loginAction() {
     this.$store.direct.dispatch.adminLogin({ login: this.login, password: this.password });
   }
@@ -36,7 +47,7 @@ export default class LoginPage extends Vue {
   created() {
     this.$store.direct.dispatch.adminLogin()
       .finally(() => {
-        if (this.$store.direct.getters.isAuthorized) {
+        if (this.isAuthorized) {
           this.$router.push({ name: 'Home' });
         }
       });

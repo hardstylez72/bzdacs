@@ -2,7 +2,7 @@ port: ":3000"
 env: "dev"
 host: "http://localhost:3000"
 databases:
-  postgres: "host=postgresss port=5432 user=postgres password=postgres dbname=bback sslmode=disable"
+  postgres: "host=localhost port=6667 user=postgres password=postgres dbname=bback sslmode=disable"
 user:
   login: hs
   password: 1234

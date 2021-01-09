@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
+	"github.com/hardstylez72/bzdacs/pkg/group"
+	"github.com/hardstylez72/bzdacs/pkg/usergroup"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
 )
@@ -18,12 +20,19 @@ type Repository interface {
 }
 
 type controller struct {
-	rep       Repository
-	validator *validator.Validate
+	userRepository      Repository
+	groupRepository     group.Repository
+	userGroupRepository usergroup.Repository
+	validator           *validator.Validate
 }
 
-func NewController(rep Repository) *controller {
-	return &controller{rep: rep, validator: validator.New()}
+func NewController(rep Repository, groupRepository group.Repository, userGroupRepository usergroup.Repository) *controller {
+	return &controller{
+		userRepository:      rep,
+		groupRepository:     groupRepository,
+		userGroupRepository: userGroupRepository,
+		validator:           validator.New(),
+	}
 }
 
 func (c *controller) create(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +49,7 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	group, err := c.rep.Insert(ctx, insertRequestConvert(&req))
+	group, err := c.userRepository.Insert(ctx, insertRequestConvert(&req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -63,7 +72,7 @@ func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := c.rep.GetById(ctx, req.Id)
+	user, err := c.userRepository.GetById(ctx, req.Id)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -75,7 +84,7 @@ func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	list, err := c.rep.List(ctx)
+	list, err := c.userRepository.List(ctx)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -99,7 +108,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := c.rep.Delete(ctx, req.Id)
+	err := c.userRepository.Delete(ctx, req.Id)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -116,4 +125,5 @@ func (c *controller) Mount(private, public chi.Router) {
 	public.Post("/v1/user/admin/login", c.admin)
 	public.Post("/v1/user/guest/login", c.guest)
 	public.Post("/v1/user/session/get", c.session)
+	public.Post("/v1/user/logout", c.logout)
 }

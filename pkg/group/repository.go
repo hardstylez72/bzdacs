@@ -165,7 +165,7 @@ func (r *repository) GetById(ctx context.Context, id int) (*Group, error) {
 	return GetByIdDb(ctx, r.conn, id)
 }
 
-func (r *repository) GetByCodeDb(ctx context.Context, code string) (*Group, error) {
+func (r *repository) GetByCode(ctx context.Context, code string) (*Group, error) {
 	return GetByCodeDb(ctx, r.conn, code)
 }
 

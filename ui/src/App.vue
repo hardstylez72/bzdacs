@@ -1,19 +1,62 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark><h1>BZDACS</h1></v-app-bar>
-    <v-main>
-      <router-view />
-    </v-main>
+    <v-app-bar app color="primary" dark>
+      <h1>BZDACS</h1>
+      <v-spacer></v-spacer>
+      <v-btn v-if="login" @click="logout">logout <span v-if="login">({{login}})</span></v-btn>
+    </v-app-bar>
+    <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
+      <v-main>
+        <router-view />
+      </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import MainTabs from '@/views/base/pages/Main.vue';
+import {
+  Component, Vue,
+} from 'vue-property-decorator';
 
-export default Vue.extend({
-  name: 'App',
-});
+@Component
+export default class App extends Vue {
+  get isAuthorized(): boolean {
+    return this.$store.direct.getters.isAuthorized;
+  }
+
+  get login(): string {
+    return this.$store.direct.getters.login;
+  }
+
+  logout(): Promise<Error> {
+    return this.$store.direct.dispatch.logout();
+  }
+
+  get snackbarMessage(): string {
+    return this.$store.direct.getters.snackbarMessage;
+  }
+
+  get showSnackbar(): boolean {
+    return this.$store.direct.state.showSnackbar;
+  }
+
+  set showSnackbar(val: boolean) {
+    this.$store.direct.commit.setShowSnackbar(val);
+  }
+
+  created() {
+    // eslint-disable-next-line no-undef
+    window.addEventListener('req-status-403', () => {
+      this.$store.direct.commit.showError('user does not have permissions to do this operation');
+    });
+
+    // eslint-disable-next-line no-undef
+    window.addEventListener('req-status-401', () => {
+      this.$store.direct.commit.showError('user is not authorized');
+    });
+
+    this.$store.direct.dispatch.userSession();
+  }
+}
 </script>
 
 <style scoped lang="css">

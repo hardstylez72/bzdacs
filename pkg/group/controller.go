@@ -11,7 +11,7 @@ import (
 
 type Repository interface {
 	GetById(ctx context.Context, id int) (*Group, error)
-	GetByCodeDb(ctx context.Context, code string) (*Group, error)
+	GetByCode(ctx context.Context, code string) (*Group, error)
 	List(ctx context.Context) ([]Group, error)
 	Insert(ctx context.Context, group *Group) (*Group, error)
 	InsertGroupBasedOnAnother(ctx context.Context, group *Group, groupBaseId int) (*Group, error)

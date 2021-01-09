@@ -59,7 +59,7 @@ func NewServer(log *zap.SugaredLogger) *Server {
 
 func (s *Server) Run() error {
 
-	configPath := flag.String("config", "/home/hs/go/src/github.com/hardstylez72/bzdacs/cmd/server/config.yaml", "path to config file")
+	configPath := flag.String("config", "/home/hs/go/src/github.com/hardstylez72/bzdacs/cmd/server/config.local.yaml", "path to config file")
 	flag.Parse()
 
 	err := Load(*configPath)
@@ -147,7 +147,7 @@ func Start(r chi.Router) error {
 			route.NewController(routeRepository).Mount(private)
 			group.NewController(groupRepository).Mount(private)
 			grouproute.NewController(groupRouteRepository).Mount(private)
-			user.NewController(userRepository).Mount(private, public)
+			user.NewController(userRepository, groupRepository, userGroupRepository).Mount(private, public)
 			usergroup.NewController(userGroupRepository).Mount(private)
 			userroute.NewController(userRouteRepository).Mount(private)
 		})
@@ -155,27 +155,34 @@ func Start(r chi.Router) error {
 
 	ctx := context.Background()
 
-	u, err := resolveUser(ctx, userRepository)
+	force := true
+
+	u, err := resolveUser(ctx, userRepository, &Option{Force: force})
 	if err != nil {
 		return err
 	}
-	g, err := resolveGroup(ctx, groupRepository)
+	g, err := resolveGroup(ctx, groupRepository, &Option{Force: force})
 	if err != nil {
 		return err
 	}
-	err = resolveUserAndGroup(ctx, userGroupRepository, u.Id, g.Id)
+	err = resolveUserAndGroup(ctx, userGroupRepository, u.Id, g.Id, &Option{Force: force})
 	if err != nil {
 		return err
 	}
 
 	rs := buildRoutes(r)
 
-	rs, err = resolveRoutes(ctx, routeRepository, rs)
+	rs, err = resolveRoutes(ctx, routeRepository, rs, &Option{Force: force})
 	if err != nil {
 		return err
 	}
 
-	err = resolveGroupAndRoutes(ctx, groupRouteRepository, rs, g.Id)
+	err = resolveGroupAndRoutes(ctx, groupRouteRepository, rs, g.Id, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+
+	_, err = resolveGuestGroup(ctx, groupRepository, g.Id, &Option{Force: force})
 	if err != nil {
 		return err
 	}

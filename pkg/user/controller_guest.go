@@ -2,6 +2,7 @@ package user
 
 import (
 	"errors"
+	"github.com/hardstylez72/bzdacs/pkg/usergroup"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/spf13/viper"
 	"net/http"
@@ -26,16 +27,31 @@ func (c *controller) guest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u, err := c.rep.GetByExternalId(ctx, login)
+	u, err := c.userRepository.GetByExternalId(ctx, login)
 	if err != nil {
 		println(err == util.ErrEntityNotFound)
 		if err == ErrEntityNotFound {
 			var insertUserErr error
-			u, insertUserErr = c.rep.Insert(ctx, &User{ExternalId: login})
+			u, insertUserErr = c.userRepository.Insert(ctx, &User{ExternalId: login})
 			if insertUserErr != nil {
 				util.NewResp(w, r).Error(insertUserErr).Status(http.StatusInternalServerError).Send()
 				return
 			}
+			g, getGuestGroupErr := c.groupRepository.GetByCode(ctx, "sys_guest")
+			if getGuestGroupErr != nil {
+				util.NewResp(w, r).Error(getGuestGroupErr).Status(http.StatusInternalServerError).Send()
+				return
+			}
+
+			_, insertUserGroupPair := c.userGroupRepository.InsertMany(ctx, []usergroup.Pair{{
+				GroupId: g.Id,
+				UserId:  u.Id,
+			}})
+			if insertUserGroupPair != nil {
+				util.NewResp(w, r).Error(insertUserGroupPair).Status(http.StatusInternalServerError).Send()
+				return
+			}
+
 		} else {
 			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 			return

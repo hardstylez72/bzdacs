@@ -18,7 +18,7 @@ type Pair struct {
 type Repository interface {
 	ListUserGroups(ctx context.Context, userId int) ([]Group, error)
 	ListUserNotInGroups(ctx context.Context, groupId int) ([]Group, error)
-	Insert(ctx context.Context, params []Pair) ([]Group, error)
+	InsertMany(ctx context.Context, params []Pair) ([]Group, error)
 	Delete(ctx context.Context, params []Pair) error
 }
 
@@ -43,7 +43,7 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	routes, err := c.rep.Insert(ctx, insertRequestConvert(req))
+	routes, err := c.rep.InsertMany(ctx, insertRequestConvert(req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return

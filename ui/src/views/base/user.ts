@@ -6,6 +6,15 @@ export interface Session {
 }
 
 export default class User {
+  async logout(): Promise<Session> {
+    const req: Request = {
+      data: {},
+      method: 'POST',
+      url: '/api/v1/user/logout',
+    };
+    return makeRequest(req);
+  }
+
   async userSession(): Promise<Session> {
     const req: Request = {
       data: {},

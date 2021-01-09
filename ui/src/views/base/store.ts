@@ -20,6 +20,8 @@ export interface State{
   showSnackbar: boolean;
   snackbarMessage: string;
   service: AuthService;
+  login: string;
+  isAdmin: boolean;
 }
 
 const {
@@ -35,8 +37,13 @@ const {
     showSnackbar: false,
     snackbarMessage: '',
     service: new AuthService(),
+    login: '',
+    isAdmin: false,
   } as State,
   getters: {
+    login(state) {
+      return state.login;
+    },
     isAuthorized(state) {
       return state.isAuthorized;
     },
@@ -56,14 +63,36 @@ const {
     setAuthorized(state, isAuthorized: boolean) {
       state.isAuthorized = isAuthorized;
     },
+    setUser(state, payload: {login: string; isAdmin: boolean}) {
+      state.login = payload.login;
+      state.isAdmin = payload.isAdmin;
+    },
   },
   actions: {
+
+    async logout(context): Promise<Error> {
+      const { commit, state } = actionContext(context);
+
+      return state.service.logout()
+        .then((s: Session) => {
+          commit.setAuthorized(false);
+          return s;
+        })
+        .catch((err) => {
+          commit.setAuthorized(true);
+          return err;
+        })
+        .finally(() => {
+          window.location.reload();
+        });
+    },
     async userSession(context): Promise<Session | Error> {
       const { commit, state } = actionContext(context);
 
       return state.service.userSession()
         .then((s: Session) => {
           if (s.login !== '') {
+            commit.setUser({ login: s.login, isAdmin: s.isAdmin });
             commit.setAuthorized(true);
             return s;
           }

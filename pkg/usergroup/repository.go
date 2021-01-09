@@ -45,7 +45,7 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 	return nil
 }
 
-func (r *repository) insertPair(ctx context.Context, tx *sqlx.Tx, groupId, userId int) (*Group, error) {
+func InsertPair(ctx context.Context, tx *sqlx.Tx, groupId, userId int) (*Group, error) {
 	query := `
 		with insert_row as (
 			insert into ad.users_groups (
@@ -76,7 +76,7 @@ func (r *repository) insertPair(ctx context.Context, tx *sqlx.Tx, groupId, userI
 	return &route, nil
 }
 
-func (r *repository) Insert(ctx context.Context, params []Pair) ([]Group, error) {
+func (r *repository) InsertMany(ctx context.Context, params []Pair) ([]Group, error) {
 
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
@@ -90,7 +90,7 @@ func (r *repository) Insert(ctx context.Context, params []Pair) ([]Group, error)
 	routes := make([]Group, 0)
 	for _, pair := range params {
 
-		route, err := r.insertPair(ctx, tx, pair.GroupId, pair.UserId)
+		route, err := InsertPair(ctx, tx, pair.GroupId, pair.UserId)
 		if err != nil {
 			return nil, err
 		}
