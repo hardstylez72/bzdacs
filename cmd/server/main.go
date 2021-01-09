@@ -182,7 +182,14 @@ func Start(r chi.Router) error {
 		return err
 	}
 
-	_, err = resolveGuestGroup(ctx, groupRepository, g.Id, &Option{Force: force})
+	guestRs := filterGuestRoutes(rs)
+
+	guestGroup, err := resolveGuestGroup(ctx, groupRepository, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+
+	err = resolveGroupAndRoutes(ctx, groupRouteRepository, guestRs, guestGroup.Id, &Option{Force: force})
 	if err != nil {
 		return err
 	}

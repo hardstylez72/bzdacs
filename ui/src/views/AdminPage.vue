@@ -48,6 +48,7 @@ export default class LoginPage extends Vue {
     this.$store.direct.dispatch.adminLogin()
       .finally(() => {
         if (this.isAuthorized) {
+          this.$store.direct.dispatch.userSession();
           this.$router.push({ name: 'Home' });
         }
       });

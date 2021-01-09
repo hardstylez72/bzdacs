@@ -10,6 +10,7 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/usergroup"
 	"github.com/spf13/viper"
 	"net/http"
+	"strings"
 )
 
 const (
@@ -50,7 +51,7 @@ func resolveGroup(ctx context.Context, rep group.Repository, o *Option) (*group.
 	return g, nil
 }
 
-func resolveGuestGroup(ctx context.Context, rep group.Repository, baseGroupId int, o *Option) (*group.Group, error) {
+func resolveGuestGroup(ctx context.Context, rep group.Repository, o *Option) (*group.Group, error) {
 
 	g, err := rep.GetByCode(ctx, sysGuestGroupCode)
 	if err != nil {
@@ -68,7 +69,7 @@ func resolveGuestGroup(ctx context.Context, rep group.Repository, baseGroupId in
 		}
 	}
 
-	g, err = rep.InsertGroupBasedOnAnother(ctx, &group.Group{Code: sysGuestGroupCode, Description: sysGuestDescription}, baseGroupId)
+	g, err = rep.Insert(ctx, &group.Group{Code: sysGuestGroupCode, Description: sysGuestDescription})
 	if err != nil {
 		return nil, err
 	}
@@ -124,6 +125,20 @@ func buildRoutes(r chi.Router) []route.Route {
 		})
 	}
 	return rs
+}
+
+func filterGuestRoutes(in []route.Route) []route.Route {
+	out := make([]route.Route, 0)
+
+	for _, r := range in {
+		if strings.Contains(r.Route, "/update") ||
+			strings.Contains(r.Route, "/delete") ||
+			strings.Contains(r.Route, "/create") {
+			continue
+		}
+		out = append(out, r)
+	}
+	return out
 }
 
 func resolveRoutes(ctx context.Context, rep route.Repository, rs []route.Route, o *Option) ([]route.Route, error) {

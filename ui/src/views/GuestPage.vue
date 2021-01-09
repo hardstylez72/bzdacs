@@ -37,6 +37,7 @@ export default class LoginPage extends Vue {
         console.log('guest login');
         console.log('this.isAuthorized', this.isAuthorized);
         if (this.isAuthorized) {
+          this.$store.direct.dispatch.userSession();
           this.$router.push({ name: 'Home' });
         }
       });

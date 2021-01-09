@@ -70,19 +70,11 @@ const {
   },
   actions: {
 
-    async logout(context): Promise<Error> {
-      const { commit, state } = actionContext(context);
+    async logout(context): Promise<void> {
+      const { state } = actionContext(context);
 
       return state.service.logout()
-        .then((s: Session) => {
-          commit.setAuthorized(false);
-          return s;
-        })
-        .catch((err) => {
-          commit.setAuthorized(true);
-          return err;
-        })
-        .finally(() => {
+        .then(() => {
           window.location.reload();
         });
     },
@@ -104,24 +96,19 @@ const {
     },
 
     guestLogin(context, login): Promise<void> {
-      const { state, commit } = actionContext(context);
+      const { state, dispatch } = actionContext(context);
 
-      return state.service.guestLogin(login).then(() => {
-        commit.setAuthorized(true);
-      })
-        .catch((err) => {
-          commit.setAuthorized(false);
+      return state.service.guestLogin(login)
+        .finally(() => {
+          dispatch.userSession();
         });
     },
     adminLogin(context, payload?: {login: string; password: string}): Promise<void> {
-      const { state, commit } = actionContext(context);
+      const { state, dispatch } = actionContext(context);
 
       return state.service.adminLogin(payload)
-        .then(() => {
-          commit.setAuthorized(true);
-        })
-        .catch((err) => {
-          commit.setAuthorized(false);
+        .finally(() => {
+          dispatch.userSession();
         });
     },
   },
