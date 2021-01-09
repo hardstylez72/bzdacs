@@ -27,7 +27,7 @@ export default class App extends Vue {
     return this.$store.direct.getters.login;
   }
 
-  logout(): Promise<Error> {
+  logout(): Promise<void> {
     return this.$store.direct.dispatch.logout();
   }
 
