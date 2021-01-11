@@ -7,12 +7,12 @@
       class="elevation-1"
     >
       <template v-slot:no-data>
-        Нет данных
+        {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
+          <v-toolbar-title>{{ $t('title') }}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer/>
           <CreateGroupDialog/>
@@ -58,11 +58,11 @@ export default class TapGroupTable extends DictTable<Group> {
   readonly title = 'Группы'
 
   readonly headers: DataTableHeader[] = [
-    { text: 'ID', value: 'id', width: '50px' },
-    { text: 'Код', value: 'code', width: '15%' },
-    { text: 'Описание', value: 'description' },
+    { text: this.$t('id').toString(), value: 'id', width: '50px' },
+    { text: this.$t('code').toString(), value: 'code', width: '15%' },
+    { text: this.$t('description').toString(), value: 'description' },
     {
- text: 'Actions', value: 'actions', sortable: false, width: '100px',
+ text: this.$t('actions').toString(), value: 'actions', sortable: false, width: '100px',
 },
   ]
 
@@ -98,3 +98,23 @@ export default class TapGroupTable extends DictTable<Group> {
 
 }
 </style>
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "title": "Groups",
+    "code": "Code",
+    "id": "Id",
+    "description": "Description",
+    "actions": "Actions"
+  },
+  "ru": {
+    "no-data": " Нет данных",
+    "title": "Группы",
+    "code": "Код",
+    "id": "Id",
+    "description": "Описание",
+    "actions": "Дейтсвия"
+  }
+}
+</i18n>

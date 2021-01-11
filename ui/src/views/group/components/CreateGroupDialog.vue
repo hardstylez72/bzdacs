@@ -1,11 +1,11 @@
 <template>
   <Dialog v-model="show">
     <template v-slot:activator="props">
-      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">Новая группа</v-btn>
+      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">{{$t('add-group-btn')}}</v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="headline grey lighten-2">Создание группы</v-card-title>
+      <v-card-title class="headline grey lighten-2">{{$t('add-group-title')}}</v-card-title>
       <v-card-text>
         <v-form ref="create-group-form" v-model="valid" lazy-validation>
           <v-row>
@@ -14,7 +14,7 @@
                 v-model="group.code"
                 required
                 :rules="codeRules"
-                label="Код"
+                :label="$t('label.code')"
               />
             </v-col>
             <v-col cols="12" sm="4" md="4">
@@ -23,7 +23,7 @@
                 item-text="code"
                 item-value="id"
                 v-model="baseGroupId"
-                label="Код базовой группы"
+                :label="$t('label.base-code-group')"
               />
             </v-col>
             <v-col cols="12" sm="10" md="10">
@@ -32,7 +32,7 @@
                 outlined
                 required
                 :rules="descriptionRules"
-                label="Описание"
+                :label="$t('label.desc')"
               />
             </v-col>
           </v-row>
@@ -40,8 +40,8 @@
 
         <v-card-actions>
           <v-spacer />
-          <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="createGroup">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
+          <v-btn color="blue darken-1" text @click="createGroup">{{$t('save')}}</v-btn>
         </v-card-actions>
       </v-card-text>
     </v-card>
@@ -89,7 +89,7 @@ export default class CreateRouteDialog extends Vue {
   }
 
   rules = [
-    (v: string) => !!v || 'Обязательное поле',
+    (v: string) => !!v || this.$t('required'),
 ]
 
   codeRules = this.rules
@@ -127,6 +127,31 @@ export default class CreateRouteDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "add-group-btn": "Add group",
+    "add-group-title": "Group creation",
+    "label": {
+      "code": "Code",
+      "base-code-group": "Base group code",
+      "desc": "Description"
+    },
+    "cancel": "Cancel",
+    "save": "Save",
+    "required": "required"
+  },
+  "ru": {
+    "add-group-btn": "Добавить группу",
+    "add-group-title": "Создание группы",
+    "label": {
+      "code": "Код",
+      "base-code-group": "Код базовой группы",
+      "desc": "Описание"
+    },
+    "cancel": "Отмена",
+    "save": "Создать",
+    "required": "Обязательное поле"
+  }
+}
+</i18n>

@@ -2,14 +2,19 @@
   <div>
     <v-data-table
       v-model="selected"
-      :headers="headers"
+      :headers="headersC"
       :items="items"
       sort-by="calories"
       class="elevation-1"
       show-select
     >
+      <template slot="items" slot-scope="props">
+        <td>{{ props.item.id }}</td>
+        <td class="text-xs-right">{{ props.item.method }}</td>
+      </template>
+
       <template v-slot:no-data>
-        Нет данных
+        {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
@@ -38,14 +43,37 @@ import HttpMethodBox from '@/views/base/components/HttpMethodBox.vue';
 })
 export default class GroupRoutesSelectableTable extends SelectableTable<Route> {
   readonly headers: DataTableHeader[] = [
-    { text: 'ID', value: 'id', width: '5%' },
-    { text: 'Метод', value: 'method', width: '80px' },
-    { text: 'Маршрут', value: 'route' },
-    { text: 'Описание', value: 'description' },
+    { text: this.$t('id').toString(), value: 'id', width: '7%' },
+    { text: this.$t('method').toString(), value: 'method', width: '100px' },
+    { text: this.$t('route').toString(), value: 'route' },
+    { text: this.$t('description').toString(), value: 'description' },
   ]
+
+  get headersC() {
+    return this.headers;
+  }
 }
 
 </script>
 
 <style scoped lang="scss">
 </style>
+
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "id": "Id",
+    "method": "Method",
+    "route": "Route",
+    "description": "Description"
+  },
+  "ru": {
+    "no-data": " Нет данных",
+    "id": "Id",
+    "method": "Метод",
+    "route": "Маршрут",
+    "description": "Описание"
+  }
+}
+</i18n>

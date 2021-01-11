@@ -50,7 +50,17 @@ export default class MainTabs extends Vue {
   tab = 0;
 
   tabs: string[] = [
-    'routes', 'groups', 'users', 'tags',
+    this.$t('routes').toString(),
+    this.$t('groups').toString(),
+    this.$t('users').toString(),
+    this.$t('tags').toString(),
+  ];
+
+  tabCodes: string[] = [
+    'routes',
+    'groups',
+    'users',
+    'tags',
   ];
 
   @Watch('$route')
@@ -68,14 +78,14 @@ export default class MainTabs extends Vue {
     }
 
     const { tab } = this.$route.query;
-    if (tab !== this.tabs[tabNumber]) {
-      this.$router.push({ query: { tab: this.tabs[tabNumber] } });
+    if (tab !== this.tabCodes[tabNumber]) {
+      this.$router.push({ query: { ...this.$route.query, tab: this.tabCodes[tabNumber] } });
     }
   }
 
   tabChanged(tabNumber: number) {
     if (tabNumber !== this.getTabNumberFromUrlQueryParams()) {
-      this.$router.push({ query: { tab: this.tabs[tabNumber] } });
+      this.$router.push({ query: { ...this.$route.query, tab: this.tabCodes[tabNumber] } });
     }
   }
 
@@ -83,7 +93,7 @@ export default class MainTabs extends Vue {
     const { tab } = this.$route.query;
     let tabNumber = 0;
     if (tab) {
-      this.tabs.some((itemTabName: string, itemTabNumber: number) => {
+      this.tabCodes.some((itemTabName: string, itemTabNumber: number) => {
         if (itemTabName === tab) {
           tabNumber = itemTabNumber;
           return true;
@@ -96,7 +106,19 @@ export default class MainTabs extends Vue {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style  lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "routes": "routes",
+    "groups": "groups",
+    "users": "users",
+    "tags": "tags"
+  },
+  "ru": {
+    "routes": "Маршруты",
+    "groups": "Группы",
+    "users": "Пользователи",
+    "tags": "Теги"
+  }
+}
+</i18n>

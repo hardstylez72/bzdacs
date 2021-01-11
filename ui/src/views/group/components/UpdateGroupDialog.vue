@@ -1,7 +1,7 @@
 <template>
   <Dialog v-model="show">
     <v-card>
-      <v-card-title class="headline grey lighten-2">Редактирование группы</v-card-title>
+      <v-card-title class="headline grey lighten-2">{{$t('editing')}}</v-card-title>
       <v-card-text>
         <v-form ref="create-group-form" v-model="valid" lazy-validation>
           <v-row>
@@ -10,7 +10,7 @@
                 v-model="group.code"
                 required
                 :rules="codeRules"
-                label="Код"
+                :label="$t('label.code')"
               />
             </v-col>
             <v-col cols="12" sm="10" md="10">
@@ -19,7 +19,7 @@
                 outlined
                 required
                 :rules="descriptionRules"
-                label="Описание"
+                :label="$t('label.desc')"
               />
             </v-col>
           </v-row>
@@ -27,8 +27,8 @@
 
         <v-card-actions>
           <v-spacer />
-          <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="updateGroup">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
+          <v-btn color="blue darken-1" text :disabled="disable" @click="updateGroup">{{$t('update')}}</v-btn>
         </v-card-actions>
       </v-card-text>
     </v-card>
@@ -46,14 +46,13 @@ import { Route } from '@/views/route/service';
   components: {
     Dialog: () => import('../../base/components/Dialog.vue'),
   },
-  watch: {
-    match: 'validate',
-    max: 'validate',
-    model: 'validate',
-  },
 
 })
 export default class UpdateGroupDialog extends Vue {
+  disable = false
+
+  initialGroupState: Group
+
   @Prop({ required: true }) id!: number
 
   @Model('change', { default: false, type: Boolean })
@@ -74,6 +73,26 @@ export default class UpdateGroupDialog extends Vue {
     this.group.id = g.id;
     this.group.code = g.code;
     this.group.description = g.description;
+
+    this.initialGroupState = g;
+  }
+
+  @Watch('group', { deep: true })
+  protected onChangeGroup(group: Group): void {
+    this.disable = false;
+    if (this.groupsSame(this.initialGroupState, group)) {
+      this.disable = true;
+      return;
+    }
+
+    if (this.groupsSame(this.group, group)) {
+      this.disable = false;
+    }
+  }
+
+  groupsSame(a: Group, b: Group): boolean {
+    return (a.description === b.description
+      && a.code === b.code);
   }
 
   show = false
@@ -130,6 +149,25 @@ export default class UpdateGroupDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "editing": "Group editing",
+    "label": {
+      "code": "Code",
+      "desc": "Description"
+    },
+    "cancel": "Cancel",
+    "update": "Update"
+  },
+  "ru": {
+    "editing": "Редактирование группы",
+    "label": {
+      "code": "Код",
+      "desc": "Описание"
+    },
+    "cancel": "Отмена",
+    "update": "Обновить"
+  }
+}
+</i18n>

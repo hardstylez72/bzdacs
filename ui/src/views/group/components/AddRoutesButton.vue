@@ -11,23 +11,18 @@
         v-bind="props"
         v-on="props.on"
       >
-        Добавить маршруты
+        {{$t('add-routes-btn')}}
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Добавление маршрутов к группе
+        {{$t('add-routes-title')}}
       </v-card-title>
 
-      <GroupRoutesSelectableTable
-        v-model="selected"
-        :items="routes"
-      >
+      <GroupRoutesSelectableTable v-model="selected" :items="routes">
         <template v-slot:top>
-          <v-toolbar
-            flat
-          >
+          <v-toolbar flat>
             <v-spacer />
             <div>
               <v-btn
@@ -36,7 +31,7 @@
                 class="mb-2"
                 @click="addSelectedRoutes"
               >
-                Добавить выбранные маршруты
+                {{$t('add-selected-routes')}}
               </v-btn>
             </div>
           </v-toolbar>
@@ -44,13 +39,7 @@
       </GroupRoutesSelectableTable>
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="close"
-        >
-          Cancel
-        </v-btn>
+        <v-btn color="blue darken-1" text @click="close">{{$t('cancel-btn')}}</v-btn>
         <v-spacer />
       </v-card-actions>
     </v-card>
@@ -110,6 +99,19 @@ export default class RoutesTableSelectAddDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "add-routes-btn": "Add routes",
+    "add-routes-title": "Adding routes to the group",
+    "add-selected-routes": "Add selected routes",
+    "cancel-btn": "Cancel"
+  },
+  "ru": {
+    "add-routes-btn": "Добавить маршруты",
+    "add-routes-title": "Добавление маршрутов к группе",
+    "add-selected-routes": "Добавить выбранные маршруты",
+    "cancel-btn": "Отмена"
+  }
+}
+</i18n>
