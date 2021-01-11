@@ -5,9 +5,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import MainTabs from '@/views/base/pages/Main.vue';
-import LoginPage from '@/views/AdminPage.vue';
 
 @Component({
   components: {

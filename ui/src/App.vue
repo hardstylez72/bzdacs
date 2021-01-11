@@ -1,9 +1,11 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <h1>BZDACS</h1>
+      <h1>{{appName}}</h1>
+      <LanguageSelector  class="ml-12 language-selector pt-4" />
       <v-spacer></v-spacer>
-      <v-btn v-if="login" @click="logout">logout <span v-if="login">({{login}})</span></v-btn>
+      <span v-if="login" class="ms-5">{{$t('user')}}: {{login}}</span>
+      <v-btn v-if="login" class="ms-5" @click="logout" >{{$t('logout')}}</v-btn>
     </v-app-bar>
     <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
       <v-main>
@@ -16,9 +18,16 @@
 import {
   Component, Vue,
 } from 'vue-property-decorator';
+import LanguageSelector from '@/views/app/components/LanguageSelector.vue';
 
-@Component
+@Component({
+  components: {
+    LanguageSelector,
+  },
+})
 export default class App extends Vue {
+  appName = 'BZDACS'
+
   get isAuthorized(): boolean {
     return this.$store.direct.getters.isAuthorized;
   }
@@ -67,9 +76,26 @@ export default class App extends Vue {
   margin-top: 0.5%;
 }
 
+.language-selector {
+  width: 100px;
+}
+
 @font-face {
   font-family: "Lobster";
   src: local("Lobster"),
   url(../public/fonts/lobster.ttf) format("truetype");
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "logout": "Logout",
+    "user": "User"
+  },
+  "ru": {
+    "logout": "Выйти",
+    "user": "Пользователь"
+  }
+}
+</i18n>

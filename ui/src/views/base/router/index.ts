@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig, Route } from 'vue-router';
-import Home from '../../Main.vue';
-import Admin from '../../AdminPage.vue';
-import Guest from '../../GuestPage.vue';
+import Home from '../../app/pages/Main.vue';
+import Admin from '../../app/pages/AdminPage.vue';
+import Guest from '../../app/pages/GuestPage.vue';
 import Group from '../../group/pages/main.vue';
 import User from '../../user/pages/main.vue';
 

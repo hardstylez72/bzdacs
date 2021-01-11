@@ -15,15 +15,15 @@ module.exports = {
     {
       files: ['*.vue'],
       rules: {
-        indent: 'off'
-      }
-    }
+        indent: 'off',
+      },
+    },
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'max-len': "warn",
-    'consistent-return': "off",
-    'class-methods-use-this': ['warn']
+    'max-len': 'warn',
+    'consistent-return': 'off',
+    'class-methods-use-this': ['warn'],
   },
 };

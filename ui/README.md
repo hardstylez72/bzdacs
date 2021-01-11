@@ -1,5 +1,10 @@
 # ui
 
+```tests
+cypress run --headed --no-exit
+
+```
+
 ## Project setup
 ```
 npm install

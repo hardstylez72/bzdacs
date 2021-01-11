@@ -1,14 +1,12 @@
 <template>
-  <div class="login-form">
-    <v-form>
-        <v-text-field
-          v-model="login"
-          required
-          label="Логин"
-        />
-      <v-btn @click="loginAction">Войти</v-btn>
+  <v-form class="login-form">
+      <v-text-field
+        v-model="login"
+        required
+        :label="$t('input-label')"
+      />
+    <v-btn @click="loginAction">{{ $t('login-btn-text') }}</v-btn>
     </v-form>
-  </div>
 </template>
 
 <script lang="ts">
@@ -34,10 +32,7 @@ export default class LoginPage extends Vue {
   loginAction() {
     this.$store.direct.dispatch.guestLogin(this.login)
       .finally(() => {
-        console.log('guest login');
-        console.log('this.isAuthorized', this.isAuthorized);
         if (this.isAuthorized) {
-          this.$store.direct.dispatch.userSession();
           this.$router.push({ name: 'Home' });
         }
       });
@@ -56,3 +51,16 @@ export default class LoginPage extends Vue {
   margin: 20% auto;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "input-label": "Enter a login",
+    "login-btn-text": "login"
+  },
+  "ru": {
+    "input-label": "Введите логин",
+    "login-btn-text": "войти"
+  }
+}
+</i18n>

@@ -4,15 +4,15 @@
         <v-text-field
           v-model="login"
           required
-          label="Логин"
+          :label="$t('input-login-label')"
         />
         <v-text-field
           v-model="password"
           required
           type="password"
-          label="Пароль"
+          :label="$t('input-password-label')"
         />
-      <v-btn @click="loginAction">Войти</v-btn>
+      <v-btn @click="loginAction">{{ $t('login-btn-text')}}</v-btn>
     </v-form>
   </div>
 </template>
@@ -67,3 +67,18 @@ export default class LoginPage extends Vue {
   margin: 20% auto;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "input-login-label": "Enter login",
+    "input-password-label": "Enter password",
+    "login-btn-text": "login"
+  },
+  "ru": {
+    "input-login-label": "Введите логин",
+    "input-password-label": "Введите пароль",
+    "login-btn-text": "войти"
+  }
+}
+</i18n>
