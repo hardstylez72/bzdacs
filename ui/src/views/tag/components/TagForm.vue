@@ -8,7 +8,7 @@
             outlined
             required
             :rules="nameRules"
-            label="Название"
+            :label="$t('label.tag')"
           />
         </v-col>
       </v-row>
@@ -50,11 +50,24 @@ export default class TagForm extends Vue {
   }
 
   nameRules = [
-    (v: string) => !!v || 'Обязательное поле',
+    (v: string) => !!v || this.$t('required'),
   ]
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "label": {
+      "tag": "Tag"
+    },
+    "required": "Required"
+  },
+  "ru": {
+    "label": {
+      "tag": "Тег"
+    },
+    "required": "Обязательное поле"
+  }
+}
+</i18n>

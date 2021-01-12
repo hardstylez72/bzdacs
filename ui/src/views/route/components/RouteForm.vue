@@ -7,7 +7,7 @@
             v-model="route.route"
             required
             :rules="routeRules"
-            label="Маршрут"
+            :label="$t('label.route')"
           />
         </v-col>
         <v-col cols="2" sm="2" md="2">
@@ -16,7 +16,7 @@
             required
             :rules="methodRules"
             :items="httpMethodList"
-            label="Метод"
+            :label="$t('label.method')"
           />
         </v-col>
         <v-col cols="12" sm="12" md="12">
@@ -25,13 +25,13 @@
             outlined
             required
             :rules="descriptionRules"
-            label="Описание"
+            :label="$t('label.desc')"
           />
         </v-col>
         <v-col cols="12" sm="12" md="12">
           <v-autocomplete
-            label="Теги"
-            placeholder="Введите название тега"
+            :label="$t('label.tags')"
+            :placeholder="$t('tag.tip')"
             ref="autocomplete-input"
             v-model="selectedTags"
             :items="suggestedTags"
@@ -46,7 +46,7 @@
             <template v-slot:no-data>
               <v-list-item>
                 <v-list-item-title>
-                  Поиск тегов
+                  {{$t('tag.no-data')}}
                 </v-list-item-title>
               </v-list-item>
             </template>
@@ -189,7 +189,7 @@ export default class RouteForm extends Vue {
       if (v) {
         if (v.length) {
           if (v[0] !== '/') {
-            return 'Маршрут должен начинаться со знака `/`';
+            return this.$t('route-rule-1');
           }
         }
       }
@@ -199,7 +199,7 @@ export default class RouteForm extends Vue {
       if (v) {
         if (v.length) {
           if (v.includes('//')) {
-            return 'Маршрут не должен содержать повторяющиеся знаки типа //';
+            return this.$t('route-rule-2');
           }
         }
       }
@@ -208,13 +208,44 @@ export default class RouteForm extends Vue {
 ]
 
   methodRules = [
-    (v: string) => !!v || 'Обязательное поле',
+    (v: string) => !!v || this.$t('required'),
   ]
 
   descriptionRules = this.methodRules
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "label": {
+      "route": "Route",
+      "method": "Method",
+      "desc": "Description",
+      "tags": "tags"
+    },
+    "tag": {
+      "tip": "Enter tag",
+      "no-data": "No data"
+    },
+    "required": "required",
+    "route-rule-1": "Route must start with /",
+    "route-rule-2": "Route must not contain repeating like //"
+  },
+  "ru": {
+    "label": {
+      "route": "Маршрут",
+      "method": "Метод",
+      "desc": "Описание",
+      "tags": "Теги"
+    },
+    "tag": {
+      "tip": "Введите название тега",
+      "no-data": "Нет данных"
+    },
+    "required": "Обязательное поле",
+    "route-rule-1":"Маршрут должен начинаться со знака `/`",
+    "route-rule-2": "Маршрут не должен содержать повторяющиеся знаки типа //"
+  }
+}
+</i18n>

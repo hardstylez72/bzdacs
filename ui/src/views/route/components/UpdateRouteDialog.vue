@@ -2,15 +2,15 @@
   <Dialog v-model="show">
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Редактирование маршрута
+        {{$t('editing')}}
       </v-card-title>
       <v-card-text>
         <RouteForm v-model="route">
           <template v-slot:actions="{ref}">
             <v-card-actions>
               <v-spacer />
-              <v-btn color="blue darken-1" text @click="close">Отмена</v-btn>
-              <v-btn color="blue darken-1" text :disabled="disableUpdateButton" @click="updateRoute(ref)">Обновить</v-btn>
+              <v-btn color="blue darken-1" text @click="close"> {{$t('cancel')}}</v-btn>
+              <v-btn color="blue darken-1" text :disabled="disableUpdateButton" @click="updateRoute(ref)"> {{$t('update')}}</v-btn>
             </v-card-actions>
           </template>
         </RouteForm>
@@ -123,6 +123,17 @@ export default class UpdateRouteDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "editing": "Route editing",
+    "cancel": "Cancel",
+    "update": "Update"
+  },
+  "ru": {
+    "editing": "Редактирование маршрута",
+    "cancel": "Отмена",
+    "update": "Обновить"
+  }
+}
+</i18n>

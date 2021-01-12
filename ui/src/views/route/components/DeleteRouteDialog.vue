@@ -5,24 +5,12 @@
   >
     <v-card>
       <v-card-title>
-        Вы уверены что хотите удлить маршрут?
+        {{$t('sure')}}
       </v-card-title>
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="close"
-        >
-          Cancel
-        </v-btn>
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="deleteRoute"
-        >
-          OK
-        </v-btn>
+        <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
+        <v-btn color="blue darken-1" text @click="deleteRoute">{{$t('ok')}}</v-btn>
         <v-spacer />
       </v-card-actions>
     </v-card>
@@ -64,6 +52,17 @@ export default class DeleteRouteDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "sure": "Are you sure want to delete that route?",
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "ru": {
+    "sure": "Вы уверены что хотите удлить маршрут?",
+    "cancel": "Отмена",
+    "ok": "ОК"
+  }
+}
+</i18n>

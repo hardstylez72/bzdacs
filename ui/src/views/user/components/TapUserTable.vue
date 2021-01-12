@@ -67,7 +67,6 @@ export default class TapUserTable extends DictTable<User> {
   protected headers: DataTableHeader[] = [
     { text: 'ID', value: 'id', width: '50px' },
     { text: 'Внеший ID', value: 'externalId' },
-    { text: 'Системный пользователь', value: 'isSystem' },
     {
  text: 'Actions', value: 'actions', sortable: false, width: '100px',
 },

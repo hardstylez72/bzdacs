@@ -1,12 +1,12 @@
 <template>
   <Dialog v-model="show">
     <template v-slot:activator="props">
-      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">Новый маршрут</v-btn>
+      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">{{$t('add-btn')}}</v-btn>
     </template>
 
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        {{title}}
+        {{$t('add-title')}}
       </v-card-title>
       <v-card-text>
 
@@ -14,8 +14,8 @@
           <template v-slot:actions="{ref}">
             <v-card-actions>
               <v-spacer />
-              <v-btn color="blue darken-1" text @click="close">Отмена</v-btn>
-              <v-btn color="blue darken-1" text :disabled="disableCreateButton" @click="createRoute(ref)">Создать</v-btn>
+              <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
+              <v-btn color="blue darken-1" text :disabled="disableCreateButton" @click="createRoute(ref)">{{$t('save')}}</v-btn>
             </v-card-actions>
           </template>
         </RouteForm>
@@ -107,6 +107,19 @@ export default class CreateRouteDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "add-btn": "Add route",
+    "add-title": "Route creation",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "ru": {
+    "add-btn": "Добавить маршрут",
+    "add-title": "Создание маршрута",
+    "cancel": "Отмена",
+    "save": "Создать"
+  }
+}
+</i18n>

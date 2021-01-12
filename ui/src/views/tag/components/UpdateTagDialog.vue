@@ -2,15 +2,15 @@
   <Dialog v-model="show">
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Редактирование тега
+        {{$t('editing')}}
       </v-card-title>
       <v-card-text>
         <TagForm v-model="tag">
           <template v-slot:actions="{ref}">
             <v-card-actions>
               <v-spacer />
-              <v-btn color="blue darken-1" text @click="close">Отмена</v-btn>
-              <v-btn color="blue darken-1" text :disabled="disableUpdateButton" @click="updateTag(ref)">Обновить</v-btn>
+              <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
+              <v-btn color="blue darken-1" text :disabled="disableUpdateButton" @click="updateTag(ref)">{{$t('update')}}</v-btn>
             </v-card-actions>
           </template>
         </TagForm>
@@ -122,7 +122,17 @@ export default class UpdateTagDialog extends Vue {
   }
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "editing": "Tag editing",
+    "cancel": "Cancel",
+    "update": "Update"
+  },
+  "ru": {
+    "editing": "Редактирование тега",
+    "cancel": "Отмена",
+    "update": "Обновить"
+  }
+}
+</i18n>

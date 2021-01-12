@@ -18,16 +18,4 @@ module.exports = {
       .use('i18n')
       .loader('@kazupon/vue-i18n-loader');
   },
-  // configureWebpack: {
-  //   module: {
-  //     rules: [
-  //       {
-  //         resourceQuery: /blockType=i18n/,
-  //         type: 'javascript/auto',
-  //         loader: '@intlify/vue-i18n-loader',
-  //       },
-  //       // ...
-  //     ],
-  //   },
-  // },
 };

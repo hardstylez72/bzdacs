@@ -8,12 +8,12 @@
       class="elevation-1"
     >
       <template v-slot:no-data>
-        Нет данных
+        {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
+          <v-toolbar-title> {{$t('title')}}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer />
           <CreateRouteDialog/>
@@ -97,13 +97,13 @@ export default class TabRouteTable extends DictTable<Route> {
   methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
 
   readonly headers: DataTableHeader[] = [
-    { text: 'ID', value: 'id', width: '50px' },
-    { text: 'Метод', value: 'method', width: '80px' },
-    { text: 'Маршруты', value: 'route' },
-    { text: 'Описание', value: 'description' },
-    { text: 'Теги', value: 'tags', width: '30%' },
+    { text: this.$t('id').toString(), value: 'id', width: '70px' },
+    { text: this.$t('method').toString(), value: 'method', width: '100px' },
+    { text: this.$t('route').toString(), value: 'route' },
+    { text: this.$t('description').toString(), value: 'description' },
+    { text: this.$t('tags').toString(), value: 'tags', width: '30%' },
     {
- text: 'Actions', value: 'actions', sortable: false, width: '80px',
+ text: this.$t('actions').toString(), value: 'actions', sortable: false, width: '80px',
 },
   ]
 }
@@ -120,3 +120,28 @@ export default class TabRouteTable extends DictTable<Route> {
 
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "title": "Routes",
+    "id": "Id",
+    "method": "Method",
+    "route": "Route",
+    "description": "Description",
+    "tags": "Tags",
+    "actions": "Actions"
+  },
+  "ru": {
+    "no-data": " Нет данных",
+    "title": "Муршруты",
+    "id": "Id",
+    "method": "Метод",
+    "route": "Маршрут",
+    "description": "Описание",
+    "tags": "Теги",
+    "actions": "Действия"
+  }
+}
+</i18n>

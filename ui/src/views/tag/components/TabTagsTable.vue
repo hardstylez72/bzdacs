@@ -1,18 +1,18 @@
 <template>
   <div>
     <v-data-table
-      :items="routes"
+      :items="tags"
       :headers="headers"
       sort-by="calories"
       class="elevation-1"
     >
       <template v-slot:no-data>
-        Нет данных
+       {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
+          <v-toolbar-title>{{ $t('title') }}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer />
           <CreateTagDialog/>
@@ -61,7 +61,7 @@ export default class TabRouteTable extends DictTable<Route> {
     this.$store.direct.dispatch.tag.GetList();
   }
 
-  get routes(): readonly Tag[] {
+  get tags(): readonly Tag[] {
     return this.$store.direct.getters.tag.getTags;
   }
 
@@ -70,9 +70,9 @@ export default class TabRouteTable extends DictTable<Route> {
   }
 
   readonly headers: DataTableHeader[] = [
-    { text: 'ID', value: 'id', width: '50px' },
-    { text: 'Тег', value: 'name' },
-    { text: 'Действия', value: 'actions', width: '80px' },
+    { text: this.$t('id').toString(), value: 'id', width: '70px' },
+    { text: this.$t('tag').toString(), value: 'name' },
+    { text: this.$t('actions').toString(), value: 'actions', width: '80px' },
   ]
 }
 </script>
@@ -88,3 +88,22 @@ export default class TabRouteTable extends DictTable<Route> {
 
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "title": "Tags",
+    "id": "Id",
+    "tag": "Tag",
+    "actions": "Actions"
+  },
+  "ru": {
+    "no-data": "Нет данных",
+    "title": "Теги",
+    "id": "Id",
+    "tag": "Тег",
+    "actions": "Дейтсвия"
+  }
+}
+</i18n>

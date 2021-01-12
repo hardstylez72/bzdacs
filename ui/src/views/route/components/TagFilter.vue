@@ -2,8 +2,8 @@
   <v-row class="justify-center ">
     <v-col cols="12" sm="10" md="10">
       <v-autocomplete
-        label="Теги"
-        placeholder="Введите название тега"
+        :label="$t('ac-label')"
+        :placeholder="$t('placeholder')"
         ref="autocomplete-input"
         v-model="selectedTags"
         :items="suggestedTags"
@@ -18,7 +18,7 @@
         <template v-slot:no-data>
           <v-list-item>
             <v-list-item-title>
-              Тег не найден
+              {{$t('no-data')}}
             </v-list-item-title>
           </v-list-item>
         </template>
@@ -35,7 +35,7 @@
       </v-autocomplete>
       <v-switch
         v-if="this.selectedTags.length"
-        :label="filter.tags.exclude ? 'Показываются все теги кроме выбранных' : 'Показываются только выбранные теги'"
+        :label="filter.tags.exclude ? $t('s-label-ex') : $t('s-label-in')"
         v-model="filter.tags.exclude"
       ></v-switch>
     </v-col>
@@ -146,6 +146,22 @@ export default class TagFilter extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "ac-label": "Tags",
+    "placeholder": "Enter tag",
+    "s-label-ex": "Show routes with tags but selected",
+    "s-label-in": "Show only routes with selected tags"
 
-</style>
+  },
+  "ru": {
+    "no-data": "Нет данных",
+    "ac-label": "Теги",
+    "placeholder": "Введите название тега",
+    "s-label-ex": "Показываются все теги кроме выбранных",
+    "s-label-in": "Показываются только выбранные теги"
+  }
+}
+</i18n>

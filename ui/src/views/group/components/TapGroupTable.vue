@@ -58,7 +58,7 @@ export default class TapGroupTable extends DictTable<Group> {
   readonly title = 'Группы'
 
   readonly headers: DataTableHeader[] = [
-    { text: this.$t('id').toString(), value: 'id', width: '50px' },
+    { text: this.$t('id').toString(), value: 'id', width: '70px' },
     { text: this.$t('code').toString(), value: 'code', width: '15%' },
     { text: this.$t('description').toString(), value: 'description' },
     {
