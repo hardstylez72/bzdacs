@@ -7,12 +7,12 @@
       class="elevation-1"
     >
       <template v-slot:no-data>
-        Нет данных
+        {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
+          <v-toolbar-title>{{ $t('title') }}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer/>
           <CreateUserDialog/>
@@ -65,15 +65,29 @@ export default class TapUserTable extends DictTable<User> {
   }
 
   protected headers: DataTableHeader[] = [
-    { text: 'ID', value: 'id', width: '50px' },
-    { text: 'Внеший ID', value: 'externalId' },
+    { text: this.$t('id').toString(), value: 'id', width: '70px' },
+    { text: this.$t('externalId').toString(), value: 'externalId' },
     {
  text: 'Actions', value: 'actions', sortable: false, width: '100px',
 },
   ];
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "title": "Users",
+    "id": "Id",
+    "externalId": "External Id",
+    "actions": "Actions"
+  },
+  "ru": {
+    "no-data": "Нет данных",
+    "title": "Пользователи",
+    "id": "Id",
+    "externalId": "Внешний идентификатор",
+    "actions": "Дейтсвия"
+  }
+}
+</i18n>

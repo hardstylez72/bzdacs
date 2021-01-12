@@ -2,12 +2,12 @@
   <c-dialog v-model="show" max-width="450px">
     <v-card>
       <v-card-title>
-        Вы уверены что хотите удлить пользователя?
+        {{$t('sure')}}
       </v-card-title>
       <v-card-actions>
         <v-spacer />
-        <v-btn color="blue darken-1" text @click="close">Отмена</v-btn>
-        <v-btn color="blue darken-1" text @click="remove">Да</v-btn>
+        <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
+        <v-btn color="blue darken-1" text @click="remove">{{$t('ok')}}</v-btn>
         <v-spacer />
       </v-card-actions>
     </v-card>
@@ -49,6 +49,17 @@ export default class DeleteRouteDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "sure": "Are you sure want to delete that user?",
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "ru": {
+    "sure": "Вы уверены что хотите удлить пользователя?",
+    "cancel": "Отмена",
+    "ok": "ОК"
+  }
+}
+</i18n>

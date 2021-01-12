@@ -24,8 +24,8 @@ export default class LanguageSelector extends Vue {
       return;
     }
     this.$router.push({ query: { ...this.$route.query, lang } });
-    // eslint-disable-next-line no-undef
-    window.location.reload();
+    this.lang = this.getLangFromQuery();
+    this.$i18n.locale = lang;
   }
 
   getLangFromQuery(): string {
@@ -35,7 +35,11 @@ export default class LanguageSelector extends Vue {
       return this.defaultLang;
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     if (this.langs.includes(lang)) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       return lang;
     }
 

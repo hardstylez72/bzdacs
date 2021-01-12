@@ -8,7 +8,7 @@
       class="elevation-1"
     >
       <template v-slot:no-data>
-        Нет данных
+       {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
@@ -40,13 +40,13 @@ import { DataTableHeader } from 'vuetify';
 @Component
 export default class UserRoutesTable extends SelectableTable<Group> {
   readonly headers: DataTableHeader[] = [
-      { text: 'ID', value: 'id', width: '50px' },
-      { text: 'Метод', value: 'method', width: '80px' },
-      { text: 'Маршрут', value: 'route' },
-      { text: 'Описание', value: 'description' },
-      { text: 'Группы', value: 'groupCodes' },
-      { text: 'Действия', value: 'actions', width: '80px' },
-      { text: 'Статусы', value: 'statuses', width: '80px' },
+      { text: this.$t('id').toString(), value: 'id', width: '70px' },
+      { text: this.$t('method').toString(), value: 'method', width: '100px' },
+      { text: this.$t('route').toString(), value: 'route' },
+      { text: this.$t('description').toString(), value: 'description' },
+      { text: this.$t('groupCodes').toString(), value: 'groupCodes' },
+      { text: this.$t('actions').toString(), value: 'actions', width: '80px' },
+      { text: this.$t('statuses').toString(), value: 'statuses', width: '80px' },
     ]
 
   view(group: Group) {
@@ -55,5 +55,28 @@ export default class UserRoutesTable extends SelectableTable<Group> {
 }
 </script>
 
-<style scoped lang="scss">
-</style>
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "id": "Id",
+    "method": "Method",
+    "route": "Route",
+    "description": "Description",
+    "groupCodes": "Groups",
+    "actions": "Actions",
+    "statuses": "Statuses"
+
+  },
+  "ru": {
+    "no-data": "Нет данных",
+    "id": "Id",
+    "method": "Метод",
+    "route": "Маршрут",
+    "description": "Описание",
+    "groupCodes": "Группы",
+    "actions": "Действия",
+    "statuses": "Статусы"
+  }
+}
+</i18n>

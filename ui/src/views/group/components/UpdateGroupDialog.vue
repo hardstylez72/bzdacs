@@ -51,8 +51,6 @@ import { Route } from '@/views/route/service';
 export default class UpdateGroupDialog extends Vue {
   disable = false
 
-  initialGroupState: Group
-
   @Prop({ required: true }) id!: number
 
   @Model('change', { default: false, type: Boolean })
@@ -104,6 +102,8 @@ export default class UpdateGroupDialog extends Vue {
     id: 0,
     code: '',
   }
+
+  initialGroupState: Group = this.group
 
   get activeGroup(): Group {
     return this.$store.direct.getters.group.getEntities.filter(((route) => route.id === this.id))[0];

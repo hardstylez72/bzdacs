@@ -11,13 +11,13 @@
         v-bind="props"
         v-on="props.on"
       >
-        Добавить маршруты
+        {{$t('add-btn')}}
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Добавление маршрутов к пользователю
+        {{$t('title')}}
       </v-card-title>
 
       <UserRoutesSelectableTable
@@ -36,7 +36,7 @@
                 class="mb-2"
                 @click="addSelectedRoutes"
               >
-                Добавить выбранные маршруты
+                {{$t('add-selected')}}
               </v-btn>
             </div>
           </v-toolbar>
@@ -44,13 +44,7 @@
       </UserRoutesSelectableTable>
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="close"
-        >
-          Cancel
-        </v-btn>
+        <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
         <v-spacer />
       </v-card-actions>
     </v-card>
@@ -117,6 +111,19 @@ export default class RoutesTableSelectAddDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "add-btn": "Add routes",
+    "title": "Adding routes to the user",
+    "add-selected": "Add selected routes",
+    "cancel": "Cancel"
+  },
+  "ru": {
+    "add-btn": "Добавить маршруты",
+    "title": "Добавление маршрутов к пользователю",
+    "add-selected": "Добавить выбранные маршруты",
+    "cancel": "Отмена"
+  }
+}
+</i18n>

@@ -65,6 +65,15 @@ import HttpMethodBox from '../../base/components/HttpMethodBox.vue';
 export default class TabRouteTable extends DictTable<Route> {
   readonly title = 'Маршруты'
 
+  @Watch('$i18n.locale')
+  onChange() {
+    console.log(this.langUp);
+  }
+
+  get langUp(): string {
+    return this.$i18n.locale;
+  }
+
   mounted() {
     const filter = this.$store.direct.getters.route.getFilter;
     this.$store.direct.dispatch.route.GetList(filter);

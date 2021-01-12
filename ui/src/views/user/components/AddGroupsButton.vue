@@ -1,33 +1,24 @@
 <template>
-  <Dialog
-    v-model="show"
-    max-width="2000px"
-  >
+  <Dialog v-model="show" max-width="2000px">
     <template v-slot:activator="props">
       <v-btn
         color="primary"
-
         class="mb-2"
         v-bind="props"
         v-on="props.on"
       >
-        Добавить группы
+        {{$t('add-btn')}}
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Добавление групп к пользователю
+        {{$t('title')}}
       </v-card-title>
 
-      <UserGroupsSelectableTable
-        v-model="selected"
-        :items="routes"
-      >
+      <UserGroupsSelectableTable v-model="selected" :items="routes">
         <template v-slot:top>
-          <v-toolbar
-            flat
-          >
+          <v-toolbar flat>
             <v-spacer />
             <div>
               <v-btn
@@ -36,7 +27,7 @@
                 class="mb-2"
                 @click="addSelectedGroups"
               >
-                Добавить выбранные группы
+                {{$t('add-selected')}}
               </v-btn>
             </div>
           </v-toolbar>
@@ -44,13 +35,7 @@
       </UserGroupsSelectableTable>
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="close"
-        >
-          Cancel
-        </v-btn>
+        <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
         <v-spacer />
       </v-card-actions>
     </v-card>
@@ -113,6 +98,19 @@ export default class RoutesTableSelectAddDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "add-btn": "Add groups",
+    "title": "Adding group to the user",
+    "add-selected": "Add selected groups",
+    "cancel": "Cancel"
+  },
+  "ru": {
+    "add-btn": "Добавить группы",
+    "title": "Добавление групп к пользователю",
+    "add-selected": "Добавить выбранные группы",
+    "cancel": "Отмена"
+  }
+}
+</i18n>

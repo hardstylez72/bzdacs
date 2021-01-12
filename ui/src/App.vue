@@ -1,7 +1,9 @@
 <template>
-  <v-app>
+  <v-app :key="$i18n.locale">
     <v-app-bar app color="primary" dark>
-      <h1>{{appName}}</h1>
+      <a @click="$router.push({name: 'Home'})">
+        <h1 style="color: aliceblue">{{appName}}</h1>
+      </a>
       <LanguageSelector  class="ml-12 language-selector pt-4" />
       <v-spacer></v-spacer>
       <span v-if="login" class="ms-5">{{$t('user')}}: {{login}}</span>

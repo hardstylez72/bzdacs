@@ -9,7 +9,7 @@
       show-select
     >
       <template v-slot:no-data>
-        Нет данных
+       {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
@@ -35,11 +35,11 @@ import { DataTableHeader } from 'vuetify';
 @Component
 export default class GroupsBelongUserSelectableTable extends SelectableTable<Group> {
   readonly headers: DataTableHeader[] = [
-    { text: 'ID', value: 'id', width: '50px' },
-    { text: 'Метод', value: 'method', width: '10%' },
-    { text: 'Код', value: 'code' },
-    { text: 'Описание', value: 'description' },
-    { text: 'Actions', value: 'actions' },
+    { text: this.$t('id').toString(), value: 'id', width: '70px' },
+    { text: this.$t('method').toString(), value: 'method', width: '100px' },
+    { text: this.$t('code').toString(), value: 'code' },
+    { text: this.$t('description').toString(), value: 'description' },
+    { text: this.$t('actions').toString(), value: 'actions', width: '110px' },
   ]
 
   view(group: Group) {
@@ -48,5 +48,25 @@ export default class GroupsBelongUserSelectableTable extends SelectableTable<Gro
 }
 </script>
 
-<style scoped lang="scss">
-</style>
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "title": "Groups",
+    "method": "Method",
+    "code": "Code",
+    "id": "Id",
+    "description": "Description",
+    "actions": "Actions"
+  },
+  "ru": {
+    "no-data": " Нет данных",
+    "title": "Группы",
+    "method": "Метод",
+    "code": "Код",
+    "id": "Id",
+    "description": "Описание",
+    "actions": "Дейтсвия"
+  }
+}
+</i18n>

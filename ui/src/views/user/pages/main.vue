@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2>Пользователь {{userC.externalId}}</h2>
+    <h2>{{$t('user')}} {{userC.externalId}}</h2>
     <UserGroupsSelectableTable v-model="selectedGroups" :items="groups">
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>{{ titleGroup }}</v-toolbar-title>
+          <v-toolbar-title>{{ $t('titleGroup') }}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer/>
           <div>
@@ -14,7 +14,7 @@
               class="mb-2"
               @click="deleteSelectedGroups"
             >
-              Удалить выбранные группы
+              {{$t('delete-group-btn')}}
             </v-btn>
           </div>
           <AddGroupsButton :user-id="userIdC" />
@@ -25,7 +25,7 @@
     <UserRoutesTable :items="routes" >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>{{ titleRoute }}</v-toolbar-title>
+          <v-toolbar-title>{{ $t('titleRoute') }}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer/>
           <AddRoutesButton :user-id="userIdC" />
@@ -142,6 +142,21 @@ export default class UserPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "no-data": "No data",
+    "user": "User",
+    "titleGroup": "Groups",
+    "titleRoute": "Routes",
+    "delete-group-btn": "Delete selected groups"
+  },
+  "ru": {
+    "no-data": "Нет данных",
+    "user": "Пользователь",
+    "titleGroup": "Группы",
+    "titleRoute": "Маршруты",
+    "delete-group-btn": "Удалить выбранные группы",
+  }
+}
+</i18n>

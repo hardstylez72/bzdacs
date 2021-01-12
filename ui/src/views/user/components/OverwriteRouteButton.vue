@@ -5,7 +5,7 @@
         <v-icon>mdi-plus</v-icon>
       </div>
     </template>
-      <span>Перезатереть маршрут</span>
+      <span>{{$t('overwrite')}}</span>
   </v-tooltip>
 </template>
 
@@ -30,11 +30,18 @@ export default class OverwriteRouteButton extends Vue {
     };
 
     await this.$store.direct.dispatch.userRoute.RewriteOne(params);
-}
+  }
 }
 
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "overwrite": "Overwrite route"
+  },
+  "ru": {
+    "overwrite": "Перезатереть маршрут"
+  }
+}
+</i18n>

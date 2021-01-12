@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-icon v-on="on" color="red">mdi-orbit-variant</v-icon>
     </template>
-    <span>Маршрут перезатерт</span>
+    <span>{{$t('overwritten')}}</span>
   </v-tooltip>
 </template>
 
@@ -21,6 +21,13 @@ export default class StatusIconRouteOverwritten extends Vue {
 
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "overwritten": "Route is overwritten"
+  },
+  "ru": {
+    "overwritten": "Маршрут перезатерт"
+  }
+}
+</i18n>

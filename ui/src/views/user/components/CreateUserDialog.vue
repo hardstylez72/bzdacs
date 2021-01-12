@@ -1,11 +1,11 @@
 <template>
   <Dialog v-model="show">
     <template v-slot:activator="props">
-      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">Новый пользователь</v-btn>
+      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">{{$t('add-btn')}}</v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="headline grey lighten-2">Создание пользователя</v-card-title>
+      <v-card-title class="headline grey lighten-2">{{$t('title')}}</v-card-title>
       <v-card-text>
         <v-form ref="create-user-form" v-model="valid" lazy-validation>
           <v-row>
@@ -14,7 +14,7 @@
                 v-model="user.externalId"
                 required
                 :rules="externalIdRules"
-                label="Идентфикатор"
+                :label="$t('label.external-id')"
               />
             </v-col>
           </v-row>
@@ -22,8 +22,8 @@
 
         <v-card-actions>
           <v-spacer />
-          <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="create">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
+          <v-btn color="blue darken-1" text @click="create">{{$t('save')}}</v-btn>
         </v-card-actions>
       </v-card-text>
     </v-card>
@@ -35,10 +35,11 @@ import {
   Component, Vue,
 } from 'vue-property-decorator';
 import { User } from '@/views/user/services/user';
+import Dialog from '../../base/components/Dialog.vue';
 
 @Component({
   components: {
-    Dialog: () => import('../../base/components/Dialog.vue'),
+    Dialog,
   },
 })
 export default class CreateRouteDialog extends Vue {
@@ -60,7 +61,7 @@ export default class CreateRouteDialog extends Vue {
   }
 
   rules = [
-    (v: string) => !!v || 'Обязательное поле',
+    (v: string) => !!v || this.$t('required'),
 ]
 
   externalIdRules = this.rules
@@ -85,6 +86,27 @@ export default class CreateRouteDialog extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "add-btn": "Add user",
+    "title": "User creation",
+    "label": {
+      "external-id": "External Id"
+    },
+    "cancel": "Cancel",
+    "save": "Save",
+    "required": "required"
+  },
+  "ru": {
+    "add-btn": "Добавить пользователи",
+    "title": "Создание пользователя",
+    "label": {
+      "external-id": "Идентфикатор"
+    },
+    "cancel": "Отмена",
+    "save": "Создать",
+    "required": "Обязательное поле"
+  }
+}
+</i18n>

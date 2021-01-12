@@ -5,8 +5,8 @@
         <v-icon>mdi-close</v-icon>
       </div>
     </template>
-    <span v-if="item.isIndependent && item.isOverwritten">Отменить перезатирание маршрута</span>
-    <span v-else>Удалить маршрут</span>
+    <span v-if="item.isIndependent && item.isOverwritten">{{$t('abort')}}</span>
+    <span v-else>{{$t('delete')}}</span>
   </v-tooltip>
 </template>
 
@@ -37,6 +37,15 @@ export default class OverwriteRouteButton extends Vue {
 
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "abort": "Abort route overwrite",
+    "delete": "Delete route"
+  },
+  "ru": {
+    "abort": "Отменить перезатирание маршрута",
+    "delete": "Удалить маршрут"
+  }
+}
+</i18n>

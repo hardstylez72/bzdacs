@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import MainTabs from '@/views/app/components/Main.vue';
+import MainTabs from '@/views/app/components/Tabs.vue';
 
 @Component({
   components: {

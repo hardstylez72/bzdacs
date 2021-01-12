@@ -6,8 +6,8 @@
         <v-icon v-else >mdi-account-plus</v-icon>
       </div>
     </template>
-      <span v-if="!item.isExcluded">Заблокировать маршрут</span>
-      <span v-else>Разблокировать маршрут</span>
+      <span v-if="!item.isExcluded">{{$t('forbid')}}</span>
+      <span v-else>{{$t('unlock')}}</span>
   </v-tooltip>
 </template>
 
@@ -44,6 +44,15 @@ export default class UpdateRouteButton extends Vue {
 
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "unlock": "Unlock route",
+    "forbid": "Forbid"
+  },
+  "ru": {
+    "unlock": "Разблокировать маршрут",
+    "forbid": "Заблокировать маршрут"
+  }
+}
+</i18n>

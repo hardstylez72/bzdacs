@@ -6,8 +6,8 @@
         <v-icon v-else color="green">mdi-account</v-icon>
       </div>
     </template>
-    <span v-if="item.isExcluded">Маршрут запрещен</span>
-    <span v-else>Маршрут разрешен</span>
+    <span v-if="item.isExcluded">{{$t('forbidden')}}</span>
+    <span v-else>{{$t('allowed')}}</span>
   </v-tooltip>
 </template>
 
@@ -25,6 +25,15 @@ export default class StatusIconRouteAccess extends Vue {
 
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<i18n>
+{
+  "en": {
+    "forbidden": "Route is forbidden",
+    "allowed": "Route is allowed"
+  },
+  "ru": {
+    "forbidden": "Маршрут запрещен",
+    "allowed": "Маршрут разрешен"
+  }
+}
+</i18n>
