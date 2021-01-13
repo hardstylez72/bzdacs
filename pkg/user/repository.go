@@ -19,6 +19,38 @@ func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 
+func (r *repository) Update(ctx context.Context, user *User) (*User, error) {
+	query := `
+	update ad.users 
+	   set external_id = :external_id,
+	       updated_at = now()
+	 where id = :id 
+ returning id,
+		   external_id,
+		   created_at,
+		   updated_at,
+		   deleted_at;
+`
+
+	rows, err := r.conn.NamedQueryContext(ctx, query, user)
+	if err != nil {
+		return nil, err
+	}
+
+	var u User
+	for rows.Next() {
+		err = rows.StructScan(&u)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if u.Id == 0 {
+		return nil, ErrEntityNotFound
+	}
+	return &u, nil
+}
+
 func (r *repository) Insert(ctx context.Context, entity *User) (*User, error) {
 	query := `
 insert into ad.users (

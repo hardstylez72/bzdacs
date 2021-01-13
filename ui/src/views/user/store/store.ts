@@ -27,6 +27,13 @@ const mutations = defineMutations < State < User >>()({
   addEntity(state, entities) {
     state.entities.push(entities);
   },
+  updateEntity(state, u: User) {
+    state.entities.forEach((user, index) => {
+      if (user.id === u.id) {
+        state.entities.splice(index, 1, u);
+      }
+    });
+  },
 });
 
 const actions = defineActions({
@@ -44,6 +51,12 @@ const actions = defineActions({
     const { state, commit } = actionContext(context);
     const createdEntity = await state.service.Create(entity);
     commit.addEntity(createdEntity);
+    return createdEntity;
+  },
+  async Update(context, entity: User): Promise<User> {
+    const { state, commit } = actionContext(context);
+    const createdEntity = await state.service.Update(entity);
+    commit.updateEntity(createdEntity);
     return createdEntity;
   },
   async Delete(context, id: number): Promise<void> {

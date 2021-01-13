@@ -1,9 +1,5 @@
 <template>
   <Dialog v-model="show">
-    <template v-slot:activator="props">
-      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">{{$t('add-btn')}}</v-btn>
-    </template>
-
     <v-card>
       <v-card-title class="headline grey lighten-2">{{$t('title')}}</v-card-title>
       <v-card-text>
@@ -23,7 +19,7 @@
         <v-card-actions>
           <v-spacer />
           <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
-          <v-btn color="blue darken-1" text @click="create">{{$t('save')}}</v-btn>
+          <v-btn color="blue darken-1" :disabled="disable" text @click="update">{{$t('update')}}</v-btn>
         </v-card-actions>
       </v-card-text>
     </v-card>
@@ -32,7 +28,7 @@
 
 <script lang="ts">
 import {
-  Component, Vue,
+  Component, Vue, Model, Watch, Prop,
 } from 'vue-property-decorator';
 import { User } from '@/views/user/services/user';
 import Dialog from '../../base/components/Dialog.vue';
@@ -42,14 +38,55 @@ import Dialog from '../../base/components/Dialog.vue';
     Dialog,
   },
 })
-export default class CreateRouteDialog extends Vue {
+export default class UpdateUserDialog extends Vue {
   show = false
+
+  disable = true
 
   valid = false
 
   user: User = {
     id: -1,
     externalId: '',
+  }
+
+  initialUserState: User = this.user
+
+  @Prop({ required: true }) id!: number
+
+  @Watch('id')
+  onIdChange(id: number) {
+    this.$store.direct.dispatch.user.GetById(id).then((user) => {
+      this.user = user;
+      this.initialUserState.externalId = this.user.externalId;
+      this.initialUserState.id = this.user.id;
+    });
+  }
+
+  @Model('change', { default: false, type: Boolean })
+  readonly value!: boolean
+
+  @Watch('value')
+  protected onChangeValue(value: boolean): void {
+    this.show = value;
+  }
+
+  @Watch('user', { deep: true })
+  onUserChange(u: User) {
+    console.log(u);
+    this.disable = false;
+    if (this.sameUsers(this.initialUserState, u)) {
+      this.disable = true;
+      return;
+    }
+
+    if (!this.sameUsers(this.user, u)) {
+      this.disable = false;
+    }
+  }
+
+  sameUsers(a: User, b: User): boolean {
+    return (b.externalId === a.externalId);
   }
 
   validate() {
@@ -64,7 +101,7 @@ export default class CreateRouteDialog extends Vue {
 
   externalIdRules = this.rules
 
-  async create() {
+  async update() {
     this.validate();
     if (!this.valid) {
       return;
@@ -74,12 +111,14 @@ export default class CreateRouteDialog extends Vue {
       return;
     }
 
-    await this.$store.direct.dispatch.user.Create(this.user);
+    await this.$store.direct.dispatch.user.Update(this.user);
+    this.$emit('change', false);
     this.show = false;
   }
 
   close() {
     this.show = false;
+    this.$emit('change', false);
   }
 }
 </script>
@@ -93,7 +132,7 @@ export default class CreateRouteDialog extends Vue {
       "external-id": "External Id"
     },
     "cancel": "Cancel",
-    "save": "Save",
+    "update": "Update",
     "required": "required"
   },
   "ru": {
@@ -103,7 +142,7 @@ export default class CreateRouteDialog extends Vue {
       "external-id": "Идентфикатор"
     },
     "cancel": "Отмена",
-    "save": "Создать",
+    "update": "Обновить",
     "required": "Обязательное поле"
   }
 }

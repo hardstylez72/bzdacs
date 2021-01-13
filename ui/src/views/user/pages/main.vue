@@ -88,8 +88,6 @@ export default class UserPage extends Vue {
 
   user: User = {
     externalId: 'Не найден',
-    isSystem: false,
-    description: '',
     id: -1,
   }
 
@@ -156,7 +154,7 @@ export default class UserPage extends Vue {
     "user": "Пользователь",
     "titleGroup": "Группы",
     "titleRoute": "Маршруты",
-    "delete-group-btn": "Удалить выбранные группы",
+    "delete-group-btn": "Удалить выбранные группы"
   }
 }
 </i18n>

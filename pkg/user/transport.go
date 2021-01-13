@@ -28,3 +28,15 @@ type deleteRequest struct {
 type getRequest struct {
 	Id int `json:"id" validate:"required"`
 }
+
+type updateRequest struct {
+	Id         int    `json:"id" validate:"required"`
+	ExternalId string `json:"externalId" validate:"required"`
+}
+
+func updateRequestConvert(r *updateRequest) *User {
+	return &User{
+		ExternalId: r.ExternalId,
+		Id:         r.Id,
+	}
+}

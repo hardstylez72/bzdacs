@@ -26,6 +26,7 @@ export default class LanguageSelector extends Vue {
     this.$router.push({ query: { ...this.$route.query, lang } });
     this.lang = this.getLangFromQuery();
     this.$i18n.locale = lang;
+    this.$vuetify.lang.current = lang;
   }
 
   getLangFromQuery(): string {

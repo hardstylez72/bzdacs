@@ -16,6 +16,7 @@ type Repository interface {
 	GetByExternalId(ctx context.Context, id string) (*User, error)
 	List(ctx context.Context) ([]User, error)
 	Insert(ctx context.Context, user *User) (*User, error)
+	Update(ctx context.Context, user *User) (*User, error)
 	Delete(ctx context.Context, id int) error
 }
 
@@ -35,6 +36,29 @@ func NewController(rep Repository, groupRepository group.Repository, userGroupRe
 	}
 }
 
+func (c *controller) update(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	var req updateRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	if err := c.validator.Struct(req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	u, err := c.userRepository.Update(ctx, updateRequestConvert(&req))
+	if err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		return
+	}
+
+	util.NewResp(w, r).Status(http.StatusOK).Json(newInsertResponse(u)).Send()
+}
+
 func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var req insertRequest
@@ -49,13 +73,13 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	group, err := c.userRepository.Insert(ctx, insertRequestConvert(&req))
+	u, err := c.userRepository.Insert(ctx, insertRequestConvert(&req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	util.NewResp(w, r).Status(http.StatusOK).Json(newInsertResponse(group)).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(newInsertResponse(u)).Send()
 }
 
 func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
@@ -122,6 +146,7 @@ func (c *controller) Mount(private, public chi.Router) {
 	private.Post("/v1/user/get", c.getById)
 	private.Post("/v1/user/create", c.create)
 	private.Post("/v1/user/delete", c.delete)
+	private.Post("/v1/user/update", c.update)
 	public.Post("/v1/user/admin/login", c.admin)
 	public.Post("/v1/user/guest/login", c.guest)
 	public.Post("/v1/user/session/get", c.session)

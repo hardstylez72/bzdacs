@@ -122,10 +122,6 @@ export default class TagFilter extends Vue {
 
     this.suggestedTags = tags.map((tag) => tag.name);
 
-    if (tags.length === 0) {
-      this.suggestedTags.push('Тег не найден');
-    }
-
     // // after suggest request focus fades away
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore

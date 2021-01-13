@@ -29,6 +29,10 @@
       :id="activeItemId"
       v-model="showDeleteDialog"
     />
+    <UpdateUserDialog
+      :id="activeItemId"
+      v-model="showEditDialog"
+    />
   </div>
 </template>
 
@@ -42,11 +46,13 @@ import { User } from '../services/user';
 import DictTable from '../../base/components/DictTable.vue';
 import CreateUserDialog from './CreateUserDialog.vue';
 import DeleteUserDialog from './DeleteUserDialog.vue';
+import UpdateUserDialog from './UpdateUserDialog.vue';
 
 @Component({
   components: {
     CreateUserDialog,
     DeleteUserDialog,
+    UpdateUserDialog,
   },
 })
 export default class TapUserTable extends DictTable<User> {
@@ -68,7 +74,7 @@ export default class TapUserTable extends DictTable<User> {
     { text: this.$t('id').toString(), value: 'id', width: '70px' },
     { text: this.$t('externalId').toString(), value: 'externalId' },
     {
- text: 'Actions', value: 'actions', sortable: false, width: '100px',
+ text: this.$t('actions').toString(), value: 'actions', sortable: false, width: '100px',
 },
   ];
 }
