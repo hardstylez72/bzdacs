@@ -2,6 +2,7 @@ package grouproute
 
 import (
 	"context"
+	"database/sql"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
 )
@@ -9,6 +10,11 @@ import (
 type repository struct {
 	conn *sqlx.DB
 }
+
+var (
+	ErrEntityAlreadyExists = util.ErrEntityAlreadyExists
+	ErrEntityNotFound      = util.ErrEntityNotFound
+)
 
 func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
@@ -23,6 +29,25 @@ func (r *repository) deletePair(ctx context.Context, tx *sqlx.Tx, groupId, route
 	}
 
 	return nil
+}
+
+func (r *repository) Insert(ctx context.Context, params Pair) (*Route, error) {
+	return InsertPairDb(ctx, r.conn, params.GroupId, params.RouteId)
+}
+
+func (r *repository) IsPairExist(ctx context.Context, pair Pair) (bool, error) {
+	query := `select count(*) from ad.groups_routes where route_id = $1 and group_id = $2`
+
+	var cnt = 0
+	err := r.conn.GetContext(ctx, &cnt, query, pair.RouteId, pair.GroupId)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, ErrEntityNotFound
+		}
+		return false, err
+	}
+
+	return cnt >= 1, nil
 }
 
 func (r *repository) Delete(ctx context.Context, params []Pair) error {
@@ -46,7 +71,7 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 	return nil
 }
 
-func (r *repository) Insert(ctx context.Context, params []Pair) ([]Route, error) {
+func (r *repository) InsertMany(ctx context.Context, params []Pair) ([]Route, error) {
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
 		if err != nil {
@@ -71,6 +96,42 @@ func InsertTx(ctx context.Context, tx *sqlx.Tx, params []Pair) ([]Route, error) 
 	}
 
 	return routes, nil
+}
+
+func InsertPairDb(ctx context.Context, conn *sqlx.DB, groupId, routeId int) (*Route, error) {
+	query := `
+		with insert_row as (
+			insert into ad.groups_routes (
+					   route_id,
+					   group_id
+					   )
+				   values (
+					   $1,
+					   $2
+				   ) on conflict do nothing 
+		)
+		select r.id,
+			   r.route,
+		       r.method,
+			   r.description,
+			   r.created_at,
+			   r.updated_at,
+			   r.deleted_at
+		from ad.routes r where r.id = $1;
+`
+
+	rows := conn.QueryRowxContext(ctx, query, routeId, groupId)
+	var route Route
+	err := rows.StructScan(&route)
+	if err != nil {
+		return nil, err
+	}
+
+	if route.Id == 0 {
+		return nil, util.ErrEntityAlreadyExists
+	}
+
+	return &route, nil
 }
 
 func InsertPairTx(ctx context.Context, tx *sqlx.Tx, groupId, routeId int) (*Route, error) {

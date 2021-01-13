@@ -31,7 +31,10 @@ export default class User {
       url: '/api/v1/user/guest/login',
     };
     if (login) {
-      req.headers = { login };
+      req.headers = {
+        login:
+          encodeURIComponent(login),
+      };
     }
 
     return makeRequest(req);

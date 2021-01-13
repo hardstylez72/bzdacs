@@ -19,6 +19,8 @@ type Repository interface {
 	ListUserGroups(ctx context.Context, userId int) ([]Group, error)
 	ListUserNotInGroups(ctx context.Context, groupId int) ([]Group, error)
 	InsertMany(ctx context.Context, params []Pair) ([]Group, error)
+	Insert(ctx context.Context, pair Pair) (*Group, error)
+	IsPairExist(ctx context.Context, pair Pair) (bool, error)
 	Delete(ctx context.Context, params []Pair) error
 }
 

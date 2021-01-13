@@ -6,12 +6,12 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	acsmw "github.com/hardstylez72/bzdacs-go"
 	"github.com/hardstylez72/bzdacs/pkg/acs"
 	"github.com/hardstylez72/bzdacs/pkg/group"
 	"github.com/hardstylez72/bzdacs/pkg/grouproute"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
-	"github.com/hardstylez72/bzdacs/pkg/mwv"
 	"github.com/hardstylez72/bzdacs/pkg/route"
 	"github.com/hardstylez72/bzdacs/pkg/tag"
 	"github.com/hardstylez72/bzdacs/pkg/user"
@@ -141,7 +141,7 @@ func Start(r chi.Router) error {
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
 			private.Use(user.Auth())
-			private.Use(mwv.AccessCheck(mwv.NewService("http://localhost:3000"), extractLogin, extractRouteAndMethod))
+			private.Use(acsmw.AccessCheck(acsmw.NewService("http://localhost:3000"), extractLogin, extractRouteAndMethod))
 			acs.NewController(userRouteRepository, userRepository, userGroupRepository).Mount(public)
 			tag.NewController(tagRepository).Mount(private)
 			route.NewController(routeRepository).Mount(private)
@@ -155,7 +155,7 @@ func Start(r chi.Router) error {
 
 	ctx := context.Background()
 
-	force := true
+	force := false
 
 	u, err := resolveUser(ctx, userRepository, &Option{Force: force})
 	if err != nil {

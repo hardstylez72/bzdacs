@@ -17,7 +17,9 @@ type Pair struct {
 type Repository interface {
 	List(ctx context.Context, groupId int) ([]Route, error)
 	ListNotInGroup(ctx context.Context, groupId int) ([]Route, error)
-	Insert(ctx context.Context, params []Pair) ([]Route, error)
+	InsertMany(ctx context.Context, params []Pair) ([]Route, error)
+	Insert(ctx context.Context, params Pair) (*Route, error)
+	IsPairExist(ctx context.Context, pair Pair) (bool, error)
 	Delete(ctx context.Context, params []Pair) error
 }
 
@@ -42,7 +44,7 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	routes, err := c.rep.Insert(ctx, insertRequestConvert(req))
+	routes, err := c.rep.InsertMany(ctx, insertRequestConvert(req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return

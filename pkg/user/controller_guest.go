@@ -6,6 +6,7 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/spf13/viper"
 	"net/http"
+	"net/url"
 )
 
 func (c *controller) guest(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +76,11 @@ func GetLoginFromRequest(r *http.Request) (string, error) {
 
 	login := r.Header.Get("login")
 	if login != "" {
-		return login, nil
+		decodedValue, err := url.QueryUnescape(login)
+		if err != nil {
+			return "", err
+		}
+		return decodedValue, nil
 	}
 
 	session, _ := getSessionFromCookie(r.Cookies())

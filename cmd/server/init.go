@@ -104,10 +104,37 @@ func resolveUser(ctx context.Context, rep user.Repository, o *Option) (*user.Use
 }
 
 func resolveUserAndGroup(ctx context.Context, rep usergroup.Repository, userId, groupId int, o *Option) error {
-	// todo: add option ..
+	isExist, err := rep.IsPairExist(ctx, usergroup.Pair{
+		GroupId: groupId,
+		UserId:  userId,
+	})
+	if err != nil {
+		if err != usergroup.ErrEntityNotFound {
+			return err
+		}
+	}
 
-	_, err := rep.InsertMany(ctx, []usergroup.Pair{{GroupId: groupId, UserId: userId}})
-	return err
+	if isExist {
+		if !o.Force {
+			return nil
+		}
+		err = rep.Delete(ctx, []usergroup.Pair{{
+			GroupId: groupId,
+			UserId:  userId,
+		}})
+		if err != nil {
+			return err
+		}
+	}
+	_, err = rep.Insert(ctx, usergroup.Pair{
+		GroupId: groupId,
+		UserId:  userId,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func buildRoutes(r chi.Router) []route.Route {
@@ -176,16 +203,38 @@ func resolveRoutes(ctx context.Context, rep route.Repository, rs []route.Route, 
 }
 
 func resolveGroupAndRoutes(ctx context.Context, rep grouproute.Repository, rs []route.Route, groupId int, o *Option) error {
-	groupRoutePairs := make([]grouproute.Pair, 0)
-
-	// todo: add options ...
 
 	for _, r := range rs {
-		groupRoutePairs = append(groupRoutePairs, grouproute.Pair{
+		isExist, err := rep.IsPairExist(ctx, grouproute.Pair{
 			GroupId: groupId,
 			RouteId: r.Id,
 		})
+		if err != nil {
+			if err != grouproute.ErrEntityNotFound {
+				return err
+			}
+		}
+
+		if isExist {
+			if !o.Force {
+				continue
+			}
+			err = rep.Delete(ctx, []grouproute.Pair{{
+				GroupId: groupId,
+				RouteId: r.Id,
+			}})
+			if err != nil {
+				return err
+			}
+		}
+		_, err = rep.Insert(ctx, grouproute.Pair{
+			GroupId: groupId,
+			RouteId: r.Id,
+		})
+		if err != nil {
+			return err
+		}
 	}
-	_, err := rep.Insert(ctx, groupRoutePairs)
-	return err
+
+	return nil
 }
