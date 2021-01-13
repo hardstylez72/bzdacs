@@ -1,7 +1,15 @@
 <template>
   <Dialog v-model="show">
     <template v-slot:activator="props">
-      <v-btn color="primary" class="mb-2" v-bind="props" v-on="props.on">{{$t('add-btn')}}</v-btn>
+      <v-btn
+        data-test="add-route-btn"
+        color="primary"
+        class="mb-2"
+        v-bind="props"
+        v-on="props.on"
+      >
+        {{$t('add-btn')}}
+      </v-btn>
     </template>
 
     <v-card>
@@ -14,8 +22,22 @@
           <template v-slot:actions="{ref}">
             <v-card-actions>
               <v-spacer />
-              <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
-              <v-btn color="blue darken-1" text :disabled="disableCreateButton" @click="createRoute(ref)">{{$t('save')}}</v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                {{$t('cancel')}}
+              </v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                :disabled="disableCreateButton"
+                @click="createRoute(ref)"
+                data-test="save-route-btn"
+              >
+                {{$t('save')}}
+              </v-btn>
             </v-card-actions>
           </template>
         </RouteForm>
@@ -52,19 +74,13 @@ export default class CreateRouteDialog extends Vue {
     description: '',
     id: -1,
     method: '',
-    route: '/',
+    route: '',
     tags: [],
   }
 
   disableCreateButton = true
 
-  routeInitialState: Route = {
-    description: '',
-    id: -1,
-    method: '',
-    route: '/',
-    tags: [],
-  }
+  routeInitialState: Route = this.route
 
   @Watch('route', { deep: true })
   protected onChangeRoute(route: Route): void {

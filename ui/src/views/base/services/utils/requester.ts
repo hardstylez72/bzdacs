@@ -28,14 +28,19 @@ const requester = (req: Request): Promise<any> => {
     .catch(async (err: AxiosError) => {
       if (err.response) {
         if (err.response.status === 401) {
-          if (window.location.pathname !== '/guest' && window.location.pathname !== '/admin') {
-            window.location.href = '/guest';
+          const evt = new Event('req-status-401');
+          window.dispatchEvent(evt);
+
+          if (window.location.pathname === '/guest') {
+            return;
           }
+          if (window.location.pathname === '/admin') {
+            return;
+          }
+
+          window.location.pathname = '/guest';
         } else if (err.response.status === 403) {
           const evt = new Event('req-status-403');
-          window.dispatchEvent(evt);
-        } else {
-          const evt = new Event('req-status-401');
           window.dispatchEvent(evt);
         }
       }

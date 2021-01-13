@@ -45,7 +45,7 @@ const module = defineModule({
       state.routes = state.routes.filter((route) => route.id !== id);
     },
     addRoute(state, routes: Route) {
-      state.routes.push(routes);
+      state.routes.unshift(routes);
     },
     updateRoute(state, route: Route) {
       state.routes = state.routes.map((r) => {

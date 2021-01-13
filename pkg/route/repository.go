@@ -375,26 +375,41 @@ func ListDb(ctx context.Context, conn *sqlx.DB, f filter) ([]Route, error) {
 			   r.updated_at,
 			   r.deleted_at
 			`).
-		From("ad.routes r").
-		InnerJoin("ad.routes_tags rt on rt.route_id = r.id").
-		InnerJoin("ad.tags t on rt.tag_id = t.id").
-		Where("r.deleted_at is null").
-		Where("t.deleted_at is null")
+		From("ad.routes r")
 
 	if len(f.Tags.Names) > 0 {
 		if f.Tags.Exclude {
-			routes1 = routes1.Where(`rt.route_id not in (
-													select route_id from ad.routes_tags where tag_id in (
-												   	   select id from ad.tags where name in (` + formArrayStringSql(f.Tags.Names) + `)
-													)
-										     )`)
-			routes1 = routes1.Where(`t.name not in (` + formArrayStringSql(f.Tags.Names) + `)`)
+
+			subQuery, args, err := sqlx.In(`
+			r.id not in (    
+           select rt.route_id from ad.routes_tags rt 
+             join ad.tags t on t.id = rt.tag_id 
+			 			   and t.deleted_at is null
+ 				           and t.name in (`+sq.Placeholders(len(f.Tags.Names))+`)
+         )`, f.Tags.Names)
+			if err != nil {
+				return nil, err
+			}
+			routes1 = routes1.
+				Where(subQuery, args...)
 		} else {
-			routes1 = routes1.Where(`t.name in (` + formArrayStringSql(f.Tags.Names) + `)`)
+			subQuery, args, err := sqlx.In(`
+			r.id  in (    
+           select rt.route_id from ad.routes_tags rt 
+             join ad.tags t on t.id = rt.tag_id
+						   and t.deleted_at is null
+             			   and t.name in (`+sq.Placeholders(len(f.Tags.Names))+`)
+         )`, f.Tags.Names)
+			if err != nil {
+				return nil, err
+			}
+			routes1 = routes1.
+				Where(subQuery, args...)
 		}
 	}
 
-	routes1 = routes1.GroupBy("r.id")
+	routes1 = routes1.
+		Where("r.deleted_at is null")
 
 	query, args, err := routes1.ToSql()
 	if err != nil {

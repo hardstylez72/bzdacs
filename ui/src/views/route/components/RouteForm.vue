@@ -8,6 +8,7 @@
             required
             :rules="routeRules"
             :label="$t('label.route')"
+            data-test="form-route-input"
           />
         </v-col>
         <v-col cols="2" sm="2" md="2">
@@ -17,6 +18,7 @@
             :rules="methodRules"
             :items="httpMethodList"
             :label="$t('label.method')"
+            data-test="form-method-input"
           />
         </v-col>
         <v-col cols="12" sm="12" md="12">
@@ -26,6 +28,7 @@
             required
             :rules="descriptionRules"
             :label="$t('label.desc')"
+            data-test="form-description-input"
           />
         </v-col>
         <v-col cols="12" sm="12" md="12">
@@ -93,7 +96,7 @@ export default class RouteForm extends Vue {
     description: '',
     id: -1,
     method: '',
-    route: '/',
+    route: '',
     tags: [],
   }
 

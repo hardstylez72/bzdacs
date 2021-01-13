@@ -1,14 +1,6 @@
 <template>
   <v-app :key="$i18n.locale">
-    <v-app-bar app color="primary" dark>
-      <a @click="$router.push({name: 'Home'})">
-        <h1 style="color: aliceblue">{{appName}}</h1>
-      </a>
-      <LanguageSelector  class="ml-12 language-selector pt-4" />
-      <v-spacer></v-spacer>
-      <span v-if="login" class="ms-5">{{$t('user')}}: {{login}}</span>
-      <v-btn v-if="login" class="ms-5" @click="logout" >{{$t('logout')}}</v-btn>
-    </v-app-bar>
+    <Nav/>
     <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
       <v-main>
         <router-view />
@@ -20,28 +12,14 @@
 import {
   Component, Vue,
 } from 'vue-property-decorator';
-import LanguageSelector from '@/views/app/components/LanguageSelector.vue';
+import Nav from '@/views/app/components/Nav.vue';
 
 @Component({
   components: {
-    LanguageSelector,
+    Nav,
   },
 })
 export default class App extends Vue {
-  appName = 'BZDACS'
-
-  get isAuthorized(): boolean {
-    return this.$store.direct.getters.isAuthorized;
-  }
-
-  get login(): string {
-    return this.$store.direct.getters.login;
-  }
-
-  logout(): Promise<void> {
-    return this.$store.direct.dispatch.logout();
-  }
-
   get snackbarMessage(): string {
     return this.$store.direct.getters.snackbarMessage;
   }
@@ -57,12 +35,12 @@ export default class App extends Vue {
   created() {
     // eslint-disable-next-line no-undef
     window.addEventListener('req-status-403', () => {
-      this.$store.direct.commit.showError('user does not have permissions to do this operation');
+      this.$store.direct.commit.showError(this.$t('403').toString());
     });
 
     // eslint-disable-next-line no-undef
     window.addEventListener('req-status-401', () => {
-      this.$store.direct.commit.showError('user is not authorized');
+      this.$store.direct.commit.showError(this.$t('401').toString());
     });
 
     this.$store.direct.dispatch.userSession();
@@ -78,14 +56,10 @@ export default class App extends Vue {
   margin-top: 0.5%;
 }
 
-.language-selector {
-  width: 100px;
-}
-
 @font-face {
   font-family: "Lobster";
   src: local("Lobster"),
-  url(../public/fonts/lobster.ttf) format("truetype");
+  url(../../../../public/fonts/lobster.ttf) format("truetype");
 }
 </style>
 
@@ -93,11 +67,15 @@ export default class App extends Vue {
 {
   "en": {
     "logout": "Logout",
-    "user": "User"
+    "user": "User",
+    "401": "user is not authorized",
+    "403": "user does not have permissions to do this operation"
   },
   "ru": {
     "logout": "Выйти",
-    "user": "Пользователь"
+    "user": "Пользователь",
+    "401": "Пользователь не авторизован",
+    "403": "У вас нет прав на выполнение этого действия"
   }
 }
 </i18n>
