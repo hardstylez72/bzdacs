@@ -25,6 +25,46 @@ type Option struct {
 	Force bool
 }
 
+func (s *Server) initialize(ctx context.Context, force bool, r chi.Router) error {
+	u, err := resolveUser(ctx, s.repository.user, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+	g, err := resolveGroup(ctx, s.repository.group, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+	err = resolveUserAndGroup(ctx, s.repository.usergroup, u.Id, g.Id, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+
+	rs := buildRoutes(r)
+
+	rs, err = resolveRoutes(ctx, s.repository.route, rs, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+
+	err = resolveGroupAndRoutes(ctx, s.repository.grouproute, rs, g.Id, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+
+	guestRs := filterGuestRoutes(rs)
+
+	guestGroup, err := resolveGuestGroup(ctx, s.repository.group, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+
+	err = resolveGroupAndRoutes(ctx, s.repository.grouproute, guestRs, guestGroup.Id, &Option{Force: force})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func resolveGroup(ctx context.Context, rep group.Repository, o *Option) (*group.Group, error) {
 
 	g, err := rep.GetByCode(ctx, sysGroupCode)

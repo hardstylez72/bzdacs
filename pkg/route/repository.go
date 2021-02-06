@@ -9,7 +9,6 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/tag"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
-	"strings"
 )
 
 var (
@@ -262,7 +261,6 @@ func getTagsByRouteId(ctx context.Context, conn *sqlx.DB, id int) ([]string, err
 		return nil, err
 	}
 	tagNames := make([]string, 0)
-
 	for _, tagId := range tagIds {
 		t, err := tag.GetByIdDb(ctx, conn, tagId)
 		if err != nil {
@@ -341,26 +339,6 @@ func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Route, error) {
 	}
 
 	return &route, nil
-}
-
-func formArrayStringSql(arr []string) string {
-	buf := make([]string, 0)
-
-	for i := range arr {
-		buf = append(buf, `'`+arr[i]+`'`)
-	}
-
-	return strings.Join(buf, ", ")
-}
-
-func printQuestions(n int) string {
-	out := ""
-	for i := 0; i < n; i++ {
-		out = out + "?,"
-	}
-
-	out = out[:len(out)-1]
-	return out
 }
 
 func ListDb(ctx context.Context, conn *sqlx.DB, f filter) ([]Route, error) {

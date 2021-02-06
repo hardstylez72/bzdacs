@@ -2,8 +2,12 @@ FROM alpine:3.12.3
 
 CMD mkdir /opt/bzdacs
 WORKDIR /opt/bzdacs
-COPY ./cmd/server/main .
-#COPY ./cmd/server/config.yaml .
-COPY ./migrations ./migrations
 
-CMD ["/opt/bzdacs/main", "-config", "/opt/cfg/config.yaml"]
+COPY ./cmd/backend/backend .
+COPY ./ui/dist ./ui
+COPY ./migrations ./migrations
+COPY config/config.prod.yaml /opt/cfg/
+
+EXPOSE 8080
+
+CMD [ "/opt/bzdacs/backend", "-config", "/opt/cfg/config.prod.yaml"]

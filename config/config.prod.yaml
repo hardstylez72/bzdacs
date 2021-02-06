@@ -1,0 +1,15 @@
+env: "prod"
+backend:
+  port: :4000
+database:
+  postgres: "host=localhost port=6667 user=postgres password=postgres dbname=bback sslmode=disable"
+user:
+  login: hs
+  password: 1234
+proxy:
+  port: :8086
+ui:
+ path: /opt/bzdacs/ui
+ port: :3000
+
+

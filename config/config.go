@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"github.com/spf13/viper"
@@ -11,6 +11,8 @@ func Load(filePath string) error {
 	if err != nil {             // Handle errors reading the config file
 		return err
 	}
+
+	//env := viper.Get("env")
 
 	return nil
 }

@@ -2,7 +2,8 @@
 
 
 ### build
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o backend .
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o static .
 
 docker build -t hardstylez72/bzdacss .
 docker login

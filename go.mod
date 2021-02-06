@@ -19,5 +19,6 @@ require (
 	github.com/pressly/goose v2.6.0+incompatible
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/viper v1.7.1
+	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.16.0
 )
