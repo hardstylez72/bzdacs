@@ -6,8 +6,8 @@ WORKDIR /opt/bzdacs
 COPY ./cmd/backend/backend .
 COPY ./ui/dist ./ui
 COPY ./migrations ./migrations
-COPY config/config.prod.yaml /opt/cfg/
+COPY config/config.build.yaml /opt/cfg/
 
 EXPOSE 8080
 
-CMD [ "/opt/bzdacs/backend", "-config", "/opt/cfg/config.prod.yaml"]
+CMD [ "/opt/bzdacs/backend", "-config", "/opt/cfg/config.build.yaml"]

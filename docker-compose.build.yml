@@ -2,7 +2,7 @@ version: '3'
 
 services:
   bzdacs:
-    image: hardstylez72/bzdacs:latest
+    build: .
     restart: always
     ports:
       - 8888:8080

@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/spf13/viper"
+	"os"
 )
 
 func Load(filePath string) error {
@@ -12,7 +13,21 @@ func Load(filePath string) error {
 		return err
 	}
 
-	//env := viper.Get("env")
+	if viper.Get("env") == "prod" {
+		login := os.Getenv("BZDACS_LOGIN")
+		if login != "" {
+			viper.Set("user.login", login)
+		}
+		password := os.Getenv("BZDACS_PASSWORD")
+		if password != "" {
+			viper.Set("user.password", password)
+		}
+
+		postgres := os.Getenv("$BZDACS_POSTGRES")
+		if postgres != "" {
+			viper.Set("database.postgres", postgres)
+		}
+	}
 
 	return nil
 }
