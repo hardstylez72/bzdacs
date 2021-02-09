@@ -1,14 +1,14 @@
 <template>
-  <v-app-bar app color="primary" dark>
-    <a @click="goHome">
-      <h1 style="color: aliceblue">{{appName}}</h1>
-    </a>
-    <LanguageSelector  class="ml-12 language-selector pt-4" />
-    <GithubLink class="mx-4"/>
-    <v-spacer></v-spacer>
-    <Avatar v-if="login" :login="login"/>
-    <v-btn data-test="logout" v-if="login" class="ms-5" @click="logout" >{{$t('logout')}}</v-btn>
-  </v-app-bar>
+  <div>
+    <v-app-bar app color="primary" dark>
+      <a @click="goHome"><h1 style="color: aliceblue">{{appName}}</h1></a>
+      <LanguageSelector  class="ml-12 language-selector pt-4" />
+      <GithubLink class="mx-4"/>
+      <v-spacer/>
+      <Avatar v-if="login" :login="login"/>
+      <v-btn data-test="logout" v-if="login" class="ms-5" @click="logout" >{{$t('logout')}}</v-btn>
+    </v-app-bar>
+  </div>
 </template>
 
 <script lang="ts">
@@ -27,6 +27,10 @@ import Avatar from '@/views/app/components/Avatar.vue';
   },
 })
 export default class Nav extends Vue {
+  drawer = false
+
+  group = null
+
   appName = 'BZDACS'
 
   goHome() {

@@ -11,7 +11,9 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/grouproute"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
+	"github.com/hardstylez72/bzdacs/pkg/namespace"
 	"github.com/hardstylez72/bzdacs/pkg/route"
+	"github.com/hardstylez72/bzdacs/pkg/system"
 	"github.com/hardstylez72/bzdacs/pkg/tag"
 	"github.com/hardstylez72/bzdacs/pkg/user"
 	"github.com/hardstylez72/bzdacs/pkg/usergroup"
@@ -34,6 +36,8 @@ type Server struct {
 		grouproute grouproute.Repository
 		usergroup  usergroup.Repository
 		userroute  userroute.Repository
+		namespace  namespace.Repository
+		system  system.Repository
 	}
 }
 
@@ -89,6 +93,7 @@ func (s *Server) Start(r chi.Router) error {
 	if err != nil {
 		return err
 	}
+
 	err = storage.RunMigrations(pg, "./migrations")
 	if err != nil {
 		return err
@@ -101,6 +106,8 @@ func (s *Server) Start(r chi.Router) error {
 	s.repository.grouproute = grouproute.NewRepository(pgx)
 	s.repository.usergroup = usergroup.NewRepository(pgx)
 	s.repository.userroute = userroute.NewRepository(pgx)
+	s.repository.namespace = namespace.NewRepository(pgx)
+	s.repository.system = system.NewRepository(pgx)
 
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Timeout(60 * time.Second))
@@ -118,13 +125,18 @@ func (s *Server) Start(r chi.Router) error {
 			user.NewController(s.repository.user, s.repository.group, s.repository.usergroup).Mount(private, public)
 			usergroup.NewController(s.repository.usergroup).Mount(private)
 			userroute.NewController(s.repository.userroute).Mount(private)
+			namespace.NewController(s.repository.namespace).Mount(private)
+			system.NewController(s.repository.system).Mount(private)
 		})
 	})
 
 	ctx := context.Background()
 
 	force := false
-	s.initialize(ctx, force, r)
+	err = s.initialize(ctx, force, r)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

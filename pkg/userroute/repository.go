@@ -16,7 +16,7 @@ func NewRepository(conn *sqlx.DB) *repository {
 }
 
 func (r *repository) deletePair(ctx context.Context, tx *sqlx.Tx, routeId, userId int) error {
-	query := `delete from ad.users_routes where user_id = $1 and route_id = $2`
+	query := `delete from users_routes where user_id = $1 and route_id = $2`
 
 	_, err := tx.ExecContext(ctx, query, userId, routeId)
 	if err != nil {
@@ -51,7 +51,7 @@ func (r *repository) Update(ctx context.Context, params params) (*UserRoute, err
 
 	query := `
 	with insert_row as (
-		update ad.users_routes 
+		update users_routes 
 		   set is_excluded = $1 
 		 where user_id = $2 and route_id = $3
 	)
@@ -63,7 +63,7 @@ func (r *repository) Update(ctx context.Context, params params) (*UserRoute, err
 			   r.updated_at,
 			   r.deleted_at,
 		       $1 as is_excluded
-		from ad.routes r where r.id = $3;`
+		from routes r where r.id = $3;`
 
 	rows := r.conn.QueryRowxContext(ctx, query, params.IsExcluded, params.UserId, params.RouteId)
 
@@ -79,7 +79,7 @@ func (r *repository) Update(ctx context.Context, params params) (*UserRoute, err
 func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, userId int, isExcluded bool) (*UserRoute, error) {
 	query := `
 		with insert_row as (
-			insert into ad.users_routes (
+			insert into users_routes (
 					   user_id,
 					   route_id,
 			           is_excluded
@@ -98,7 +98,7 @@ func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, userId int, isExclude
 			   r.updated_at,
 			   r.deleted_at,
 		       $3 as is_excluded
-		from ad.routes r where r.id = $2;
+		from routes r where r.id = $2;
 `
 
 	rows := tx.QueryRowxContext(ctx, query, userId, routeId, isExcluded)
@@ -259,11 +259,11 @@ select r.id,
 			   r.updated_at,
 			   r.deleted_at,
 		       false as is_excluded
-		from ad.routes r
-   inner join ad.groups_routes gr on gr.route_id = r.id
-   inner join ad.groups g on gr.group_id = g.id
+		from routes r
+   inner join groups_routes gr on gr.route_id = r.id
+   inner join groups g on gr.group_id = g.id
        where r.deleted_at is null
-         and gr.group_id in (select group_id from ad.users_groups where user_id = $1)
+         and gr.group_id in (select group_id from users_groups where user_id = $1)
          and g.deleted_at is null
     group by r.id
 `
@@ -286,8 +286,8 @@ func ListOverwrittenRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userI
 			   r.updated_at,
 			   r.deleted_at,
 		       rg.is_excluded
-		from ad.routes r
-    left join ad.users_routes rg on rg.route_id = r.id
+		from routes r
+    left join users_routes rg on rg.route_id = r.id
         where rg.user_id = $1
           and deleted_at is null
 `
@@ -309,21 +309,21 @@ func ListRoutesNotBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) (
 			   r.created_at,
 			   r.updated_at,
 			   r.deleted_at
-		from ad.routes r
+		from routes r
 
        where r.deleted_at is null
          and r.id not in (
                        select rg.route_id as id
-                         from ad.routes r
-                   inner join ad.users_routes rg on rg.route_id = r.id
+                         from routes r
+                   inner join users_routes rg on rg.route_id = r.id
                         where rg.user_id = $1
                           and deleted_at is null
                 union
                       select r.id
-                        from ad.routes r
-                  inner join ad.groups_routes gr on gr.route_id = r.id
+                        from routes r
+                  inner join groups_routes gr on gr.route_id = r.id
                        where r.deleted_at is null
-                         and gr.group_id in (select group_id from ad.users_groups where user_id = $1)
+                         and gr.group_id in (select group_id from users_groups where user_id = $1)
                     group by r.id
            )
 `

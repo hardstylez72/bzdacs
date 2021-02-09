@@ -41,7 +41,7 @@ func Merge(ctx context.Context, conn *sqlx.DB, tx *sqlx.Tx, routeId int, tagName
 
 	for i := range currentTagIds {
 		if !contains(newTagIds, currentTagIds[i]) {
-			err = deletePair(ctx, tx, routeId, currentTagIds[i])
+			err := deletePair(ctx, tx, routeId, currentTagIds[i])
 			if err != nil {
 				return nil, err
 			}
@@ -63,7 +63,7 @@ func contains(set []int, el int) bool {
 func GetRouteTags(ctx context.Context, conn *sqlx.DB, routeId int) ([]int, error) {
 	query := `
 			select tag_id 
-			  from ad.routes_tags 
+			  from routes_tags 
 			 where route_id = $1
 `
 
@@ -79,7 +79,7 @@ func GetRouteTags(ctx context.Context, conn *sqlx.DB, routeId int) ([]int, error
 func isPairExist(ctx context.Context, conn *sqlx.DB, routeId, tagId int) (bool, error) {
 	query := `
 			select count(*) 
-			  from ad.routes_tags 
+			  from routes_tags 
 			 where tag_id = $1 
 			   and route_id = $2
 `
@@ -98,7 +98,7 @@ func isPairExist(ctx context.Context, conn *sqlx.DB, routeId, tagId int) (bool, 
 
 func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, tagId int) error {
 	query := `
-			insert into ad.routes_tags (
+			insert into routes_tags (
 					   tag_id,
 					   route_id
 					   )
@@ -116,7 +116,7 @@ func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, tagId int) error {
 	return nil
 }
 func deletePair(ctx context.Context, tx *sqlx.Tx, routeId, tagId int) error {
-	query := `delete from ad.routes_tags where route_id = $1 and tag_id = $2`
+	query := `delete from routes_tags where route_id = $1 and tag_id = $2`
 
 	_, err := tx.ExecContext(ctx, query, routeId, tagId)
 	if err != nil {

@@ -34,11 +34,29 @@ export default class DefaultService<T> implements Service<T> {
     return makeRequest(req);
   }
 
+  Update(t: T): Promise<T> {
+    const req: Request = {
+      data: t,
+      method: this.methodPost,
+      url: `${this.baseUrl}/update`,
+    };
+    return makeRequest(req);
+  }
+
   Delete(id: number): Promise<void> {
     const req: Request = {
       data: { id },
       method: this.methodPost,
       url: `${this.baseUrl}/delete`,
+    };
+    return makeRequest(req);
+  }
+
+  GetById(id: number): Promise<T> {
+    const req: Request = {
+      data: { id },
+      method: this.methodPost,
+      url: `${this.baseUrl}/get`,
     };
     return makeRequest(req);
   }

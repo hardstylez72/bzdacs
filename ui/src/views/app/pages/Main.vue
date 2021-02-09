@@ -1,16 +1,16 @@
 <template>
   <div v-if="isAuthorized">
-    <MainTabs />
+    <TreeView/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import MainTabs from '@/views/app/components/Tabs.vue';
+import TreeView from '@/views/tree-menu/components/TreeView.vue';
 
 @Component({
   components: {
-    MainTabs,
+    TreeView,
   },
 })
 export default class Home extends Vue {

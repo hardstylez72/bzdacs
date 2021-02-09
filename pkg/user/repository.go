@@ -21,7 +21,7 @@ func NewRepository(conn *sqlx.DB) *repository {
 
 func (r *repository) Update(ctx context.Context, user *User) (*User, error) {
 	query := `
-	update ad.users 
+	update users 
 	   set external_id = :external_id,
 	       updated_at = now()
 	 where id = :id 
@@ -53,7 +53,7 @@ func (r *repository) Update(ctx context.Context, user *User) (*User, error) {
 
 func (r *repository) Insert(ctx context.Context, entity *User) (*User, error) {
 	query := `
-insert into ad.users (
+insert into users (
                        external_id,
                        created_at,
 					   updated_at,
@@ -97,7 +97,7 @@ func (r *repository) GetByExternalId(ctx context.Context, id string) (*User, err
 		       created_at,
 			   updated_at,
 			   deleted_at
-		from ad.users
+		from users
 	   where deleted_at is null
  		 and external_id = $1
 `
@@ -120,7 +120,7 @@ func (r *repository) GetById(ctx context.Context, id int) (*User, error) {
 		       created_at,
 			   updated_at,
 			   deleted_at
-		from ad.users
+		from users
 	   where deleted_at is null
  		 and id = $1
 `
@@ -140,7 +140,7 @@ func (r *repository) List(ctx context.Context) ([]User, error) {
 		       created_at,
 			   updated_at,
 			   deleted_at
-		from ad.users
+		from users
 	   where deleted_at is null;
 `
 	groups := make([]User, 0)
@@ -154,7 +154,7 @@ func (r *repository) List(ctx context.Context) ([]User, error) {
 
 func (r *repository) Delete(ctx context.Context, id int) error {
 	query := `
-		update ad.users 
+		update users 
 			set deleted_at = now()
 		where id = $1;
 `

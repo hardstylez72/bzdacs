@@ -59,7 +59,7 @@ func (r *repository) InsertGroupBasedOnAnother(ctx context.Context, g *Group, gr
 }
 func InsertTx(ctx context.Context, tx *sqlx.Tx, group *Group) (*Group, error) {
 	query := `
-insert into ad.groups (
+insert into groups (
                        code,
                        description,
                        created_at,
@@ -90,7 +90,7 @@ insert into ad.groups (
 
 func (r *repository) Update(ctx context.Context, group *Group) (*Group, error) {
 	query := `
-	update ad.groups 
+	update groups 
 	   set code = :code,
 		   description = :description,
 		   updated_at = now()
@@ -120,7 +120,7 @@ func (r *repository) Update(ctx context.Context, group *Group) (*Group, error) {
 
 func (r *repository) Insert(ctx context.Context, group *Group) (*Group, error) {
 	query := `
-insert into ad.groups (
+insert into groups (
                        code,
                        description,
                        created_at,
@@ -177,7 +177,7 @@ func GetByCodeDb(ctx context.Context, conn *sqlx.DB, code string) (*Group, error
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from ad.groups
+		from groups
 	   where deleted_at is null
 	     and code = $1
 `
@@ -201,7 +201,7 @@ func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Group, error) {
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from ad.groups
+		from groups
 	   where id = $1
 `
 	var group Group
@@ -221,7 +221,7 @@ func (r *repository) List(ctx context.Context) ([]Group, error) {
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from ad.groups
+		from groups
 	   where deleted_at is null;
 `
 	groups := make([]Group, 0)
@@ -235,7 +235,7 @@ func (r *repository) List(ctx context.Context) ([]Group, error) {
 
 func (r *repository) Delete(ctx context.Context, id int) error {
 	query := `
-		update ad.groups 
+		update groups 
 			set deleted_at = now()
 		where id = $1;
 `

@@ -4,3 +4,7 @@ export interface Entity {
   updatedAt?: Date | null;
   deletedAt?: Date | null;
 }
+
+export interface SimpleEntity extends Entity {
+  name: string;
+}

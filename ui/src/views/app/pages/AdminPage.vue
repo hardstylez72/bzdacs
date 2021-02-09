@@ -1,16 +1,18 @@
 <template>
   <div class="login-form">
-    <v-form>
+    <v-form ref="form">
         <v-text-field
           v-model="login"
-          required
+          :rules="rules"
           :label="$t('input-login-label')"
+          @keyup.enter.native="loginAction"
         />
         <v-text-field
           v-model="password"
-          required
+          :rules="rules"
           type="password"
           :label="$t('input-password-label')"
+          @keyup.enter.native="loginAction"
         />
       <v-btn @click="loginAction">{{ $t('login-btn-text')}}</v-btn>
     </v-form>
@@ -29,18 +31,36 @@ export default class LoginPage extends Vue {
 
   password = ''
 
+  rules = [
+    (v: string) => !!v || this.$t('required'),
+  ]
+
   get isAuthorized(): boolean {
     return this.$store.direct.getters.isAuthorized;
+  }
+
+  goHome() {
+    this.$router.push({ name: 'Home' });
   }
 
   @Watch('isAuthorized')
   onUserAuthChange(isAuthorized: boolean) {
     if (isAuthorized) {
-      this.$router.push({ name: 'Home' });
+      this.goHome();
     }
   }
 
+  validate(): boolean {
+    // @ts-ignore
+    this.$refs.form.validate();
+    return !((!this.login) || (!this.password));
+  }
+
   loginAction() {
+    if (!this.validate()) {
+      return;
+    }
+
     this.$store.direct.dispatch.adminLogin({ login: this.login, password: this.password });
   }
 
@@ -49,7 +69,7 @@ export default class LoginPage extends Vue {
       .finally(() => {
         if (this.isAuthorized) {
           this.$store.direct.dispatch.userSession();
-          this.$router.push({ name: 'Home' });
+          this.goHome();
         }
       });
   }
@@ -73,12 +93,14 @@ export default class LoginPage extends Vue {
   "en": {
     "input-login-label": "Enter login",
     "input-password-label": "Enter password",
-    "login-btn-text": "login"
+    "login-btn-text": "login",
+    "required": "required"
   },
   "ru": {
     "input-login-label": "Введите логин",
     "input-password-label": "Введите пароль",
-    "login-btn-text": "войти"
+    "login-btn-text": "войти",
+    "required": "Обязательно для заполнения"
   }
 }
 </i18n>

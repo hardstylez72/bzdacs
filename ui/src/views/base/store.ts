@@ -11,6 +11,8 @@ import groupRouteModule from '../group/store/grouproute';
 import userGroupModule from '../user/store/usergroup';
 import userRouteModule from '../user/store/userroute';
 import tagModule from '../tag/store';
+import namespaceModule from '../namespace/store';
+import systemModule from '../system/store';
 import AuthService, { Session } from './user';
 
 Vue.use(Vuex);
@@ -120,6 +122,8 @@ const {
     userGroup: userGroupModule,
     userRoute: userRouteModule,
     tag: tagModule,
+    namespace: namespaceModule,
+    system: systemModule,
   },
 });
 

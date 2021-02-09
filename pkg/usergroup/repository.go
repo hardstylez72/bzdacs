@@ -18,7 +18,7 @@ func NewRepository(conn *sqlx.DB) *repository {
 }
 
 func (r *repository) deletePair(ctx context.Context, tx *sqlx.Tx, groupId, userId int) error {
-	query := `delete from ad.users_groups where user_id = $1 and group_id = $2`
+	query := `delete from users_groups where user_id = $1 and group_id = $2`
 
 	_, err := tx.ExecContext(ctx, query, userId, groupId)
 	if err != nil {
@@ -52,7 +52,7 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 func InsertPairTx(ctx context.Context, tx *sqlx.Tx, groupId, userId int) (*Group, error) {
 	query := `
 		with insert_row as (
-			insert into ad.users_groups (
+			insert into users_groups (
 					   user_id,
 					   group_id
 					   )
@@ -67,7 +67,7 @@ func InsertPairTx(ctx context.Context, tx *sqlx.Tx, groupId, userId int) (*Group
 			   r.created_at,
 			   r.updated_at,
 			   r.deleted_at
-		from ad.groups r where r.id = $2;
+		from groups r where r.id = $2;
 `
 
 	rows := tx.QueryRowxContext(ctx, query, userId, groupId)
@@ -83,7 +83,7 @@ func InsertPairTx(ctx context.Context, tx *sqlx.Tx, groupId, userId int) (*Group
 func InsertPairDb(ctx context.Context, conn *sqlx.DB, params Pair) (*Group, error) {
 	query := `
 		with insert_row as (
-			insert into ad.users_groups (
+			insert into users_groups (
 					   user_id,
 					   group_id
 					   )
@@ -98,7 +98,7 @@ func InsertPairDb(ctx context.Context, conn *sqlx.DB, params Pair) (*Group, erro
 			   r.created_at,
 			   r.updated_at,
 			   r.deleted_at
-		from ad.groups r where r.id = $2;
+		from groups r where r.id = $2;
 `
 
 	rows := conn.QueryRowxContext(ctx, query, params.UserId, params.GroupId)
@@ -115,7 +115,7 @@ func InsertPairDb(ctx context.Context, conn *sqlx.DB, params Pair) (*Group, erro
 }
 
 func (r *repository) IsPairExist(ctx context.Context, pair Pair) (bool, error) {
-	query := `select count(*) from ad.users_groups where user_id = $1 and group_id = $2`
+	query := `select count(*) from users_groups where user_id = $1 and group_id = $2`
 
 	var cnt = 0
 	err := r.conn.GetContext(ctx, &cnt, query, pair.UserId, pair.GroupId)
@@ -165,8 +165,8 @@ func (r *repository) ListUserNotInGroups(ctx context.Context, groupId int) ([]Gr
 			   r.created_at,
 			   r.updated_at,
 			   r.deleted_at
-		from ad.groups r
-        where r.id not in (select group_id from ad.users_groups where user_id = $1)
+		from groups r
+        where r.id not in (select group_id from users_groups where user_id = $1)
           and deleted_at is null
 `
 	routes := make([]Group, 0)
@@ -186,8 +186,8 @@ func (r *repository) ListUserGroups(ctx context.Context, userId int) ([]Group, e
 			   r.created_at,
 			   r.updated_at,
 			   r.deleted_at
-		from ad.groups r
-    left join ad.users_groups rg on rg.group_id = r.id
+		from groups r
+    left join users_groups rg on rg.group_id = r.id
         where rg.user_id = $1 
           and deleted_at is null
 `

@@ -1,11 +1,11 @@
 -- +goose Up
 
-create table if not exists ad.routes_tags (
-   route_id int references ad.routes (id),
-   tag_id bigint references ad.tags (id),
+create table if not exists routes_tags (
+   route_id int references routes (id)  not null,
+   tag_id bigint references tags (id)  not null,
    unique (route_id, tag_id)
 );
 
 -- +goose Down
 
-drop table if exists ad.routes_tags;
+drop table if exists routes_tags;

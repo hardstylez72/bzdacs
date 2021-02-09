@@ -21,7 +21,7 @@ func NewRepository(conn *sqlx.DB) *repository {
 
 func (r *repository) Update(ctx context.Context, group *Tag) (*Tag, error) {
 	query := `
-	update ad.tags 
+	update tags 
 	   set name = :name,
 		   updated_at = now()
 	 where id = :id returning  id,
@@ -49,7 +49,7 @@ func (r *repository) Update(ctx context.Context, group *Tag) (*Tag, error) {
 
 func (r *repository) Insert(ctx context.Context, group *Tag) (*Tag, error) {
 	query := `
-insert into ad.tags (
+insert into tags (
                        name,
                        created_at,
                        updated_at,
@@ -85,7 +85,7 @@ insert into ad.tags (
 
 func InsertTx(ctx context.Context, tx *sqlx.Tx, tag *Tag) (*Tag, error) {
 	query := `
-insert into ad.tags (
+insert into tags (
                        name,
                        created_at,
                        updated_at,
@@ -129,7 +129,7 @@ func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Tag, error) {
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from ad.tags
+		from tags
 	   where id = $1
 `
 	var group Tag
@@ -149,7 +149,7 @@ func (r *repository) FindByPattern(ctx context.Context, pattern string) ([]Tag, 
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from ad.tags
+		from tags
 	   where deleted_at is null
 		 and name like $1;
 `
@@ -169,7 +169,7 @@ func GetByNameDb(ctx context.Context, conn *sqlx.DB, name string) (*Tag, error) 
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from ad.tags
+		from tags
 	   where deleted_at is null
 		 and name = $1;
 `
@@ -192,7 +192,7 @@ func (r *repository) List(ctx context.Context) ([]Tag, error) {
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from ad.tags
+		from tags
 	   where deleted_at is null;
 `
 	groups := make([]Tag, 0)
@@ -206,7 +206,7 @@ func (r *repository) List(ctx context.Context) ([]Tag, error) {
 
 func (r *repository) Delete(ctx context.Context, id int) error {
 	query := `
-		update ad.tags 
+		update tags 
 			set deleted_at = now()
 		where id = $1;
 `
