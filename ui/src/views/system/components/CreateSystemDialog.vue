@@ -10,8 +10,8 @@
           <template v-slot:actions="{validate}">
             <v-card-actions>
               <v-spacer />
-              <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
-              <v-btn color="blue darken-1" text :disabled="disableCreateButton" @click="save(validate)">{{$t('save')}}</v-btn>
+              <v-btn color="blue darken-1" text @click="close" >{{$t('cancel')}}</v-btn>
+              <v-btn color="blue darken-1" data-test="save-system-btn" text :disabled="disableCreateButton" @click="save(validate)">{{$t('save')}}</v-btn>
             </v-card-actions>
           </template>
         </SystemForm>

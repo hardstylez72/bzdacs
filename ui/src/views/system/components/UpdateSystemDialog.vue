@@ -10,7 +10,7 @@
             <v-card-actions>
               <v-spacer />
               <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
-              <v-btn color="blue darken-1" text :disabled="disableUpdateButton" @click="update(validate)">{{$t('update')}}</v-btn>
+              <v-btn color="blue darken-1" data-test="update-system-btn" text :disabled="disableUpdateButton" @click="update(validate)">{{$t('update')}}</v-btn>
             </v-card-actions>
           </template>
         </SystemForm>

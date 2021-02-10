@@ -1,4 +1,5 @@
 <template>
+  <div>
     <v-menu  right>
       <template v-slot:activator="{ on, attrs }">
         <v-btn dark icon v-bind="attrs" v-on="on">
@@ -7,13 +8,13 @@
       </template>
 
       <v-list>
-        <v-list-item @click="clickedUpdate">
+        <v-list-item data-test="system-edit-option" @click="clickedUpdateSystemButton">
           <v-list-item-title>Редактировать</v-list-item-title>
           <v-list-item-icon>
             <v-icon>mdi-pencil</v-icon>
           </v-list-item-icon>
         </v-list-item>
-        <v-list-item @click="clickedDelete">
+        <v-list-item data-test="system-delete-option" @click="clickedDeleteSystemButton">
           <v-list-item-title>Удалить</v-list-item-title>
           <v-list-item-icon>
             <v-icon>mdi-delete</v-icon>
@@ -21,6 +22,9 @@
         </v-list-item>
       </v-list>
     </v-menu>
+    <DeleteSystemDialog v-model="showDeleteSystemDialog" :id="system.id" @itemDeleted="systemDeleted"/>
+    <UpdateSystemDialog v-model="showUpdateSystemDialog" :id="system.id" @itemUpdated="systemUpdated"/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,18 +32,37 @@ import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
 import { System } from '@/views/system/service';
+import DeleteSystemDialog from '../../system/components/DeleteSystemDialog.vue';
+import UpdateSystemDialog from '../../system/components/UpdateSystemDialog.vue';
 
-@Component
+@Component({
+  components: {
+    DeleteSystemDialog,
+    UpdateSystemDialog,
+  },
+})
 
 export default class SystemMenu extends Vue {
   @Prop() system!: System
 
-  clickedDelete() {
-    this.$emit('clickedDelete', this.system);
+  showUpdateSystemDialog = false
+
+  showDeleteSystemDialog = false
+
+  clickedDeleteSystemButton() {
+    this.showDeleteSystemDialog = true;
   }
 
-  clickedUpdate() {
-    this.$emit('clickedUpdate', this.system);
+  clickedUpdateSystemButton() {
+    this.showUpdateSystemDialog = true;
+  }
+
+  systemUpdated(system: System) {
+    this.$store.direct.dispatch.system.GetList();
+  }
+
+  systemDeleted(id: number) {
+    this.$store.direct.dispatch.system.GetList();
   }
 }
 </script>

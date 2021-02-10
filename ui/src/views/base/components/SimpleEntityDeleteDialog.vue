@@ -7,7 +7,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
-        <v-btn color="blue darken-1" text @click="remove">{{$t('ok')}}</v-btn>
+        <v-btn data-test="delete-system-btn" color="blue darken-1" text @click="remove">{{$t('ok')}}</v-btn>
         <v-spacer />
       </v-card-actions>
     </v-card>

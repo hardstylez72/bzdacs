@@ -57,7 +57,7 @@ export default class SimpleEntityUpdateDialog<T extends SimpleEntity> extends Vu
 
    propInitialState: T = this.local
 
-  @Watch('id')
+  @Watch('id', { immediate: true })
    protected async onChangeItem(id: number) {
     const item = await this.loadItemWithId(id);
 

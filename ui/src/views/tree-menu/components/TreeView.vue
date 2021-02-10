@@ -1,6 +1,7 @@
 <template>
   <div class="tree-view-container">
     <v-treeview
+      data-test="tree-view"
       v-model="tree"
       :items="systems"
       activatable
@@ -13,19 +14,14 @@
       <template v-slot:prepend="{ item, open }">
         <v-icon :color="item.color ? item.color : ''">{{ iconMap.get(item.type) }}</v-icon>
       </template>
+      <template v-slot:label="{ item, open }">
+        <span :data-test="item.id">{{item.name}}</span>
+      </template>
       <template v-slot:append="{ item, open }">
-        <SystemMenu
-          v-if="item.type === 'system'"
-          :system="item.origin"
-          @clickedDelete="clickedDeleteSystemButton"
-          @clickedUpdate="clickedUpdateSystemButton"
-        />
+        <SystemMenu :data-test="item.id+'_system_options'" v-if="item.type === 'system'" :system="item.origin"/>
       </template>
     </v-treeview>
     <CreateSystemDialog v-model="showCreateSystemDialog" @itemCreated="systemCreated"/>
-    <DeleteSystemDialog v-model="showDeleteSystemDialog" :id="activeSystemId" @itemDeleted="systemDeleted"/>
-    <UpdateSystemDialog v-model="showUpdateSystemDialog" :id="activeSystemId" @itemUpdated="systemUpdated"/>
-
   </div>
 
 </template>
@@ -37,15 +33,11 @@ import {
 import { System } from '@/views/system/service';
 import { Node, NodeType } from '../entity';
 import CreateSystemDialog from '../../system/components/CreateSystemDialog.vue';
-import DeleteSystemDialog from '../../system/components/DeleteSystemDialog.vue';
-import UpdateSystemDialog from '../../system/components/UpdateSystemDialog.vue';
 import SystemMenu from './SystemMenu.vue';
 
 @Component({
   components: {
     CreateSystemDialog,
-    DeleteSystemDialog,
-    UpdateSystemDialog,
     SystemMenu,
   },
 })
@@ -53,23 +45,19 @@ import SystemMenu from './SystemMenu.vue';
 export default class TreeView extends Vue {
   showCreateSystemDialog = false
 
-  showUpdateSystemDialog = false
-
-  showDeleteSystemDialog = false
-
-  activeSystemId = -1
-
   iconMap = new Map<NodeType, string>()
 
   active = []
 
   createNewNamespaceBtn: Node = {
+    id: 'createNewNamespaceBtn',
     name: 'Новое пространство имен',
     type: 'createNewNamespaceBtn',
     color: 'green',
   }
 
   createNewSystemBtn: Node ={
+    id: 'createNewSystemBtn',
     name: 'Новая система',
     type: 'createNewSystemBtn',
     color: 'green',
@@ -92,29 +80,12 @@ export default class TreeView extends Vue {
     this.$store.direct.dispatch.system.GetList();
   }
 
-  systemUpdated(system: System) {
-    this.$store.direct.dispatch.system.GetList();
-  }
-
-  systemDeleted(id: number) {
-    this.$store.direct.dispatch.system.GetList();
-  }
-
-  clickedDeleteSystemButton(system: System) {
-    this.activeSystemId = system.id;
-    this.showDeleteSystemDialog = true;
-  }
-
-  clickedUpdateSystemButton(system: System) {
-    this.activeSystemId = system.id;
-    this.showUpdateSystemDialog = true;
-  }
-
   get systems(): readonly Node[] {
     const base = this.$store.direct.getters.system.getItems;
 
     const nodes = base.map((sys) => {
       const node: Node = {
+        id: sys.name,
         name: sys.name,
         type: 'system',
         origin: sys,

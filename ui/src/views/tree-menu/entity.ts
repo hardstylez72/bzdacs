@@ -19,7 +19,7 @@ export interface Tree {
   children: Node[];
 }
 export interface Node {
-  id?: number; // todo: сдеать обязательным
+  id?: string; // todo: сдеать обязательным
   name: string;
   type: NodeType;
   color?: string;

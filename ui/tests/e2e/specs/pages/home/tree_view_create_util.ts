@@ -1,0 +1,29 @@
+import { System } from '../../../../../src/views/system/service';
+import { assertSystemIsShown, buildSystem, fillForm } from './tree_view_util';
+
+const clickNewSystemButton = () => {
+  cy.getBySel('createNewSystemBtn').click();
+};
+
+const clickSaveSystemButton = () => {
+  cy.getBySel('save-system-btn').click();
+};
+
+const createSystem = (system?: System): System => {
+  if (!system) {
+    // eslint-disable-next-line no-param-reassign
+    system = buildSystem();
+  }
+  clickNewSystemButton();
+  fillForm(system);
+  clickSaveSystemButton();
+  // @ts-ignore
+  return system;
+};
+
+// eslint-disable-next-line import/prefer-default-export
+export const createValidSystem = (system?: System): System => {
+  const created = createSystem(system);
+  assertSystemIsShown(created);
+  return created;
+};

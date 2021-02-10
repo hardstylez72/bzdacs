@@ -1,10 +1,19 @@
 {
+  "include": ["./**/*.ts"],
+  "exclude": [],
   "compilerOptions": {
+    "types": ["cypress", "@percy/cypress"],
+    "lib": ["es2015", "dom"],
     "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress"]
-  },
-  "include": [
-    "**/*.ts"
-  ]
+    "skipLibCheck": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  }
 }
