@@ -11,7 +11,7 @@
             <v-card-actions>
               <v-spacer />
               <v-btn color="blue darken-1" text @click="close" >{{$t('cancel')}}</v-btn>
-              <v-btn color="blue darken-1" data-test="save-system-btn" text :disabled="disableCreateButton" @click="save(validate)">{{$t('save')}}</v-btn>
+              <v-btn color="blue darken-1" data-test="save-namespace-btn" text :disabled="disableCreateButton" @click="save(validate)">{{$t('save')}}</v-btn>
             </v-card-actions>
           </template>
         </SystemForm>
@@ -23,13 +23,13 @@
 
 <script lang="ts">
 import {
-  Component,
+  Component, Prop,
 } from 'vue-property-decorator';
 
 import Dialog from '@/views/base/components/Dialog.vue';
 import SimpleEntityCreateDialog from '@/views/base/components/SimpleEntityCreateDialog.vue';
-import { System } from '@/views/tree-menu/entity';
-import SystemForm from './SystemForm.vue';
+import { Namespace } from '@/views/namespace/service';
+import SystemForm from './Form.vue';
 
 @Component({
   components: {
@@ -37,10 +37,12 @@ import SystemForm from './SystemForm.vue';
   },
 })
 
-export default class CreateSystemDialog extends SimpleEntityCreateDialog<System> {
-  async saveValid(s: System) {
-    const system = await this.$store.direct.dispatch.system.Create(s);
-    this.$emit('itemCreated', system);
+export default class CreateNamespaceDialog extends SimpleEntityCreateDialog<Namespace> {
+  @Prop() systemId!: number
+
+  async saveValid(namespace: Namespace) {
+    const n = await this.$store.direct.dispatch.namespace.Create({ namespace, systemId: this.systemId });
+    this.$emit('itemCreated', n, this.systemId);
   }
 }
 </script>
@@ -48,14 +50,14 @@ export default class CreateSystemDialog extends SimpleEntityCreateDialog<System>
 <i18n>
 {
   "en": {
-    "add-btn": "Add system",
-    "title": "System creation",
+    "add-btn": "Add service",
+    "title": "Service creation",
     "cancel": "Cancel",
     "save": "Save"
   },
   "ru": {
-    "add-btn": "Добавить систему",
-    "title": "Создание системы",
+    "add-btn": "Добавить сервис",
+    "title": "Создание сервиса",
     "cancel": "Отмена",
     "save": "Создать"
   }

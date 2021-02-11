@@ -54,26 +54,6 @@ insert into systems (
 	return &g, nil
 }
 
-func (r *repository) FindByPattern(ctx context.Context, pattern string) ([]System, error) {
-	pattern = "%" + pattern + "%"
-	query := `
-		select id,
-			   name,
-			   created_at,
-			   updated_at,
-			   deleted_at
-		from tags
-	   where deleted_at is null
-		 and name like $1;
-`
-	groups := make([]System, 0)
-	err := r.conn.SelectContext(ctx, &groups, query, pattern)
-	if err != nil {
-		return nil, err
-	}
-
-	return groups, nil
-}
 
 func GetByNameDb(ctx context.Context, conn *sqlx.DB, name string) (*System, error) {
 	query := `

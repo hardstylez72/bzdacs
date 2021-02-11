@@ -56,3 +56,14 @@ export default class Nav extends Vue {
   width: 100px;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "logout": "logout"
+  },
+  "ru": {
+    "logout": "Выйти"
+  }
+}
+</i18n>

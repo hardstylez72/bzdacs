@@ -4,6 +4,7 @@ import {
 } from 'vue-property-decorator';
 
 import SimpleEntityForm from '@/views/base/components/SimpleEntityForm.vue';
+import { System } from '@/views/system/service';
 
 @Component
 export default class SystemForm extends SimpleEntityForm<System> {}

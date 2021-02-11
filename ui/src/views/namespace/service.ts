@@ -1,28 +1,63 @@
 import { Entity } from '@/views/base/services/entity';
 import { makeRequest, Request } from '@/views/base/services/utils/requester';
-import DefaultService from '../base/services/default';
+import { Method } from 'axios';
 
 export interface Namespace extends Entity {
-  id: number;
   name: string;
 }
+interface Options {
+  host: string;
+  baseUrl: string;
+}
 
-export default class NamespaceService extends DefaultService<Namespace> {
-  Update(t: Namespace): Promise<Namespace> {
+export default class NamespaceService {
+  private options: Options
+
+  readonly methodPost: Method = 'POST'
+
+  readonly baseUrl: string;
+
+  constructor(options: Options) {
+    this.options = options;
+    this.baseUrl = `${this.options.host}${this.options.baseUrl}`;
+  }
+
+  Create(namespace: Namespace, systemId: number): Promise<Namespace> {
     const req: Request = {
-      data: t,
+      data: {
+        name: namespace.name,
+        systemId,
+      },
       method: this.methodPost,
-      url: `${this.baseUrl}/update`,
+      url: `${this.baseUrl}/create`,
     };
     return makeRequest(req);
   }
 
-  GetById(id: number): Promise<Namespace> {
+  GetListBySystemId(id: number): Promise<Namespace[]> {
     const req: Request = {
       data: { id },
       method: this.methodPost,
-      url: `${this.baseUrl}/get`,
+      url: `${this.baseUrl}/list`,
     };
     return makeRequest(req);
   }
+
+  // Update(t: T): Promise<T> {
+  //   const req: Request = {
+  //     data: t,
+  //     method: this.methodPost,
+  //     url: `${this.baseUrl}/update`,
+  //   };
+  //   return makeRequest(req);
+  // }
+
+  // Delete(id: number): Promise<void> {
+  //   const req: Request = {
+  //     data: { id },
+  //     method: this.methodPost,
+  //     url: `${this.baseUrl}/delete`,
+  //   };
+  //   return makeRequest(req);
+  // }
 }

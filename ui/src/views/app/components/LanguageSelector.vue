@@ -1,6 +1,6 @@
 <template>
   <div class="locale-changer">
-    <v-select v-model="lang" :items="langs" label="language" dark filled>
+    <v-select v-model="lang" :items="langs" :label="language" dark filled>
     </v-select>
   </div>
 </template>
@@ -14,12 +14,18 @@ import {
 export default class LanguageSelector extends Vue {
   langs: string[] = ['ru', 'en']
 
+  language = 'language'
+
   lang = 'en'
 
   defaultLang = 'en'
 
   @Watch('lang')
   onChange(lang: string) {
+    if (lang === 'ru') {
+      this.language = 'язык';
+    }
+
     if (this.lang === this.getLangFromQuery()) {
       return;
     }
@@ -54,7 +60,3 @@ export default class LanguageSelector extends Vue {
   }
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

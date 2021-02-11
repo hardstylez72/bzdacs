@@ -32,8 +32,8 @@ import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
 import { System } from '@/views/system/service';
-import DeleteSystemDialog from '../../system/components/DeleteSystemDialog.vue';
-import UpdateSystemDialog from '../../system/components/UpdateSystemDialog.vue';
+import DeleteSystemDialog from '../../system/components/DeleteDialog.vue';
+import UpdateSystemDialog from '../../system/components/UpdateDialog.vue';
 
 @Component({
   components: {
@@ -58,11 +58,11 @@ export default class SystemMenu extends Vue {
   }
 
   systemUpdated(system: System) {
-    this.$store.direct.dispatch.system.GetList();
+    this.$emit('systemUpdated');
   }
 
   systemDeleted(id: number) {
-    this.$store.direct.dispatch.system.GetList();
+    this.$emit('systemDeleted');
   }
 }
 </script>

@@ -1,5 +1,5 @@
 import { System } from '../../../../../src/views/system/service';
-import { fillForm } from './tree_view_util';
+import { fillForm } from './tree_view_system_util';
 
 const clickSystemOptions = (system: System) => {
   cy.getBySel(`${system.name}_system_options`).click();

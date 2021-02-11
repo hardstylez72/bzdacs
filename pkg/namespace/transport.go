@@ -2,11 +2,15 @@ package namespace
 
 type insertRequest struct {
 	Name string `json:"name" validate:"required"`
+	SystemId int `json:"systemId" validate:"required"`
 }
 
-func insertRequestConvert(r *insertRequest) *Namespace {
-	return &Namespace{
-		Name: r.Name,
+func insertRequestConvert(r *insertRequest) *NamespaceExt {
+	return &NamespaceExt{
+		Namespace: Namespace{
+			Name: r.Name,
+		},
+		SystemId:  r.SystemId,
 	}
 }
 

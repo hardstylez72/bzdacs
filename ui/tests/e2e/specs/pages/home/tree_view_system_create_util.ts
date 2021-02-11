@@ -1,5 +1,5 @@
 import { System } from '../../../../../src/views/system/service';
-import { assertSystemIsShown, buildSystem, fillForm } from './tree_view_util';
+import { assertSystemIsShown, buildSystem, fillForm } from './tree_view_system_util';
 
 const clickNewSystemButton = () => {
   cy.getBySel('createNewSystemBtn').click();
@@ -17,6 +17,7 @@ const createSystem = (system?: System): System => {
   clickNewSystemButton();
   fillForm(system);
   clickSaveSystemButton();
+  cy.getBySel('create-system-dialog-card').should('not.exist');
   // @ts-ignore
   return system;
 };

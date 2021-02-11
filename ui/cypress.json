@@ -1,6 +1,6 @@
 {
   "pluginsFile": "tests/e2e/plugins/index.js",
-  "baseUrl": "http://localhost:8083",
+  "baseUrl": "http://localhost:8081",
   "env": {
      "adminSession" :"eyJ0b2tlbiI6ImFITTZNVEl6TkE9PSIsImlzQWRtaW4iOnRydWUsImxvZ2luIjoiaHMifQ==",
      "cookieName" : "session-token",

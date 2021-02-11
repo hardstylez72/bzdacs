@@ -10,10 +10,11 @@ import (
 )
 
 type Repository interface {
+	GetListBySystemId(ctx context.Context, systemId int) ([]Namespace, error)
+	Insert(ctx context.Context, namespace *NamespaceExt) (*Namespace, error)
+
 	GetById(ctx context.Context, id int) (*Namespace, error)
-	FindByPattern(ctx context.Context, pattern string) ([]Namespace, error)
 	List(ctx context.Context) ([]Namespace, error)
-	Insert(ctx context.Context, namespace *Namespace) (*Namespace, error)
 	Delete(ctx context.Context, id int) error
 	Update(ctx context.Context, namespace *Namespace) (*Namespace, error)
 }
@@ -74,27 +75,6 @@ func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Json(newUpdateResponse(group)).Send()
 }
 
-func (c *controller) suggest(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
-	var req suggestRequest
-
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-		return
-	}
-
-	if err := c.validator.Struct(req); err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-		return
-	}
-	list, err := c.rep.FindByPattern(ctx, req.Pattern)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
-		return
-	}
-	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list)).Send()
-}
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -105,6 +85,31 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	}
 	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list)).Send()
 }
+
+func (c *controller) getBySystemId(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var req getRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	if err := c.validator.Struct(req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	namespaces, err := c.rep.GetListBySystemId(ctx, req.Id)
+	if err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		return
+	}
+
+	util.NewResp(w, r).Status(http.StatusOK).Json(namespaces).Send()
+}
+
 func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -154,10 +159,13 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) Mount(r chi.Router) {
+	r.Post("/v1/system/namespace/create", c.create)
+	r.Post("/v1/system/namespace/list", c.getBySystemId)
+
+
 	r.Post("/v1/namespace/list", c.list)
-	r.Post("/v1/namespace/suggest", c.suggest)
 	r.Post("/v1/namespace/get", c.getById)
-	r.Post("/v1/namespace/create", c.create)
+
 	r.Post("/v1/namespace/delete", c.delete)
 	r.Post("/v1/namespace/update", c.update)
 

@@ -14,17 +14,13 @@ export interface System extends Entity{
   name: string;
 }
 
-export interface Tree {
-  nodes: Node[];
-  children: Node[];
-}
 export interface Node {
-  id?: string; // todo: сдеать обязательным
+  id: string;
   name: string;
   type: NodeType;
   color?: string;
-  system?: string | null;
-  namespace?: string | null;
   children?: Node[];
-  origin?: System | Namespace;
+  system?: System;
+  namespace?: Namespace;
+  testId?: string;
 }

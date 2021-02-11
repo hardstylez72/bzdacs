@@ -1,12 +1,10 @@
 import faker from 'faker';
 import { System } from '../../../../../src/views/system/service';
 
-export const buildSystem = (): System => {
-  const system: System = {
-    name: faker.lorem.word(),
-  };
-  return system;
-};
+export const buildSystem = (): System => ({
+  id: -1,
+  name: faker.lorem.word(),
+});
 
 export const fillForm = (system: System) => {
   cy.getBySel('name-input').clear();

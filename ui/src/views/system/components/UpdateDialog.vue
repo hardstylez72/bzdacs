@@ -27,7 +27,7 @@ import {
 import Dialog from '@/views/base/components/Dialog.vue';
 import SimpleEntityUpdateDialog from '@/views/base/components/SimpleEntityUpdateDialog.vue';
 import { System } from '@/views/tree-menu/entity';
-import SystemForm from './SystemForm.vue';
+import SystemForm from './Form.vue';
 
 @Component({
   components: {

@@ -1,7 +1,7 @@
-import { createValidSystem } from './tree_view_create_util';
-import { assertSystemIsNotShown, assertSystemIsShown, buildSystem } from './tree_view_util';
-import { editSystem } from './tree_view_edit_util';
-import { deleteSystem } from './tree_view_delete_util';
+import { createValidSystem } from './tree_view_system_create_util';
+import { assertSystemIsNotShown, assertSystemIsShown, buildSystem } from './tree_view_system_util';
+import { editSystem } from './tree_view_system_edit_util';
+import { deleteSystem } from './tree_view_system_delete_util';
 
 describe('Guest page', () => {
   it('Creates system and validates it is shown in a list', () => {

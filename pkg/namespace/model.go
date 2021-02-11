@@ -12,3 +12,8 @@ type Namespace struct {
 	UpdatedAt time.Time         `json:"updatedAt" db:"updated_at"`
 	DeletedAt util.JsonNullTime `json:"deletedAt" db:"deleted_at"`
 }
+
+type NamespaceExt struct {
+	Namespace
+	SystemId int
+}
