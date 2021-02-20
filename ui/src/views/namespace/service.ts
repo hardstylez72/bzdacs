@@ -34,6 +34,18 @@ export default class NamespaceService {
     return makeRequest(req);
   }
 
+  Delete(namespaceId: number, systemId: number): Promise<void> {
+    const req: Request = {
+      data: {
+        namespaceId,
+        systemId,
+      },
+      method: this.methodPost,
+      url: `${this.baseUrl}/delete`,
+    };
+    return makeRequest(req);
+  }
+
   GetListBySystemId(id: number): Promise<Namespace[]> {
     const req: Request = {
       data: { id },
@@ -43,21 +55,21 @@ export default class NamespaceService {
     return makeRequest(req);
   }
 
-  // Update(t: T): Promise<T> {
-  //   const req: Request = {
-  //     data: t,
-  //     method: this.methodPost,
-  //     url: `${this.baseUrl}/update`,
-  //   };
-  //   return makeRequest(req);
-  // }
+  GetById(id: number): Promise<Namespace> {
+    const req: Request = {
+      data: { id },
+      method: this.methodPost,
+      url: `${this.baseUrl}/get`,
+    };
+    return makeRequest(req);
+  }
 
-  // Delete(id: number): Promise<void> {
-  //   const req: Request = {
-  //     data: { id },
-  //     method: this.methodPost,
-  //     url: `${this.baseUrl}/delete`,
-  //   };
-  //   return makeRequest(req);
-  // }
+  Update(namespace: Namespace): Promise<Namespace> {
+    const req: Request = {
+      data: namespace,
+      method: this.methodPost,
+      url: `${this.baseUrl}/update`,
+    };
+    return makeRequest(req);
+  }
 }

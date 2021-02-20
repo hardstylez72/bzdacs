@@ -20,11 +20,19 @@
       </template>
       <template v-slot:append="{ item, open }">
         <SystemMenu
-          :data-test="item.id+'_system_options'"
+          :data-test="item.testId+'_system_options'"
           v-if="item.type === 'system'"
           :system="item.system"
           @systemUpdated="systemUpdated"
           @systemDeleted="systemDeleted"
+        />
+        <NamespaceMenu
+          v-if="item.type === 'namespace'"
+          :data-test="item.testId+'_namespace_options'"
+          :namespace="item.namespace"
+          :system="item.system"
+          @deleted="namespaceDeleted"
+          @updated="namespaceUpdated"
         />
       </template>
     </v-treeview>
@@ -51,12 +59,14 @@ import { Node, NodeType } from '../entity';
 import CreateSystemDialog from '../../system/components/CreateDialog.vue';
 import CreateNamespaceDialog from '../../namespace/components/CreateDialog.vue';
 import SystemMenu from './SystemMenu.vue';
+import NamespaceMenu from './NamespaceMenu.vue';
 
 @Component({
   components: {
     CreateSystemDialog,
     CreateNamespaceDialog,
     SystemMenu,
+    NamespaceMenu,
   },
 })
 
@@ -149,6 +159,39 @@ export default class TreeView extends Vue {
     });
   }
 
+  async namespaceDeleted(namespaceId: number, systemId: number) {
+     this.items.forEach((system) => {
+      if (system.system?.id === systemId) {
+        // eslint-disable-next-line no-unused-expressions
+        system.children?.forEach((namespace, namespaceIndex) => {
+          if (namespace.namespace?.id === namespaceId) {
+            // eslint-disable-next-line no-unused-expressions
+            system.children?.splice(namespaceIndex, 1);
+          }
+        });
+      }
+      return system;
+    });
+  }
+
+  async namespaceUpdated(ns: Namespace, system: System) {
+     this.items.forEach((systemNode) => {
+      if (systemNode.system?.id === system.id) {
+        // eslint-disable-next-line no-unused-expressions
+        systemNode.children = systemNode.children?.map((namespaceNode) => {
+          if (namespaceNode.namespace) {
+            if (namespaceNode.namespace.id === ns.id) {
+              namespaceNode = this.convertNamespaceToNode(ns, system);
+            }
+          }
+          return namespaceNode;
+        });
+      }
+
+      return systemNode;
+    });
+  }
+
   async systemCreated() {
     this.items = await this.getSystems();
   }
@@ -163,20 +206,20 @@ export default class TreeView extends Vue {
 
   async getSystems(): Promise<Node[]> {
     const systems = await this.$store.direct.dispatch.system.GetList();
-
-    const nodes = systems.map((system) => {
-      const node: Node = {
-        id: system.name,
-        name: system.name,
-        type: 'system',
-        system,
-        testId: system.name,
-        children: [],
-      };
-      return node;
-    });
+    const nodes = systems.map((system) => this.convertSystemToNode(system));
     nodes.push(this.createNewSystemBtn);
     return nodes;
+  }
+
+  convertSystemToNode(system: System): Node {
+    return {
+      id: system.name,
+      name: system.name,
+      type: 'system',
+      system,
+      testId: system.name,
+      children: [],
+    };
   }
 
   convertNamespaceToNode(namespace: Namespace, system: System): Node {
@@ -185,7 +228,7 @@ export default class TreeView extends Vue {
       system,
       type: 'namespace',
       name: namespace.name,
-      id: this.generateRandom(),
+      id: `${system.name}_${namespace.name}`,
       testId: `${system.name}_${namespace.name}`,
       children: [],
     };
@@ -217,7 +260,6 @@ export default class TreeView extends Vue {
       if (nodes[0].system?.id) {
         this.activeSystemId = nodes[0].system.id;
       }
-      console.log('nodes[0].system?.name', nodes[0].system?.name);
       this.showCreateNamespaceDialog = true;
       this.clearActiveNodes();
     }

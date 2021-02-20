@@ -18,3 +18,7 @@ export const assertNamespaceIsShown = (namespace: Namespace) => {
 export const assertNamespaceIsNotShown = (namespace: Namespace) => {
   cy.getBySel('tree-view').should('not.contain.text', namespace.name);
 };
+
+export const clickNamespaceOptions = (system: System, namespace: Namespace) => {
+  cy.getBySel(`${system.name}_${namespace.name}_namespace_options`).click();
+};

@@ -113,19 +113,19 @@ export default class CreateNamespaceDialog<T extends SimpleEntity> extends Vue {
 }
 </script>
 
-<i18n>
-{
-  "en": {
-    "add-btn": "Add namespace",
-    "title": "Namespace creation",
-    "cancel": "Cancel",
-    "save": "Save"
-  },
-  "ru": {
-    "add-btn": "Добавить пронстранство имен",
-    "title": "Создание пронстранства имен",
-    "cancel": "Отмена",
-    "save": "Создать"
-  }
-}
-</i18n>
+<!--<i18n>-->
+<!--{-->
+<!--  "en": {-->
+<!--    "add-btn": "Add namespace",-->
+<!--    "title": "Namespace creation",-->
+<!--    "cancel": "Cancel",-->
+<!--    "save": "Save"-->
+<!--  },-->
+<!--  "ru": {-->
+<!--    "add-btn": "Добавить пронстранство имен",-->
+<!--    "title": "Создание пронстранства имен",-->
+<!--    "cancel": "Отмена",-->
+<!--    "save": "Создать"-->
+<!--  }-->
+<!--}-->
+<!--</i18n>-->

@@ -2,6 +2,7 @@ package system
 
 import (
 	"context"
+	"github.com/hardstylez72/bzdacs/pkg/namespace"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -101,10 +102,22 @@ func GetByIdConn(ctx context.Context, conn *sqlx.DB, id int) (*System, error) {
 }
 
 func (r *repository) Delete(ctx context.Context, id int) error {
+
+	namespaces, err := namespace.GetListBySystemIdConn(ctx, r.conn, id)
+	if err != nil {
+		return err
+	}
+
+	for _, ns := range namespaces {
+		err = namespace.DeleteConn(ctx, r.conn, id, ns.Id)
+		if err != nil {
+			return err
+		}
+	}
 	return DeleteConn(ctx, r.conn, id)
 }
 
-func  DeleteConn(ctx context.Context, conn *sqlx.DB, id int) error {
+func DeleteConn(ctx context.Context, conn *sqlx.DB, id int) error {
 	query := `
 		update systems 
 			set deleted_at = now()

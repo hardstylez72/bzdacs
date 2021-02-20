@@ -12,38 +12,29 @@ export interface State {
 const module = defineModule({
   namespaced: true as true,
   state: {
-    service: new NamespaceService({ host: '', baseUrl: '/api/v1/system/namespace' }),
+    service: new NamespaceService({ host: '', baseUrl: '/api/v1/namespace' }),
   } as State,
-  getters: {
-  },
-  mutations: {},
   actions: {
     async GetListBySystemId(context, id: number): Promise<Namespace[]> {
       const { state } = actionContext(context);
       return state.service.GetListBySystemId(id);
     },
-    // async GetList(context): Promise<Namespace[]> {
-    //   const { state, commit } = actionContext(context);
-    //   const namespaces = await state.service.GetList();
-    //   commit.setMany(namespaces);
-    //   return namespaces;
-    // },
+    async GetById(context, id: number): Promise<Namespace> {
+      const { state } = actionContext(context);
+      return state.service.GetById(id);
+    },
     async Create(context, payload: {namespace: Namespace; systemId: number}): Promise<Namespace> {
       const { state } = actionContext(context);
       return state.service.Create(payload.namespace, payload.systemId);
     },
-    // async Update(context, route: Namespace): Promise<Namespace> {
-    //   const { state, commit } = actionContext(context);
-    //   const createdRoute = await state.service.Update(route);
-    //   commit.updateTag(createdRoute);
-    //   return createdRoute;
-    // },
-    // async Delete(context, id: number): Promise<void> {
-    //   const { state, commit } = actionContext(context);
-    //
-    //   await state.service.Delete(id);
-    //   commit.deleteById(id);
-    // },
+    async Update(context, namespace: Namespace): Promise<Namespace> {
+      const { state } = actionContext(context);
+      return state.service.Update(namespace);
+    },
+    async Delete(context, payload: {namespaceId: number; systemId: number}): Promise<void> {
+      const { state } = actionContext(context);
+      await state.service.Delete(payload.namespaceId, payload.systemId);
+    },
   },
 });
 

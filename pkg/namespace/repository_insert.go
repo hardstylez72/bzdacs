@@ -2,8 +2,10 @@ package namespace
 
 import (
 	"context"
+	"errors"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/systemnamespace"
+	"github.com/jackc/pgconn"
 )
 
 func (r *repository) Insert(ctx context.Context, namespace *NamespaceExt) (*Namespace, error) {
@@ -35,7 +37,7 @@ func (r *repository) Insert(ctx context.Context, namespace *NamespaceExt) (*Name
 	return n, nil
 }
 
-func  InsertConn(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
+func InsertConn(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
 	query := `
 insert into namespaces (
                        name,
@@ -57,6 +59,13 @@ insert into namespaces (
 
 	rows, err := conn.NamedQueryContext(ctx, query, namespace)
 	if err != nil {
+		const UniqExceptionCode = "23505"
+		pgErr, ok := err.(*pgconn.PgError)
+		if ok {
+			if pgErr.Code == UniqExceptionCode {
+				return nil, errors.New("entity with same attribute already exist")
+			}
+		}
 		return nil, err
 	}
 

@@ -24,7 +24,7 @@ func WrapSqlxTx(tx *sqlx.Tx) *Tx {
 	}
 }
 
-func (tx *Tx) NamedQueryContext(ctx context.Context, query string, arg interface{}) (*sqlx.Rows, error)  {
+func (tx *Tx) NamedQueryContext(ctx context.Context, query string, arg interface{}) (*sqlx.Rows, error) {
 	// todo: someday when https://github.com/jmoiron/sqlx/pull/565 will be merged all this file can be removed
 	return tx.origin.NamedQuery(query, arg)
 }
@@ -40,3 +40,6 @@ func (tx *Tx) ExecContext(ctx context.Context, query string, args ...interface{}
 	return tx.origin.ExecContext(ctx, query, args...)
 }
 
+func (tx *Tx) NamedExecContext(ctx context.Context, query string, arg interface{}) (sql.Result, error) {
+	return tx.origin.NamedExecContext(ctx, query, arg)
+}

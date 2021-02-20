@@ -7,7 +7,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
-        <v-btn data-test="delete-system-btn" color="blue darken-1" text @click="remove">{{$t('ok')}}</v-btn>
+        <v-btn data-test="delete-btn" color="blue darken-1" text @click="remove">{{$t('ok')}}</v-btn>
         <v-spacer />
       </v-card-actions>
     </v-card>
@@ -55,17 +55,17 @@ export default class SimpleEntityDeleteDialog<T extends SimpleEntity> extends Vu
 }
 </script>
 
-<i18n>
-{
-  "en": {
-    "sure": "Are you sure want to delete that tag?",
-    "cancel": "Cancel",
-    "ok": "OK"
-  },
-  "ru": {
-    "sure": "Вы уверены что хотите удлить тег?",
-    "cancel": "Отмена",
-    "ok": "ОК"
-  }
-}
-</i18n>
+<!--<i18n>-->
+<!--{-->
+<!--  "en": {-->
+<!--    "sure": "Are you sure want to delete that tag?",-->
+<!--    "cancel": "Cancel",-->
+<!--    "ok": "OK"-->
+<!--  },-->
+<!--  "ru": {-->
+<!--    "sure": "Вы уверены что хотите удлить тег?",-->
+<!--    "cancel": "Отмена",-->
+<!--    "ok": "ОК"-->
+<!--  }-->
+<!--}-->
+<!--</i18n>-->

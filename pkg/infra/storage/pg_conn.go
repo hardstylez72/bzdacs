@@ -3,7 +3,7 @@ package storage
 import (
 	"contrib.go.opencensus.io/integrations/ocsql"
 	"database/sql"
-	_ "github.com/jackc/pgx/stdlib"
+	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
 	"github.com/pressly/goose"
 	"os"
@@ -18,6 +18,7 @@ type TimeTamps struct {
 }
 
 func NewPGConnection(connString string) (*sql.DB, error) {
+
 	var err error
 	const postgresDriverName = "pgx"
 

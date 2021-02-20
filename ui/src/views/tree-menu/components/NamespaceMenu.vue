@@ -8,13 +8,13 @@
       </template>
 
       <v-list>
-        <v-list-item data-test="system-edit-option" @click="clickedUpdateSystemButton">
+        <v-list-item data-test="namespace-edit-option" @click="clickedUpdateButton">
           <v-list-item-title>{{this.$t('edit')}}</v-list-item-title>
           <v-list-item-icon>
             <v-icon>mdi-pencil</v-icon>
           </v-list-item-icon>
         </v-list-item>
-        <v-list-item data-test="system-delete-option" @click="clickedDeleteSystemButton">
+        <v-list-item data-test="namespace-delete-option" @click="clickedDeleteButton">
           <v-list-item-title>{{this.$t('delete')}}</v-list-item-title>
           <v-list-item-icon>
             <v-icon>mdi-delete</v-icon>
@@ -22,8 +22,8 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <DeleteSystemDialog v-model="showDeleteSystemDialog" :id="system.id" @itemDeleted="systemDeleted"/>
-    <UpdateSystemDialog v-model="showUpdateSystemDialog" :id="system.id" @itemUpdated="systemUpdated"/>
+    <DeleteDialog v-model="showDeleteDialog" :system-id="system.id" :id="namespace.id" @deleted="namespaceDeleted"/>
+    <UpdateDialog v-model="showUpdateDialog" :id="namespace.id" @updated="namespaceUpdated"/>
   </div>
 </template>
 
@@ -31,38 +31,41 @@
 import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
+import { Namespace } from '@/views/namespace/service';
 import { System } from '@/views/system/service';
-import DeleteSystemDialog from '../../system/components/DeleteDialog.vue';
-import UpdateSystemDialog from '../../system/components/UpdateDialog.vue';
+import DeleteDialog from '../../namespace/components/DeleteDialog.vue';
+import UpdateDialog from '../../namespace/components/UpdateDialog.vue';
 
 @Component({
   components: {
-    DeleteSystemDialog,
-    UpdateSystemDialog,
+    DeleteDialog,
+    UpdateDialog,
   },
 })
 
-export default class SystemMenu extends Vue {
+export default class NamespaceMenu extends Vue {
+  @Prop() namespace!: Namespace
+
   @Prop() system!: System
 
-  showUpdateSystemDialog = false
+  showUpdateDialog = false
 
-  showDeleteSystemDialog = false
+  showDeleteDialog = false
 
-  clickedDeleteSystemButton() {
-    this.showDeleteSystemDialog = true;
+  clickedDeleteButton() {
+    this.showDeleteDialog = true;
   }
 
-  clickedUpdateSystemButton() {
-    this.showUpdateSystemDialog = true;
+  clickedUpdateButton() {
+    this.showUpdateDialog = true;
   }
 
-  systemUpdated(system: System) {
-    this.$emit('systemUpdated');
+  namespaceUpdated(namespace: Namespace) {
+    this.$emit('updated', namespace, this.system);
   }
 
-  systemDeleted(id: number) {
-    this.$emit('systemDeleted');
+  namespaceDeleted(namespaceId: number, systemId: number) {
+    this.$emit('deleted', namespaceId, this.system.id);
   }
 }
 </script>

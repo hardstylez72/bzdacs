@@ -17,7 +17,7 @@ const createSystem = (system?: System): System => {
   clickNewSystemButton();
   fillForm(system);
   clickSaveSystemButton();
-  cy.getBySel('create-system-dialog-card').should('not.exist');
+  cy.get('.v-dialog').should('not.be.visible');
   // @ts-ignore
   return system;
 };

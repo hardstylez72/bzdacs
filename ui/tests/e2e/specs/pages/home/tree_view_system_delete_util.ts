@@ -9,7 +9,7 @@ const clickSystemDeleteOption = () => {
 };
 
 const clickDeleteButton = () => {
-  cy.getBySel('delete-system-btn').click();
+  cy.getBySel('delete-btn').click();
 };
 
 export const deleteSystem = (system: System) => {

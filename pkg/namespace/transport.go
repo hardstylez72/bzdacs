@@ -1,8 +1,8 @@
 package namespace
 
 type insertRequest struct {
-	Name string `json:"name" validate:"required"`
-	SystemId int `json:"systemId" validate:"required"`
+	Name     string `json:"name" validate:"required"`
+	SystemId int    `json:"systemId" validate:"required"`
 }
 
 func insertRequestConvert(r *insertRequest) *NamespaceExt {
@@ -10,7 +10,7 @@ func insertRequestConvert(r *insertRequest) *NamespaceExt {
 		Namespace: Namespace{
 			Name: r.Name,
 		},
-		SystemId:  r.SystemId,
+		SystemId: r.SystemId,
 	}
 }
 
@@ -45,13 +45,10 @@ func newListResponse(groups []Namespace) listResponse {
 }
 
 type deleteRequest struct {
-	Id int `json:"id" validate:"required"`
+	NamespaceId int `json:"namespaceId" validate:"required"`
+	SystemId    int `json:"systemId" validate:"required"`
 }
 
 type getRequest struct {
 	Id int `json:"id" validate:"required"`
-}
-
-type suggestRequest struct {
-	Pattern string `json:"pattern" validate:"required"`
 }

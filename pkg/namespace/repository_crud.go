@@ -11,7 +11,7 @@ func (r *repository) Update(ctx context.Context, namespace *Namespace) (*Namespa
 
 func UpdateConn(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
 	query := `
-	update tags
+	update namespaces
 	   set name = :name,
 		   updated_at = now()
 	 where id = :id returning  id,
@@ -37,9 +37,7 @@ func UpdateConn(ctx context.Context, conn storage.SqlDriver, namespace *Namespac
 	return &g, nil
 }
 
-
 func (r *repository) GetById(ctx context.Context, id int) (*Namespace, error) {
-
 
 	return GetByIdConn(ctx, r.conn, id)
 }
@@ -51,29 +49,28 @@ func GetByIdConn(ctx context.Context, conn storage.SqlDriver, id int) (*Namespac
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from tags
+		from namespaces
 	   where id = $1
 `
-	var group Namespace
-	err := conn.GetContext(ctx, &group, query, id)
+	var namespace Namespace
+	err := conn.GetContext(ctx, &namespace, query, id)
 	if err != nil {
 		return nil, err
 	}
 
-	return &group, nil
+	return &namespace, nil
 }
 
-func (r *repository) Delete(ctx context.Context, id int) error {
-	return DeleteConn(ctx, r.conn, id)
+func (r *repository) Delete(ctx context.Context, systemId, namespaceId int) error {
+	return DeleteConn(ctx, r.conn, systemId, namespaceId)
 }
 
-func  DeleteConn(ctx context.Context, conn storage.SqlDriver, id int) error {
+func DeleteConn(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int) error {
 	query := `
-		update tags 
-			set deleted_at = now()
-		where id = $1;
+		delete from systems_namespaces
+		where system_id = $1 and namespace_id = $2
 `
-	_, err := conn.ExecContext(ctx, query, id)
+	_, err := conn.ExecContext(ctx, query, systemId, namespaceId)
 	if err != nil {
 		return err
 	}

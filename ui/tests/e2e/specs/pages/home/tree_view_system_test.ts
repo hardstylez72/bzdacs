@@ -3,13 +3,13 @@ import { assertSystemIsNotShown, assertSystemIsShown, buildSystem } from './tree
 import { editSystem } from './tree_view_system_edit_util';
 import { deleteSystem } from './tree_view_system_delete_util';
 
-describe('Guest page', () => {
+describe('TreeView system', () => {
   it('Creates system and validates it is shown in a list', () => {
     cy.visit('/?lang=en');
     createValidSystem();
   });
 
-  it('Creates system and validates it is shown in a list', () => {
+  it('Creates system then deletes it', () => {
     cy.visit('/?lang=en');
     const have = createValidSystem();
     assertSystemIsShown(have);
@@ -17,7 +17,7 @@ describe('Guest page', () => {
     assertSystemIsNotShown(have);
   });
 
-  it('Creates system and validates it is shown in a list', () => {
+  it('Creates system then edits it', () => {
     cy.visit('/?lang=en');
     const have = createValidSystem();
     const want = buildSystem();
