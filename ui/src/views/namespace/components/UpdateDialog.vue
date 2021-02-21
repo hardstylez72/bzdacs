@@ -24,7 +24,7 @@ import {
   Component,
 } from 'vue-property-decorator';
 
-import Dialog from '@/views/base/components/Dialog.vue';
+import Dialog from '@/views/common/components/Dialog.vue';
 import SimpleEntityUpdateDialog from '@/views/base/components/SimpleEntityUpdateDialog.vue';
 import { Namespace } from '@/views/namespace/service';
 import Form from './Form.vue';

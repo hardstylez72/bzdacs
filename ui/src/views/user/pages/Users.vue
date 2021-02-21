@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Breadcrumbs :items="breadcrumbs"/>
     <v-data-table
       :items="users"
       :headers="headers"
@@ -44,25 +45,35 @@ import {
 import { DataTableHeader } from 'vuetify';
 import { User } from '../services/user';
 import DictTable from '../../base/components/DictTable.vue';
-import CreateUserDialog from './CreateUserDialog.vue';
-import DeleteUserDialog from './DeleteUserDialog.vue';
-import UpdateUserDialog from './UpdateUserDialog.vue';
+import CreateUserDialog from '../components/CreateUserDialog.vue';
+import DeleteUserDialog from '../components/DeleteUserDialog.vue';
+import UpdateUserDialog from '../components/UpdateUserDialog.vue';
+import Breadcrumbs from '../../common/components/Breadcrumbs.vue';
 
 @Component({
   components: {
     CreateUserDialog,
     DeleteUserDialog,
     UpdateUserDialog,
+    Breadcrumbs,
   },
 })
 export default class TapUserTable extends DictTable<User> {
+  breadcrumbs: any[] = []
+
   protected title = 'Пользователи'
 
   get users(): readonly User[] {
     return this.$store.direct.getters.user.getEntities;
   }
 
-  mounted() {
+  created() {
+    this.breadcrumbs.push({
+      text: this.$route.query.systemName,
+    });
+    this.breadcrumbs.push({
+      text: this.$route.query.namespaceName,
+    });
     this.$store.direct.dispatch.user.GetList();
   }
 

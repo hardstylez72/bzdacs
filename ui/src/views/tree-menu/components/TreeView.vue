@@ -264,10 +264,24 @@ export default class TreeView extends Vue {
       this.clearActiveNodes();
     }
 
-    if (nodes[0].type === 'users') {
-      await this.$router.push({ query: { users: '34' } });
+    const node = nodes[0];
+    if (node.type === 'routes') {
+      await this.$router.push({ name: 'Routes', query: this.formQueryParams(node.system, node.namespace) });
+    } else if (node.type === 'groups') {
+      await this.$router.push({ name: 'Groups', query: this.formQueryParams(node.system, node.namespace) });
+    } else if (node.type === 'users') {
+      await this.$router.push({ name: 'Users', query: this.formQueryParams(node.system, node.namespace) });
     }
     this.clearActiveNodes();
+  }
+
+  formQueryParams(system: System, namespace: Namespace): any {
+    return {
+      systemId: system.id,
+      systemName: system.name,
+      namespaceId: namespace.id,
+      namespaceName: namespace.name,
+    };
   }
 
   clearActiveNodes() {
@@ -304,6 +318,5 @@ async created() {
 <style scoped lang="scss">
 .tree-view-container {
   background: aliceblue;
-  max-width: 400px;
 }
 </style>

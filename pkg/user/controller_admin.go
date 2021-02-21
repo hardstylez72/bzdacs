@@ -127,10 +127,23 @@ func validateToken(token string) (bool, string, error) {
 	return true, login, nil
 }
 
+func parseToken(token string) (string, error) {
+	isValid, login, err := validateToken(token)
+	if isValid {
+		return login, nil
+	}
+	return "", err
+}
+
 func ExtractLogin(r *http.Request) (string, error) {
-	s, err := getSessionFromCookie(r.Cookies())
+	token, err := getTokenFromRequest(r)
 	if err != nil {
 		return "", err
 	}
-	return s.Login, nil
+
+	login, err := parseToken(token)
+	if err != nil {
+		return "", err
+	}
+	return login, nil
 }

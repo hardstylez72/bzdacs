@@ -13,3 +13,6 @@ docker build -t hardstylez72/bzdacsui .
 docker login
 docker push hardstylez72/bzdacsui:latest
  
+ 
+# Swagger
+Generate docs - swag init -g ./cmd/backend/main.go

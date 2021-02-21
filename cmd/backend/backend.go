@@ -19,8 +19,12 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/usergroup"
 	"github.com/hardstylez72/bzdacs/pkg/userroute"
 	"github.com/spf13/viper"
+	"github.com/swaggo/http-swagger"
 	"go.uber.org/zap"
+	"io/ioutil"
 	"net/http"
+	"os"
+	"path"
 	"time"
 )
 
@@ -37,7 +41,7 @@ type Server struct {
 		usergroup  usergroup.Repository
 		userroute  userroute.Repository
 		namespace  namespace.Repository
-		system  system.Repository
+		system     system.Repository
 	}
 }
 
@@ -113,10 +117,18 @@ func (s *Server) Start(r chi.Router) error {
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Mount(apiPathPrefix, r)
 
+	host := "http://localhost" + viper.GetString("backend.port")
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
+			swaggerUrl := "/swagger/source"
+			r.Get("/swagger/*", httpSwagger.Handler(
+				httpSwagger.URL(host+swaggerUrl), //The url pointing to API definition"
+			))
+			r.Get(swaggerUrl, getSwaggerSource)
 			private.Use(user.Auth())
-			private.Use(acsmw.AccessCheck(acsmw.NewService("http://localhost"+viper.GetString("backend.port")), extractLogin, extractRouteAndMethod))
+			private.Use(acsmw.AccessCheck(acsmw.NewService(host), extractLogin, extractRouteAndMethod))
+			namespace.NewController(s.repository.namespace).Mount(private)
+			system.NewController(s.repository.system).Mount(private)
 			acs.NewController(s.repository.userroute, s.repository.user, s.repository.usergroup).Mount(public)
 			tag.NewController(s.repository.tag).Mount(private)
 			route.NewController(s.repository.route).Mount(private)
@@ -125,8 +137,6 @@ func (s *Server) Start(r chi.Router) error {
 			user.NewController(s.repository.user, s.repository.group, s.repository.usergroup).Mount(private, public)
 			usergroup.NewController(s.repository.usergroup).Mount(private)
 			userroute.NewController(s.repository.userroute).Mount(private)
-			namespace.NewController(s.repository.namespace).Mount(private)
-			system.NewController(s.repository.system).Mount(private)
 		})
 	})
 
@@ -139,4 +149,26 @@ func (s *Server) Start(r chi.Router) error {
 	}
 
 	return nil
+}
+
+func getSwaggerSource(writer http.ResponseWriter, request *http.Request) {
+
+	curDir, err := os.Getwd()
+	if err != nil {
+		return
+	}
+
+	file, err := os.Open(path.Join(curDir, "/docs/swagger.yaml"))
+	if err != nil {
+		return
+	}
+	defer func() {
+		_ = file.Close()
+	}()
+
+	swaggerSpec, err := ioutil.ReadAll(file)
+	if err != nil {
+		return
+	}
+	_, _ = writer.Write(swaggerSpec)
 }

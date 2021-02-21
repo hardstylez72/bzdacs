@@ -34,7 +34,7 @@ import { Component } from 'vue-property-decorator';
 import { Route } from '@/views/route/service';
 import SelectableTable from '@/views/base/components/SelectableTable.vue';
 import { DataTableHeader } from 'vuetify';
-import HttpMethodBox from '@/views/base/components/HttpMethodBox.vue';
+import HttpMethodBox from '@/views/common/components/HttpMethodBox.vue';
 
 @Component({
   components: {

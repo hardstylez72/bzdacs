@@ -24,7 +24,7 @@ import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import { Route } from '@/views/route/service';
-import Dialog from '@/views/base/components/Dialog.vue';
+import Dialog from '@/views/common/components/Dialog.vue';
 import _ from 'lodash';
 
 import RouteForm from './RouteForm.vue';

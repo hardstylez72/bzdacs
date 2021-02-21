@@ -44,7 +44,7 @@ import { Tag } from '@/views/tag/service';
 import CreateTagDialog from './CreateTagDialog.vue';
 import DeleteTagDialog from './DeleteTagDialog.vue';
 import UpdateTagDialog from './UpdateTagDialog.vue';
-import HttpMethodBox from '../../base/components/HttpMethodBox.vue';
+import HttpMethodBox from '../../common/components/HttpMethodBox.vue';
 
 @Component({
   components: {

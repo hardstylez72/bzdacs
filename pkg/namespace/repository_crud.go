@@ -62,10 +62,10 @@ func GetByIdConn(ctx context.Context, conn storage.SqlDriver, id int) (*Namespac
 }
 
 func (r *repository) Delete(ctx context.Context, systemId, namespaceId int) error {
-	return DeleteConn(ctx, r.conn, systemId, namespaceId)
+	return DeleteLL(ctx, r.conn, systemId, namespaceId)
 }
 
-func DeleteConn(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int) error {
+func DeleteLL(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int) error {
 	query := `
 		delete from systems_namespaces
 		where system_id = $1 and namespace_id = $2

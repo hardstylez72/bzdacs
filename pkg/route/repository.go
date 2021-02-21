@@ -47,38 +47,6 @@ func (r *repository) UpdateWithTags(ctx context.Context, route *Route, tagNames 
 		Tags:  tagNames,
 	}, nil
 }
-func (r *repository) Update(ctx context.Context, route *Route) (*Route, error) {
-	query := `
-	
-			update routes
-			   set route = :route,
-				   method = :method,
-				   description = :description,
-				   updated_at = now()
-			where id = :id returning id,
-						   route,
-						   method,
-						   description,
-						   created_at,
-						   updated_at,
-						   deleted_at
-`
-
-	rows, err := r.conn.NamedQueryContext(ctx, query, route)
-	if err != nil {
-		return nil, err
-	}
-
-	var g Route
-	for rows.Next() {
-		err = rows.StructScan(&g)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	return &g, nil
-}
 
 func UpdateTx(ctx context.Context, tx *sqlx.Tx, route *Route) (*Route, error) {
 	query := `
@@ -98,48 +66,6 @@ func UpdateTx(ctx context.Context, tx *sqlx.Tx, route *Route) (*Route, error) {
 `
 
 	rows, err := tx.NamedQuery(query, route)
-	if err != nil {
-		return nil, err
-	}
-
-	var g Route
-	for rows.Next() {
-		err = rows.StructScan(&g)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	return &g, nil
-}
-
-func (r *repository) Insert(ctx context.Context, route *Route) (*Route, error) {
-	query := `
-insert into routes (
-                       route,
-                       method,
-                       description,
-                       created_at,
-                       updated_at,
-                       deleted_at
-                       )
-                   values (
-                       :route,
-                       :method,
-                       :description,
-                       now(),
-                       null,
-                       null
-                   ) returning id,
-                               route,
-                       		   method,
-                               description,
-                               created_at,
-                               updated_at,
-                               deleted_at;
-`
-
-	rows, err := r.conn.NamedQueryContext(ctx, query, route)
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +148,7 @@ insert into routes (
 
 	return &g, nil
 }
-func (r *repository) GetByMethodAndRoute(ctx context.Context, route, method string) (*RouteWithTags, error) {
+func (r *repository) Get(ctx context.Context, route, method string) (*RouteWithTags, error) {
 	rr, err := GetByMethodAndRouteDb(ctx, r.conn, method, route)
 	if err != nil {
 		return nil, err

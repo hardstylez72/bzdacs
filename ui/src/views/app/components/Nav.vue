@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position: relative">
     <v-app-bar app color="primary" dark>
       <a @click="goHome"><h1 style="color: aliceblue">{{appName}}</h1></a>
       <LanguageSelector  class="ml-12 language-selector pt-4" />

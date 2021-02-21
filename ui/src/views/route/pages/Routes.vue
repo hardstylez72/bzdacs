@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Breadcrumbs :items="breadcrumbs"/>
     <TagFilter></TagFilter>
     <v-data-table
       :items="routes"
@@ -47,11 +48,12 @@ import {
 import { Filter, Route } from '@/views/route/service';
 import DictTable from '@/views/base/components/DictTable.vue';
 import { DataTableHeader } from 'vuetify';
-import CreateRouteDialog from './CreateRouteDialog.vue';
-import DeleteRouteDialog from './DeleteRouteDialog.vue';
-import UpdateRouteDialog from './UpdateRouteDialog.vue';
-import TagFilter from './TagFilter.vue';
-import HttpMethodBox from '../../base/components/HttpMethodBox.vue';
+import CreateRouteDialog from '../components/CreateRouteDialog.vue';
+import DeleteRouteDialog from '../components/DeleteRouteDialog.vue';
+import UpdateRouteDialog from '../components/UpdateRouteDialog.vue';
+import TagFilter from '../components/TagFilter.vue';
+import HttpMethodBox from '../../common/components/HttpMethodBox.vue';
+import Breadcrumbs from '../../common/components/Breadcrumbs.vue';
 
 @Component({
   components: {
@@ -60,10 +62,13 @@ import HttpMethodBox from '../../base/components/HttpMethodBox.vue';
     UpdateRouteDialog,
     HttpMethodBox,
     TagFilter,
+    Breadcrumbs,
   },
 })
 export default class TabRouteTable extends DictTable<Route> {
   readonly title = 'Маршруты'
+
+  breadcrumbs: any[] = []
 
   @Watch('$i18n.locale')
   onChange() {
@@ -75,6 +80,12 @@ export default class TabRouteTable extends DictTable<Route> {
   }
 
   mounted() {
+    this.breadcrumbs.push({
+      text: this.$route.query.systemName,
+    });
+    this.breadcrumbs.push({
+      text: this.$route.query.namespaceName,
+    });
     const filter = this.$store.direct.getters.route.getFilter;
     this.$store.direct.dispatch.route.GetList(filter);
   }

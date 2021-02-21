@@ -49,11 +49,11 @@ func (r *jsonRes) Json(body interface{}) *jsonRes {
 
 func (r *jsonRes) Send() {
 
+	r.w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
 	if r.statusCode != 0 {
 		r.w.WriteHeader(r.statusCode)
 	}
-
-	r.w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	if r.err != nil {
 		stack := zap.StackSkip("", 0)

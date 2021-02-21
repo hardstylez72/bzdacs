@@ -44,7 +44,7 @@ import { Route } from '@/views/route/service';
 
 @Component({
   components: {
-    Dialog: () => import('../../base/components/Dialog.vue'),
+    Dialog: () => import('../../common/components/Dialog.vue'),
   },
 
 })

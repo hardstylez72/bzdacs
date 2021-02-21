@@ -5,10 +5,23 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/hardstylez72/bzdacs/config"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
+
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"log"
 )
+
+// @title BZDACS
+// @version 1.0
+// @description Access control system
+
+// @contact.name Sergey Korotkov
+// @contact.instruction ss
+
+// @host localhost:4000
+// @BasePath /api
+
+// @securityDefinitions.basic BasicAuth
 
 const (
 	apiPathPrefix = "/api"

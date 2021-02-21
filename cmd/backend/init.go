@@ -214,7 +214,7 @@ func resolveRoutes(ctx context.Context, rep route.Repository, rs []route.Route, 
 
 	for _, r := range rs {
 
-		rr, err := rep.GetByMethodAndRoute(ctx, r.Route, r.Method)
+		rr, err := rep.Get(ctx, r.Route, r.Method)
 		if err != nil {
 			if err != route.ErrEntityNotFound {
 				return nil, err

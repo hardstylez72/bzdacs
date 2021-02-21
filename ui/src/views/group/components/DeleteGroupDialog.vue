@@ -18,12 +18,12 @@
 import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
-import Dialog from '@/views/base/components/Dialog.vue';
+import Dialog from '@/views/common/components/Dialog.vue';
 
 @Component({
   components: {
     Dialog,
-    'c-dialog': () => import('../../base/components/Dialog.vue'),
+    'c-dialog': () => import('../../common/components/Dialog.vue'),
   },
 })
 export default class DeleteRouteDialog extends Vue {

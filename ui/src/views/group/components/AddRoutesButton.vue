@@ -55,7 +55,7 @@ import GroupRoutesSelectableTable from './GroupRoutesSelectableTable.vue';
 
 @Component({
   components: {
-    'c-dialog': () => import('../../base/components/Dialog.vue'),
+    'c-dialog': () => import('../../common/components/Dialog.vue'),
     GroupRoutesSelectableTable,
   },
 })

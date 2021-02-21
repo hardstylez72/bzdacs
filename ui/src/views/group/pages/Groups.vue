@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Breadcrumbs :items="breadcrumbs"/>
     <v-data-table
       :items="groups"
       :headers="headers"
@@ -42,20 +43,24 @@ import {
 } from 'vue-property-decorator';
 import { Group } from '@/views/group/services/group';
 import { DataTableHeader } from 'vuetify';
+import Breadcrumbs from '@/views/common/components/Breadcrumbs.vue';
 import DictTable from '../../base/components/DictTable.vue';
-import CreateGroupDialog from './CreateGroupDialog.vue';
-import DeleteGroupDialog from './DeleteGroupDialog.vue';
-import UpdateGroupDialog from './UpdateGroupDialog.vue';
+import CreateGroupDialog from '../components/CreateGroupDialog.vue';
+import DeleteGroupDialog from '../components/DeleteGroupDialog.vue';
+import UpdateGroupDialog from '../components/UpdateGroupDialog.vue';
 
 @Component({
   components: {
     CreateGroupDialog,
     DeleteGroupDialog,
     UpdateGroupDialog,
+    Breadcrumbs,
   },
 })
 export default class TapGroupTable extends DictTable<Group> {
   readonly title = 'Группы'
+
+  breadcrumbs: any[] = []
 
   readonly headers: DataTableHeader[] = [
     { text: this.$t('id').toString(), value: 'id', width: '70px' },
@@ -67,6 +72,12 @@ export default class TapGroupTable extends DictTable<Group> {
   ]
 
   mounted() {
+    this.breadcrumbs.push({
+      text: this.$route.query.systemName,
+    });
+    this.breadcrumbs.push({
+      text: this.$route.query.namespaceName,
+    });
     this.$store.direct.dispatch.group.GetList();
   }
 

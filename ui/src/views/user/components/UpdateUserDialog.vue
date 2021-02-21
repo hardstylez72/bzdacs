@@ -31,7 +31,7 @@ import {
   Component, Vue, Model, Watch, Prop,
 } from 'vue-property-decorator';
 import { User } from '@/views/user/services/user';
-import Dialog from '../../base/components/Dialog.vue';
+import Dialog from '../../common/components/Dialog.vue';
 
 @Component({
   components: {

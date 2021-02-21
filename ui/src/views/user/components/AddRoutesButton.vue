@@ -57,7 +57,7 @@ import {
 } from 'vue-property-decorator';
 import { Group } from '@/views/group/services/group';
 import { Route } from '@/views/route/service';
-import Dialog from '@/views/base/components/Dialog.vue';
+import Dialog from '@/views/common/components/Dialog.vue';
 import UserRoutesSelectableTable from './UserRoutesSelectableTable.vue';
 
 @Component({

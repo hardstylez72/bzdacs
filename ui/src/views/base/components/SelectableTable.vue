@@ -37,7 +37,7 @@ import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import { DataTableHeader } from 'vuetify';
-import HttpMethodBox from './HttpMethodBox.vue';
+import HttpMethodBox from '../../common/components/HttpMethodBox.vue';
 
 @Component({
   components: {

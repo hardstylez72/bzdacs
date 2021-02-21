@@ -18,7 +18,7 @@
 import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
-import Dialog from '@/views/base/components/Dialog.vue';
+import Dialog from '@/views/common/components/Dialog.vue';
 
 @Component({
   components: {

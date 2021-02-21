@@ -1,0 +1,259 @@
+basePath: /api
+definitions:
+  system.System:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  system.deleteRequest:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  system.getRequest:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  system.getResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  system.insertRequest:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  system.insertResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  system.updateRequest:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  system.updateResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  util.Error:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      stack:
+        type: string
+    type: object
+  util.ResponseWithError:
+    properties:
+      error:
+        $ref: '#/definitions/util.Error'
+    type: object
+host: localhost:4000
+info:
+  contact:
+    name: Sergey Korotkov
+  description: Access control system
+  title: BZDACS
+  version: "1.0"
+paths:
+  /v1/system/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates system
+      operationId: system.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/system.insertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/system.insertResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - system
+  /v1/system/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes system by id
+      operationId: system.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/system.deleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - system
+  /v1/system/get:
+    post:
+      consumes:
+      - application/json
+      description: Gets system by multiple params
+      operationId: system.get
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/system.getRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/system.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - system
+  /v1/system/list:
+    post:
+      consumes:
+      - application/json
+      description: Gets system list
+      operationId: system.list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/system.System'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - system
+  /v1/system/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates system
+      operationId: system.update
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/system.updateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/system.updateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - system
+securityDefinitions:
+  BasicAuth:
+    authorizationUrl: ""
+    type: basic
+swagger: "2.0"

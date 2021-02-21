@@ -24,7 +24,7 @@ import {
 
 @Component({
   components: {
-    'c-dialog': () => import('../../base/components/Dialog.vue'),
+    'c-dialog': () => import('../../common/components/Dialog.vue'),
   },
 })
 export default class DeleteRouteDialog extends Vue {

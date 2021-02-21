@@ -12,12 +12,10 @@ import (
 type Repository interface {
 	List(ctx context.Context, f filter) ([]RouteWithTags, error)
 	GetById(ctx context.Context, id int) (*RouteWithTags, error)
-	GetByMethodAndRoute(ctx context.Context, route, method string) (*RouteWithTags, error)
-	Insert(ctx context.Context, group *Route) (*Route, error)
+	Get(ctx context.Context, route, method string) (*RouteWithTags, error)
 	InsertWithTags(ctx context.Context, route *Route, tagNames []string) (*RouteWithTags, error)
 	UpdateWithTags(ctx context.Context, route *Route, tagNames []string) (*RouteWithTags, error)
 	Delete(ctx context.Context, id int) error
-	Update(ctx context.Context, group *Route) (*Route, error)
 }
 
 type controller struct {

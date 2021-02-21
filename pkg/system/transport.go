@@ -36,8 +36,8 @@ func newUpdateResponse(group *System) *updateResponse {
 
 type listResponse []System
 
-func newListResponse(groups []System) listResponse {
-	return groups
+func newListResponse(systems []System) listResponse {
+	return systems
 }
 
 type deleteRequest struct {
@@ -45,9 +45,12 @@ type deleteRequest struct {
 }
 
 type getRequest struct {
-	Id int `json:"id" validate:"required"`
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }
 
-type suggestRequest struct {
-	Pattern string `json:"pattern" validate:"required"`
+type getResponse System
+
+func newGetResponse(system *System) *getResponse {
+	return (*getResponse)(system)
 }

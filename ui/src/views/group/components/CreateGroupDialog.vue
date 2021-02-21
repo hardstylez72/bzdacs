@@ -56,7 +56,7 @@ import { Group } from '@/views/group/services/group';
 
 @Component({
   components: {
-    Dialog: () => import('../../base/components/Dialog.vue'),
+    Dialog: () => import('../../common/components/Dialog.vue'),
   },
   watch: {
     match: 'validate',

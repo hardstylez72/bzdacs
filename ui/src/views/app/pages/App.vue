@@ -1,9 +1,13 @@
 <template>
-  <v-app :key="$i18n.locale">
-    <Nav/>
+  <v-app :key="$i18n.locale" style="display: flex">
+    <Nav class="top-nav-bar"/>
+    <TreeView class="left-side-menu"/>
     <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
       <v-main>
-        <router-view />
+        <v-container class="app-body-container">
+          <router-view />
+        </v-container>
+
       </v-main>
   </v-app>
 </template>
@@ -13,10 +17,12 @@ import {
   Component, Vue,
 } from 'vue-property-decorator';
 import Nav from '@/views/app/components/Nav.vue';
+import TreeView from '@/views/tree-menu/components/TreeView.vue';
 
 @Component({
   components: {
     Nav,
+    TreeView,
   },
 })
 export default class App extends Vue {
@@ -49,11 +55,22 @@ export default class App extends Vue {
 </script>
 
 <style scoped lang="css">
-.v-main {
-  font-family: "Lobster";
-  width: 99%;
-  margin-left: 0.5%;
-  margin-top: 0.5%;
+
+.app-body-container {
+  margin-left: 325px;
+  width: 100%;
+}
+
+.top-nav-bar {
+
+}
+
+.left-side-menu {
+  z-index: 1;
+  margin-top: 70px;
+  width: 320px;
+  height: 100%;
+  position: fixed;
 }
 
 @font-face {

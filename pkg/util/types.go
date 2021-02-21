@@ -6,10 +6,30 @@ import (
 	"time"
 )
 
+type Timestamp struct {
+	time.Time
+}
+
+///implement encoding.JSON.Marshaler interface
+func (v *Timestamp) MarshalJSON() ([]byte, error) {
+	return json.Marshal(v.String)
+}
+
+func (v *Timestamp) UnmarshalJSON(data []byte) error {
+	var x *string
+	if err := json.Unmarshal(data, &x); err != nil {
+		return err
+	}
+	return nil
+}
+
+///
+
 type JsonNullString struct {
 	sql.NullString
 }
 
+///implement encoding.JSON.Marshaler interface
 func (v *JsonNullString) MarshalJSON() ([]byte, error) {
 	if v.Valid {
 		return json.Marshal(v.String)
@@ -32,11 +52,13 @@ func (v *JsonNullString) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+///
 
 type JsonNullTime struct {
 	sql.NullTime
 }
 
+///implement encoding.JSON.Marshaler interface
 func (v *JsonNullTime) MarshalJSON() ([]byte, error) {
 	if v.Valid {
 		return json.Marshal(v.Time)
@@ -58,3 +80,5 @@ func (v *JsonNullTime) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
+
+///
