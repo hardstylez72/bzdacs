@@ -61,7 +61,7 @@ func (r *jsonRes) Send() {
 		err := &ResponseWithError{Error: Error{
 			Message: r.err.Error(),
 			Stack:   stack.String,
-			Code:    GetErrorCode(r.err),
+			//Code:    GetErrorCode(r.err), // todo: fix
 		}}
 
 		res, sendErr := json.Marshal(err)

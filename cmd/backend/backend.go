@@ -120,6 +120,7 @@ func (s *Server) Start(r chi.Router) error {
 	host := "http://localhost" + viper.GetString("backend.port")
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
+
 			swaggerUrl := "/swagger/source"
 			r.Get("/swagger/*", httpSwagger.Handler(
 				httpSwagger.URL(host+swaggerUrl), //The url pointing to API definition"

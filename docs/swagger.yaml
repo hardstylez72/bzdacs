@@ -1,5 +1,105 @@
 basePath: /api
 definitions:
+  namespace.Namespace:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  namespace.deleteRequest:
+    properties:
+      namespaceId:
+        type: integer
+      systemId:
+        type: integer
+    required:
+    - namespaceId
+    - systemId
+    type: object
+  namespace.getRequest:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  namespace.getResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  namespace.insertRequest:
+    properties:
+      name:
+        type: string
+      systemId:
+        type: integer
+    required:
+    - name
+    - systemId
+    type: object
+  namespace.insertResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  namespace.listRequest:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  namespace.updateRequest:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  namespace.updateResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
   system.System:
     properties:
       createdAt:
@@ -109,6 +209,160 @@ info:
   title: BZDACS
   version: "1.0"
 paths:
+  /v1/namespace/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates namespace
+      operationId: namespace.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/namespace.insertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/namespace.insertResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - namespace
+  /v1/namespace/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes selected namespace
+      operationId: namespace.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/namespace.deleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - namespace
+  /v1/namespace/get:
+    post:
+      consumes:
+      - application/json
+      description: Gets namespace with specified params
+      operationId: namespace.get
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/namespace.getRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/namespace.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - namespace
+  /v1/namespace/list:
+    post:
+      consumes:
+      - application/json
+      description: List of namespaces belong to selected system
+      operationId: namespace.list
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/namespace.listRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/namespace.Namespace'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - namespace
+  /v1/namespace/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates namespace
+      operationId: namespace.update
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/namespace.updateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/namespace.updateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - namespace
   /v1/system/create:
     post:
       consumes:
@@ -254,6 +508,5 @@ paths:
       - system
 securityDefinitions:
   BasicAuth:
-    authorizationUrl: ""
     type: basic
 swagger: "2.0"

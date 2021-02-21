@@ -2,8 +2,8 @@ package namespace
 
 import (
 	"context"
-	"database/sql"
-	"errors"
+	sq "github.com/Masterminds/squirrel"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -11,109 +11,124 @@ type repository struct {
 	conn *sqlx.DB
 }
 
-var (
-	ErrNotFound = errors.New("tag not found")
-)
-
 func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
+func (r *repository) Update(ctx context.Context, namespace *Namespace) (*Namespace, error) {
+	return UpdateLL(ctx, r.conn, namespace)
+}
 
-func InsertTx(ctx context.Context, tx *sqlx.Tx, tag *Namespace) (*Namespace, error) {
+func UpdateLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
 	query := `
-insert into tags (
-                       name,
-                       created_at,
-                       updated_at,
-                       deleted_at
-                       )
-                   values (
-                       :name,
-                       now(),
-                       null,
-                       null
-                   ) returning id,
-                               name,
-                               created_at,
-                               updated_at,
-                               deleted_at;
+	update namespaces
+	   set name = :name,
+		   updated_at = now()
+	 where id = :id returning  id,
+                              name,
+                              created_at,
+                              updated_at,
+                              deleted_at;
 `
-	var g Namespace
-	rows, err := tx.NamedQuery(query, tag)
+
+	rows, err := conn.NamedQueryContext(ctx, query, namespace)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
+	var g Namespace
 	for rows.Next() {
 		err = rows.StructScan(&g)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
 	}
 
 	return &g, nil
 }
 
-func (r *repository) FindByPattern(ctx context.Context, pattern string) ([]Namespace, error) {
-	pattern = "%" + pattern + "%"
-	query := `
-		select id,
+func (r *repository) Get(ctx context.Context, id int, name string) (*Namespace, error) {
+	return GetLL(ctx, r.conn, id, name)
+}
+
+func GetLL(ctx context.Context, conn storage.SqlDriver, id int, name string) (*Namespace, error) {
+	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
+
+	builder := psql.Select(`
+ 			   id,
 			   name,
 			   created_at,
 			   updated_at,
 			   deleted_at
-		from tags
-	   where deleted_at is null
-		 and name like $1;
-`
-	groups := make([]Namespace, 0)
-	err := r.conn.SelectContext(ctx, &groups, query, pattern)
+`).From("namespaces")
+
+	if id != 0 {
+		builder = builder.Where(sq.Eq{"id": id})
+	}
+
+	if name != "" {
+		builder = builder.Where(sq.Eq{"name": name})
+	}
+
+	query, args, err := builder.ToSql()
 	if err != nil {
 		return nil, err
 	}
+	var namespace Namespace
+	err = conn.GetContext(ctx, &namespace, query, args...)
+	if err != nil {
+		return nil, storage.PgError(err)
+	}
 
-	return groups, nil
+	return &namespace, nil
 }
 
-func GetByNameDb(ctx context.Context, conn *sqlx.DB, name string) (*Namespace, error) {
-	query := `
-		select id,
-			   name,
-			   created_at,
-			   updated_at,
-			   deleted_at
-		from tags
-	   where deleted_at is null
-		 and name = $1;
-`
-	var tag Namespace
-	err := conn.GetContext(ctx, &tag, query, name)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, ErrNotFound
+func (r *repository) Delete(ctx context.Context, systemId, namespaceId int) error {
+	tx, err := r.conn.BeginTxx(ctx, nil)
+	defer func() {
+		if err != nil {
+			_ = tx.Rollback()
+		} else {
+			_ = tx.Commit()
 		}
-		return nil, err
-	}
+	}()
 
-	return &tag, nil
-}
+	txx := storage.WrapSqlxTx(tx)
 
-func (r *repository) List(ctx context.Context) ([]Namespace, error) {
-	query := `
-		select id,
-			   name,
-			   created_at,
-			   updated_at,
-			   deleted_at
-		from tags
-	   where deleted_at is null;
-`
-	groups := make([]Namespace, 0)
-	err := r.conn.SelectContext(ctx, &groups, query)
+	err = DeleteLL(ctx, txx, systemId, namespaceId)
 	if err != nil {
-		return nil, err
+		return err
 	}
-
-	return groups, nil
+	err = DeleteRelationLL(ctx, txx, namespaceId)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
+func DeleteLL(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int) error {
+	query := `
+		delete from systems_namespaces
+		where system_id = $1 and namespace_id = $2;
+`
+	_, err := conn.ExecContext(ctx, query, systemId, namespaceId)
+	if err != nil {
+		return storage.PgError(err)
+	}
+
+	return nil
+}
+
+func DeleteRelationLL(ctx context.Context, conn storage.SqlDriver, namespaceId int) error {
+
+	query := `
+			update namespaces
+				set deleted_at = now()
+				where id = $1;
+`
+	_, err := conn.ExecContext(ctx, query, namespaceId)
+	if err != nil {
+		return storage.PgError(err)
+	}
+
+	return nil
+}

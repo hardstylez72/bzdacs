@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgconn"
 )
 
-func (r *repository) Insert(ctx context.Context, namespace *NamespaceExt) (*Namespace, error) {
+func (r *repository) Insert(ctx context.Context, namespace *Namespace, systemId int) (*Namespace, error) {
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
 		if err != nil {
@@ -20,13 +20,13 @@ func (r *repository) Insert(ctx context.Context, namespace *NamespaceExt) (*Name
 
 	txx := storage.WrapSqlxTx(tx)
 
-	n, err := InsertConn(ctx, txx, &namespace.Namespace)
+	n, err := InsertConn(ctx, txx, namespace)
 	if err != nil {
 		return nil, err
 	}
 
 	err = systemnamespace.InsertConn(ctx, txx, systemnamespace.Pair{
-		SystemId:    namespace.SystemId,
+		SystemId:    systemId,
 		NamespaceId: n.Id,
 	})
 

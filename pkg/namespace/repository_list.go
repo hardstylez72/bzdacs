@@ -5,11 +5,11 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 )
 
-func (r *repository) GetListBySystemId(ctx context.Context, systemId int) ([]Namespace, error) {
-	return GetListBySystemIdConn(ctx, r.conn, systemId)
+func (r *repository) List(ctx context.Context, systemId int) ([]Namespace, error) {
+	return ListLL(ctx, r.conn, systemId)
 }
 
-func GetListBySystemIdConn(ctx context.Context, conn storage.SqlDriver, systemId int) ([]Namespace, error) {
+func ListLL(ctx context.Context, conn storage.SqlDriver, systemId int) ([]Namespace, error) {
 	query := `
     select
            n.id,

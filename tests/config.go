@@ -20,7 +20,7 @@ func GetConfig() *Config {
 		BasePath: "/api",
 		Login:    "hs",
 		Password: "1234",
-		Timeout:  time.Second * 10,
+		Timeout:  time.Second * 100,
 	}
 }
 

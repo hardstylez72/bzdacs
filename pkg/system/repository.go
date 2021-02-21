@@ -2,7 +2,6 @@ package system
 
 import (
 	"context"
-	"errors"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/namespace"
@@ -12,10 +11,6 @@ import (
 type repository struct {
 	conn *sqlx.DB
 }
-
-var (
-	ErrNotFound = errors.New("tag not found")
-)
 
 func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
@@ -38,7 +33,7 @@ func ListLL(ctx context.Context, driver storage.SqlDriver) ([]System, error) {
 	systems := make([]System, 0)
 	err := driver.SelectContext(ctx, &systems, query)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	return systems, nil
@@ -62,14 +57,14 @@ func UpdateLL(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, e
 
 	rows, err := conn.NamedQueryContext(ctx, query, namespace)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	var g System
 	for rows.Next() {
 		err = rows.StructScan(&g)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
 	}
 
@@ -102,14 +97,14 @@ insert into systems (
 
 	rows, err := conn.NamedQueryContext(ctx, query, namespace)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	var g System
 	for rows.Next() {
 		err = rows.StructScan(&g)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
 	}
 
@@ -144,18 +139,18 @@ func GetLL(ctx context.Context, conn *sqlx.DB, id int, name string) (*System, er
 		return nil, err
 	}
 
-	var group System
-	err = conn.GetContext(ctx, &group, query, args...)
+	var system System
+	err = conn.GetContext(ctx, &system, query, args...)
 	if err != nil {
 		return nil, storage.PgError(err)
 	}
 
-	return &group, nil
+	return &system, nil
 }
 
 func (r *repository) Delete(ctx context.Context, id int) error {
 
-	namespaces, err := namespace.GetListBySystemIdConn(ctx, r.conn, id)
+	namespaces, err := namespace.ListLL(ctx, r.conn, id)
 	if err != nil {
 		return err
 	}
@@ -177,7 +172,7 @@ func DeleteLL(ctx context.Context, conn *sqlx.DB, id int) error {
 `
 	_, err := conn.ExecContext(ctx, query, id)
 	if err != nil {
-		return err
+		return storage.PgError(err)
 	}
 
 	return nil

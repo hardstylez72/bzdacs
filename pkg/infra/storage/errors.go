@@ -28,5 +28,5 @@ func PgError(err error) error {
 		}
 	}
 
-	return nil
+	return err
 }

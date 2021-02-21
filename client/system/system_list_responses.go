@@ -50,13 +50,13 @@ func NewSystemListOK() *SystemListOK {
 OK
 */
 type SystemListOK struct {
-	Payload [][]*models.SystemSystem
+	Payload []*models.SystemSystem
 }
 
 func (o *SystemListOK) Error() string {
 	return fmt.Sprintf("[POST /v1/system/list][%d] systemListOK  %+v", 200, o.Payload)
 }
-func (o *SystemListOK) GetPayload() [][]*models.SystemSystem {
+func (o *SystemListOK) GetPayload() []*models.SystemSystem {
 	return o.Payload
 }
 

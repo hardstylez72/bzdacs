@@ -5,19 +5,16 @@ type insertRequest struct {
 	SystemId int    `json:"systemId" validate:"required"`
 }
 
-func insertRequestConvert(r *insertRequest) *NamespaceExt {
-	return &NamespaceExt{
-		Namespace: Namespace{
-			Name: r.Name,
-		},
-		SystemId: r.SystemId,
-	}
+func insertRequestConvert(r *insertRequest) (*Namespace, int) {
+	return &Namespace{
+		Name: r.Name,
+	}, r.SystemId
 }
 
 type insertResponse Namespace
 
-func newInsertResponse(group *Namespace) *insertResponse {
-	return (*insertResponse)(group)
+func newInsertResponse(namespace *Namespace) *insertResponse {
+	return (*insertResponse)(namespace)
 }
 
 type updateRequest struct {
@@ -34,14 +31,14 @@ func updateRequestConvert(r *updateRequest) *Namespace {
 
 type updateResponse Namespace
 
-func newUpdateResponse(group *Namespace) *updateResponse {
-	return (*updateResponse)(group)
+func newUpdateResponse(namespace *Namespace) *updateResponse {
+	return (*updateResponse)(namespace)
 }
 
 type listResponse []Namespace
 
-func newListResponse(groups []Namespace) listResponse {
-	return groups
+func newListResponse(namespaces []Namespace) listResponse {
+	return namespaces
 }
 
 type deleteRequest struct {
@@ -50,5 +47,16 @@ type deleteRequest struct {
 }
 
 type getRequest struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+type getResponse *Namespace
+
+func newGetResponse(namespace *Namespace) getResponse {
+	return namespace
+}
+
+type listRequest struct {
 	Id int `json:"id" validate:"required"`
 }
