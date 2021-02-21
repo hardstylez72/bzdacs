@@ -521,12 +521,18 @@ var doc = `{
         },
         "namespace.getRequest": {
             "type": "object",
+            "required": [
+                "systemId"
+            ],
             "properties": {
                 "id": {
                     "type": "integer"
                 },
                 "name": {
                     "type": "string"
+                },
+                "systemId": {
+                    "type": "integer"
                 }
             }
         },

@@ -46,27 +46,29 @@ func UpdateLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace)
 	return &g, nil
 }
 
-func (r *repository) Get(ctx context.Context, id int, name string) (*Namespace, error) {
-	return GetLL(ctx, r.conn, id, name)
+func (r *repository) Get(ctx context.Context, systemId, id int, name string) (*Namespace, error) {
+	return GetLL(ctx, r.conn, systemId, id, name)
 }
 
-func GetLL(ctx context.Context, conn storage.SqlDriver, id int, name string) (*Namespace, error) {
+func GetLL(ctx context.Context, conn storage.SqlDriver, systemId, id int, name string) (*Namespace, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 	builder := psql.Select(`
- 			   id,
-			   name,
-			   created_at,
-			   updated_at,
-			   deleted_at
-`).From("namespaces")
+ 			   n.id,
+			   n.name,
+			   n.created_at,
+			   n.updated_at,
+			   n.deleted_at
+			`).From("namespaces n")
 
 	if id != 0 {
-		builder = builder.Where(sq.Eq{"id": id})
-	}
-
-	if name != "" {
-		builder = builder.Where(sq.Eq{"name": name})
+		builder = builder.Where(sq.Eq{"n.id": id})
+	} else {
+		builder = builder.Join("systems_namespaces sn on sn.namespace_id = n.id")
+		if name != "" {
+			builder = builder.Where(sq.Eq{"n.name": name})
+		}
+		builder = builder.Where(sq.Eq{"sn.system_id": systemId})
 	}
 
 	query, args, err := builder.ToSql()

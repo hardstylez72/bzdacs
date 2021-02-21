@@ -16,7 +16,7 @@ type Repository interface {
 	Insert(ctx context.Context, namespace *Namespace, systemId int) (*Namespace, error)
 	Delete(ctx context.Context, systemId, namespaceId int) error
 	Update(ctx context.Context, namespace *Namespace) (*Namespace, error)
-	Get(ctx context.Context, id int, name string) (*Namespace, error)
+	Get(ctx context.Context, systemId, id int, name string) (*Namespace, error)
 }
 
 type controller struct {
@@ -123,12 +123,20 @@ func (c *controller) get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if req.Id <= 0 && req.Name == "" {
-		err := errors.New("namespace id or name must be set")
+		err := errors.New("namespace id or name+systemId must be set")
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
-	namespace, err := c.rep.Get(ctx, req.Id, req.Name)
+	if req.Id <= 0 {
+		if req.SystemId <= 0 && req.Name == "" {
+			err := errors.New("name and systemId must be set")
+			util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+			return
+		}
+	}
+
+	namespace, err := c.rep.Get(ctx, req.SystemId, req.Id, req.Name)
 	if err != nil {
 		if err == storage.EntityNotFound {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
@@ -151,7 +159,7 @@ func (c *controller) get(w http.ResponseWriter, r *http.Request) {
 // @failure 400 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/namespace/list [post]
-func (c *controller) listBySystemId(w http.ResponseWriter, r *http.Request) {
+func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var req listRequest
@@ -168,7 +176,11 @@ func (c *controller) listBySystemId(w http.ResponseWriter, r *http.Request) {
 
 	namespaces, err := c.rep.List(ctx, req.Id)
 	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		if err == storage.EntityNotFound {
+			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
 		return
 	}
 
@@ -211,7 +223,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 
 func (c *controller) Mount(r chi.Router) {
 	r.Post("/v1/namespace/create", c.create)
-	r.Post("/v1/namespace/list", c.listBySystemId)
+	r.Post("/v1/namespace/list", c.list)
 	r.Post("/v1/namespace/delete", c.delete)
 	r.Post("/v1/namespace/update", c.update)
 	r.Post("/v1/namespace/get", c.get)

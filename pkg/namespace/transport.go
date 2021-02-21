@@ -47,8 +47,9 @@ type deleteRequest struct {
 }
 
 type getRequest struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
+	Id       int    `json:"id"`
+	Name     string `json:"name"`
+	SystemId int    `json:"systemId"`
 }
 
 type getResponse *Namespace

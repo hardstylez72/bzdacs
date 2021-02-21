@@ -30,6 +30,10 @@ definitions:
         type: integer
       name:
         type: string
+      systemId:
+        type: integer
+    required:
+    - systemId
     type: object
   namespace.getResponse:
     properties:

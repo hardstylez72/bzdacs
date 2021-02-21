@@ -23,11 +23,12 @@ func DeleteNamespace(ctx context.Context, client *client.BZDACS, namespaceId, sy
 	return nil
 }
 
-func GetNamespaceByName(ctx context.Context, client *client.BZDACS, name string) (*models.NamespaceGetResponse, error) {
+func GetNamespaceByName(ctx context.Context, client *client.BZDACS, name string, SystemID int64) (*models.NamespaceGetResponse, error) {
 	res, err := client.Namespace.NamespaceGet(
 		&namespace.NamespaceGetParams{
 			Req: &models.NamespaceGetRequest{
-				Name: name,
+				Name:     name,
+				SystemID: &SystemID,
 			},
 			Context: ctx,
 		},
