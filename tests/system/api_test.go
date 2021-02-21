@@ -22,7 +22,7 @@ func Test_system_api(t *testing.T) {
 
 	t.Run("404", func(t *testing.T) {
 		sysName := "404-h"
-		_, err := GetSystemByName(ctx, c, sysName)
+		_, err := GetByName(ctx, c, sysName)
 		_, ok := err.(*system.SystemGetNotFound)
 		if !ok {
 			t.Fatal(err)
@@ -32,22 +32,22 @@ func Test_system_api(t *testing.T) {
 
 func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS) {
 	sysName := tests.GenSystemName()
-	created, err := CreateSystem(ctx, c, sysName)
+	created, err := Create(ctx, c, sysName)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	newSysName := tests.GenSystemName()
-	edited, err := UpdateSystem(ctx, c, newSysName, created.ID)
+	edited, err := Update(ctx, c, newSysName, created.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = DeleteSystem(ctx, c, edited.ID)
+	err = Delete(ctx, c, edited.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
-	deleted, err := GetSystemById(ctx, c, edited.ID)
+	deleted, err := GetById(ctx, c, edited.ID)
 	if err != nil {
 		t.Fatal(err)
 	}

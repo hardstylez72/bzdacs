@@ -2,8 +2,9 @@ package tag
 
 import (
 	"context"
-	"database/sql"
 	"errors"
+	sq "github.com/Masterminds/squirrel"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -19,7 +20,11 @@ func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 
-func (r *repository) Update(ctx context.Context, group *Tag) (*Tag, error) {
+func (r *repository) Update(ctx context.Context, tag *Tag) (*Tag, error) {
+	return UpdateLL(ctx, r.conn, tag)
+}
+
+func UpdateLL(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, error) {
 	query := `
 	update tags 
 	   set name = :name,
@@ -28,59 +33,66 @@ func (r *repository) Update(ctx context.Context, group *Tag) (*Tag, error) {
                                name,
                                created_at,
                                updated_at,
-                               deleted_at;
-`
+                               deleted_at,
+							   namespace_id
+	`
 
-	rows, err := r.conn.NamedQueryContext(ctx, query, group)
+	rows, err := driver.NamedQueryContext(ctx, query, tag)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
-	var g Tag
+	var t Tag
 	for rows.Next() {
-		err = rows.StructScan(&g)
+		err = rows.StructScan(&t)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
 	}
 
-	return &g, nil
+	return &t, nil
 }
 
-func (r *repository) Insert(ctx context.Context, group *Tag) (*Tag, error) {
+func (r *repository) Insert(ctx context.Context, tag *Tag) (*Tag, error) {
+	return InsertLL(ctx, r.conn, tag)
+}
+func InsertLL(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, error) {
 	query := `
-insert into tags (
+	insert into tags (
                        name,
                        created_at,
                        updated_at,
-                       deleted_at
+                       deleted_at,
+					   namespace_id
                        )
                    values (
                        :name,
                        now(),
+                       now(),
                        null,
-                       null
+					   :namespace_id
                    ) returning id,
                                name,
                                created_at,
                                updated_at,
-                               deleted_at;
-`
+                               deleted_at,
+							   namespace_id
+	`
 
-	rows, err := r.conn.NamedQueryContext(ctx, query, group)
+	rows, err := driver.NamedQueryContext(ctx, query, tag)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
-	var g Tag
+	var t Tag
 	for rows.Next() {
-		err = rows.StructScan(&g)
+		err = rows.StructScan(&t)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
 	}
 
-	return &g, nil
+	return &t, nil
 }
 
 func InsertTx(ctx context.Context, tx *sqlx.Tx, tag *Tag) (*Tag, error) {
@@ -105,24 +117,24 @@ insert into tags (
 	var g Tag
 	rows, err := tx.NamedQuery(query, tag)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	for rows.Next() {
 		err = rows.StructScan(&g)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
 	}
 
 	return &g, nil
 }
 
-func (r *repository) GetById(ctx context.Context, id int) (*Tag, error) {
-	return GetByIdDb(ctx, r.conn, id)
+func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Tag, error) {
+	return GetByIdLL(ctx, r.conn, id, namespaceId)
 }
 
-func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Tag, error) {
+func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*Tag, error) {
 	query := `
 		select id,
 			   name,
@@ -130,36 +142,52 @@ func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Tag, error) {
 			   updated_at,
 			   deleted_at
 		from tags
-	   where id = $1
+	   where id = $1 
+		 and namespace_id = $2
 `
-	var group Tag
-	err := conn.GetContext(ctx, &group, query, id)
+	var tag Tag
+	err := driver.GetContext(ctx, &tag, query, id, namespaceId)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
-	return &group, nil
+	return &tag, nil
+}
+func (r *repository) List(ctx context.Context, pattern string, namespaceId int) ([]Tag, error) {
+	return ListLL(ctx, r.conn, pattern, namespaceId)
 }
 
-func (r *repository) FindByPattern(ctx context.Context, pattern string) ([]Tag, error) {
-	pattern = "%" + pattern + "%"
-	query := `
-		select id,
+func ListLL(ctx context.Context, driver storage.SqlDriver, pattern string, namespaceId int) ([]Tag, error) {
+
+	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
+
+	builder := psql.Select(`
+ 			   id,
 			   name,
 			   created_at,
 			   updated_at,
-			   deleted_at
-		from tags
-	   where deleted_at is null
-		 and name like $1;
-`
-	groups := make([]Tag, 0)
-	err := r.conn.SelectContext(ctx, &groups, query, pattern)
+			   deleted_at,
+			   namespace_id
+			`).From("tags")
+
+	if pattern != "" {
+		pattern = "%" + pattern + "%"
+		builder = builder.Where(sq.Like{"name": pattern})
+	}
+	builder = builder.Where(sq.Eq{"deleted_at": nil})
+	builder = builder.Where(sq.Eq{"namespace_id": namespaceId})
+
+	query, args, err := builder.ToSql()
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
+	}
+	tags := make([]Tag, 0)
+	err = driver.SelectContext(ctx, &tags, query, args...)
+	if err != nil {
+		return nil, storage.PgError(err)
 	}
 
-	return groups, nil
+	return tags, nil
 }
 
 func GetByNameDb(ctx context.Context, conn *sqlx.DB, name string) (*Tag, error) {
@@ -176,43 +204,24 @@ func GetByNameDb(ctx context.Context, conn *sqlx.DB, name string) (*Tag, error) 
 	var tag Tag
 	err := conn.GetContext(ctx, &tag, query, name)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, ErrNotFound
-		}
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	return &tag, nil
 }
-
-func (r *repository) List(ctx context.Context) ([]Tag, error) {
-	query := `
-		select id,
-			   name,
-			   created_at,
-			   updated_at,
-			   deleted_at
-		from tags
-	   where deleted_at is null;
-`
-	groups := make([]Tag, 0)
-	err := r.conn.SelectContext(ctx, &groups, query)
-	if err != nil {
-		return nil, err
-	}
-
-	return groups, nil
+func (r *repository) Delete(ctx context.Context, id, namespaceId int) error {
+	return DeleteLL(ctx, r.conn, id, namespaceId)
 }
-
-func (r *repository) Delete(ctx context.Context, id int) error {
+func DeleteLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
 	query := `
 		update tags 
 			set deleted_at = now()
-		where id = $1;
+		where id = $1
+		  and namespace_id = $2
 `
-	_, err := r.conn.ExecContext(ctx, query, id)
+	_, err := driver.ExecContext(ctx, query, id, namespaceId)
 	if err != nil {
-		return err
+		return storage.PgError(err)
 	}
 
 	return nil

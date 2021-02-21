@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func DeleteSystem(ctx context.Context, client *client.BZDACS, id int64) error {
+func Delete(ctx context.Context, client *client.BZDACS, id int64) error {
 	_, err := client.System.SystemDelete(
 		&system.SystemDeleteParams{
 			Req:        &models.SystemDeleteRequest{ID: &id},
@@ -22,7 +22,7 @@ func DeleteSystem(ctx context.Context, client *client.BZDACS, id int64) error {
 	return nil
 }
 
-func GetSystemByName(ctx context.Context, client *client.BZDACS, name string) (*models.SystemGetResponse, error) {
+func GetByName(ctx context.Context, client *client.BZDACS, name string) (*models.SystemGetResponse, error) {
 	res, err := client.System.SystemGet(
 		&system.SystemGetParams{
 			Req: &models.SystemGetRequest{
@@ -38,7 +38,7 @@ func GetSystemByName(ctx context.Context, client *client.BZDACS, name string) (*
 	return res.GetPayload(), nil
 }
 
-func GetSystemById(ctx context.Context, client *client.BZDACS, id int64) (*models.SystemGetResponse, error) {
+func GetById(ctx context.Context, client *client.BZDACS, id int64) (*models.SystemGetResponse, error) {
 	res, err := client.System.SystemGet(
 		&system.SystemGetParams{
 			Req: &models.SystemGetRequest{
@@ -54,7 +54,7 @@ func GetSystemById(ctx context.Context, client *client.BZDACS, id int64) (*model
 	return res.GetPayload(), nil
 }
 
-func UpdateSystem(ctx context.Context, client *client.BZDACS, name string, id int64) (*models.SystemUpdateResponse, error) {
+func Update(ctx context.Context, client *client.BZDACS, name string, id int64) (*models.SystemUpdateResponse, error) {
 	res, err := client.System.SystemUpdate(
 		&system.SystemUpdateParams{
 			Req: &models.SystemUpdateRequest{
@@ -71,7 +71,7 @@ func UpdateSystem(ctx context.Context, client *client.BZDACS, name string, id in
 	return res.GetPayload(), nil
 }
 
-func CreateSystem(ctx context.Context, client *client.BZDACS, name string) (*models.SystemInsertResponse, error) {
+func Create(ctx context.Context, client *client.BZDACS, name string) (*models.SystemInsertResponse, error) {
 	res, err := client.System.SystemCreate(
 		&system.SystemCreateParams{
 			Req:        &models.SystemInsertRequest{Name: &name},

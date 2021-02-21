@@ -1,13 +1,12 @@
 <template>
   <v-app :key="$i18n.locale" style="display: flex">
     <Nav class="top-nav-bar"/>
-    <TreeView class="left-side-menu"/>
+    <TreeView v-if="isAuthorized" class="left-side-menu"/>
     <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
       <v-main>
-        <v-container class="app-body-container">
+        <v-container :class="isAuthorized ? 'app-body-container' : ''">
           <router-view />
         </v-container>
-
       </v-main>
   </v-app>
 </template>
@@ -26,6 +25,10 @@ import TreeView from '@/views/tree-menu/components/TreeView.vue';
   },
 })
 export default class App extends Vue {
+  get isAuthorized(): boolean {
+    return this.$store.direct.getters.isAuthorized;
+  }
+
   get snackbarMessage(): string {
     return this.$store.direct.getters.snackbarMessage;
   }

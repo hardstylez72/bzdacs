@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -141,13 +140,13 @@ func (s *Server) Start(r chi.Router) error {
 		})
 	})
 
-	ctx := context.Background()
+	//ctx := context.Background()
 
-	force := false
-	err = s.initialize(ctx, force, r)
-	if err != nil {
-		return err
-	}
+	//force := false
+	//err = s.initialize(ctx, force, r)
+	//if err != nil {
+	//	return err
+	//}
 
 	return nil
 }

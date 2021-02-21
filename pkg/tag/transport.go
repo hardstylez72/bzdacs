@@ -1,53 +1,66 @@
 package tag
 
 type insertRequest struct {
-	Name string `json:"name" validate:"required"`
+	Name        string `json:"name" validate:"required"`
+	NamespaceId int    `json:"namespaceId" validate:"required"`
 }
 
 func insertRequestConvert(r *insertRequest) *Tag {
 	return &Tag{
-		Name: r.Name,
+		Name:        r.Name,
+		NamespaceId: r.NamespaceId,
 	}
 }
 
-type insertResponse Tag
+type insertResponse *Tag
 
-func newInsertResponse(group *Tag) *insertResponse {
-	return (*insertResponse)(group)
+func newInsertResponse(tag *Tag) insertResponse {
+	return tag
 }
 
 type updateRequest struct {
-	Id   int    `json:"id"  validate:"required"`
-	Name string `json:"name" validate:"required"`
+	Id          int    `json:"id"  validate:"required"`
+	Name        string `json:"name" validate:"required"`
+	NamespaceId int    `json:"namespaceId" validate:"required"`
 }
 
 func updateRequestConvert(r *updateRequest) *Tag {
 	return &Tag{
-		Id:   r.Id,
-		Name: r.Name,
+		Id:          r.Id,
+		Name:        r.Name,
+		NamespaceId: r.NamespaceId,
 	}
 }
 
-type updateResponse Tag
+type updateResponse *Tag
 
-func newUpdateResponse(group *Tag) *updateResponse {
-	return (*updateResponse)(group)
+func newUpdateResponse(tag *Tag) updateResponse {
+	return tag
 }
 
 type listResponse []Tag
 
-func newListResponse(groups []Tag) listResponse {
-	return groups
+func newListResponse(tags []Tag) listResponse {
+	return tags
 }
 
 type deleteRequest struct {
-	Id int `json:"id" validate:"required"`
+	Id          int `json:"id" validate:"required"`
+	NamespaceId int `json:"namespaceId" validate:"required"`
 }
 
 type getRequest struct {
-	Id int `json:"id" validate:"required"`
+	Id          int `json:"id" validate:"required"`
+	NamespaceId int `json:"namespaceId" validate:"required"`
 }
 
-type suggestRequest struct {
-	Pattern string `json:"pattern" validate:"required"`
+type getResponse *Tag
+
+func newGetResponse(tag *Tag) getResponse {
+	return tag
+}
+
+type listRequest struct {
+	Pattern     string `json:"pattern"`
+	NamespaceId int    `json:"namespaceId" validate:"required"`
 }

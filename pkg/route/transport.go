@@ -20,6 +20,7 @@ func insertRequestConvert(r *insertRequest) *Route {
 		Route:       r.Route,
 		Description: r.Description,
 		Method:      r.Method,
+		Tags:        r.Tags,
 	}
 }
 
@@ -32,10 +33,10 @@ func updateRequestConvert(r *updateRequest) *Route {
 	}
 }
 
-type insertResponse RouteWithTags
+type insertResponse *Route
 
-func newInsertResponse(group *RouteWithTags) *insertResponse {
-	return (*insertResponse)(group)
+func newInsertResponse(route *Route) insertResponse {
+	return route
 }
 
 type listResponse []RouteWithTags
@@ -57,7 +58,8 @@ type listRequest struct {
 }
 
 type filter struct {
-	Tags tags `json:"tags"`
+	Tags     tags  `json:"tags"`
+	SystemId int64 `json:"systemId" validate:"required"`
 }
 
 type tags struct {

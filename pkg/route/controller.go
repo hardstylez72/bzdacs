@@ -5,15 +5,17 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
 )
 
 type Repository interface {
+	Insert(ctx context.Context, route *Route) (*Route, error)
+
 	List(ctx context.Context, f filter) ([]RouteWithTags, error)
 	GetById(ctx context.Context, id int) (*RouteWithTags, error)
 	Get(ctx context.Context, route, method string) (*RouteWithTags, error)
-	InsertWithTags(ctx context.Context, route *Route, tagNames []string) (*RouteWithTags, error)
 	UpdateWithTags(ctx context.Context, route *Route, tagNames []string) (*RouteWithTags, error)
 	Delete(ctx context.Context, id int) error
 }
@@ -41,7 +43,7 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	route, err := c.rep.InsertWithTags(ctx, insertRequestConvert(&req), req.Tags)
+	route, err := c.rep.Insert(ctx, insertRequestConvert(&req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -89,7 +91,11 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 
 	list, err := c.rep.List(ctx, req.Filter)
 	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		if err == storage.EntityNotFound {
+			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
 		return
 	}
 

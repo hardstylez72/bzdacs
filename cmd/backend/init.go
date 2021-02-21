@@ -232,10 +232,10 @@ func resolveRoutes(ctx context.Context, rep route.Repository, rs []route.Route, 
 			}
 		}
 
-		rr, err = rep.InsertWithTags(ctx, &r, []string{sysRouteTag})
-		if err != nil {
-			return nil, err
-		}
+		//rr, err = rep.Insert(ctx, &r, []string{sysRouteTag})
+		//if err != nil {
+		//	return nil, err
+		//}
 
 		out = append(out, rr.Route)
 	}

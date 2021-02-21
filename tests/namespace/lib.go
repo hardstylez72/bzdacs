@@ -7,7 +7,7 @@ import (
 	"github.com/hardstylez72/bzdacs/models"
 )
 
-func DeleteNamespace(ctx context.Context, client *client.BZDACS, namespaceId, systemId int64) error {
+func Delete(ctx context.Context, client *client.BZDACS, namespaceId, systemId int64) error {
 	_, err := client.Namespace.NamespaceDelete(
 		&namespace.NamespaceDeleteParams{
 			Req: &models.NamespaceDeleteRequest{
@@ -23,12 +23,12 @@ func DeleteNamespace(ctx context.Context, client *client.BZDACS, namespaceId, sy
 	return nil
 }
 
-func GetNamespaceByName(ctx context.Context, client *client.BZDACS, name string, SystemID int64) (*models.NamespaceGetResponse, error) {
+func GetByName(ctx context.Context, client *client.BZDACS, name string, SystemID int64) (*models.NamespaceGetResponse, error) {
 	res, err := client.Namespace.NamespaceGet(
 		&namespace.NamespaceGetParams{
 			Req: &models.NamespaceGetRequest{
 				Name:     name,
-				SystemID: &SystemID,
+				SystemID: SystemID,
 			},
 			Context: ctx,
 		},
@@ -39,7 +39,7 @@ func GetNamespaceByName(ctx context.Context, client *client.BZDACS, name string,
 	return res.GetPayload(), nil
 }
 
-func GetNamespaceById(ctx context.Context, client *client.BZDACS, id int64) (*models.NamespaceGetResponse, error) {
+func GetById(ctx context.Context, client *client.BZDACS, id int64) (*models.NamespaceGetResponse, error) {
 	res, err := client.Namespace.NamespaceGet(
 		&namespace.NamespaceGetParams{
 			Req: &models.NamespaceGetRequest{
@@ -54,7 +54,7 @@ func GetNamespaceById(ctx context.Context, client *client.BZDACS, id int64) (*mo
 	return res.GetPayload(), nil
 }
 
-func UpdateNamespace(ctx context.Context, client *client.BZDACS, name string, id int64) (*models.NamespaceUpdateResponse, error) {
+func Update(ctx context.Context, client *client.BZDACS, name string, id int64) (*models.NamespaceUpdateResponse, error) {
 	res, err := client.Namespace.NamespaceUpdate(
 		&namespace.NamespaceUpdateParams{
 			Req: &models.NamespaceUpdateRequest{
@@ -70,7 +70,7 @@ func UpdateNamespace(ctx context.Context, client *client.BZDACS, name string, id
 	return res.GetPayload(), nil
 }
 
-func CreateNamespace(ctx context.Context, client *client.BZDACS, name string, systemId int64) (*models.NamespaceInsertResponse, error) {
+func Create(ctx context.Context, client *client.BZDACS, name string, systemId int64) (*models.NamespaceInsertResponse, error) {
 	res, err := client.Namespace.NamespaceCreate(
 		&namespace.NamespaceCreateParams{
 			Req: &models.NamespaceInsertRequest{

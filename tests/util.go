@@ -11,3 +11,8 @@ func GenNamespaceName() string {
 	gofakeit.Seed(0)
 	return gofakeit.Generate("###???")
 }
+
+func GenTagName() string {
+	gofakeit.Seed(0)
+	return gofakeit.Generate("###???")
+}
