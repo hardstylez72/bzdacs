@@ -4,6 +4,7 @@
       <a @click="goHome"><h1 style="color: aliceblue">{{appName}}</h1></a>
       <LanguageSelector  class="ml-12 language-selector pt-4" />
       <GithubLink class="mx-4"/>
+      <SwaggerLink class="mx-4"/>
       <v-spacer/>
       <Avatar v-if="login" :login="login"/>
       <v-btn data-test="logout" v-if="login" class="ms-5" @click="logout" >{{$t('logout')}}</v-btn>
@@ -17,6 +18,7 @@ import {
 } from 'vue-property-decorator';
 import LanguageSelector from '@/views/app/components/LanguageSelector.vue';
 import GithubLink from '@/views/app/components/GithubLink.vue';
+import SwaggerLink from '@/views/app/components/SwaggerLink.vue';
 import Avatar from '@/views/app/components/Avatar.vue';
 
 @Component({
@@ -24,6 +26,7 @@ import Avatar from '@/views/app/components/Avatar.vue';
     LanguageSelector,
     GithubLink,
     Avatar,
+    SwaggerLink,
   },
 })
 export default class Nav extends Vue {

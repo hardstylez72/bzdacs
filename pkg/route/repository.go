@@ -3,10 +3,10 @@ package route
 import (
 	"context"
 	"database/sql"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/hardstylez72/bzdacs/pkg/routetag"
-	"github.com/hardstylez72/bzdacs/pkg/tag"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
 )
@@ -24,7 +24,7 @@ func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 
-func (r *repository) UpdateWithTags(ctx context.Context, route *Route, tagNames []string) (*RouteWithTags, error) {
+func (r *repository) Update(ctx context.Context, route *Route) (*Route, error) {
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
 		if err != nil {
@@ -33,19 +33,22 @@ func (r *repository) UpdateWithTags(ctx context.Context, route *Route, tagNames 
 			_ = tx.Commit()
 		}
 	}()
+
+	txx := storage.WrapSqlxTx(tx)
+
 	updatedRoute, err := UpdateTx(ctx, tx, route)
 	if err != nil {
 		return nil, err
 	}
 
-	tagNames, err = routetag.Merge(ctx, r.conn, tx, updatedRoute.Id, tagNames)
+	tags, err := routetag.MergeLL(ctx, txx, updatedRoute.Id, route.Tags, route.NamespaceId)
 	if err != nil {
 		return nil, err
 	}
-	return &RouteWithTags{
-		Route: *updatedRoute,
-		Tags:  tagNames,
-	}, nil
+
+	updatedRoute.Tags = getTagIdsFromArray(tags)
+
+	return updatedRoute, nil
 }
 
 func UpdateTx(ctx context.Context, tx *sqlx.Tx, route *Route) (*Route, error) {
@@ -62,7 +65,8 @@ func UpdateTx(ctx context.Context, tx *sqlx.Tx, route *Route) (*Route, error) {
 						   description,
 						   created_at,
 						   updated_at,
-						   deleted_at
+						   deleted_at,
+			    		   namespace_id
 `
 
 	rows, err := tx.NamedQuery(query, route)
@@ -87,7 +91,7 @@ func (r *repository) Get(ctx context.Context, route, method string) (*RouteWithT
 		return nil, err
 	}
 
-	tagNames, err := getTagsByRouteId(ctx, r.conn, rr.Id)
+	tagNames, err := getTagNamesByRouteId(ctx, r.conn, rr.Id, 11)
 	if err != nil {
 		return nil, err
 	}
@@ -98,34 +102,29 @@ func (r *repository) Get(ctx context.Context, route, method string) (*RouteWithT
 	}, nil
 }
 
-func (r *repository) GetById(ctx context.Context, id int) (*RouteWithTags, error) {
+func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Route, error) {
 	route, err := GetByIdDb(ctx, r.conn, id)
 	if err != nil {
 		return nil, err
 	}
 
-	tagNames, err := getTagsByRouteId(ctx, r.conn, route.Id)
+	tagNames, err := getTagNamesByRouteId(ctx, r.conn, route.Id, namespaceId)
 	if err != nil {
 		return nil, err
 	}
-
-	return &RouteWithTags{
-		Route: *route,
-		Tags:  tagNames,
-	}, nil
+	route.Tags = tagNames
+	return route, nil
 }
 
-func getTagsByRouteId(ctx context.Context, conn *sqlx.DB, id int) ([]string, error) {
-	tagIds, err := routetag.GetRouteTags(ctx, conn, id)
+func getTagNamesByRouteId(ctx context.Context, conn *sqlx.DB, routeId, namespaceId int) ([]string, error) {
+	tags, err := routetag.GetRouteTagsLL(ctx, conn, routeId, namespaceId)
 	if err != nil {
 		return nil, err
 	}
-	tagNames := make([]string, 0)
-	for _, tagId := range tagIds {
-		t, err := tag.GetByIdLL(ctx, conn, tagId, 111)
-		if err != nil {
-			return nil, err
-		}
+
+	tagNames := make([]string, 0, len(tags))
+
+	for _, t := range tags {
 		tagNames = append(tagNames, t.Name)
 	}
 	return tagNames, nil
@@ -141,7 +140,7 @@ func (r *repository) List(ctx context.Context, f filter) ([]RouteWithTags, error
 
 	for _, route := range routes {
 
-		tagNames, err := getTagsByRouteId(ctx, r.conn, route.Id)
+		tagNames, err := getTagNamesByRouteId(ctx, r.conn, route.Id, 11)
 		if err != nil {
 			return nil, err
 		}
@@ -189,8 +188,7 @@ func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Route, error) {
 			   updated_at,
 			   deleted_at
 		from routes
-	   where deleted_at is null
-  		 and id = $1
+	   where id = $1
 `
 	var route Route
 	err := conn.GetContext(ctx, &route, query, id)
@@ -263,13 +261,17 @@ func ListDb(ctx context.Context, conn *sqlx.DB, f filter) ([]Route, error) {
 	return groups, nil
 }
 
-func (r *repository) Delete(ctx context.Context, id int) error {
+func (r *repository) Delete(ctx context.Context, routeId, namespaceId int) error {
+	return DeleteLL(ctx, r.conn, routeId, namespaceId)
+}
+func DeleteLL(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) error {
 	query := `
 		update routes 
 			set deleted_at = now()
-		where id = $1;
+		where id = $1
+		  and namespace_id = $2
 `
-	_, err := r.conn.ExecContext(ctx, query, id)
+	_, err := driver.ExecContext(ctx, query, routeId, namespaceId)
 	if err != nil {
 		return err
 	}

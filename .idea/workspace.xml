@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/pkg/tag/repository_merge.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/assert.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/namespace/gen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/route/asserts.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/route/gen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/route/route_api_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/route/route_lib.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/system/gen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/tag/gen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/app/components/SwaggerLink.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/backend/backend.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/backend.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/backend/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/backend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/infra/storage/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/infra/storage/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/namespace/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/repository_instert.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository_instert.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/routetag/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/routetag/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/system/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/system/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/tag/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/tag/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/namespace/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/namespace/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/system/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/system/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tag/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/tag/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/util.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/util.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/app/components/Nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/app/components/Nav.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="$PROJECT_DIR$/../../../../go1.13" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1mmGceifm3EiBww6It2tUlGWwZl" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="GO_FMT" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/ui/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/route" />
+      <recent name="$PROJECT_DIR$/tests" />
+      <recent name="$PROJECT_DIR$/pkg/namespace" />
+      <recent name="$PROJECT_DIR$/pkg/systemnamespace" />
+      <recent name="$PROJECT_DIR$/pkg" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests" />
+      <recent name="$PROJECT_DIR$/pkg/systemnamespace" />
+      <recent name="$PROJECT_DIR$/pkg/namespace" />
+      <recent name="$PROJECT_DIR$/migrations" />
+      <recent name="$PROJECT_DIR$/pkg" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend">
+    <configuration name="go build github.com/hardstylez72/bzdacs/cmd/backend" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="bzdacs" />
+      <working_directory value="$PROJECT_DIR$" />
+      <parameters value="-config $PROJECT_DIR$/config/config.local.yaml" />
+      <EXTENSION ID="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+        </ENTRIES>
+      </EXTENSION>
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/cmd/backend/main.go" />
+      <package value="github.com/hardstylez72/bzdacs/cmd/backend" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_system_api in github.com/hardstylez72/bzdacs/tests/system" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bzdacs" />
+      <working_directory value="$PROJECT_DIR$/tests/system" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hardstylez72/bzdacs/tests/system" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^Test_system_api$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_system_api/404 in github.com/hardstylez72/bzdacs/tests/system" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bzdacs" />
+      <working_directory value="$PROJECT_DIR$/tests/system" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hardstylez72/bzdacs/tests/system" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^Test_system_api$/^404$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bzdacs" />
+      <working_directory value="$PROJECT_DIR$/tests/route" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hardstylez72/bzdacs/tests/route" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^Test_tag_api$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/hardstylez72/bzdacs/tests/system" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bzdacs" />
+      <working_directory value="$PROJECT_DIR$/tests/system" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hardstylez72/bzdacs/tests/system" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend" />
+      <item itemvalue="Go Test.go test github.com/hardstylez72/bzdacs/tests/system" />
+      <item itemvalue="Go Test.Test_system_api/404 in github.com/hardstylez72/bzdacs/tests/system" />
+      <item itemvalue="Go Test.Test_system_api in github.com/hardstylez72/bzdacs/tests/system" />
+      <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend" />
+        <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" />
+        <item itemvalue="Go Test.go test github.com/hardstylez72/bzdacs/tests/system" />
+        <item itemvalue="Go Test.Test_system_api in github.com/hardstylez72/bzdacs/tests/system" />
+        <item itemvalue="Go Test.Test_system_api/404 in github.com/hardstylez72/bzdacs/tests/system" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/ui/tests/e2e/support/commands.js" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixes dependencies" />
+    <MESSAGE value="Fixe postgres uniq null index and add generic err response" />
+    <MESSAGE value="Adds access role mw" />
+    <MESSAGE value="Fixes cycle import ui" />
+    <MESSAGE value="Add logout and fixes ui bugs" />
+    <MESSAGE value="Changes default guest group" />
+    <MESSAGE value="Fixed cfg for local deployment" />
+    <MESSAGE value="Add update user func" />
+    <MESSAGE value="Fixe init func" />
+    <MESSAGE value="Delete config.yaml" />
+    <MESSAGE value="Adds e2e tests" />
+    <MESSAGE value="Adds proxy and static server" />
+    <MESSAGE value="Adds demonstrative docker-compose file" />
+    <MESSAGE value="Adds treeView + tests" />
+    <MESSAGE value="Adds system swagger" />
+    <MESSAGE value="Fixes tests" />
+    <MESSAGE value="Adds tag tests + updates tag api" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds tag tests + updates tag api" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="738" y="177" width="1084" height="759" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1612960304072">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="738" y="177" width="1084" height="759" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612960304072" />
+    <state x="445" y="346" width="465" height="391" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1610177655254">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="445" y="346" width="465" height="391" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1610177655254" />
+    <state x="1527" y="80" width="794" height="878" key="CommitChangelistDialog2" timestamp="1613938711835">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1527" y="80" width="794" height="878" key="CommitChangelistDialog2/0.0.2560.1040@0.0.2560.1040" timestamp="1613938711835" />
+    <state x="1126" y="80" width="794" height="878" key="CommitChangelistDialog2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612679505213" />
+    <state width="941" height="485" key="DebuggerActiveHint" timestamp="1613985480375">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="941" height="485" key="DebuggerActiveHint/0.0.2560.1040@0.0.2560.1040" timestamp="1613985480375" />
+    <state width="928" height="485" key="DebuggerActiveHint/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612961792752" />
+    <state x="133" y="100" width="1439" height="839" key="DiffContextDialog" timestamp="1613907190693">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="133" y="100" width="1439" height="839" key="DiffContextDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1613907190693" />
+    <state x="100" y="100" width="1079" height="839" key="DiffContextDialog/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612611111394" />
+    <state x="1274" y="278" width="424" height="482" key="FileChooserDialogImpl" timestamp="1613200352875">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1698" y="278" width="424" height="482" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1610535317961" />
+    <state x="1274" y="278" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613200352875" />
+    <state width="1237" height="279" key="GridCell.Tab.0.bottom" timestamp="1613986324441">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="279" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1613986324441" />
+    <state width="1237" height="259" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
+    <state width="1237" height="279" key="GridCell.Tab.0.center" timestamp="1613986324441">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="279" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1613986324441" />
+    <state width="1237" height="259" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
+    <state width="1237" height="279" key="GridCell.Tab.0.left" timestamp="1613986324441">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="279" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1613986324441" />
+    <state width="1237" height="259" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
+    <state width="1237" height="279" key="GridCell.Tab.0.right" timestamp="1613986324441">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="279" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1613986324441" />
+    <state width="1237" height="259" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
+    <state width="1237" height="280" key="GridCell.Tab.1.bottom" timestamp="1613986269138">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="280" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1613986269138" />
+    <state width="1237" height="259" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
+    <state width="1237" height="280" key="GridCell.Tab.1.center" timestamp="1613986269137">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="280" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1613986269137" />
+    <state width="1237" height="259" key="GridCell.Tab.1.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
+    <state width="1237" height="280" key="GridCell.Tab.1.left" timestamp="1613986269137">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="280" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1613986269137" />
+    <state width="1237" height="259" key="GridCell.Tab.1.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
+    <state width="1237" height="280" key="GridCell.Tab.1.right" timestamp="1613986269138">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1237" height="280" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1613986269138" />
+    <state width="1237" height="259" key="GridCell.Tab.1.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
+    <state x="1041" y="225" width="468" height="583" key="RollbackChangesDialog" timestamp="1613977461698">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1041" y="225" width="468" height="583" key="RollbackChangesDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1613977461698" />
+    <state x="1424" y="154" key="SettingsEditor" timestamp="1610091826541">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1424" y="154" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1610091826541" />
+    <state x="1649" y="256" width="642" height="524" key="StructurePopup" timestamp="1613984364258">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1649" y="256" width="642" height="524" key="StructurePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1613984364258" />
+    <state x="1510" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1613938715298">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1510" y="256" width="800" height="526" key="Vcs.Push.Dialog.v2/0.0.2560.1040@0.0.2560.1040" timestamp="1613938715298" />
+    <state x="1110" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612679508976" />
+    <state width="626" height="519" key="XDebugger.FullValuePopup" timestamp="1613938546924">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="626" height="519" key="XDebugger.FullValuePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1613938546924" />
+    <state width="470" height="519" key="XDebugger.FullValuePopup/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612813165925" />
+    <state x="285" y="128" width="698" height="777" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1612113450016">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="285" y="128" width="698" height="777" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1612113450016" />
+    <state x="1627" y="234" width="587" height="570" key="find.popup" timestamp="1613906308409">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1627" y="234" width="587" height="570" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1613906308409" />
+    <state x="1220" y="234" width="557" height="570" key="find.popup/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612961742564" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/grouproute/repository.go</url>
+          <line>44</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/config/config.go</url>
+          <line>16</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/util/error.go</url>
+          <line>18</line>
+          <option name="timeStamp" value="175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/tests/route/route_lib.go</url>
+          <line>117</line>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/tag/repository.go</url>
+          <line>83</line>
+          <option name="timeStamp" value="210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/tag/repository.go</url>
+          <line>90</line>
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/route/controller.go</url>
+          <line>153</line>
+          <option name="timeStamp" value="213" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/route/repository.go</url>
+          <line>112</line>
+          <option name="timeStamp" value="214" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/route/repository.go</url>
+          <line>107</line>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

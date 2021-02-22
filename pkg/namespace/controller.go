@@ -138,7 +138,7 @@ func (c *controller) get(w http.ResponseWriter, r *http.Request) {
 
 	namespace, err := c.rep.Get(ctx, req.SystemId, req.Id, req.Name)
 	if err != nil {
-		if err == storage.EntityNotFound {
+		if errors.Is(err, storage.EntityNotFound) {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
 		} else {
 			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()

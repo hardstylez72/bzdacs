@@ -1,9 +1,8 @@
-package tag
+package route
 
 import (
 	"context"
 	"github.com/hardstylez72/bzdacs/client"
-
 	"github.com/hardstylez72/bzdacs/tests"
 	"github.com/hardstylez72/bzdacs/tests/namespace"
 	"github.com/hardstylez72/bzdacs/tests/system"
@@ -50,28 +49,35 @@ func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS) {
 		_ = namespace.Delete(ctx, c, ns.ID, s.ID)
 	}()
 
-	tagName := GenTagName()
-	created, err := Create(ctx, c, tagName, ns.ID)
+	r := GenRoute(ns.ID)
+	created, err := Create(ctx, c, r)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	assertRoutes(t, r, created)
+	tests.AssertTimesCreated(t, created.Times)
+
+	e := GenRoute(ns.ID)
+	e.Id = created.Id
+	edited, err := Update(ctx, c, e)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	assertRoutes(t, e, edited)
+	tests.AssertTimesUpdated(t, edited.Times)
+
+	err = Delete(ctx, c, edited.Id, ns.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	newNsName := GenTagName()
-	edited, err := Update(ctx, c, newNsName, created.ID, ns.ID)
+	deleted, err := GetById(ctx, c, edited.Id, ns.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	err = Delete(ctx, c, edited.ID, ns.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	deleted, err := GetById(ctx, c, edited.ID, ns.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
+	tests.AssertTimesDeleted(t, deleted.Times)
 
 	assert.NotNil(t, deleted.DeletedAt)
-	assert.Equal(t, deleted.ID, created.ID)
+	assert.Equal(t, deleted.Id, created.Id)
 }

@@ -31,13 +31,13 @@ func Test_system_api(t *testing.T) {
 }
 
 func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS) {
-	sysName := tests.GenSystemName()
+	sysName := GenSystemName()
 	created, err := Create(ctx, c, sysName)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	newSysName := tests.GenSystemName()
+	newSysName := GenSystemName()
 	edited, err := Update(ctx, c, newSysName, created.ID)
 	if err != nil {
 		t.Fatal(err)

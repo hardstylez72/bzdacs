@@ -64,3 +64,7 @@ type listRequest struct {
 	Pattern     string `json:"pattern"`
 	NamespaceId int    `json:"namespaceId" validate:"required"`
 }
+
+func assertUpdatesEntity() {
+
+}

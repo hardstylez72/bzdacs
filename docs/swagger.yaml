@@ -102,6 +102,93 @@ definitions:
       updatedAt:
         type: string
     type: object
+  route.deleteRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  route.getByIdRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  route.getResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      id:
+        type: integer
+      method:
+        type: string
+      namespaceId:
+        type: integer
+      route:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  route.insertRequest:
+    properties:
+      description:
+        type: string
+      method:
+        type: string
+      namespaceId:
+        type: integer
+      route:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+    required:
+    - description
+    - method
+    - namespaceId
+    - route
+    type: object
+  route.updateRequest:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      method:
+        type: string
+      namespaceId:
+        type: integer
+      route:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+    required:
+    - description
+    - id
+    - method
+    - namespaceId
+    - route
+    type: object
   system.System:
     properties:
       createdAt:
@@ -319,7 +406,7 @@ definitions:
       error:
         $ref: '#/definitions/util.Error'
     type: object
-host: localhost:4000
+host: localhost:8081
 info:
   contact:
     name: Sergey Korotkov
@@ -481,6 +568,124 @@ paths:
             $ref: '#/definitions/util.ResponseWithError'
       tags:
       - namespace
+  /v1/route/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates route
+      operationId: route.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/route.insertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/route.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - route
+  /v1/route/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes route
+      operationId: route.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/route.deleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - route
+  /v1/route/getById:
+    post:
+      consumes:
+      - application/json
+      description: Gets route by id
+      operationId: route.getById
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/route.getByIdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/route.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - route
+  /v1/route/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates route
+      operationId: route.update
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/route.updateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/route.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - route
   /v1/system/create:
     post:
       consumes:

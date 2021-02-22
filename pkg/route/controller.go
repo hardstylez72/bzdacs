@@ -12,12 +12,14 @@ import (
 
 type Repository interface {
 	Insert(ctx context.Context, route *Route) (*Route, error)
+	Update(ctx context.Context, route *Route) (*Route, error)
+	GetById(ctx context.Context, routeId, namespaceId int) (*Route, error)
 
 	List(ctx context.Context, f filter) ([]RouteWithTags, error)
-	GetById(ctx context.Context, id int) (*RouteWithTags, error)
+
 	Get(ctx context.Context, route, method string) (*RouteWithTags, error)
-	UpdateWithTags(ctx context.Context, route *Route, tagNames []string) (*RouteWithTags, error)
-	Delete(ctx context.Context, id int) error
+
+	Delete(ctx context.Context, routeId, namespaceId int) error
 }
 
 type controller struct {
@@ -29,6 +31,16 @@ func NewController(rep Repository) *controller {
 	return &controller{rep: rep, validator: validator.New()}
 }
 
+// @tags route
+// @description Creates route
+// @id route.create
+// @accept application/json
+// @param req body insertRequest true "request"
+// @produce application/json
+// @success 200 {object} getResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/route/create [post]
 func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var req insertRequest
@@ -52,6 +64,16 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Json(newInsertResponse(route)).Send()
 }
 
+// @tags route
+// @description Updates route
+// @id route.update
+// @accept application/json
+// @param req body updateRequest true "request"
+// @produce application/json
+// @success 200 {object} getResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/route/update [post]
 func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var req updateRequest
@@ -66,13 +88,13 @@ func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	route, err := c.rep.UpdateWithTags(ctx, updateRequestConvert(&req), req.Tags)
+	route, err := c.rep.Update(ctx, updateRequestConvert(&req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	util.NewResp(w, r).Status(http.StatusOK).Json(route).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(newUpdateResponse(route)).Send()
 }
 
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
@@ -102,10 +124,20 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list)).Send()
 }
 
+// @tags route
+// @description Gets route by id
+// @id route.getById
+// @accept application/json
+// @param req body getByIdRequest true "request"
+// @produce application/json
+// @success 200 {object} getResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/route/getById [post]
 func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	var req getRequest
+	var req getByIdRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
@@ -116,15 +148,26 @@ func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
-	list, err := c.rep.GetById(ctx, req.Id)
+
+	route, err := c.rep.GetById(ctx, req.Id, req.NamespaceId)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	util.NewResp(w, r).Status(http.StatusOK).Json(list).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(newGetResponse(route)).Send()
 }
 
+// @tags route
+// @description Deletes route
+// @id route.delete
+// @accept application/json
+// @param req body deleteRequest true "request"
+// @produce application/json
+// @success 200
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/route/delete [post]
 func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -140,7 +183,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := c.rep.Delete(ctx, req.Id)
+	err := c.rep.Delete(ctx, req.Id, req.NamespaceId)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -151,7 +194,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 
 func (c *controller) Mount(r chi.Router) {
 	r.Post("/v1/route/list", c.list)
-	r.Post("/v1/route/get", c.getById)
+	r.Post("/v1/route/getById", c.getById)
 	r.Post("/v1/route/create", c.create)
 	r.Post("/v1/route/delete", c.delete)
 	r.Post("/v1/route/update", c.update)

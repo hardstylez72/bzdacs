@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/strfmt"
 
 	"github.com/hardstylez72/bzdacs/client/namespace"
+	"github.com/hardstylez72/bzdacs/client/route"
 	"github.com/hardstylez72/bzdacs/client/system"
 	"github.com/hardstylez72/bzdacs/client/tag"
 )
@@ -21,7 +22,7 @@ var Default = NewHTTPClient(nil)
 const (
 	// DefaultHost is the default Host
 	// found in Meta (info) section of spec file
-	DefaultHost string = "localhost:4000"
+	DefaultHost string = "localhost:8081"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
 	DefaultBasePath string = "/api"
@@ -58,6 +59,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *BZDACS {
 	cli := new(BZDACS)
 	cli.Transport = transport
 	cli.Namespace = namespace.New(transport, formats)
+	cli.Route = route.New(transport, formats)
 	cli.System = system.New(transport, formats)
 	cli.Tag = tag.New(transport, formats)
 	return cli
@@ -106,6 +108,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type BZDACS struct {
 	Namespace namespace.ClientService
 
+	Route route.ClientService
+
 	System system.ClientService
 
 	Tag tag.ClientService
@@ -117,6 +121,7 @@ type BZDACS struct {
 func (c *BZDACS) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.Namespace.SetTransport(transport)
+	c.Route.SetTransport(transport)
 	c.System.SetTransport(transport)
 	c.Tag.SetTransport(transport)
 }

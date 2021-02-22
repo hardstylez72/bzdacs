@@ -18,7 +18,7 @@ import (
 // @contact.name Sergey Korotkov
 // @contact.instruction ss
 
-// @host localhost:4000
+// @host localhost:8081
 // @BasePath /api
 
 // @securityDefinitions.basic BasicAuth

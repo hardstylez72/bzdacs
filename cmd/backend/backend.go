@@ -4,7 +4,6 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
-	acsmw "github.com/hardstylez72/bzdacs-go"
 	"github.com/hardstylez72/bzdacs/pkg/acs"
 	"github.com/hardstylez72/bzdacs/pkg/group"
 	"github.com/hardstylez72/bzdacs/pkg/grouproute"
@@ -126,7 +125,7 @@ func (s *Server) Start(r chi.Router) error {
 			))
 			r.Get(swaggerUrl, getSwaggerSource)
 			private.Use(user.Auth())
-			private.Use(acsmw.AccessCheck(acsmw.NewService(host), extractLogin, extractRouteAndMethod))
+			//private.Use(acsmw.AccessCheck(acsmw.NewService(host), extractLogin, extractRouteAndMethod))
 			namespace.NewController(s.repository.namespace).Mount(private)
 			system.NewController(s.repository.system).Mount(private)
 			acs.NewController(s.repository.userroute, s.repository.user, s.repository.usergroup).Mount(public)
@@ -158,7 +157,7 @@ func getSwaggerSource(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	file, err := os.Open(path.Join(curDir, "/docs/swagger.yaml"))
+	file, err := os.Open(path.Join(curDir, "/docs/swagger.json"))
 	if err != nil {
 		return
 	}

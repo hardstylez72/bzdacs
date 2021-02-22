@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/routetag"
+	"github.com/hardstylez72/bzdacs/pkg/tag"
 )
 
 func (r *repository) Insert(ctx context.Context, route *Route) (*Route, error) {
@@ -23,13 +24,23 @@ func (r *repository) Insert(ctx context.Context, route *Route) (*Route, error) {
 		return nil, err
 	}
 
-	tagNames, err := routetag.Merge(ctx, r.conn, tx, newRoute.Id, route.Tags)
+	tags, err := routetag.MergeLL(ctx, txx, newRoute.Id, route.Tags, route.NamespaceId)
 	if err != nil {
 		return nil, err
 	}
-	newRoute.Tags = tagNames
+
+	newRoute.Tags = getTagIdsFromArray(tags)
 
 	return newRoute, nil
+}
+
+func getTagIdsFromArray(tags []tag.Tag) []string {
+	names := make([]string, 0, len(tags))
+
+	for _, tag := range tags {
+		names = append(names, tag.Name)
+	}
+	return names
 }
 
 func InsertLL(ctx context.Context, driver storage.SqlDriver, route *Route) (*Route, error) {
@@ -40,7 +51,8 @@ insert into routes (
                        description,
                        created_at,
                        updated_at,
-                       deleted_at
+                       deleted_at,
+					   namespace_id
                        )
                    values (
                        :route,
@@ -48,14 +60,16 @@ insert into routes (
                        :description,
                        now(),
                        now(),
-                       null
+                       null,
+					   :namespace_id
                    ) returning id,
                                route,
                        		   method,
                                description,
                                created_at,
                                updated_at,
-                               deleted_at;
+                               deleted_at,
+							   namespace_id
 `
 	var r Route
 	rows, err := driver.NamedQueryContext(ctx, query, route)

@@ -2,7 +2,8 @@ package storage
 
 import (
 	"database/sql"
-	"errors"
+	"github.com/pkg/errors"
+
 	"github.com/jackc/pgconn"
 )
 
@@ -18,13 +19,13 @@ var (
 func PgError(err error) error {
 
 	if sql.ErrNoRows == err {
-		return EntityNotFound
+		return errors.Wrap(EntityNotFound, err.Error())
 	}
 
 	pgErr, ok := err.(*pgconn.PgError)
 	if ok {
 		if pgErr.Code == UniqExceptionCode {
-			return EntityAlreadyExist
+			return errors.Wrap(EntityAlreadyExist, err.Error())
 		}
 	}
 

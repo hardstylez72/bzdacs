@@ -226,10 +226,10 @@ func resolveRoutes(ctx context.Context, rep route.Repository, rs []route.Route, 
 				out = append(out, rr.Route)
 				continue
 			}
-			err := rep.Delete(ctx, rr.Id)
-			if err != nil {
-				return nil, err
-			}
+			//err := rep.Delete(ctx, rr.Id)
+			//if err != nil {
+			//	return nil, err
+			//}
 		}
 
 		//rr, err = rep.Insert(ctx, &r, []string{sysRouteTag})

@@ -34,20 +34,20 @@ func Test_namespace_api(t *testing.T) {
 
 func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS) {
 
-	s, err := system.Create(ctx, c, tests.GenSystemName())
+	s, err := system.Create(ctx, c, system.GenSystemName())
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer func() {
 		_ = system.Delete(ctx, c, s.ID)
 	}()
-	nsName := tests.GenNamespaceName()
+	nsName := GenNamespaceName()
 	created, err := Create(ctx, c, nsName, s.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	newNsName := tests.GenNamespaceName()
+	newNsName := GenNamespaceName()
 	edited, err := Update(ctx, c, newNsName, created.ID)
 	if err != nil {
 		t.Fatal(err)
