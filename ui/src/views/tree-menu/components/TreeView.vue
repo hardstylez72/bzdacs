@@ -53,9 +53,9 @@
 import {
   Component, Vue,
 } from 'vue-property-decorator';
-import { System } from '@/views/system/service';
-import { Namespace } from '@/views/namespace/service';
-import { Node, NodeType } from '../entity';
+import { System } from '@/views/system/entity';
+import { Namespace } from '@/views/namespace/entity';
+import { Node, NodeType, QueryParams } from '../entity';
 import CreateSystemDialog from '../../system/components/CreateDialog.vue';
 import CreateNamespaceDialog from '../../namespace/components/CreateDialog.vue';
 import SystemMenu from './SystemMenu.vue';
@@ -117,21 +117,29 @@ export default class TreeView extends Vue {
       type: 'routes',
       system,
       namespace,
-      testId: 'routes',
+      testId: `${system.name}_${namespace.name}_routes`,
     }, {
       id: this.generateRandom(),
       name: 'groups',
       type: 'groups',
       system,
       namespace,
-      testId: 'groups',
+      testId: `${system.name}_${namespace.name}_groups`,
     }, {
       id: this.generateRandom(),
       name: 'users',
       type: 'users',
       system,
       namespace,
-      testId: 'users',
+      testId: `${system.name}_${namespace.name}_users`,
+    },
+    {
+      id: this.generateRandom(),
+      name: 'tags',
+      type: 'tags',
+      system,
+      namespace,
+      testId: `${system.name}_${namespace.name}_tags`,
     },
   ];
   }
@@ -271,11 +279,13 @@ export default class TreeView extends Vue {
       await this.$router.push({ name: 'Groups', query: this.formQueryParams(node.system, node.namespace) });
     } else if (node.type === 'users') {
       await this.$router.push({ name: 'Users', query: this.formQueryParams(node.system, node.namespace) });
+    } else if (node.type === 'tags') {
+      await this.$router.push({ name: 'Tags', query: this.formQueryParams(node.system, node.namespace) });
     }
     this.clearActiveNodes();
   }
 
-  formQueryParams(system: System, namespace: Namespace): any {
+  formQueryParams(system: System, namespace: Namespace): QueryParams {
     return {
       systemId: system.id,
       systemName: system.name,
@@ -307,6 +317,7 @@ async created() {
   this.iconMap.set('users', 'mdi-account');
   this.iconMap.set('createNewSystemBtn', 'mdi-database-plus');
   this.iconMap.set('createNewNamespaceBtn', 'mdi-card-plus');
+  this.iconMap.set('tags', 'mdi-tag-multiple');
 
   this.items = await this.getSystems();
 }

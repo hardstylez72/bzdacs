@@ -2,8 +2,16 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
+import { client } from '@/views/base/services/utils/requester';
+import {
+  serviceOptions,
+  NamespaceService,
+  namespace_insertRequest, namespace_updateRequest, namespace_deleteRequest,
+} from '@/views/namespace/generated';
 import { moduleActionContext } from '../base/store';
-import NamespaceService, { Namespace } from './service';
+import { Namespace } from './entity';
+
+serviceOptions.axios = client;
 
 export interface State {
   service: NamespaceService;
@@ -12,28 +20,28 @@ export interface State {
 const module = defineModule({
   namespaced: true as true,
   state: {
-    service: new NamespaceService({ host: '', baseUrl: '/api/v1/namespace' }),
+    service: new NamespaceService(),
   } as State,
   actions: {
     async GetListBySystemId(context, id: number): Promise<Namespace[]> {
       const { state } = actionContext(context);
-      return state.service.GetListBySystemId(id);
+      return state.service.namespaceList({ req: { id } });
     },
     async GetById(context, id: number): Promise<Namespace> {
       const { state } = actionContext(context);
-      return state.service.GetById(id);
+      return state.service.namespaceGet({ req: { id } });
     },
-    async Create(context, payload: {namespace: Namespace; systemId: number}): Promise<Namespace> {
+    async Create(context, req: namespace_insertRequest): Promise<Namespace> {
       const { state } = actionContext(context);
-      return state.service.Create(payload.namespace, payload.systemId);
+      return state.service.namespaceCreate({ req });
     },
-    async Update(context, namespace: Namespace): Promise<Namespace> {
+    async Update(context, req: namespace_updateRequest): Promise<Namespace> {
       const { state } = actionContext(context);
-      return state.service.Update(namespace);
+      return state.service.namespaceUpdate({ req });
     },
-    async Delete(context, payload: {namespaceId: number; systemId: number}): Promise<void> {
+    async Delete(context, req: namespace_deleteRequest): Promise<void> {
       const { state } = actionContext(context);
-      await state.service.Delete(payload.namespaceId, payload.systemId);
+      await state.service.namespaceDelete({ req });
     },
   },
 });

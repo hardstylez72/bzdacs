@@ -52,13 +52,10 @@ func (v *JsonNullString) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-///
-
 type JsonNullTime struct {
 	sql.NullTime
 }
 
-///implement encoding.JSON.Marshaler interface
 func (v *JsonNullTime) MarshalJSON() ([]byte, error) {
 	if v.Valid {
 		return json.Marshal(v.Time)
@@ -80,5 +77,3 @@ func (v *JsonNullTime) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-///

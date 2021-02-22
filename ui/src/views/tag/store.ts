@@ -2,77 +2,52 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
+import { client } from '@/views/base/services/utils/requester';
+import {
+  serviceOptions, tag_deleteRequest, tag_insertRequest, tag_listRequest, tag_updateRequest,
+  TagService,
+} from '@/views/tag/generated';
 import { moduleActionContext } from '../base/store';
-import TagService, { Tag } from './service';
+import { TagSwg as Tag } from './entity';
+
+serviceOptions.axios = client;
 
 export interface State {
   service: TagService;
-  tags: Tag[];
 }
 
 const module = defineModule({
   namespaced: true as true,
   state: {
-    service: new TagService({ host: '', baseUrl: '/api/v1/tag' }),
-    tags: [],
+    service: new TagService(),
   } as State,
-  getters: {
-    getTags(state) {
-      return state.tags;
-    },
-  },
-  mutations: {
-    setTags(state, routes: Tag[]) {
-      state.tags = routes;
-    },
-    deleteTag(state, id: number) {
-      state.tags = state.tags.filter((route) => route.id !== id);
-    },
-    addTag(state, routes: Tag) {
-      state.tags.push(routes);
-    },
-    updateTag(state, route: Tag) {
-      state.tags = state.tags.map((r) => {
-        if (route.id === r.id) {
-          return route;
-        }
-        return r;
-      });
-    },
-  },
   actions: {
     async GetById(context, id: number): Promise<Tag> {
       const { state } = actionContext(context);
-
-      return state.service.GetById(id);
+      return state.service.tagGet({ req: { id } });
     },
-    async GetList(context): Promise<Tag[]> {
-      const { state, commit } = actionContext(context);
-      const routes = await state.service.GetList();
-      commit.setTags(routes);
-      return routes;
-    },
-    async Create(context, route: Tag): Promise<Tag> {
-      const { state, commit } = actionContext(context);
-      const createdRoute = await state.service.Create(route);
-      commit.addTag(createdRoute);
-      return createdRoute;
-    },
-    async GetByPattern(context, name: string): Promise<Tag[]> {
+    async GetList(context, req: tag_listRequest): Promise<{items: Tag[]; total: number}> {
       const { state } = actionContext(context);
-      return state.service.GetByPattern(name);
+      // @ts-ignore
+      return state.service.tagList({ req });
     },
-    async Update(context, route: Tag): Promise<Tag> {
-      const { state, commit } = actionContext(context);
-      const createdRoute = await state.service.Update(route);
-      commit.updateTag(createdRoute);
-      return createdRoute;
+    async Create(context, req: tag_insertRequest): Promise<Tag> {
+      const { state } = actionContext(context);
+      return state.service.tagCreate({ req });
     },
-    async Delete(context, id: number): Promise<void> {
-      const { state, commit } = actionContext(context);
-
-      await state.service.Delete(id);
-      commit.deleteTag(id);
+    async GetByPattern(context, req: tag_listRequest): Promise<Tag[]> {
+      const { state } = actionContext(context);
+      const res = await state.service.tagList({ req });
+      // @ts-ignore
+      return res.items;
+    },
+    async Update(context, req: tag_updateRequest): Promise<Tag> {
+      const { state } = actionContext(context);
+      return state.service.tagUpdate({ req });
+    },
+    async Delete(context, req: tag_deleteRequest): Promise<void> {
+      const { state } = actionContext(context);
+      await state.service.tagDelete({ req });
     },
   },
 });

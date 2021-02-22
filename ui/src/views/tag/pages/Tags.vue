@@ -1,8 +1,7 @@
 <template>
   <div>
-    <Breadcrumbs :items="breadcrumbs"/>
     <v-data-table
-      :items="routes"
+      :items="getTags"
       :headers="headers"
       sort-by="calories"
       class="elevation-1"
@@ -10,26 +9,20 @@
       :items-per-page="-1"
     >
       <template v-slot:no-data>
-        {{$t('no-data')}}
+       {{$t('no-data')}}
       </template>
 
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title> {{$t('title')}}</v-toolbar-title>
+          <v-toolbar-title>{{ $t('title') }}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer />
-          <CreateRouteDialog @routeCreated="loadRoutes"/>
+          <CreateTagDialog @tagCreated="loadTags"/>
         </v-toolbar>
       </template>
 
       <template v-slot:item.method="{ item }">
         <HttpMethodBox :method="item.method"></HttpMethodBox>
-      </template>
-
-      <template v-slot:item.tags="{ item }">
-        <div class="d-inline-block" v-for="tag in item.tags">
-          <v-chip>{{tag}}</v-chip>
-        </div>
       </template>
 
       <template v-slot:item.actions="{ item }">
@@ -38,8 +31,8 @@
       </template>
     </v-data-table>
     <TablePagination v-bind:limit.sync="pageSize" :total="total" v-model="page"/>
-    <DeleteRouteDialog :route-id="activeItemId" v-model="showDeleteDialog" @routeDeleted="loadRoutes"/>
-    <UpdateRouteDialog :route-id="activeItemId" v-model="showEditDialog" @routeUpdated="loadRoutes"/>
+    <DeleteTagDialog :tag-id="activeItemId" v-model="showDeleteDialog" @tagDeleted="loadTags"/>
+    <UpdateTagDialog :id="activeItemId" v-model="showEditDialog" @tagUpdated="loadTags"/>
   </div>
 </template>
 
@@ -50,45 +43,43 @@ import {
 import { Route } from '@/views/route/entity';
 import DictTable from '@/views/base/components/DictTable.vue';
 import { DataTableHeader } from 'vuetify';
+import { Tag } from '@/views/tag/entity';
 import { QueryParams } from '@/views/tree-menu/entity';
-import CreateRouteDialog from '../components/CreateRouteDialog.vue';
-import DeleteRouteDialog from '../components/DeleteRouteDialog.vue';
-import UpdateRouteDialog from '../components/UpdateRouteDialog.vue';
+import CreateTagDialog from '../components/CreateTagDialog.vue';
+import DeleteTagDialog from '../components/DeleteTagDialog.vue';
+import UpdateTagDialog from '../components/UpdateTagDialog.vue';
 import HttpMethodBox from '../../common/components/HttpMethodBox.vue';
-import Breadcrumbs from '../../common/components/Breadcrumbs.vue';
 import TablePagination from '../../common/components/TablePagination.vue';
 
 @Component({
   components: {
-    CreateRouteDialog,
-    DeleteRouteDialog,
-    UpdateRouteDialog,
+    CreateTagDialog,
+    DeleteTagDialog,
+    UpdateTagDialog,
     HttpMethodBox,
-    Breadcrumbs,
     TablePagination,
   },
 })
-
 export default class TabRouteTable extends DictTable<Route> {
-  breadcrumbs: any[] = []
+  pageSize =10
 
-    pageSize =10
+  page = 1
 
-    page = 1
+  total = 0
 
-    total = 0
+  tags = []
 
   @Watch('pageSize')
   paginationChanged(pageSize: number) {
     this.page = 1;
     this.pageSize = pageSize;
-    this.loadRoutes();
+    this.loadTags();
   }
 
   @Watch('page')
   pageChanged(pageSize: number) {
     this.page = pageSize;
-    this.loadRoutes();
+    this.loadTags();
   }
 
   queryParams = this.getViewTreeQueryParams()
@@ -96,7 +87,7 @@ export default class TabRouteTable extends DictTable<Route> {
   @Watch('$route.query')
   routerChanged() {
     this.queryParams = this.getViewTreeQueryParams();
-    this.loadRoutes();
+    this.loadTags();
   }
 
   getViewTreeQueryParams(): QueryParams {
@@ -108,18 +99,8 @@ export default class TabRouteTable extends DictTable<Route> {
     };
   }
 
-  mounted() {
-    this.breadcrumbs.push({
-      text: this.$route.query.systemName,
-    });
-    this.breadcrumbs.push({
-      text: this.$route.query.namespaceName,
-    });
-    this.loadRoutes();
-  }
-
-  async loadRoutes() {
-    const list = await this.$store.direct.dispatch.route.GetList({
+  async loadTags() {
+    const list = await this.$store.direct.dispatch.tag.GetList({
       filter: {
         namespaceId: this.queryParams.namespaceId,
         page: this.page,
@@ -127,64 +108,48 @@ export default class TabRouteTable extends DictTable<Route> {
       },
     });
     this.total = list.total;
+    this.tags = list.items;
   }
 
-  get routes(): readonly Route[] {
-    return this.$store.direct.getters.route.getRoutes;
+  mounted() {
+    this.loadTags();
   }
 
-  get activeRoute(): Route {
-    return this.$store.direct.getters.route.getRoutes.filter(((route) => route.id === this.activeItemId))[0];
+  get getTags(): readonly Tag[] {
+    return this.tags;
   }
 
-  methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
+  get activeRoute(): Tag {
+    return this.tags.filter(((tag) => tag.id === this.activeItemId))[0];
+  }
 
   readonly headers: DataTableHeader[] = [
     { text: this.$t('id').toString(), value: 'id', width: '70px' },
-    { text: this.$t('method').toString(), value: 'method', width: '100px' },
-    { text: this.$t('route').toString(), value: 'route' },
-    { text: this.$t('description').toString(), value: 'description' },
-    { text: this.$t('tags').toString(), value: 'tags', width: '30%' },
-    {
- text: this.$t('actions').toString(), value: 'actions', sortable: false, width: '80px',
-},
+    { text: this.$t('tag').toString(), value: 'name' },
+    { text: this.$t('actions').toString(), value: 'actions', width: '80px' },
   ]
 }
 </script>
 
 <style scoped lang="scss">
-.routes-tab-container {
-  display: flex;
-  height: 1000px;
-  justify-content: space-between;
-}
-.create-route-btn {
-  margin: 10px;
 
-}
 </style>
 
 <i18n>
 {
   "en": {
     "no-data": "No data",
-    "title": "Routes",
+    "title": "Tags",
     "id": "Id",
-    "method": "Method",
-    "route": "Route",
-    "description": "Description",
-    "tags": "Tags",
+    "tag": "Tag",
     "actions": "Actions"
   },
   "ru": {
-    "no-data": " Нет данных",
-    "title": "Муршруты",
+    "no-data": "Нет данных",
+    "title": "Теги",
     "id": "Id",
-    "method": "Метод",
-    "route": "Маршрут",
-    "description": "Описание",
-    "tags": "Теги",
-    "actions": "Действия"
+    "tag": "Тег",
+    "actions": "Дейтсвия"
   }
 }
 </i18n>

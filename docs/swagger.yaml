@@ -69,6 +69,19 @@ definitions:
     - id
     - namespaceId
     type: object
+  route.filter:
+    properties:
+      namespaceId:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    required:
+    - namespaceId
+    - page
+    - pageSize
+    type: object
   route.getByIdRequest:
     properties:
       id:
@@ -135,6 +148,20 @@ definitions:
     - method
     - namespaceId
     - route
+    type: object
+  route.listRequest:
+    properties:
+      filter:
+        $ref: '#/definitions/route.filter'
+    type: object
+  route.listResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/route.getResponse'
+        type: array
+      total:
+        type: integer
     type: object
   route.updateRequest:
     properties:
@@ -214,6 +241,21 @@ definitions:
     - id
     - namespaceId
     type: object
+  tag.filter:
+    properties:
+      namespaceId:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      pattern:
+        type: string
+    required:
+    - namespaceId
+    - page
+    - pageSize
+    type: object
   tag.getRequest:
     properties:
       id:
@@ -249,12 +291,17 @@ definitions:
     type: object
   tag.listRequest:
     properties:
-      namespaceId:
+      filter:
+        $ref: '#/definitions/tag.filter'
+    type: object
+  tag.listResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/tag.getResponse'
+        type: array
+      total:
         type: integer
-      pattern:
-        type: string
-    required:
-    - namespaceId
     type: object
   tag.updateRequest:
     properties:
@@ -571,6 +618,36 @@ paths:
             $ref: '#/definitions/util.ResponseWithError'
       tags:
       - route
+  /v1/route/list:
+    post:
+      consumes:
+      - application/json
+      description: Gets list of routes
+      operationId: route.list
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/route.listRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/route.listResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - route
   /v1/route/update:
     post:
       consumes:
@@ -851,9 +928,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/tag.getResponse'
-            type: array
+            $ref: '#/definitions/tag.listResponse'
         "400":
           description: Bad Request
           schema:

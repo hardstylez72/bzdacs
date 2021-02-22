@@ -2,88 +2,65 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
+import { client } from '@/views/base/services/utils/requester';
+import {
+  serviceOptions,
+  route_deleteRequest, route_getByIdRequest,
+  route_insertRequest, route_listRequest,
+  route_updateRequest,
+  RouteService,
+} from '@/views/route/generated';
 import { moduleActionContext } from '../base/store';
-import RouteService, { Filter, Route } from './service';
+import { RouteSwg as Route } from './entity';
+
+serviceOptions.axios = client;
 
 export interface State {
   service: RouteService;
   routes: Route[];
-  filter: Filter;
 }
 
 const module = defineModule({
   namespaced: true as true,
   state: {
-    filter: {
-      tags: {
-        exclude: false,
-        names: [],
-      },
-    },
-    service: new RouteService({ host: '', baseUrl: '/api/v1/route' }),
+    service: new RouteService(),
     routes: [],
   } as State,
   getters: {
     getRoutes(state) {
       return state.routes;
     },
-    getFilter(state) {
-      return state.filter;
-    },
   },
   mutations: {
-    setFilter(state, filter: Filter) {
-      state.filter = filter;
-    },
-    setFilterTagNames(state, names: string[]) {
-      state.filter.tags.names = names;
-    },
-    setRoutes(state, routes: Route[]) {
-      state.routes = routes;
-    },
-    deleteRoute(state, id: number) {
-      state.routes = state.routes.filter((route) => route.id !== id);
-    },
-    addRoute(state, routes: Route) {
-      state.routes.unshift(routes);
-    },
-    updateRoute(state, route: Route) {
-      state.routes = state.routes.map((r) => {
-        if (route.id === r.id) {
-          return route;
-        }
-        return r;
-      });
+    setRoutes(state, routes?: Route[]) {
+      if (routes) {
+        state.routes = routes;
+      }
     },
   },
   actions: {
-    async GetList(context, filter: Filter): Promise<Route[]> {
+    async GetList(context, req: route_listRequest): Promise<{items: Route[]; total: number}> {
       const { state, commit } = actionContext(context);
-      const routes = await state.service.GetListV2(filter);
-      commit.setRoutes(routes);
-      return routes;
+      const res = await state.service.routeList({ req });
+      commit.setRoutes(res.items);
+      // @ts-ignore
+      return res;
     },
-    async GetById(context, id: number): Promise<Route> {
+    async GetById(context, req: route_getByIdRequest): Promise<Route> {
       const { state } = actionContext(context);
-      return state.service.GetById(id);
+      return state.service.routeGetById({ req });
     },
-    async Create(context, route: Route): Promise<Route> {
-      const { state, commit } = actionContext(context);
-      const createdRoute = await state.service.Create(route);
-      commit.addRoute(createdRoute);
-      return createdRoute;
+    async Create(context, req: route_insertRequest): Promise<Route> {
+      const { state } = actionContext(context);
+      return state.service.routeCreate({ req });
     },
-    async Update(context, route: Route): Promise<Route> {
-      const { state, commit } = actionContext(context);
-      const createdRoute = await state.service.Update(route);
-      commit.updateRoute(createdRoute);
-      return createdRoute;
+    async Update(context, req: route_updateRequest): Promise<Route> {
+      const { state } = actionContext(context);
+      return state.service.routeUpdate({ req });
     },
-    async Delete(context, id: number): Promise<void> {
-      const { state, commit } = actionContext(context);
-
-      await state.service.Delete(id);
-      commit.deleteRoute(id);
+    async Delete(context, req: route_deleteRequest): Promise<void> {
+      const { state } = actionContext(context);
+      return state.service.routeDelete({ req });
     },
   },
 });

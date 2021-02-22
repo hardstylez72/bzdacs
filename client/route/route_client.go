@@ -38,6 +38,8 @@ type ClientService interface {
 
 	RouteGetByParams(params *RouteGetByParamsParams, opts ...ClientOption) (*RouteGetByParamsOK, error)
 
+	RouteList(params *RouteListParams, opts ...ClientOption) (*RouteListOK, error)
+
 	RouteUpdate(params *RouteUpdateParams, opts ...ClientOption) (*RouteUpdateOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
@@ -192,6 +194,44 @@ func (a *Client) RouteGetByParams(params *RouteGetByParamsParams, opts ...Client
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for route.getByParams: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  RouteList Gets list of routes
+*/
+func (a *Client) RouteList(params *RouteListParams, opts ...ClientOption) (*RouteListOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRouteListParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "route.list",
+		Method:             "POST",
+		PathPattern:        "/v1/route/list",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &RouteListReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*RouteListOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for route.list: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

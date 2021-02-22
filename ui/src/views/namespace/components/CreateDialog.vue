@@ -28,7 +28,7 @@ import {
 
 import Dialog from '@/views/common/components/Dialog.vue';
 import SimpleEntityCreateDialog from '@/views/base/components/SimpleEntityCreateDialog.vue';
-import { Namespace } from '@/views/namespace/service';
+import { Namespace } from '@/views/namespace/entity';
 import SystemForm from './Form.vue';
 
 @Component({
@@ -41,7 +41,7 @@ export default class CreateNamespaceDialog extends SimpleEntityCreateDialog<Name
   @Prop() systemId!: number
 
   async saveValid(namespace: Namespace) {
-    const n = await this.$store.direct.dispatch.namespace.Create({ namespace, systemId: this.systemId });
+    const n = await this.$store.direct.dispatch.namespace.Create({ systemId: this.systemId, name: namespace.name });
     this.$emit('itemCreated', n, this.systemId);
   }
 }

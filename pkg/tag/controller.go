@@ -11,7 +11,7 @@ import (
 
 type Repository interface {
 	GetById(ctx context.Context, id int) (*Tag, error)
-	List(ctx context.Context, pattern string, namespaceId int) ([]Tag, error)
+	List(ctx context.Context, filter filter) ([]Tag, int, error)
 	Insert(ctx context.Context, tag *Tag) (*Tag, error)
 	Delete(ctx context.Context, id, namespaceId int) error
 	Update(ctx context.Context, tag *Tag) (*Tag, error)
@@ -99,7 +99,7 @@ func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 // @accept application/json
 // @param req body listRequest true "request"
 // @produce application/json
-// @success 200 {array} getResponse
+// @success 200 {object} listResponse
 // @failure 400 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/tag/list [post]
@@ -118,12 +118,12 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	list, err := c.rep.List(ctx, req.Pattern, req.NamespaceId)
+	list, total, err := c.rep.List(ctx, req.Filter)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
-	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list)).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list, total)).Send()
 }
 
 // @tags tag

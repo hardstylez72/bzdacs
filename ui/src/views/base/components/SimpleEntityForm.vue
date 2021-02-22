@@ -25,7 +25,7 @@
 import {
   Component, Model, Vue, Watch,
 } from 'vue-property-decorator';
-import { Namespace } from '@/views/namespace/service';
+import { Namespace } from '@/views/namespace/entity';
 import { SimpleEntity } from '@/views/base/services/entity';
 
 @Component

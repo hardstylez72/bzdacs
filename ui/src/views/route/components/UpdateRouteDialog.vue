@@ -23,7 +23,7 @@
 import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
-import { Route } from '@/views/route/service';
+import { Route } from '@/views/route/entity';
 import Dialog from '@/views/common/components/Dialog.vue';
 import _ from 'lodash';
 
@@ -64,7 +64,8 @@ export default class UpdateRouteDialog extends Vue {
 
   @Watch('routeId')
   protected onChangeItem(id: number): void {
-    this.$store.direct.dispatch.route.GetById(id).then((item) => {
+    const namespaceId = Number(this.$route.query.namespaceId);
+    this.$store.direct.dispatch.route.GetById({ namespaceId, id }).then((item) => {
       this.route = {
         description: item.description,
         id: item.id,
@@ -104,8 +105,17 @@ export default class UpdateRouteDialog extends Vue {
       return;
     }
 
-    await this.$store.direct.dispatch.route.Update(this.$data.route);
+    const namespaceId = Number(this.$route.query.namespaceId);
+    await this.$store.direct.dispatch.route.Update({
+      namespaceId,
+      id: this.route.id,
+      tags: this.route.tags,
+      method: this.route.method,
+      description: this.route.description,
+      route: this.route.route,
+    });
     this.$emit('change', false);
+    this.$emit('routeUpdated');
     this.show = false;
   }
 

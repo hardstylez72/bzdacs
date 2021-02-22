@@ -51,7 +51,7 @@
 import {
   Component, Vue, Watch,
 } from 'vue-property-decorator';
-import { Route } from '@/views/route/service';
+import { Route } from '@/views/route/entity';
 import Dialog from '@/views/common/components/Dialog.vue';
 import _ from 'lodash';
 import RouteForm from './RouteForm.vue';
@@ -101,8 +101,15 @@ export default class CreateRouteDialog extends Vue {
     if (!this.route.description || !this.route.method || !this.route.route) {
       return;
     }
-
-    await this.$store.direct.dispatch.route.Create(this.$data.route);
+    const namespaceId = Number(this.$route.query.namespaceId);
+    await this.$store.direct.dispatch.route.Create({
+      namespaceId,
+      tags: this.route.tags,
+      route: this.route.route,
+      description: this.route.description,
+      method: this.route.method,
+    });
+    this.$emit('routeCreated');
     this.clearForm();
     this.show = false;
   }

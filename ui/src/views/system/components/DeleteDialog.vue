@@ -2,7 +2,7 @@
 import {
   Component,
 } from 'vue-property-decorator';
-import { System } from '@/views/system/service';
+import { System } from '@/views/system/entity';
 import SimpleEntityDeleteDialog from '@/views/base/components/SimpleEntityDeleteDialog.vue';
 
 @Component

@@ -5,7 +5,7 @@ import {
   defineActions, defineModule, defineMutations, defineGetters,
 } from 'direct-vuex';
 import GroupRouteService, { GroupRoute } from '@/views/group/services/grouproute';
-import { Route } from '@/views/route/service';
+import { Route } from '@/views/route/entity';
 import { moduleActionContext } from '../../base/store';
 
 export interface State{

@@ -1,6 +1,6 @@
 import faker from 'faker';
-import { Namespace } from '../../../../../src/views/namespace/service';
-import { System } from '../../../../../src/views/system/service';
+import { Namespace } from '../../../../../src/views/namespace/entity';
+import { System } from '../../../../../src/views/system/entity';
 
 export const buildNamespace = (): Namespace => ({
   name: faker.lorem.word(),

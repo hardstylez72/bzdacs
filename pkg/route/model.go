@@ -16,8 +16,3 @@ type Route struct {
 	NamespaceId int               `json:"namespaceId" db:"namespace_id"`
 	Tags        []string          `json:"tags" `
 }
-
-type RouteWithTags struct {
-	Route
-	Tags []string `json:"tags" `
-}

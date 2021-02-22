@@ -17,8 +17,7 @@ type Repository interface {
 	GetById(ctx context.Context, routeId, namespaceId int) (*Route, error)
 	GetByParams(ctx context.Context, route, method string, namespaceId int) (*Route, error)
 	Delete(ctx context.Context, routeId, namespaceId int) error
-
-	List(ctx context.Context, f filter) ([]RouteWithTags, error)
+	List(ctx context.Context, f filter) ([]Route, int, error)
 }
 
 type controller struct {
@@ -96,6 +95,16 @@ func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Json(newUpdateResponse(route)).Send()
 }
 
+// @tags route
+// @description Gets list of routes
+// @id route.list
+// @accept application/json
+// @param req body listRequest true "request"
+// @produce application/json
+// @success 200 {object} listResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/route/list [post]
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var req listRequest
@@ -110,7 +119,7 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	list, err := c.rep.List(ctx, req.Filter)
+	list, total, err := c.rep.List(ctx, req.Filter)
 	if err != nil {
 		if err == storage.EntityNotFound {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
@@ -120,7 +129,7 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list)).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(newListResponse(list, total)).Send()
 }
 
 // @tags route

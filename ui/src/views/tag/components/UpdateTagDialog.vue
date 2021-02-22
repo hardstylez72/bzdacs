@@ -24,7 +24,7 @@ import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import Dialog from '@/views/common/components/Dialog.vue';
-import { Tag } from '@/views/tag/service';
+import { Tag } from '@/views/tag/entity';
 import TagForm from './TagForm.vue';
 
 @Component({
@@ -94,21 +94,15 @@ export default class UpdateTagDialog extends Vue {
     if (!this.tag.id || !this.tag.name) {
       return;
     }
-
-    await this.$store.direct.dispatch.tag.Update(this.tag);
-    this.$emit('change', false);
-    this.disableUpdateButton = true;
-    this.$store.direct.dispatch.tag.GetById(this.id).then((tag) => {
-      this.tag = {
-        name: tag.name,
-        id: tag.id,
-      };
-      this.tagInitialState = {
-        name: tag.name,
-        id: tag.id,
-      };
+    const namespaceId = Number(this.$route.query.namespaceId);
+    await this.$store.direct.dispatch.tag.Update({
+      id: this.tag.id,
+      name: this.tag.name,
+      namespaceId,
     });
-
+    this.$emit('change', false);
+    this.$emit('tagUpdated');
+    this.disableUpdateButton = true;
     this.show = false;
   }
 

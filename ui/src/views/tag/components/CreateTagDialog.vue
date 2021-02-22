@@ -31,7 +31,7 @@ import {
 } from 'vue-property-decorator';
 
 import Dialog from '@/views/common/components/Dialog.vue';
-import { Tag } from '@/views/tag/service';
+import { Tag } from '@/views/tag/entity';
 import TagForm from './TagForm.vue';
 
 @Component({
@@ -45,8 +45,6 @@ export default class CreateRouteDialog extends Vue {
   show = false
 
   valid = true
-
-  title = 'Создание тега'
 
   tag: Tag = {
     name: '',
@@ -76,9 +74,10 @@ export default class CreateRouteDialog extends Vue {
     if (!this.tag.name) {
       return;
     }
-
-    await this.$store.direct.dispatch.tag.Create(this.tag);
+    const namespaceId = Number(this.$route.query.namespaceId);
+    await this.$store.direct.dispatch.tag.Create({ namespaceId, name: this.tag.name });
     this.clearForm();
+    this.$emit('tagCreated');
     this.show = false;
   }
 

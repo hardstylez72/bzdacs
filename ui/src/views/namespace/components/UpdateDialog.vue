@@ -26,7 +26,7 @@ import {
 
 import Dialog from '@/views/common/components/Dialog.vue';
 import SimpleEntityUpdateDialog from '@/views/base/components/SimpleEntityUpdateDialog.vue';
-import { Namespace } from '@/views/namespace/service';
+import { Namespace } from '@/views/namespace/entity';
 import Form from './Form.vue';
 
 @Component({

@@ -3,7 +3,6 @@ package tag
 import (
 	"context"
 	"errors"
-	sq "github.com/Masterminds/squirrel"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/jmoiron/sqlx"
 )
@@ -116,42 +115,6 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Tag, err
 	}
 
 	return &tag, nil
-}
-func (r *repository) List(ctx context.Context, pattern string, namespaceId int) ([]Tag, error) {
-	return ListLL(ctx, r.conn, pattern, namespaceId)
-}
-
-func ListLL(ctx context.Context, driver storage.SqlDriver, pattern string, namespaceId int) ([]Tag, error) {
-
-	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
-
-	builder := psql.Select(`
- 			   id,
-			   name,
-			   created_at,
-			   updated_at,
-			   deleted_at,
-			   namespace_id
-			`).From("tags")
-
-	if pattern != "" {
-		pattern = "%" + pattern + "%"
-		builder = builder.Where(sq.Like{"name": pattern})
-	}
-	builder = builder.Where(sq.Eq{"deleted_at": nil})
-	builder = builder.Where(sq.Eq{"namespace_id": namespaceId})
-
-	query, args, err := builder.ToSql()
-	if err != nil {
-		return nil, storage.PgError(err)
-	}
-	tags := make([]Tag, 0)
-	err = driver.SelectContext(ctx, &tags, query, args...)
-	if err != nil {
-		return nil, storage.PgError(err)
-	}
-
-	return tags, nil
 }
 
 func (r *repository) Delete(ctx context.Context, id, namespaceId int) error {

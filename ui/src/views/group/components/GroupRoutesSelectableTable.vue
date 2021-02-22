@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
-import { Route } from '@/views/route/service';
+import { Route } from '@/views/route/entity';
 import SelectableTable from '@/views/base/components/SelectableTable.vue';
 import { DataTableHeader } from 'vuetify';
 import HttpMethodBox from '@/views/common/components/HttpMethodBox.vue';

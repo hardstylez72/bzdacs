@@ -46,8 +46,10 @@ export default class DeleteRouteDialog extends Vue {
   }
 
   async deleteRoute() {
-    await this.$store.direct.dispatch.route.Delete(this.routeId);
+    const namespaceId = Number(this.$route.query.namespaceId);
+    await this.$store.direct.dispatch.route.Delete({ namespaceId, id: this.routeId });
     this.$emit('change', false);
+    this.$emit('routeDeleted');
   }
 }
 </script>

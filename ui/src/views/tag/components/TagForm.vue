@@ -22,8 +22,8 @@
 import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
-import { Route } from '@/views/route/service';
-import { Tag } from '@/views/tag/service';
+import { Route } from '@/views/route/entity';
+import { Tag } from '@/views/tag/entity';
 
 @Component
 export default class TagForm extends Vue {

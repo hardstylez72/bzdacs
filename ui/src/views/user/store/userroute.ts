@@ -11,7 +11,7 @@ import UserRouteService, {
   UserRoute,
 } from '@/views/user/services/userroute';
 
-import { Route } from '@/views/route/service';
+import { Route } from '@/views/route/entity';
 import { moduleActionContext } from '../../base/store';
 
 export interface State{

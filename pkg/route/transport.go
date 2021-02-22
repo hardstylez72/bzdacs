@@ -50,10 +50,20 @@ func newUpdateResponse(route *Route) updateResponse {
 	return route
 }
 
-type listResponse []Route
+type listResponse struct {
+	Items []getResponse `json:"items"`
+	Total int           `json:"total"`
+}
 
-func newListResponse(routes []RouteWithTags) listResponse {
-	return nil
+func newListResponse(routes []Route, total int) listResponse {
+	out := make([]getResponse, 0, len(routes))
+	for i := range routes {
+		out = append(out, &routes[i])
+	}
+	return listResponse{
+		Items: out,
+		Total: total,
+	}
 }
 
 type deleteRequest struct {
@@ -83,11 +93,7 @@ type listRequest struct {
 }
 
 type filter struct {
-	Tags     tags  `json:"tags"`
-	SystemId int64 `json:"systemId" validate:"required"`
-}
-
-type tags struct {
-	Names   []string `json:"names"`
-	Exclude bool     `json:"exclude"`
+	Page        int `json:"page"  validate:"required,gte=1"`
+	PageSize    int `json:"pageSize"  validate:"required,gte=1"`
+	NamespaceId int `json:"namespaceId" validate:"required,gte=1"`
 }

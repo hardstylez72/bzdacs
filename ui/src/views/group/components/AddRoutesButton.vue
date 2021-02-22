@@ -50,7 +50,7 @@
 import {
   Component, Vue, Prop,
 } from 'vue-property-decorator';
-import { Route } from '@/views/route/service';
+import { Route } from '@/views/route/entity';
 import GroupRoutesSelectableTable from './GroupRoutesSelectableTable.vue';
 
 @Component({

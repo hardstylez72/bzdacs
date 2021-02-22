@@ -37,7 +37,7 @@
 import {
   Component, Vue,
 } from 'vue-property-decorator';
-import { Route } from '@/views/route/service';
+import { Route } from '@/views/route/entity';
 import { Group } from '@/views/group/services/group';
 import GroupRoutesSelectableTable from '../components/GroupRoutesSelectableTable.vue';
 import AddRoutesButton from '../components/AddRoutesButton.vue';

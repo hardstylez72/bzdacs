@@ -31,7 +31,7 @@
 import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
-import { System } from '@/views/system/service';
+import { System } from '@/views/system/entity';
 import DeleteSystemDialog from '../../system/components/DeleteDialog.vue';
 import UpdateSystemDialog from '../../system/components/UpdateDialog.vue';
 

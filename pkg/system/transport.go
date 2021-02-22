@@ -49,8 +49,8 @@ type getRequest struct {
 	Name string `json:"name"`
 }
 
-type getResponse System
+type getResponse *System
 
-func newGetResponse(system *System) *getResponse {
-	return (*getResponse)(system)
+func newGetResponse(system *System) getResponse {
+	return system
 }

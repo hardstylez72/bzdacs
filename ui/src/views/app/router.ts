@@ -1,11 +1,12 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig, Route } from 'vue-router';
+import VueRouter, { RouteConfig } from 'vue-router';
 import RoutePages from '@/views/route/routes';
 import GroupPages from '@/views/group/routes';
 import UserPages from '@/views/user/routes';
-import Home from '../../app/pages/Home.vue';
-import Admin from '../../app/pages/AdminPage.vue';
-import Guest from '../../app/pages/GuestPage.vue';
+import TagPages from '@/views/tag/routes';
+import Home from './pages/Home.vue';
+import Admin from './pages/AdminPage.vue';
+import Guest from './pages/GuestPage.vue';
 
 Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
@@ -27,6 +28,7 @@ const routes: Array<RouteConfig> = [
   ...RoutePages,
   ...GroupPages,
   ...UserPages,
+  ...TagPages,
 ];
 
 const router = new VueRouter({

@@ -76,8 +76,8 @@
 import {
   Component, Model, Vue, Watch,
 } from 'vue-property-decorator';
-import { Route } from '@/views/route/service';
-import { Tag } from '@/views/tag/service';
+import { Route } from '@/views/route/entity';
+import { Tag } from '@/views/tag/entity';
 import _ from 'lodash';
 
 @Component
@@ -123,10 +123,17 @@ export default class RouteForm extends Vue {
     if (this.isSuggestUpdating) {
       return;
     }
-
+    const namespaceId = Number(this.$route.query.namespaceId);
     this.isSuggestUpdating = true;
     // api suggest
-    this.suggestedTags = await this.$store.direct.dispatch.tag.GetByPattern(pattern)
+    this.suggestedTags = await this.$store.direct.dispatch.tag.GetByPattern({
+      filter: {
+        pattern,
+        namespaceId,
+        page: 1,
+        pageSize: 10,
+      },
+    })
       .finally(() => {
         this.isSuggestUpdating = false;
       });

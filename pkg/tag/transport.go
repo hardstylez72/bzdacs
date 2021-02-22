@@ -38,12 +38,6 @@ func newUpdateResponse(tag *Tag) updateResponse {
 	return tag
 }
 
-type listResponse []Tag
-
-func newListResponse(tags []Tag) listResponse {
-	return tags
-}
-
 type deleteRequest struct {
 	Id          int `json:"id" validate:"required"`
 	NamespaceId int `json:"namespaceId" validate:"required"`
@@ -60,10 +54,28 @@ func newGetResponse(tag *Tag) getResponse {
 }
 
 type listRequest struct {
-	Pattern     string `json:"pattern"`
-	NamespaceId int    `json:"namespaceId" validate:"required"`
+	Filter filter `json:"filter"`
 }
 
-func assertUpdatesEntity() {
+type filter struct {
+	Page        int    `json:"page"  validate:"required,gte=1"`
+	PageSize    int    `json:"pageSize"  validate:"required,gte=1"`
+	Pattern     string `json:"pattern"`
+	NamespaceId int    `json:"namespaceId" validate:"required,gte=1"`
+}
 
+type listResponse struct {
+	Items []getResponse `json:"items"`
+	Total int           `json:"total"`
+}
+
+func newListResponse(tags []Tag, total int) listResponse {
+	out := make([]getResponse, 0, len(tags))
+	for i := range tags {
+		out = append(out, &tags[i])
+	}
+	return listResponse{
+		Items: out,
+		Total: total,
+	}
 }

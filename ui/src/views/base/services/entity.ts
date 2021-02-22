@@ -1,10 +1,10 @@
 export interface Entity {
-  id: number;
-  createdAt?: Date;
-  updatedAt?: Date | null;
-  deletedAt?: Date | null;
+  id?: number;
+  createdAt?: Date | string;
+  updatedAt?: Date | string | null;
+  deletedAt?: Date | string | null;
 }
 
 export interface SimpleEntity extends Entity {
-  name: string;
+  name?: string;
 }

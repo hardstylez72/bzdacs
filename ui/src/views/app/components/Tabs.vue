@@ -33,7 +33,7 @@ import {
 import TabRouteTable from '@/views/route/pages/Routes.vue';
 import TapGroupTable from '@/views/group/pages/Groups.vue';
 import TapUserTable from '@/views/user/pages/Users.vue';
-import TabTagsTable from '@/views/tag/components/TabTagsTable.vue';
+import TabTagsTable from '@/views/tag/pages/Tags.vue';
 
 @Component({
   components: {

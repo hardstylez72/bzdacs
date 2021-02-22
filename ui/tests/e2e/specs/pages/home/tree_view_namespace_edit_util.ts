@@ -1,6 +1,6 @@
-import { System } from '../../../../../src/views/system/service';
+import { System } from '../../../../../src/views/system/entity';
 import { fillForm } from './tree_view_namespace_util';
-import {Namespace} from "../../../../../src/views/namespace/service";
+import {Namespace} from "../../../../../src/views/namespace/entity";
 import {clickNamespaceOptions} from "./tree_view_namespace_util";
 
 const clickNamespaceEditOption = () => {

@@ -8,6 +8,7 @@ import (
 	"github.com/hardstylez72/bzdacs/internal"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
 	"github.com/hardstylez72/bzdacs/pkg/route"
+	"time"
 
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -107,6 +108,7 @@ func (s *Server) Run() error {
 
 	go func() {
 		<-ready
+		time.Sleep(time.Millisecond * 100)
 		err = internal.Init(context.Background(), routes)
 		if err != nil {
 			done <- struct{}{}

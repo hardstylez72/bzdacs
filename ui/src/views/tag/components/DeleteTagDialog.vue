@@ -44,8 +44,10 @@ export default class DeleteTagDialog extends Vue {
   }
 
   async deleteTag() {
-    await this.$store.direct.dispatch.tag.Delete(this.tagId);
+    const namespaceId = Number(this.$route.query.namespaceId);
+    await this.$store.direct.dispatch.tag.Delete({ namespaceId, id: this.tagId });
     this.$emit('change', false);
+    this.$emit('tagDeleted');
   }
 }
 </script>

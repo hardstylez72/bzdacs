@@ -2,73 +2,47 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
+import { client } from '@/views/base/services/utils/requester';
 import { moduleActionContext } from '../base/store';
-import SystemService, { System } from './service';
+import { SystemSwg as System } from './entity';
+import {
+  serviceOptions,
+  system_insertRequest,
+  system_updateRequest,
+  SystemService,
+} from './generated/index';
+
+serviceOptions.axios = client;
 
 export interface State {
   service: SystemService;
-  items: System[];
 }
 
 const module = defineModule({
   namespaced: true as true,
   state: {
-    service: new SystemService({ host: '', baseUrl: '/api/v1/system' }),
-    items: [],
+    service: new SystemService(),
   } as State,
-  getters: {
-    getItems(state) {
-      return state.items;
-    },
-  },
-  mutations: {
-    setMany(state, items: System[]) {
-      state.items = items;
-    },
-    deleteById(state, id: number) {
-      state.items = state.items.filter((system) => system.id !== id);
-    },
-    addOne(state, system: System) {
-      state.items.push(system);
-    },
-    updateOne(state, system: System) {
-      state.items = state.items.map((r) => {
-        if (system.id === r.id) {
-          return system;
-        }
-        return r;
-      });
-    },
-  },
   actions: {
     async GetById(context, id: number): Promise<System> {
       const { state } = actionContext(context);
-
-      return state.service.GetById(id);
+      return state.service.systemGet({ req: { id } });
     },
     async GetList(context): Promise<System[]> {
-      const { state, commit } = actionContext(context);
-      const items = await state.service.GetList();
-      commit.setMany(items);
-      return items;
+      const { state } = actionContext(context);
+      return state.service.systemList();
     },
-    async Create(context, route: System): Promise<System> {
-      const { state, commit } = actionContext(context);
-      const system = await state.service.Create(route);
-      commit.addOne(system);
-      return system;
+    async Create(context, req: system_insertRequest): Promise<System> {
+      const { state } = actionContext(context);
+      return state.service.systemCreate({ req });
     },
-    async Update(context, route: System): Promise<System> {
-      const { state, commit } = actionContext(context);
-      const createdRoute = await state.service.Update(route);
-      commit.updateOne(createdRoute);
-      return createdRoute;
+    async Update(context, req: system_updateRequest): Promise<System> {
+      const { state } = actionContext(context);
+      return state.service.systemUpdate({ req });
     },
     async Delete(context, id: number): Promise<void> {
-      const { state, commit } = actionContext(context);
-
-      await state.service.Delete(id);
-      commit.deleteById(id);
+      const { state } = actionContext(context);
+      return state.service.systemDelete({ req: { id } });
     },
   },
 });

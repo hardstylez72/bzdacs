@@ -40,7 +40,6 @@ import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import { Group } from '@/views/group/services/group';
-import { Route } from '@/views/route/service';
 
 @Component({
   components: {

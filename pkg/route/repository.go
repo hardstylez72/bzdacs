@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 
-	sq "github.com/Masterminds/squirrel"
 	"github.com/hardstylez72/bzdacs/pkg/routetag"
 	"github.com/jmoiron/sqlx"
 )
@@ -120,28 +119,6 @@ func getTagNamesByRouteId(ctx context.Context, conn *sqlx.DB, routeId, namespace
 	}
 	return tagNames, nil
 }
-func (r *repository) List(ctx context.Context, f filter) ([]RouteWithTags, error) {
-
-	routes, err := ListDb(ctx, r.conn, f)
-	if err != nil {
-		return nil, err
-	}
-
-	routesWithTags := make([]RouteWithTags, 0)
-
-	for _, route := range routes {
-
-		tagNames, err := getTagNamesByRouteId(ctx, r.conn, route.Id, 11)
-		if err != nil {
-			return nil, err
-		}
-		routesWithTags = append(routesWithTags, RouteWithTags{
-			Route: route,
-			Tags:  tagNames,
-		})
-	}
-	return routesWithTags, nil
-}
 
 func GetByParamsLL(ctx context.Context, driver storage.SqlDriver, method, route string, namespaceId int) (*Route, error) {
 	query := `
@@ -186,68 +163,6 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Route, e
 	}
 
 	return &route, nil
-}
-
-func ListDb(ctx context.Context, conn *sqlx.DB, f filter) ([]Route, error) {
-	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
-
-	routes1 := psql.Select(`
-			   r.id,
-			   r.route,
-		       r.method,
-			   r.description,
-			   r.created_at,
-			   r.updated_at,
-			   r.deleted_at
-			`).
-		From("routes r")
-
-	if len(f.Tags.Names) > 0 {
-		if f.Tags.Exclude {
-
-			subQuery, args, err := sqlx.In(`
-			r.id not in (    
-           select rt.route_id from routes_tags rt 
-             join tags t on t.id = rt.tag_id 
-			 			   and t.deleted_at is null
- 				           and t.name in (`+sq.Placeholders(len(f.Tags.Names))+`)
-         )`, f.Tags.Names)
-			if err != nil {
-				return nil, err
-			}
-			routes1 = routes1.
-				Where(subQuery, args...)
-		} else {
-			subQuery, args, err := sqlx.In(`
-			r.id  in (    
-           select rt.route_id from routes_tags rt 
-             join tags t on t.id = rt.tag_id
-						   and t.deleted_at is null
-             			   and t.name in (`+sq.Placeholders(len(f.Tags.Names))+`)
-         )`, f.Tags.Names)
-			if err != nil {
-				return nil, err
-			}
-			routes1 = routes1.
-				Where(subQuery, args...)
-		}
-	}
-
-	routes1 = routes1.
-		Where("r.deleted_at is null")
-
-	query, args, err := routes1.ToSql()
-	if err != nil {
-		return nil, err
-	}
-
-	groups := make([]Route, 0)
-	err = conn.SelectContext(ctx, &groups, query, args...)
-	if err != nil {
-		return nil, err
-	}
-
-	return groups, nil
 }
 
 func (r *repository) Delete(ctx context.Context, routeId, namespaceId int) error {

@@ -2,6 +2,7 @@ import axios, { AxiosError, Method } from 'axios';
 import { v4 as uuid } from 'uuid';
 
 const instance = axios.create();
+export const client = instance;
 
 export interface Request {
   method: Method;

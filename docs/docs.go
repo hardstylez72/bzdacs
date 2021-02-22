@@ -455,6 +455,52 @@ var doc = `{
                 }
             }
         },
+        "/v1/route/list": {
+            "post": {
+                "description": "Gets list of routes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "route"
+                ],
+                "operationId": "route.list",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/route.listRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/route.listResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/route/update": {
             "post": {
                 "description": "Updates route",
@@ -883,10 +929,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/tag.getResponse"
-                            }
+                            "$ref": "#/definitions/tag.listResponse"
                         }
                     },
                     "400": {
@@ -1057,6 +1100,25 @@ var doc = `{
                 }
             }
         },
+        "route.filter": {
+            "type": "object",
+            "required": [
+                "namespaceId",
+                "page",
+                "pageSize"
+            ],
+            "properties": {
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                }
+            }
+        },
         "route.getByIdRequest": {
             "type": "object",
             "required": [
@@ -1153,6 +1215,28 @@ var doc = `{
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "route.listRequest": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "$ref": "#/definitions/route.filter"
+                }
+            }
+        },
+        "route.listResponse": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/route.getResponse"
+                    }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -1273,6 +1357,28 @@ var doc = `{
                 }
             }
         },
+        "tag.filter": {
+            "type": "object",
+            "required": [
+                "namespaceId",
+                "page",
+                "pageSize"
+            ],
+            "properties": {
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "pattern": {
+                    "type": "string"
+                }
+            }
+        },
         "tag.getRequest": {
             "type": "object",
             "required": [
@@ -1325,15 +1431,23 @@ var doc = `{
         },
         "tag.listRequest": {
             "type": "object",
-            "required": [
-                "namespaceId"
-            ],
             "properties": {
-                "namespaceId": {
-                    "type": "integer"
+                "filter": {
+                    "$ref": "#/definitions/tag.filter"
+                }
+            }
+        },
+        "tag.listResponse": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tag.getResponse"
+                    }
                 },
-                "pattern": {
-                    "type": "string"
+                "total": {
+                    "type": "integer"
                 }
             }
         },

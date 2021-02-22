@@ -1,6 +1,6 @@
 import { assertNamespaceIsShown, buildNamespace, fillForm } from './tree_view_namespace_util';
-import { Namespace } from '../../../../../src/views/namespace/service';
-import { System } from '../../../../../src/views/system/service';
+import { Namespace } from '../../../../../src/views/namespace/entity';
+import { System } from '../../../../../src/views/system/entity';
 
 const openSystem = (system: System) => {
   cy.getBySel(system.name).click();

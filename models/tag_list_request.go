@@ -11,7 +11,6 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // TagListRequest tag list request
@@ -19,19 +18,15 @@ import (
 // swagger:model tag.listRequest
 type TagListRequest struct {
 
-	// namespace Id
-	// Required: true
-	NamespaceID *int64 `json:"namespaceId"`
-
-	// pattern
-	Pattern string `json:"pattern,omitempty"`
+	// filter
+	Filter *TagFilter `json:"filter,omitempty"`
 }
 
 // Validate validates this tag list request
 func (m *TagListRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateNamespaceID(formats); err != nil {
+	if err := m.validateFilter(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -41,17 +36,48 @@ func (m *TagListRequest) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *TagListRequest) validateNamespaceID(formats strfmt.Registry) error {
+func (m *TagListRequest) validateFilter(formats strfmt.Registry) error {
+	if swag.IsZero(m.Filter) { // not required
+		return nil
+	}
 
-	if err := validate.Required("namespaceId", "body", m.NamespaceID); err != nil {
-		return err
+	if m.Filter != nil {
+		if err := m.Filter.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("filter")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
-// ContextValidate validates this tag list request based on context it is used
+// ContextValidate validate this tag list request based on the context it is used
 func (m *TagListRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateFilter(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *TagListRequest) contextValidateFilter(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Filter != nil {
+		if err := m.Filter.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("filter")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

@@ -1,4 +1,4 @@
-import { System } from '../../../../../src/views/system/service';
+import { System } from '../../../../../src/views/system/entity';
 import { assertSystemIsShown, buildSystem, fillForm } from './tree_view_system_util';
 
 const clickNewSystemButton = () => {

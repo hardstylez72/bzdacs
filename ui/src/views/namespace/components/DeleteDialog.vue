@@ -2,7 +2,7 @@
 import {
   Component, Prop,
 } from 'vue-property-decorator';
-import { System } from '@/views/system/service';
+import { System } from '@/views/system/entity';
 import SimpleEntityDeleteDialog from '@/views/base/components/SimpleEntityDeleteDialog.vue';
 
 @Component
@@ -11,7 +11,7 @@ export default class DeleteDialog extends SimpleEntityDeleteDialog<System> {
 
   async deleteEntity(namespaceId: number) {
     // must be overwritten!
-    await this.$store.direct.dispatch.namespace.Delete({ namespaceId, systemId: this.systemId });
+    await this.$store.direct.dispatch.namespace.Delete({ namespaceId });
     this.$emit('deleted', namespaceId, this.systemId);
   }
 }

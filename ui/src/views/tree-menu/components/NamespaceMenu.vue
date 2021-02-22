@@ -31,8 +31,8 @@
 import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
-import { Namespace } from '@/views/namespace/service';
-import { System } from '@/views/system/service';
+import { Namespace } from '@/views/namespace/entity';
+import { System } from '@/views/system/entity';
 import DeleteDialog from '../../namespace/components/DeleteDialog.vue';
 import UpdateDialog from '../../namespace/components/UpdateDialog.vue';
 
