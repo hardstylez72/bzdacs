@@ -2,17 +2,29 @@ package namespace
 
 import (
 	"context"
+	"errors"
 	"github.com/hardstylez72/bzdacs/client"
 	"github.com/hardstylez72/bzdacs/client/namespace"
 	"github.com/hardstylez72/bzdacs/models"
+	"github.com/hardstylez72/bzdacs/tests"
 )
+
+var (
+	ErrNamespaceGetNotFound = errors.New("namespace not found")
+)
+
+type Namespace struct {
+	Id       int64
+	Name     string
+	SystemId int64
+	tests.Times
+}
 
 func Delete(ctx context.Context, client *client.BZDACS, namespaceId, systemId int64) error {
 	_, err := client.Namespace.NamespaceDelete(
 		&namespace.NamespaceDeleteParams{
 			Req: &models.NamespaceDeleteRequest{
 				NamespaceID: &namespaceId,
-				SystemID:    &systemId,
 			},
 			Context: ctx,
 		},
@@ -23,7 +35,7 @@ func Delete(ctx context.Context, client *client.BZDACS, namespaceId, systemId in
 	return nil
 }
 
-func GetByName(ctx context.Context, client *client.BZDACS, name string, SystemID int64) (*models.NamespaceGetResponse, error) {
+func GetByName(ctx context.Context, client *client.BZDACS, name string, SystemID int64) (*Namespace, error) {
 	res, err := client.Namespace.NamespaceGet(
 		&namespace.NamespaceGetParams{
 			Req: &models.NamespaceGetRequest{
@@ -34,12 +46,16 @@ func GetByName(ctx context.Context, client *client.BZDACS, name string, SystemID
 		},
 	)
 	if err != nil {
+		_, ok := err.(*namespace.NamespaceGetNotFound)
+		if ok {
+			return nil, ErrNamespaceGetNotFound
+		}
 		return nil, err
 	}
-	return res.GetPayload(), nil
+	return namespaceDTO(res.GetPayload()), nil
 }
 
-func GetById(ctx context.Context, client *client.BZDACS, id int64) (*models.NamespaceGetResponse, error) {
+func GetById(ctx context.Context, client *client.BZDACS, id int64) (*Namespace, error) {
 	res, err := client.Namespace.NamespaceGet(
 		&namespace.NamespaceGetParams{
 			Req: &models.NamespaceGetRequest{
@@ -51,10 +67,10 @@ func GetById(ctx context.Context, client *client.BZDACS, id int64) (*models.Name
 	if err != nil {
 		return nil, err
 	}
-	return res.GetPayload(), nil
+	return namespaceDTO(res.GetPayload()), nil
 }
 
-func Update(ctx context.Context, client *client.BZDACS, name string, id int64) (*models.NamespaceUpdateResponse, error) {
+func Update(ctx context.Context, client *client.BZDACS, name string, id int64) (*Namespace, error) {
 	res, err := client.Namespace.NamespaceUpdate(
 		&namespace.NamespaceUpdateParams{
 			Req: &models.NamespaceUpdateRequest{
@@ -67,10 +83,10 @@ func Update(ctx context.Context, client *client.BZDACS, name string, id int64) (
 	if err != nil {
 		return nil, err
 	}
-	return res.GetPayload(), nil
+	return namespaceDTO(res.GetPayload()), nil
 }
 
-func Create(ctx context.Context, client *client.BZDACS, name string, systemId int64) (*models.NamespaceInsertResponse, error) {
+func Create(ctx context.Context, client *client.BZDACS, name string, systemId int64) (*Namespace, error) {
 	res, err := client.Namespace.NamespaceCreate(
 		&namespace.NamespaceCreateParams{
 			Req: &models.NamespaceInsertRequest{
@@ -83,5 +99,22 @@ func Create(ctx context.Context, client *client.BZDACS, name string, systemId in
 	if err != nil {
 		return nil, err
 	}
-	return res.GetPayload(), nil
+	return namespaceDTO(res.GetPayload()), nil
+}
+
+func namespaceDTO(p *models.NamespaceGetResponse) *Namespace {
+	out := &Namespace{
+		Id:   p.ID,
+		Name: p.Name,
+		Times: tests.Times{
+			CreatedAt: tests.ParseTime(p.CreatedAt),
+			UpdatedAt: tests.ParseTime(p.UpdatedAt),
+			DeletedAt: nil,
+		},
+	}
+	if p.DeletedAt != nil {
+		t := tests.ParseTime(*p.DeletedAt)
+		out.DeletedAt = &t
+	}
+	return out
 }

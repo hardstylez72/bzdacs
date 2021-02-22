@@ -2,7 +2,10 @@ package namespace
 
 import "github.com/brianvoe/gofakeit"
 
-func GenNamespaceName() string {
+func GenNamespace(systemId int64) *Namespace {
 	gofakeit.Seed(0)
-	return gofakeit.Generate("###???")
+	return &Namespace{
+		Name:     gofakeit.Generate("###???"),
+		SystemId: systemId,
+	}
 }

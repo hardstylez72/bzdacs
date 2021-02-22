@@ -2,7 +2,10 @@ package tag
 
 import "github.com/brianvoe/gofakeit"
 
-func GenTagName() string {
+func GenTag(namespaceId int64) *Tag {
 	gofakeit.Seed(0)
-	return gofakeit.Generate("###???")
+	return &Tag{
+		Name:        gofakeit.Generate("###???"),
+		NamespaceId: namespaceId,
+	}
 }

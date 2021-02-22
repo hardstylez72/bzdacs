@@ -6,10 +6,11 @@ create table if not exists namespaces (
     updated_at timestamp not null default now(),
     created_at timestamp not null default now(),
     deleted_at timestamp default null,
-    unique (name, deleted_at)
+    system_id bigint references systems (id) not null,
+    unique (name, system_id, deleted_at)
 );
 create unique index namespaces_name_deleted_at
-    on namespaces (name, (deleted_at is null))
+    on namespaces (name, system_id, (deleted_at is null))
     where deleted_at is null;
 
 -- +goose Down

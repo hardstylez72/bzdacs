@@ -35,6 +35,12 @@ func (o *RouteGetByIDReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return nil, result
+	case 404:
+		result := NewRouteGetByIDNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 500:
 		result := NewRouteGetByIDInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -99,6 +105,38 @@ func (o *RouteGetByIDBadRequest) GetPayload() *models.UtilResponseWithError {
 }
 
 func (o *RouteGetByIDBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.UtilResponseWithError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewRouteGetByIDNotFound creates a RouteGetByIDNotFound with default headers values
+func NewRouteGetByIDNotFound() *RouteGetByIDNotFound {
+	return &RouteGetByIDNotFound{}
+}
+
+/* RouteGetByIDNotFound describes a response with status code 404, with default header values.
+
+Not Found
+*/
+type RouteGetByIDNotFound struct {
+	Payload *models.UtilResponseWithError
+}
+
+func (o *RouteGetByIDNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/route/getById][%d] routeGetByIdNotFound  %+v", 404, o.Payload)
+}
+func (o *RouteGetByIDNotFound) GetPayload() *models.UtilResponseWithError {
+	return o.Payload
+}
+
+func (o *RouteGetByIDNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.UtilResponseWithError)
 

@@ -1,10 +1,13 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"github.com/go-chi/chi"
 	"github.com/hardstylez72/bzdacs/config"
+	"github.com/hardstylez72/bzdacs/internal"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
+	"github.com/hardstylez72/bzdacs/pkg/route"
 
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -68,6 +71,7 @@ func (s *Server) Run() error {
 	//}
 
 	done := make(chan struct{})
+	ready := make(chan struct{})
 
 	if viper.GetString("env") == "prod" {
 
@@ -92,11 +96,20 @@ func (s *Server) Run() error {
 		}()
 	}
 
+	var routes *[]route.Route
 	go func() {
-		err = s.startBackendServer(s.log, done)
+		routes, err = s.startBackendServer(s.log, done, ready)
 		if err != nil {
 			done <- struct{}{}
 			log.Fatal(err)
+		}
+	}()
+
+	go func() {
+		<-ready
+		err = internal.Init(context.Background(), routes)
+		if err != nil {
+			done <- struct{}{}
 		}
 	}()
 

@@ -5,10 +5,11 @@ type insertRequest struct {
 	SystemId int    `json:"systemId" validate:"required"`
 }
 
-func insertRequestConvert(r *insertRequest) (*Namespace, int) {
+func insertRequestConvert(r *insertRequest) *Namespace {
 	return &Namespace{
-		Name: r.Name,
-	}, r.SystemId
+		Name:     r.Name,
+		SystemId: r.SystemId,
+	}
 }
 
 type insertResponse Namespace
@@ -43,7 +44,6 @@ func newListResponse(namespaces []Namespace) listResponse {
 
 type deleteRequest struct {
 	NamespaceId int `json:"namespaceId" validate:"required"`
-	SystemId    int `json:"systemId" validate:"required"`
 }
 
 type getRequest struct {

@@ -2,18 +2,11 @@ package route
 
 import (
 	"context"
-	"database/sql"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/hardstylez72/bzdacs/pkg/routetag"
-	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
-)
-
-var (
-	ErrEntityAlreadyExists = util.ErrEntityAlreadyExists
-	ErrEntityNotFound      = util.ErrEntityNotFound
 )
 
 type repository struct {
@@ -36,7 +29,7 @@ func (r *repository) Update(ctx context.Context, route *Route) (*Route, error) {
 
 	txx := storage.WrapSqlxTx(tx)
 
-	updatedRoute, err := UpdateTx(ctx, tx, route)
+	updatedRoute, err := UpdateLL(ctx, txx, route)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +44,7 @@ func (r *repository) Update(ctx context.Context, route *Route) (*Route, error) {
 	return updatedRoute, nil
 }
 
-func UpdateTx(ctx context.Context, tx *sqlx.Tx, route *Route) (*Route, error) {
+func UpdateLL(ctx context.Context, driver storage.SqlDriver, route *Route) (*Route, error) {
 	query := `
 	
 			update routes
@@ -69,41 +62,39 @@ func UpdateTx(ctx context.Context, tx *sqlx.Tx, route *Route) (*Route, error) {
 			    		   namespace_id
 `
 
-	rows, err := tx.NamedQuery(query, route)
+	rows, err := driver.NamedQueryContext(ctx, query, route)
 	if err != nil {
 		return nil, err
 	}
 
-	var g Route
+	var r Route
 	for rows.Next() {
-		err = rows.StructScan(&g)
+		err = rows.StructScan(&r)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	return &g, nil
+	return &r, nil
 }
 
-func (r *repository) Get(ctx context.Context, route, method string) (*RouteWithTags, error) {
-	rr, err := GetByMethodAndRouteDb(ctx, r.conn, method, route)
+func (r *repository) GetByParams(ctx context.Context, route, method string, namespaceId int) (*Route, error) {
+	rr, err := GetByParamsLL(ctx, r.conn, method, route, namespaceId)
 	if err != nil {
 		return nil, err
 	}
 
-	tagNames, err := getTagNamesByRouteId(ctx, r.conn, rr.Id, 11)
+	tagNames, err := getTagNamesByRouteId(ctx, r.conn, rr.Id, namespaceId)
 	if err != nil {
 		return nil, err
 	}
 
-	return &RouteWithTags{
-		Route: *rr,
-		Tags:  tagNames,
-	}, nil
+	rr.Tags = tagNames
+	return rr, nil
 }
 
 func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Route, error) {
-	route, err := GetByIdDb(ctx, r.conn, id)
+	route, err := GetByIdLL(ctx, r.conn, id)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +143,7 @@ func (r *repository) List(ctx context.Context, f filter) ([]RouteWithTags, error
 	return routesWithTags, nil
 }
 
-func GetByMethodAndRouteDb(ctx context.Context, conn *sqlx.DB, method, route string) (*Route, error) {
+func GetByParamsLL(ctx context.Context, driver storage.SqlDriver, method, route string, namespaceId int) (*Route, error) {
 	query := `
 		select id,
 			   route,
@@ -165,20 +156,18 @@ func GetByMethodAndRouteDb(ctx context.Context, conn *sqlx.DB, method, route str
 	   where deleted_at is null
   		 and method = $1
  		 and route = $2
+		 and namespace_id = $3
 `
 	var r Route
-	err := conn.GetContext(ctx, &r, query, method, route)
+	err := driver.GetContext(ctx, &r, query, method, route, namespaceId)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, ErrEntityNotFound
-		}
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	return &r, nil
 }
 
-func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Route, error) {
+func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Route, error) {
 	query := `
 		select id,
 			   route,
@@ -191,9 +180,9 @@ func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Route, error) {
 	   where id = $1
 `
 	var route Route
-	err := conn.GetContext(ctx, &route, query, id)
+	err := driver.GetContext(ctx, &route, query, id)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	return &route, nil

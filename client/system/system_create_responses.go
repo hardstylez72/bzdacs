@@ -56,19 +56,19 @@ func NewSystemCreateOK() *SystemCreateOK {
 OK
 */
 type SystemCreateOK struct {
-	Payload *models.SystemInsertResponse
+	Payload *models.SystemGetResponse
 }
 
 func (o *SystemCreateOK) Error() string {
 	return fmt.Sprintf("[POST /v1/system/create][%d] systemCreateOK  %+v", 200, o.Payload)
 }
-func (o *SystemCreateOK) GetPayload() *models.SystemInsertResponse {
+func (o *SystemCreateOK) GetPayload() *models.SystemGetResponse {
 	return o.Payload
 }
 
 func (o *SystemCreateOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.SystemInsertResponse)
+	o.Payload = new(models.SystemGetResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

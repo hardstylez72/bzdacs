@@ -22,10 +22,6 @@ type NamespaceDeleteRequest struct {
 	// namespace Id
 	// Required: true
 	NamespaceID *int64 `json:"namespaceId"`
-
-	// system Id
-	// Required: true
-	SystemID *int64 `json:"systemId"`
 }
 
 // Validate validates this namespace delete request
@@ -33,10 +29,6 @@ func (m *NamespaceDeleteRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateNamespaceID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateSystemID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,15 +41,6 @@ func (m *NamespaceDeleteRequest) Validate(formats strfmt.Registry) error {
 func (m *NamespaceDeleteRequest) validateNamespaceID(formats strfmt.Registry) error {
 
 	if err := validate.Required("namespaceId", "body", m.NamespaceID); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *NamespaceDeleteRequest) validateSystemID(formats strfmt.Registry) error {
-
-	if err := validate.Required("systemId", "body", m.SystemID); err != nil {
 		return err
 	}
 

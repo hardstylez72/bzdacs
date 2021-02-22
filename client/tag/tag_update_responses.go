@@ -56,19 +56,19 @@ func NewTagUpdateOK() *TagUpdateOK {
 OK
 */
 type TagUpdateOK struct {
-	Payload *models.TagUpdateResponse
+	Payload *models.TagGetResponse
 }
 
 func (o *TagUpdateOK) Error() string {
 	return fmt.Sprintf("[POST /v1/tag/update][%d] tagUpdateOK  %+v", 200, o.Payload)
 }
-func (o *TagUpdateOK) GetPayload() *models.TagUpdateResponse {
+func (o *TagUpdateOK) GetPayload() *models.TagGetResponse {
 	return o.Payload
 }
 
 func (o *TagUpdateOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.TagUpdateResponse)
+	o.Payload = new(models.TagGetResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

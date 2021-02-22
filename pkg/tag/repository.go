@@ -95,11 +95,11 @@ func InsertLL(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, er
 	return &t, nil
 }
 
-func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Tag, error) {
-	return GetByIdLL(ctx, r.conn, id, namespaceId)
+func (r *repository) GetById(ctx context.Context, id int) (*Tag, error) {
+	return GetByIdLL(ctx, r.conn, id)
 }
 
-func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*Tag, error) {
+func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Tag, error) {
 	query := `
 		select id,
 			   name,
@@ -107,11 +107,10 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId in
 			   updated_at,
 			   deleted_at
 		from tags
-	   where id = $1 
-		 and namespace_id = $2
+	   where id = $1
 `
 	var tag Tag
-	err := driver.GetContext(ctx, &tag, query, id, namespaceId)
+	err := driver.GetContext(ctx, &tag, query, id)
 	if err != nil {
 		return nil, storage.PgError(err)
 	}

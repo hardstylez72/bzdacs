@@ -16,10 +16,10 @@ func ListLL(ctx context.Context, conn storage.SqlDriver, systemId int) ([]Namesp
            n.name,
            n.created_at,
            n.updated_at,
-           n.deleted_at
+           n.deleted_at,
+   		   n.system_id
       from namespaces n
-      join systems_namespaces sn on n.id = sn.namespace_id
-     where sn.system_id = $1
+     where n.system_id = $1
 `
 	ns := make([]Namespace, 0)
 	err := conn.SelectContext(ctx, &ns, query, systemId)

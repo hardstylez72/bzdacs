@@ -56,19 +56,19 @@ func NewNamespaceUpdateOK() *NamespaceUpdateOK {
 OK
 */
 type NamespaceUpdateOK struct {
-	Payload *models.NamespaceUpdateResponse
+	Payload *models.NamespaceGetResponse
 }
 
 func (o *NamespaceUpdateOK) Error() string {
 	return fmt.Sprintf("[POST /v1/namespace/update][%d] namespaceUpdateOK  %+v", 200, o.Payload)
 }
-func (o *NamespaceUpdateOK) GetPayload() *models.NamespaceUpdateResponse {
+func (o *NamespaceUpdateOK) GetPayload() *models.NamespaceGetResponse {
 	return o.Payload
 }
 
 func (o *NamespaceUpdateOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.NamespaceUpdateResponse)
+	o.Payload = new(models.NamespaceGetResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

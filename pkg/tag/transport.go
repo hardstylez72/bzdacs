@@ -50,8 +50,7 @@ type deleteRequest struct {
 }
 
 type getRequest struct {
-	Id          int `json:"id" validate:"required"`
-	NamespaceId int `json:"namespaceId" validate:"required"`
+	Id int `json:"id" validate:"required"`
 }
 
 type getResponse *Tag

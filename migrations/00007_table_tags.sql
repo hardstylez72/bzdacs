@@ -7,10 +7,10 @@ create table if not exists tags (
    created_at timestamp default now() not null,
    deleted_at timestamp default null,
    namespace_id bigint references namespaces (id) not null,
-   unique (name, deleted_at)
+   unique (name, namespace_id, deleted_at)
 );
 create unique index tags_name_deleted_at
-    on tags (name, (deleted_at is null))
+    on tags (name, namespace_id, (deleted_at is null))
     where deleted_at is null;
 
 -- +goose Down

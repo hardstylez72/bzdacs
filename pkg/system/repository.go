@@ -156,7 +156,7 @@ func (r *repository) Delete(ctx context.Context, id int) error {
 	}
 
 	for _, ns := range namespaces {
-		err = namespace.DeleteLL(ctx, r.conn, id, ns.Id)
+		err = namespace.DeleteLL(ctx, r.conn, ns.Id)
 		if err != nil {
 			return err
 		}

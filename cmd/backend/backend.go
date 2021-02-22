@@ -43,7 +43,7 @@ type Server struct {
 	}
 }
 
-func (s *Server) startBackendServer(log *zap.SugaredLogger, done chan struct{}) error {
+func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan struct{}) (*[]route.Route, error) {
 	log.Info("app is initializing")
 
 	r := chi.NewRouter()
@@ -58,7 +58,7 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done chan struct{}) 
 
 	err := s.Start(r)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	httpServer := &http.Server{
@@ -68,12 +68,17 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done chan struct{}) 
 
 	log.Info("app is successfully running on port " + viper.GetString("backend.port"))
 
-	err = httpServer.ListenAndServe()
-	if err != nil {
-		done <- struct{}{}
-		log.Fatal(err)
-	}
-	return nil
+	go func() {
+		err = httpServer.ListenAndServe()
+		if err != nil {
+			done <- struct{}{}
+			log.Fatal(err)
+		}
+	}()
+
+	ready <- struct{}{}
+	routes := buildRoutes(r)
+	return &routes, nil
 }
 
 func extractLogin(req *http.Request) string {
@@ -139,14 +144,6 @@ func (s *Server) Start(r chi.Router) error {
 		})
 	})
 
-	//ctx := context.Background()
-
-	//force := false
-	//err = s.initialize(ctx, force, r)
-	//if err != nil {
-	//	return err
-	//}
-
 	return nil
 }
 
@@ -170,4 +167,21 @@ func getSwaggerSource(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 	_, _ = writer.Write(swaggerSpec)
+}
+
+func buildRoutes(r chi.Router) []route.Route {
+	rs := make([]route.Route, 0)
+	for _, r := range r.Routes() {
+
+		if apiPathPrefix+"/*" == r.Pattern {
+			continue
+		}
+
+		rs = append(rs, route.Route{
+			Route:       apiPathPrefix + r.Pattern,
+			Method:      http.MethodPost,
+			Description: "system",
+		})
+	}
+	return rs
 }

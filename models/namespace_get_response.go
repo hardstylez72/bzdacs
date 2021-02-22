@@ -29,6 +29,9 @@ type NamespaceGetResponse struct {
 	// name
 	Name string `json:"name,omitempty"`
 
+	// system Id
+	SystemID int64 `json:"systemId,omitempty"`
+
 	// updated at
 	UpdatedAt string `json:"updatedAt,omitempty"`
 }

@@ -66,6 +66,12 @@ type getByIdRequest struct {
 	NamespaceId int `json:"namespaceId" validate:"required"`
 }
 
+type getByParamsRequest struct {
+	Route       string `json:"route" validate:"required"`
+	Method      string `json:"method" validate:"required"`
+	NamespaceId int    `json:"namespaceId" validate:"required"`
+}
+
 type getResponse *Route
 
 func newGetResponse(route *Route) getResponse {

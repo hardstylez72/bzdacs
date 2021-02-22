@@ -56,13 +56,13 @@ func NewTagListOK() *TagListOK {
 OK
 */
 type TagListOK struct {
-	Payload []*models.TagTag
+	Payload []*models.TagGetResponse
 }
 
 func (o *TagListOK) Error() string {
 	return fmt.Sprintf("[POST /v1/tag/list][%d] tagListOK  %+v", 200, o.Payload)
 }
-func (o *TagListOK) GetPayload() []*models.TagTag {
+func (o *TagListOK) GetPayload() []*models.TagGetResponse {
 	return o.Payload
 }
 

@@ -2,13 +2,10 @@ package namespace
 
 import (
 	"context"
-	"errors"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
-	"github.com/hardstylez72/bzdacs/pkg/systemnamespace"
-	"github.com/jackc/pgconn"
 )
 
-func (r *repository) Insert(ctx context.Context, namespace *Namespace, systemId int) (*Namespace, error) {
+func (r *repository) Insert(ctx context.Context, namespace *Namespace) (*Namespace, error) {
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
 		if err != nil {
@@ -20,16 +17,7 @@ func (r *repository) Insert(ctx context.Context, namespace *Namespace, systemId 
 
 	txx := storage.WrapSqlxTx(tx)
 
-	n, err := InsertConn(ctx, txx, namespace)
-	if err != nil {
-		return nil, err
-	}
-
-	err = systemnamespace.InsertConn(ctx, txx, systemnamespace.Pair{
-		SystemId:    systemId,
-		NamespaceId: n.Id,
-	})
-
+	n, err := InsertLL(ctx, txx, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -37,36 +25,32 @@ func (r *repository) Insert(ctx context.Context, namespace *Namespace, systemId 
 	return n, nil
 }
 
-func InsertConn(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
+func InsertLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
 	query := `
 insert into namespaces (
                        name,
                        created_at,
                        updated_at,
-                       deleted_at
+                       deleted_at,
+					   system_id
                        )
                    values (
                        :name,
                        now(),
                        now(),
-                       null
+                       null,
+					   :system_id
                    ) returning id,
                                name,
                                created_at,
                                updated_at,
-                               deleted_at;
+                               deleted_at,
+							   system_id
 `
 
 	rows, err := conn.NamedQueryContext(ctx, query, namespace)
 	if err != nil {
-		const UniqExceptionCode = "23505"
-		pgErr, ok := err.(*pgconn.PgError)
-		if ok {
-			if pgErr.Code == UniqExceptionCode {
-				return nil, errors.New("entity with same attribute already exist")
-			}
-		}
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	var g Namespace

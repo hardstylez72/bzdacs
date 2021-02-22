@@ -37,7 +37,7 @@ func NewController(rep Repository) *controller {
 // @accept application/json
 // @param req body insertRequest true "request"
 // @produce application/json
-// @success 200 {object} insertResponse
+// @success 200 {object} getResponse
 // @failure 400 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/system/create [post]
@@ -69,7 +69,7 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 // @accept application/json
 // @param req body updateRequest true "request"
 // @produce application/json
-// @success 200 {object} updateResponse
+// @success 200 {object} getResponse
 // @failure 400 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/system/update [post]
@@ -100,7 +100,7 @@ func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 // @id system.list
 // @accept application/json
 // @produce application/json
-// @success 200 {object} listResponse
+// @success 200 {array} getResponse
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/system/list [post]
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {

@@ -27,7 +27,8 @@ func UpdateLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace)
                               name,
                               created_at,
                               updated_at,
-                              deleted_at;
+                              deleted_at,
+							  system_id
 `
 
 	rows, err := conn.NamedQueryContext(ctx, query, namespace)
@@ -43,14 +44,17 @@ func UpdateLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace)
 		}
 	}
 
+	if g.Id == 0 {
+		return nil, storage.EntityNotFound
+	}
 	return &g, nil
 }
 
-func (r *repository) Get(ctx context.Context, systemId, id int, name string) (*Namespace, error) {
-	return GetLL(ctx, r.conn, systemId, id, name)
+func (r *repository) Get(ctx context.Context, systemId, namespaceId int, name string) (*Namespace, error) {
+	return GetLL(ctx, r.conn, systemId, namespaceId, name)
 }
 
-func GetLL(ctx context.Context, conn storage.SqlDriver, systemId, id int, name string) (*Namespace, error) {
+func GetLL(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int, name string) (*Namespace, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 	builder := psql.Select(`
@@ -58,17 +62,17 @@ func GetLL(ctx context.Context, conn storage.SqlDriver, systemId, id int, name s
 			   n.name,
 			   n.created_at,
 			   n.updated_at,
-			   n.deleted_at
+			   n.deleted_at,
+			   n.system_id
 			`).From("namespaces n")
 
-	if id != 0 {
-		builder = builder.Where(sq.Eq{"n.id": id})
+	if namespaceId != 0 {
+		builder = builder.Where(sq.Eq{"n.id": namespaceId})
 	} else {
-		builder = builder.Join("systems_namespaces sn on sn.namespace_id = n.id")
 		if name != "" {
 			builder = builder.Where(sq.Eq{"n.name": name})
 		}
-		builder = builder.Where(sq.Eq{"sn.system_id": systemId})
+		builder = builder.Where(sq.Eq{"n.system_id": systemId})
 	}
 
 	query, args, err := builder.ToSql()
@@ -84,7 +88,7 @@ func GetLL(ctx context.Context, conn storage.SqlDriver, systemId, id int, name s
 	return &namespace, nil
 }
 
-func (r *repository) Delete(ctx context.Context, systemId, namespaceId int) error {
+func (r *repository) Delete(ctx context.Context, namespaceId int) error {
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
 		if err != nil {
@@ -96,31 +100,14 @@ func (r *repository) Delete(ctx context.Context, systemId, namespaceId int) erro
 
 	txx := storage.WrapSqlxTx(tx)
 
-	err = DeleteLL(ctx, txx, systemId, namespaceId)
-	if err != nil {
-		return err
-	}
-	err = DeleteRelationLL(ctx, txx, namespaceId)
+	err = DeleteLL(ctx, txx, namespaceId)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func DeleteLL(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int) error {
-	query := `
-		delete from systems_namespaces
-		where system_id = $1 and namespace_id = $2;
-`
-	_, err := conn.ExecContext(ctx, query, systemId, namespaceId)
-	if err != nil {
-		return storage.PgError(err)
-	}
-
-	return nil
-}
-
-func DeleteRelationLL(ctx context.Context, conn storage.SqlDriver, namespaceId int) error {
+func DeleteLL(ctx context.Context, conn storage.SqlDriver, namespaceId int) error {
 
 	query := `
 			update namespaces

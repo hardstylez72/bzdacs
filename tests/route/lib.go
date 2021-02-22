@@ -2,6 +2,7 @@ package route
 
 import (
 	"context"
+	"errors"
 	"github.com/hardstylez72/bzdacs/client"
 	"github.com/hardstylez72/bzdacs/client/route"
 	"github.com/hardstylez72/bzdacs/models"
@@ -18,6 +19,10 @@ type Route struct {
 	tests.Times
 }
 
+var (
+	ErrNotFound = errors.New("entity not found")
+)
+
 func Delete(ctx context.Context, client *client.BZDACS, routeId, namespaceId int64) error {
 	_, err := client.Route.RouteDelete(
 		&route.RouteDeleteParams{
@@ -29,26 +34,28 @@ func Delete(ctx context.Context, client *client.BZDACS, routeId, namespaceId int
 		},
 	)
 	if err != nil {
-		return err
+		return wrapErr(err)
 	}
 	return nil
 }
 
-//func GetByName(ctx context.Context, client *client.BZDACS, name string, SystemID int64) (*models.NamespaceGetResponse, error) {
-//	res, err := client.Namespace.NamespaceGet(
-//		&namespace.NamespaceGetParams{
-//			Req: &models.NamespaceGetRequest{
-//				Name:     name,
-//				SystemID: SystemID,
-//			},
-//			Context: ctx,
-//		},
-//	)
-//	if err != nil {
-//		return nil, err
-//	}
-//	return res.GetPayload(), nil
-//}
+func GetByParams(ctx context.Context, client *client.BZDACS, r *Route) (*Route, error) {
+	res, err := client.Route.RouteGetByParams(
+		&route.RouteGetByParamsParams{
+			Req: &models.RouteGetByParamsRequest{
+				Method:      &r.Method,
+				NamespaceID: &r.NamespaceId,
+				Route:       &r.Route,
+			},
+			Context: ctx,
+		},
+	)
+	if err != nil {
+		return nil, wrapErr(err)
+	}
+	p := res.GetPayload()
+	return routeDTO(p), nil
+}
 
 func GetById(ctx context.Context, client *client.BZDACS, id, namespaceId int64) (*Route, error) {
 	res, err := client.Route.RouteGetByID(
@@ -61,7 +68,7 @@ func GetById(ctx context.Context, client *client.BZDACS, id, namespaceId int64) 
 		},
 	)
 	if err != nil {
-		return nil, err
+		return nil, wrapErr(err)
 	}
 	p := res.GetPayload()
 	return routeDTO(p), nil
@@ -82,10 +89,30 @@ func Update(ctx context.Context, client *client.BZDACS, r *Route) (*Route, error
 		},
 	)
 	if err != nil {
-		return nil, err
+		return nil, wrapErr(err)
 	}
 	p := res.GetPayload()
 
+	return routeDTO(p), nil
+}
+
+func Create(ctx context.Context, client *client.BZDACS, r *Route) (*Route, error) {
+	res, err := client.Route.RouteCreate(
+		&route.RouteCreateParams{
+			Req: &models.RouteInsertRequest{
+				Description: &r.Description,
+				Method:      &r.Method,
+				NamespaceID: &r.NamespaceId,
+				Route:       &r.Route,
+				Tags:        r.Tags,
+			},
+			Context: ctx,
+		},
+	)
+	if err != nil {
+		return nil, wrapErr(err)
+	}
+	p := res.GetPayload()
 	return routeDTO(p), nil
 }
 
@@ -111,22 +138,14 @@ func routeDTO(p *models.RouteGetResponse) *Route {
 	return out
 }
 
-func Create(ctx context.Context, client *client.BZDACS, r *Route) (*Route, error) {
-	res, err := client.Route.RouteCreate(
-		&route.RouteCreateParams{
-			Req: &models.RouteInsertRequest{
-				Description: &r.Description,
-				Method:      &r.Method,
-				NamespaceID: &r.NamespaceId,
-				Route:       &r.Route,
-				Tags:        r.Tags,
-			},
-			Context: ctx,
-		},
-	)
-	if err != nil {
-		return nil, err
+func wrapErr(err error) error {
+	_, ok := err.(*route.RouteGetByParamsNotFound)
+	if ok {
+		return ErrNotFound
 	}
-	p := res.GetPayload()
-	return routeDTO(p), nil
+	_, ok = err.(*route.RouteGetByIDNotFound)
+	if ok {
+		return ErrNotFound
+	}
+	return err
 }

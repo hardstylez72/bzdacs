@@ -7,6 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/util"
+	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -14,12 +15,10 @@ type Repository interface {
 	Insert(ctx context.Context, route *Route) (*Route, error)
 	Update(ctx context.Context, route *Route) (*Route, error)
 	GetById(ctx context.Context, routeId, namespaceId int) (*Route, error)
+	GetByParams(ctx context.Context, route, method string, namespaceId int) (*Route, error)
+	Delete(ctx context.Context, routeId, namespaceId int) error
 
 	List(ctx context.Context, f filter) ([]RouteWithTags, error)
-
-	Get(ctx context.Context, route, method string) (*RouteWithTags, error)
-
-	Delete(ctx context.Context, routeId, namespaceId int) error
 }
 
 type controller struct {
@@ -132,6 +131,7 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 // @produce application/json
 // @success 200 {object} getResponse
 // @failure 400 {object} util.ResponseWithError
+// @failure 404 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/route/getById [post]
 func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
@@ -151,7 +151,50 @@ func (c *controller) getById(w http.ResponseWriter, r *http.Request) {
 
 	route, err := c.rep.GetById(ctx, req.Id, req.NamespaceId)
 	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		if errors.Is(err, storage.EntityNotFound) {
+			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
+		return
+	}
+
+	util.NewResp(w, r).Status(http.StatusOK).Json(newGetResponse(route)).Send()
+}
+
+// @tags route
+// @description Gets route by params
+// @id route.getByParams
+// @accept application/json
+// @param req body getByParamsRequest true "request"
+// @produce application/json
+// @success 200 {object} getResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 404 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/route/getByParams [post]
+func (c *controller) getByParams(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var req getByParamsRequest
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	if err := c.validator.Struct(req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	route, err := c.rep.GetByParams(ctx, req.Route, req.Method, req.NamespaceId)
+	if err != nil {
+		if errors.Is(err, storage.EntityNotFound) {
+			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
 		return
 	}
 
@@ -195,6 +238,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 func (c *controller) Mount(r chi.Router) {
 	r.Post("/v1/route/list", c.list)
 	r.Post("/v1/route/getById", c.getById)
+	r.Post("/v1/route/getByParams", c.getByParams)
 	r.Post("/v1/route/create", c.create)
 	r.Post("/v1/route/delete", c.delete)
 	r.Post("/v1/route/update", c.update)

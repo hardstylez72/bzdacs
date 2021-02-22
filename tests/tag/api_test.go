@@ -7,8 +7,6 @@ import (
 	"github.com/hardstylez72/bzdacs/tests"
 	"github.com/hardstylez72/bzdacs/tests/namespace"
 	"github.com/hardstylez72/bzdacs/tests/system"
-	"github.com/stretchr/testify/assert"
-
 	"testing"
 )
 
@@ -34,44 +32,48 @@ func Test_tag_api(t *testing.T) {
 
 func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS) {
 
-	s, err := system.Create(ctx, c, system.GenSystemName())
+	s, err := system.Create(ctx, c, system.GenSystem())
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer func() {
-		_ = system.Delete(ctx, c, s.ID)
+		_ = system.Delete(ctx, c, s.Id)
 	}()
 
-	ns, err := namespace.Create(ctx, c, namespace.GenNamespaceName(), s.ID)
+	ns, err := namespace.Create(ctx, c, namespace.GenNamespace(s.Id).Name, s.Id)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer func() {
-		_ = namespace.Delete(ctx, c, ns.ID, s.ID)
+		_ = namespace.Delete(ctx, c, ns.Id, s.Id)
 	}()
 
-	tagName := GenTagName()
-	created, err := Create(ctx, c, tagName, ns.ID)
+	tag := GenTag(ns.Id)
+	created, err := Create(ctx, c, tag)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertTags(t, created, tag)
+	tests.AssertTimesCreated(t, created.Times)
+
+	newTag := GenTag(ns.Id)
+	newTag.Id = created.Id
+	edited, err := Update(ctx, c, newTag)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertTags(t, newTag, edited)
+	tests.AssertTimesUpdated(t, edited.Times)
+
+	err = Delete(ctx, c, edited)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	newNsName := GenTagName()
-	edited, err := Update(ctx, c, newNsName, created.ID, ns.ID)
+	deleted, err := GetById(ctx, c, edited.Id)
 	if err != nil {
 		t.Fatal(err)
 	}
+	tests.AssertTimesDeleted(t, deleted.Times)
 
-	err = Delete(ctx, c, edited.ID, ns.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	deleted, err := GetById(ctx, c, edited.ID, ns.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	assert.NotNil(t, deleted.DeletedAt)
-	assert.Equal(t, deleted.ID, created.ID)
 }

@@ -13,10 +13,10 @@ import (
 
 type Repository interface {
 	List(ctx context.Context, systemId int) ([]Namespace, error)
-	Insert(ctx context.Context, namespace *Namespace, systemId int) (*Namespace, error)
-	Delete(ctx context.Context, systemId, namespaceId int) error
+	Insert(ctx context.Context, namespace *Namespace) (*Namespace, error)
+	Delete(ctx context.Context, namespaceId int) error
 	Update(ctx context.Context, namespace *Namespace) (*Namespace, error)
-	Get(ctx context.Context, systemId, id int, name string) (*Namespace, error)
+	Get(ctx context.Context, systemId, namespaceId int, name string) (*Namespace, error)
 }
 
 type controller struct {
@@ -37,7 +37,7 @@ func NewController(rep Repository) *controller {
 // @accept application/json
 // @param req body insertRequest true "request"
 // @produce application/json
-// @success 200 {object} insertResponse
+// @success 200 {object} getResponse
 // @failure 400 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/namespace/create [post]
@@ -55,8 +55,7 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ns, sysId := insertRequestConvert(&req)
-	namespace, err := c.rep.Insert(ctx, ns, sysId)
+	namespace, err := c.rep.Insert(ctx, insertRequestConvert(&req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -70,7 +69,7 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 // @accept application/json
 // @param req body updateRequest true "request"
 // @produce application/json
-// @success 200 {object} updateResponse
+// @success 200 {object} getResponse
 // @failure 400 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/namespace/update [post]
@@ -88,12 +87,12 @@ func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	group, err := c.rep.Update(ctx, updateRequestConvert(&req))
+	ns, err := c.rep.Update(ctx, updateRequestConvert(&req))
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
-	util.NewResp(w, r).Status(http.StatusOK).Json(newUpdateResponse(group)).Send()
+	util.NewResp(w, r).Status(http.StatusOK).Json(newUpdateResponse(ns)).Send()
 }
 
 // @tags namespace
@@ -155,7 +154,7 @@ func (c *controller) get(w http.ResponseWriter, r *http.Request) {
 // @accept application/json
 // @param req body listRequest true "request"
 // @produce application/json
-// @success 200 {object} listResponse
+// @success 200 {array} getResponse
 // @failure 400 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/namespace/list [post]
@@ -212,7 +211,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := c.rep.Delete(ctx, req.SystemId, req.NamespaceId)
+	err := c.rep.Delete(ctx, req.NamespaceId)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return

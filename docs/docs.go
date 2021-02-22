@@ -54,7 +54,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.insertResponse"
+                            "$ref": "#/definitions/namespace.getResponse"
                         }
                     },
                     "400": {
@@ -197,7 +197,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/namespace.Namespace"
+                                "$ref": "#/definitions/namespace.getResponse"
                             }
                         }
                     },
@@ -244,7 +244,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.updateResponse"
+                            "$ref": "#/definitions/namespace.getResponse"
                         }
                     },
                     "400": {
@@ -388,6 +388,64 @@ var doc = `{
                             "$ref": "#/definitions/util.ResponseWithError"
                         }
                     },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/route/getByParams": {
+            "post": {
+                "description": "Gets route by params",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "route"
+                ],
+                "operationId": "route.getByParams",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/route.getByParamsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/route.getResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -471,7 +529,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.insertResponse"
+                            "$ref": "#/definitions/system.getResponse"
                         }
                     },
                     "400": {
@@ -603,7 +661,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/system.System"
+                                "$ref": "#/definitions/system.getResponse"
                             }
                         }
                     },
@@ -644,7 +702,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.updateResponse"
+                            "$ref": "#/definitions/system.getResponse"
                         }
                     },
                     "400": {
@@ -690,7 +748,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.insertResponse"
+                            "$ref": "#/definitions/tag.getResponse"
                         }
                     },
                     "400": {
@@ -827,7 +885,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/tag.Tag"
+                                "$ref": "#/definitions/tag.getResponse"
                             }
                         }
                     },
@@ -874,7 +932,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.updateResponse"
+                            "$ref": "#/definitions/tag.getResponse"
                         }
                     },
                     "400": {
@@ -894,38 +952,13 @@ var doc = `{
         }
     },
     "definitions": {
-        "namespace.Namespace": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
         "namespace.deleteRequest": {
             "type": "object",
             "required": [
-                "namespaceId",
-                "systemId"
+                "namespaceId"
             ],
             "properties": {
                 "namespaceId": {
-                    "type": "integer"
-                },
-                "systemId": {
                     "type": "integer"
                 }
             }
@@ -960,6 +993,9 @@ var doc = `{
                 "name": {
                     "type": "string"
                 },
+                "systemId": {
+                    "type": "integer"
+                },
                 "updatedAt": {
                     "type": "string"
                 }
@@ -977,27 +1013,6 @@ var doc = `{
                 },
                 "systemId": {
                     "type": "integer"
-                }
-            }
-        },
-        "namespace.insertResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
                 }
             }
         },
@@ -1023,27 +1038,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "namespace.updateResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
                     "type": "string"
                 }
             }
@@ -1075,6 +1069,25 @@ var doc = `{
                 },
                 "namespaceId": {
                     "type": "integer"
+                }
+            }
+        },
+        "route.getByParamsRequest": {
+            "type": "object",
+            "required": [
+                "method",
+                "namespaceId",
+                "route"
+            ],
+            "properties": {
+                "method": {
+                    "type": "string"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "route": {
+                    "type": "string"
                 }
             }
         },
@@ -1176,27 +1189,6 @@ var doc = `{
                 }
             }
         },
-        "system.System": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
         "system.deleteRequest": {
             "type": "object",
             "required": [
@@ -1251,27 +1243,6 @@ var doc = `{
                 }
             }
         },
-        "system.insertResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
         "system.updateRequest": {
             "type": "object",
             "required": [
@@ -1283,51 +1254,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "system.updateResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "tag.Tag": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "namespaceId": {
-                    "type": "integer"
-                },
-                "updatedAt": {
                     "type": "string"
                 }
             }
@@ -1350,14 +1276,10 @@ var doc = `{
         "tag.getRequest": {
             "type": "object",
             "required": [
-                "id",
-                "namespaceId"
+                "id"
             ],
             "properties": {
                 "id": {
-                    "type": "integer"
-                },
-                "namespaceId": {
                     "type": "integer"
                 }
             }
@@ -1401,30 +1323,6 @@ var doc = `{
                 }
             }
         },
-        "tag.insertResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "namespaceId": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
         "tag.listRequest": {
             "type": "object",
             "required": [
@@ -1455,30 +1353,6 @@ var doc = `{
                 },
                 "namespaceId": {
                     "type": "integer"
-                }
-            }
-        },
-        "tag.updateResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "namespaceId": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
                 }
             }
         },

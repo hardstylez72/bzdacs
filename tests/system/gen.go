@@ -1,8 +1,12 @@
 package system
 
-import "github.com/brianvoe/gofakeit"
+import (
+	"github.com/brianvoe/gofakeit"
+)
 
-func GenSystemName() string {
+func GenSystem() *System {
 	gofakeit.Seed(0)
-	return gofakeit.Generate("###???")
+	return &System{
+		Name: gofakeit.Generate("###???"),
+	}
 }

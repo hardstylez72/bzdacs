@@ -22,10 +22,6 @@ type TagGetRequest struct {
 	// id
 	// Required: true
 	ID *int64 `json:"id"`
-
-	// namespace Id
-	// Required: true
-	NamespaceID *int64 `json:"namespaceId"`
 }
 
 // Validate validates this tag get request
@@ -33,10 +29,6 @@ func (m *TagGetRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNamespaceID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,15 +41,6 @@ func (m *TagGetRequest) Validate(formats strfmt.Registry) error {
 func (m *TagGetRequest) validateID(formats strfmt.Registry) error {
 
 	if err := validate.Required("id", "body", m.ID); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *TagGetRequest) validateNamespaceID(formats strfmt.Registry) error {
-
-	if err := validate.Required("namespaceId", "body", m.NamespaceID); err != nil {
 		return err
 	}
 

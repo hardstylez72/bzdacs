@@ -5,14 +5,22 @@ import (
 	"github.com/hardstylez72/bzdacs/client"
 	"github.com/hardstylez72/bzdacs/client/tag"
 	"github.com/hardstylez72/bzdacs/models"
+	"github.com/hardstylez72/bzdacs/tests"
 )
 
-func Delete(ctx context.Context, client *client.BZDACS, tagId, namespaceId int64) error {
+type Tag struct {
+	Id          int64
+	Name        string
+	NamespaceId int64
+	tests.Times
+}
+
+func Delete(ctx context.Context, client *client.BZDACS, t *Tag) error {
 	_, err := client.Tag.TagDelete(
 		&tag.TagDeleteParams{
 			Req: &models.TagDeleteRequest{
-				NamespaceID: &namespaceId,
-				ID:          &tagId,
+				NamespaceID: &t.NamespaceId,
+				ID:          &t.Id,
 			},
 			Context: ctx,
 		},
@@ -39,12 +47,11 @@ func Delete(ctx context.Context, client *client.BZDACS, tagId, namespaceId int64
 //	return res.GetPayload(), nil
 //}
 
-func GetById(ctx context.Context, client *client.BZDACS, id, namespaceId int64) (*models.TagGetResponse, error) {
+func GetById(ctx context.Context, client *client.BZDACS, id int64) (*Tag, error) {
 	res, err := client.Tag.TagGet(
 		&tag.TagGetParams{
 			Req: &models.TagGetRequest{
-				ID:          &id,
-				NamespaceID: &namespaceId,
+				ID: &id,
 			},
 			Context: ctx,
 		},
@@ -52,16 +59,16 @@ func GetById(ctx context.Context, client *client.BZDACS, id, namespaceId int64) 
 	if err != nil {
 		return nil, err
 	}
-	return res.GetPayload(), nil
+	return tagDTO(res.GetPayload()), nil
 }
 
-func Update(ctx context.Context, client *client.BZDACS, name string, id, namespaceId int64) (*models.TagUpdateResponse, error) {
+func Update(ctx context.Context, client *client.BZDACS, t *Tag) (*Tag, error) {
 	res, err := client.Tag.TagUpdate(
 		&tag.TagUpdateParams{
 			Req: &models.TagUpdateRequest{
-				ID:          &id,
-				Name:        &name,
-				NamespaceID: &namespaceId,
+				ID:          &t.Id,
+				Name:        &t.Name,
+				NamespaceID: &t.NamespaceId,
 			},
 			Context: ctx,
 		},
@@ -69,15 +76,15 @@ func Update(ctx context.Context, client *client.BZDACS, name string, id, namespa
 	if err != nil {
 		return nil, err
 	}
-	return res.GetPayload(), nil
+	return tagDTO(res.GetPayload()), nil
 }
 
-func Create(ctx context.Context, client *client.BZDACS, name string, namespaceId int64) (*models.TagInsertResponse, error) {
+func Create(ctx context.Context, client *client.BZDACS, t *Tag) (*Tag, error) {
 	res, err := client.Tag.TagCreate(
 		&tag.TagCreateParams{
 			Req: &models.TagInsertRequest{
-				Name:        &name,
-				NamespaceID: &namespaceId,
+				Name:        &t.Name,
+				NamespaceID: &t.NamespaceId,
 			},
 			Context: ctx,
 		},
@@ -85,5 +92,23 @@ func Create(ctx context.Context, client *client.BZDACS, name string, namespaceId
 	if err != nil {
 		return nil, err
 	}
-	return res.GetPayload(), nil
+	return tagDTO(res.GetPayload()), nil
+}
+
+func tagDTO(p *models.TagGetResponse) *Tag {
+	out := &Tag{
+		Id:          p.ID,
+		Name:        p.Name,
+		NamespaceId: p.NamespaceID,
+		Times: tests.Times{
+			CreatedAt: tests.ParseTime(p.CreatedAt),
+			UpdatedAt: tests.ParseTime(p.UpdatedAt),
+			DeletedAt: nil,
+		},
+	}
+	if p.DeletedAt != nil {
+		t := tests.ParseTime(*p.DeletedAt)
+		out.DeletedAt = &t
+	}
+	return out
 }

@@ -56,13 +56,13 @@ func NewNamespaceListOK() *NamespaceListOK {
 OK
 */
 type NamespaceListOK struct {
-	Payload []*models.NamespaceNamespace
+	Payload []*models.NamespaceGetResponse
 }
 
 func (o *NamespaceListOK) Error() string {
 	return fmt.Sprintf("[POST /v1/namespace/list][%d] namespaceListOK  %+v", 200, o.Payload)
 }
-func (o *NamespaceListOK) GetPayload() []*models.NamespaceNamespace {
+func (o *NamespaceListOK) GetPayload() []*models.NamespaceGetResponse {
 	return o.Payload
 }
 
