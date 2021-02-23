@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 	"github.com/hardstylez72/bzdacs/pkg/group"
-	"github.com/hardstylez72/bzdacs/pkg/usergroup"
+	"github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
 )
@@ -147,8 +147,7 @@ func (c *controller) Mount(private, public chi.Router) {
 	private.Post("/v1/user/create", c.create)
 	private.Post("/v1/user/delete", c.delete)
 	private.Post("/v1/user/update", c.update)
-	public.Post("/v1/user/admin/login", c.admin)
-	public.Post("/v1/user/guest/login", c.guest)
+	public.Post("/v1/user/login/login", c.login)
 	public.Post("/v1/user/session/get", c.session)
 	public.Post("/v1/user/logout", c.logout)
 }

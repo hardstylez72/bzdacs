@@ -10,6 +10,7 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
+	"github.com/hardstylez72/bzdacs/client/group"
 	"github.com/hardstylez72/bzdacs/client/namespace"
 	"github.com/hardstylez72/bzdacs/client/route"
 	"github.com/hardstylez72/bzdacs/client/system"
@@ -58,6 +59,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *BZDACS {
 
 	cli := new(BZDACS)
 	cli.Transport = transport
+	cli.Group = group.New(transport, formats)
 	cli.Namespace = namespace.New(transport, formats)
 	cli.Route = route.New(transport, formats)
 	cli.System = system.New(transport, formats)
@@ -106,6 +108,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // BZDACS is a client for b z d a c s
 type BZDACS struct {
+	Group group.ClientService
+
 	Namespace namespace.ClientService
 
 	Route route.ClientService
@@ -120,6 +124,7 @@ type BZDACS struct {
 // SetTransport changes the transport on the client and all its subresources
 func (c *BZDACS) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
+	c.Group.SetTransport(transport)
 	c.Namespace.SetTransport(transport)
 	c.Route.SetTransport(transport)
 	c.System.SetTransport(transport)

@@ -9,8 +9,10 @@ import (
 )
 
 const (
-	SystemName = "BZDACS"
-	Namespace  = "system"
+	SystemName       = "BZDACS"
+	Namespace        = "internal"
+	GroupName        = "system"
+	GroupDescription = "BZDACS system group"
 )
 
 type Config struct {
@@ -35,6 +37,11 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 	}
 
 	_, err = resolveRoutes(ctx, c, *routes, ns.Id)
+	if err != nil {
+		return err
+	}
+
+	_, err = resolveGroup(ctx, c, GroupName, GroupDescription, ns.Id)
 	if err != nil {
 		return err
 	}

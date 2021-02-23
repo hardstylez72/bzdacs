@@ -1,5 +1,113 @@
 basePath: /api
 definitions:
+  group.deleteRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  group.filter:
+    properties:
+      namespaceId:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      pattern:
+        type: string
+    required:
+    - namespaceId
+    - page
+    - pageSize
+    type: object
+  group.getByCodeRequest:
+    properties:
+      code:
+        type: string
+      namespaceId:
+        type: integer
+    required:
+    - code
+    - namespaceId
+    type: object
+  group.getByIdRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  group.getResponse:
+    properties:
+      code:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  group.insertRequest:
+    properties:
+      baseGroupId:
+        type: integer
+      code:
+        type: string
+      description:
+        type: string
+      namespaceId:
+        type: integer
+    required:
+    - code
+    - description
+    - namespaceId
+    type: object
+  group.listRequest:
+    properties:
+      filter:
+        $ref: '#/definitions/group.filter'
+    type: object
+  group.listResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/group.getResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  group.updateRequest:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - code
+    - description
+    - id
+    - namespaceId
+    type: object
   namespace.deleteRequest:
     properties:
       namespaceId:
@@ -338,6 +446,192 @@ info:
   title: BZDACS
   version: "1.0"
 paths:
+  /v1/group/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates group
+      operationId: group.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.insertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/group.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group
+  /v1/group/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes group
+      operationId: group.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.deleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group
+  /v1/group/getByCode:
+    post:
+      consumes:
+      - application/json
+      description: Gets group by code
+      operationId: group.getByCode
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.getByCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/group.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group
+  /v1/group/getById:
+    post:
+      consumes:
+      - application/json
+      description: Gets group by id
+      operationId: group.getById
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.getByIdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/group.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group
+  /v1/group/list:
+    post:
+      consumes:
+      - application/json
+      description: List groups
+      operationId: group.list
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.listRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/group.listResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group
+  /v1/group/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates group
+      operationId: group.update
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.updateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/group.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group
   /v1/namespace/create:
     post:
       consumes:
@@ -901,6 +1195,10 @@ paths:
             $ref: '#/definitions/tag.getResponse'
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "404":
+          description: Not Found
           schema:
             $ref: '#/definitions/util.ResponseWithError'
         "500":

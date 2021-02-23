@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 
-	"github.com/hardstylez72/bzdacs/pkg/routetag"
+	"github.com/hardstylez72/bzdacs/pkg/relations/routetag"
 	"github.com/jmoiron/sqlx"
 )
 

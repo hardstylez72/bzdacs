@@ -175,11 +175,6 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 
 	namespaces, err := c.rep.List(ctx, req.Id)
 	if err != nil {
-		if err == storage.EntityNotFound {
-			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
-		} else {
-			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
-		}
 		return
 	}
 

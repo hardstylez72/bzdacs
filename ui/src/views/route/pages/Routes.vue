@@ -2,8 +2,9 @@
   <div>
     <Breadcrumbs :items="breadcrumbs"/>
     <v-data-table
-      :items="routes"
+      :items="items"
       :headers="headers"
+      :loading="loading"
       sort-by="calories"
       class="elevation-1"
       hide-default-footer
@@ -18,7 +19,7 @@
           <v-toolbar-title> {{$t('title')}}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical/>
           <v-spacer />
-          <CreateRouteDialog @routeCreated="loadRoutes"/>
+          <CreateRouteDialog @routeCreated="loadItemsWrapper"/>
         </v-toolbar>
       </template>
 
@@ -33,13 +34,13 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="edit(item)">mdi-pencil</v-icon>
-        <v-icon small @click="remove(item)">mdi-delete</v-icon>
+        <v-icon data-test="route-edit-action" small class="mr-2" @click="edit(item)">mdi-pencil</v-icon>
+        <v-icon data-test="route-delete-action" small @click="remove(item)">mdi-delete</v-icon>
       </template>
     </v-data-table>
     <TablePagination v-bind:limit.sync="pageSize" :total="total" v-model="page"/>
-    <DeleteRouteDialog :route-id="activeItemId" v-model="showDeleteDialog" @routeDeleted="loadRoutes"/>
-    <UpdateRouteDialog :route-id="activeItemId" v-model="showEditDialog" @routeUpdated="loadRoutes"/>
+    <DeleteRouteDialog :id="activeItemId" v-model="showDeleteDialog" @routeDeleted="loadItemsWrapper"/>
+    <UpdateRouteDialog :route-id="activeItemId" v-model="showEditDialog" @routeUpdated="loadItemsWrapper"/>
   </div>
 </template>
 
@@ -48,12 +49,12 @@ import {
   Component, Watch,
 } from 'vue-property-decorator';
 import { Route } from '@/views/route/entity';
-import DictTable from '@/views/base/components/DictTable.vue';
+import ItemTable from '@/views/base/components/ItemTable.vue';
 import { DataTableHeader } from 'vuetify';
-import { QueryParams } from '@/views/tree-menu/entity';
-import CreateRouteDialog from '../components/CreateRouteDialog.vue';
-import DeleteRouteDialog from '../components/DeleteRouteDialog.vue';
-import UpdateRouteDialog from '../components/UpdateRouteDialog.vue';
+import { ListResponse } from '@/views/common/helpers/types';
+import CreateRouteDialog from '../components/CreateDialog.vue';
+import DeleteRouteDialog from '../components/DeleteDialog.vue';
+import UpdateRouteDialog from '../components/UpdateDialog.vue';
 import HttpMethodBox from '../../common/components/HttpMethodBox.vue';
 import Breadcrumbs from '../../common/components/Breadcrumbs.vue';
 import TablePagination from '../../common/components/TablePagination.vue';
@@ -69,44 +70,8 @@ import TablePagination from '../../common/components/TablePagination.vue';
   },
 })
 
-export default class TabRouteTable extends DictTable<Route> {
+export default class TabRouteTable extends ItemTable<Route> {
   breadcrumbs: any[] = []
-
-    pageSize =10
-
-    page = 1
-
-    total = 0
-
-  @Watch('pageSize')
-  paginationChanged(pageSize: number) {
-    this.page = 1;
-    this.pageSize = pageSize;
-    this.loadRoutes();
-  }
-
-  @Watch('page')
-  pageChanged(pageSize: number) {
-    this.page = pageSize;
-    this.loadRoutes();
-  }
-
-  queryParams = this.getViewTreeQueryParams()
-
-  @Watch('$route.query')
-  routerChanged() {
-    this.queryParams = this.getViewTreeQueryParams();
-    this.loadRoutes();
-  }
-
-  getViewTreeQueryParams(): QueryParams {
-    return {
-      systemName: this.$route.query.systemName,
-      systemId: Number(this.$route.query.systemId),
-      namespaceName: this.$route.query.namespaceName,
-      namespaceId: Number(this.$route.query.namespaceId),
-    };
-  }
 
   mounted() {
     this.breadcrumbs.push({
@@ -115,26 +80,16 @@ export default class TabRouteTable extends DictTable<Route> {
     this.breadcrumbs.push({
       text: this.$route.query.namespaceName,
     });
-    this.loadRoutes();
   }
 
-  async loadRoutes() {
-    const list = await this.$store.direct.dispatch.route.GetList({
+  async loadItems(): Promise<ListResponse<Route>> {
+    return this.$store.direct.dispatch.route.GetList({
       filter: {
         namespaceId: this.queryParams.namespaceId,
         page: this.page,
         pageSize: this.pageSize,
       },
     });
-    this.total = list.total;
-  }
-
-  get routes(): readonly Route[] {
-    return this.$store.direct.getters.route.getRoutes;
-  }
-
-  get activeRoute(): Route {
-    return this.$store.direct.getters.route.getRoutes.filter(((route) => route.id === this.activeItemId))[0];
   }
 
   methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']

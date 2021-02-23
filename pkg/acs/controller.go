@@ -4,9 +4,9 @@ import (
 	"errors"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
+	"github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
+	"github.com/hardstylez72/bzdacs/pkg/relations/userroute"
 	"github.com/hardstylez72/bzdacs/pkg/user"
-	"github.com/hardstylez72/bzdacs/pkg/usergroup"
-	"github.com/hardstylez72/bzdacs/pkg/userroute"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
 )

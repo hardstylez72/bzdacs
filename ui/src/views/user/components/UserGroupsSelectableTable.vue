@@ -29,7 +29,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import SelectableTable from '@/views/base/components/SelectableTable.vue';
-import { Group } from '@/views/group/services/group';
+import { Group } from '@/views/group/entity';
 import { DataTableHeader } from 'vuetify';
 
 @Component

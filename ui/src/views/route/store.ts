@@ -10,8 +10,9 @@ import {
   route_updateRequest,
   RouteService,
 } from '@/views/route/generated';
+import { ListResponse } from '@/views/common/helpers/types';
 import { moduleActionContext } from '../base/store';
-import { RouteSwg as Route } from './entity';
+import { Route } from './entity';
 
 serviceOptions.axios = client;
 
@@ -39,7 +40,7 @@ const module = defineModule({
     },
   },
   actions: {
-    async GetList(context, req: route_listRequest): Promise<{items: Route[]; total: number}> {
+    async GetList(context, req: route_listRequest): Promise<ListResponse<Route>> {
       const { state, commit } = actionContext(context);
       const res = await state.service.routeList({ req });
       commit.setRoutes(res.items);

@@ -55,7 +55,7 @@
 import {
   Component, Vue, Prop, Watch,
 } from 'vue-property-decorator';
-import { Group } from '@/views/group/services/group';
+import { Group } from '@/views/group/entity';
 import { Route } from '@/views/route/entity';
 import Dialog from '@/views/common/components/Dialog.vue';
 import UserRoutesSelectableTable from './UserRoutesSelectableTable.vue';

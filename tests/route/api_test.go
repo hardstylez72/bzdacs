@@ -5,7 +5,6 @@ import (
 	"github.com/hardstylez72/bzdacs/client"
 	"github.com/hardstylez72/bzdacs/tests"
 	"github.com/hardstylez72/bzdacs/tests/namespace"
-	"github.com/hardstylez72/bzdacs/tests/system"
 	"testing"
 )
 
@@ -15,21 +14,11 @@ func Test_tag_api(t *testing.T) {
 	defer func() { _ = cancel }()
 	c := tests.GetClient()
 
-	s, err := system.Create(ctx, c, system.GenSystem())
+	ns, err := namespace.SetupNamespace(ctx, t, c)
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer func() {
-		_ = system.Delete(ctx, c, s.Id)
-	}()
-
-	ns, err := namespace.Create(ctx, c, namespace.GenNamespace(s.Id).Name, s.Id)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func() {
-		_ = namespace.Delete(ctx, c, ns.Id, s.Id)
-	}()
+	defer namespace.TeardownNamespace(ctx, c, ns)
 
 	t.Run("acceptance_test", func(t *testing.T) {
 		acceptanceTest(ctx, t, c, ns)

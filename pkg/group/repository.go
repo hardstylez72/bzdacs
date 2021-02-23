@@ -2,9 +2,8 @@ package group
 
 import (
 	"context"
-	"database/sql"
-	"github.com/hardstylez72/bzdacs/pkg/grouproute"
-	"github.com/hardstylez72/bzdacs/pkg/util"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
+	"github.com/hardstylez72/bzdacs/pkg/relations/grouproute"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -12,16 +11,11 @@ type repository struct {
 	conn *sqlx.DB
 }
 
-var (
-	ErrGroupAlreadyExists = util.ErrEntityAlreadyExists
-	ErrEntityNotFound     = util.ErrEntityNotFound
-)
-
 func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 
-func (r *repository) InsertGroupBasedOnAnother(ctx context.Context, g *Group, groupBaseId int) (*Group, error) {
+func (r *repository) InsertGroupWithCopy(ctx context.Context, g *Group, groupBaseId int) (*Group, error) {
 
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
@@ -32,12 +26,14 @@ func (r *repository) InsertGroupBasedOnAnother(ctx context.Context, g *Group, gr
 		}
 	}()
 
-	group, err := InsertTx(ctx, tx, g)
+	txx := storage.WrapSqlxTx(tx)
+
+	group, err := InsertLL(ctx, txx, g)
 	if err != nil {
 		return nil, err
 	}
 
-	routes, err := grouproute.ListDb(ctx, r.conn, groupBaseId)
+	routes, err := grouproute.ListLL(ctx, txx, groupBaseId)
 	if err != nil {
 		return nil, err
 	}
@@ -50,45 +46,17 @@ func (r *repository) InsertGroupBasedOnAnother(ctx context.Context, g *Group, gr
 		})
 	}
 
-	_, err = grouproute.InsertTx(ctx, tx, groupRoutePairs)
+	_, err = grouproute.InsertLL(ctx, txx, groupRoutePairs)
 	if err != nil {
 		return nil, err
 	}
 
 	return group, nil
 }
-func InsertTx(ctx context.Context, tx *sqlx.Tx, group *Group) (*Group, error) {
-	query := `
-insert into groups (
-                       code,
-                       description,
-                       created_at,
-                       updated_at,
-                       deleted_at
-                       )
-                   values (
-                       $1,
-                       $2,
-                       now(),
-                       null,
-                       null
-                   ) returning id,
-                               code,
-                               description,
-                               created_at,
-                               updated_at,
-                               deleted_at
-`
-	var g Group
-	err := tx.GetContext(ctx, &g, query, group.Code, group.Description)
-	if err != nil {
-		return nil, err
-	}
-
-	return &g, nil
-}
-
 func (r *repository) Update(ctx context.Context, group *Group) (*Group, error) {
+	return UpdateLL(ctx, r.conn, group)
+}
+func UpdateLL(ctx context.Context, driver storage.SqlDriver, group *Group) (*Group, error) {
 	query := `
 	update groups 
 	   set code = :code,
@@ -99,49 +67,55 @@ func (r *repository) Update(ctx context.Context, group *Group) (*Group, error) {
                                description,
                                created_at,
                                updated_at,
-                               deleted_at;
+                               deleted_at,
+	     					   namespace_id
 `
 
-	rows, err := r.conn.NamedQueryContext(ctx, query, group)
+	rows, err := driver.NamedQueryContext(ctx, query, group)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	var g Group
 	for rows.Next() {
 		err = rows.StructScan(&g)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
 	}
 
 	return &g, nil
 }
-
 func (r *repository) Insert(ctx context.Context, group *Group) (*Group, error) {
+	return InsertLL(ctx, r.conn, group)
+}
+func InsertLL(ctx context.Context, driver storage.SqlDriver, group *Group) (*Group, error) {
 	query := `
 insert into groups (
                        code,
                        description,
                        created_at,
                        updated_at,
-                       deleted_at
+                       deleted_at,
+                       namespace_id
                        )
                    values (
                        :code,
                        :description,
                        now(),
+                       now(),
                        null,
-                       null
+                       :namespace_id
                    ) returning id,
                                code,
                                description,
                                created_at,
                                updated_at,
-                               deleted_at;
+                               deleted_at,
+                       		   namespace_id
 `
 
-	rows, err := r.conn.NamedQueryContext(ctx, query, group)
+	rows, err := driver.NamedQueryContext(ctx, query, group)
 	if err != nil {
 		return nil, err
 	}
@@ -150,26 +124,18 @@ insert into groups (
 	for rows.Next() {
 		err = rows.StructScan(&g)
 		if err != nil {
-			return nil, err
+			return nil, storage.PgError(err)
 		}
-	}
-
-	if g.Id == 0 {
-		return nil, ErrGroupAlreadyExists
 	}
 
 	return &g, nil
 }
 
-func (r *repository) GetById(ctx context.Context, id int) (*Group, error) {
-	return GetByIdDb(ctx, r.conn, id)
+func (r *repository) GetByCode(ctx context.Context, code string, namespaceId int) (*Group, error) {
+	return GetByCodeLL(ctx, r.conn, code, namespaceId)
 }
 
-func (r *repository) GetByCode(ctx context.Context, code string) (*Group, error) {
-	return GetByCodeDb(ctx, r.conn, code)
-}
-
-func GetByCodeDb(ctx context.Context, conn *sqlx.DB, code string) (*Group, error) {
+func GetByCodeLL(ctx context.Context, driver storage.SqlDriver, code string, namespaceId int) (*Group, error) {
 	query := `
 		select id,
 			   code,
@@ -180,20 +146,22 @@ func GetByCodeDb(ctx context.Context, conn *sqlx.DB, code string) (*Group, error
 		from groups
 	   where deleted_at is null
 	     and code = $1
+		 and namespace_id = $2
 `
 	var group Group
-	err := conn.GetContext(ctx, &group, query, code)
+	err := driver.GetContext(ctx, &group, query, code, namespaceId)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, ErrEntityNotFound
-		}
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	return &group, nil
 }
 
-func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Group, error) {
+func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Group, error) {
+	return GetByIdLL(ctx, r.conn, id, namespaceId)
+}
+
+func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*Group, error) {
 	query := `
 		select id,
 			   code,
@@ -203,45 +171,30 @@ func GetByIdDb(ctx context.Context, conn *sqlx.DB, id int) (*Group, error) {
 			   deleted_at
 		from groups
 	   where id = $1
+		 and namespace_id = $2
 `
 	var group Group
-	err := conn.GetContext(ctx, &group, query, id)
+	err := driver.GetContext(ctx, &group, query, id, namespaceId)
 	if err != nil {
-		return nil, err
+		return nil, storage.PgError(err)
 	}
 
 	return &group, nil
 }
 
-func (r *repository) List(ctx context.Context) ([]Group, error) {
-	query := `
-		select id,
-			   code,
-			   description,
-			   created_at,
-			   updated_at,
-			   deleted_at
-		from groups
-	   where deleted_at is null;
-`
-	groups := make([]Group, 0)
-	err := r.conn.SelectContext(ctx, &groups, query)
-	if err != nil {
-		return nil, err
-	}
-
-	return groups, nil
+func (r *repository) Delete(ctx context.Context, id, namespaceId int) error {
+	return DeleteLL(ctx, r.conn, id, namespaceId)
 }
-
-func (r *repository) Delete(ctx context.Context, id int) error {
+func DeleteLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
 	query := `
 		update groups 
 			set deleted_at = now()
-		where id = $1;
+		where id = $1
+		  and namespace_id = $2
 `
-	_, err := r.conn.ExecContext(ctx, query, id)
+	_, err := driver.ExecContext(ctx, query, id, namespaceId)
 	if err != nil {
-		return err
+		return storage.PgError(err)
 	}
 
 	return nil

@@ -1,6 +1,6 @@
 package acs
 
-import "github.com/hardstylez72/bzdacs/pkg/usergroup"
+import "github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
 
 type checkAccessResponse struct {
 	Login         string   `json:"login"`

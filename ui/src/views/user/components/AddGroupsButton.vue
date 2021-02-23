@@ -46,7 +46,7 @@
 import {
   Component, Vue, Prop,
 } from 'vue-property-decorator';
-import { Group } from '@/views/group/services/group';
+import { Group } from '@/views/group/entity';
 
 import Dialog from '@/views/common/components/Dialog.vue';
 import UserGroupsSelectableTable from './UserGroupsSelectableTable.vue';

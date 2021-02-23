@@ -6,7 +6,6 @@ import (
 
 	"github.com/hardstylez72/bzdacs/tests"
 	"github.com/hardstylez72/bzdacs/tests/namespace"
-	"github.com/hardstylez72/bzdacs/tests/system"
 	"testing"
 )
 
@@ -16,8 +15,14 @@ func Test_tag_api(t *testing.T) {
 	defer func() { _ = cancel }()
 	c := tests.GetClient()
 
+	ns, err := namespace.SetupNamespace(ctx, t, c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer namespace.TeardownNamespace(ctx, c, ns)
+
 	t.Run("acceptance_test", func(t *testing.T) {
-		acceptanceTest(ctx, t, c)
+		acceptanceTest(ctx, t, c, ns)
 	})
 
 	//t.Run("404", func(t *testing.T) {
@@ -30,23 +35,7 @@ func Test_tag_api(t *testing.T) {
 	//})
 }
 
-func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS) {
-
-	s, err := system.Create(ctx, c, system.GenSystem())
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func() {
-		_ = system.Delete(ctx, c, s.Id)
-	}()
-
-	ns, err := namespace.Create(ctx, c, namespace.GenNamespace(s.Id).Name, s.Id)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func() {
-		_ = namespace.Delete(ctx, c, ns.Id, s.Id)
-	}()
+func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS, ns *namespace.Namespace) {
 
 	tag := GenTag(ns.Id)
 	created, err := Create(ctx, c, tag)

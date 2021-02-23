@@ -1,38 +1,46 @@
 <template>
   <div>
     <Breadcrumbs :items="breadcrumbs"/>
-    <v-data-table
-      :items="groups"
-      :headers="headers"
-      sort-by="calories"
-      class="elevation-1"
-    >
-      <template v-slot:no-data>
-        {{$t('no-data')}}
-      </template>
+    <div>
+      <v-data-table
+        :items="items"
+        :headers="headers"
+        :loading="loading"
+        hide-default-footer
+        :items-per-page="-1"
+        class="elevation-1"
+      >
+        <template v-slot:no-data>
+          {{$t('no-data')}}
+        </template>
 
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title>{{ $t('title') }}</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical/>
-          <v-spacer/>
-          <CreateGroupDialog/>
-        </v-toolbar>
-      </template>
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-toolbar-title>{{$t('title')}}</v-toolbar-title>
+            <v-divider class="mx-4" inset vertical/>
+            <v-spacer />
+            <CreateGroupDialog @groupCreated="loadItemsWrapper"/>
+          </v-toolbar>
+        </template>
 
-      <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="view(item)">mdi-eye</v-icon>
-        <v-icon small class="mr-2" @click="edit(item)">mdi-pencil</v-icon>
-        <v-icon small @click="remove(item)">mdi-delete</v-icon>
-      </template>
-    </v-data-table>
+        <template v-slot:item.actions="{ item }">
+          <v-icon small class="mr-2" @click="edit(item)">mdi-pencil</v-icon>
+          <v-icon small @click="remove(item)">mdi-delete</v-icon>
+          <v-icon small class="mr-2" @click="view(item)">mdi-eye</v-icon>
+        </template>
+
+      </v-data-table>
+      <TablePagination v-bind:limit.sync="pageSize" :total="total" v-model="page"/>
+    </div>
     <DeleteGroupDialog
       :id="activeItemId"
       v-model="showDeleteDialog"
+      @groupDeleted="loadItemsWrapper"
     />
     <UpdateGroupDialog
       :id="activeItemId"
       v-model="showEditDialog"
+      @groupUpdated="loadItemsWrapper"
     />
   </div>
 </template>
@@ -41,13 +49,14 @@
 import {
   Component,
 } from 'vue-property-decorator';
-import { Group } from '@/views/group/services/group';
+import { Group } from '@/views/group/entity';
 import { DataTableHeader } from 'vuetify';
 import Breadcrumbs from '@/views/common/components/Breadcrumbs.vue';
-import DictTable from '../../base/components/DictTable.vue';
-import CreateGroupDialog from '../components/CreateGroupDialog.vue';
-import DeleteGroupDialog from '../components/DeleteGroupDialog.vue';
-import UpdateGroupDialog from '../components/UpdateGroupDialog.vue';
+import { ListResponse } from '@/views/common/helpers/types';
+import ItemTable from '../../base/components/ItemTable.vue';
+import CreateGroupDialog from '../components/CreateDialog.vue';
+import DeleteGroupDialog from '../components/DeleteDialog.vue';
+import UpdateGroupDialog from '../components/UpdateDialog.vue';
 
 @Component({
   components: {
@@ -57,9 +66,7 @@ import UpdateGroupDialog from '../components/UpdateGroupDialog.vue';
     Breadcrumbs,
   },
 })
-export default class TapGroupTable extends DictTable<Group> {
-  readonly title = 'Группы'
-
+export default class TapGroupTable extends ItemTable<Group> {
   breadcrumbs: any[] = []
 
   readonly headers: DataTableHeader[] = [
@@ -78,11 +85,16 @@ export default class TapGroupTable extends DictTable<Group> {
     this.breadcrumbs.push({
       text: this.$route.query.namespaceName,
     });
-    this.$store.direct.dispatch.group.GetList();
   }
 
- get groups(): readonly Group[] {
-    return this.$store.direct.getters.group.getEntities;
+  async loadItems(): Promise<ListResponse<Group>> {
+    return this.$store.direct.dispatch.group.GetList({
+      filter: {
+        namespaceId: this.queryParams.namespaceId,
+        pageSize: this.pageSize,
+        page: this.page,
+      },
+    });
   }
 
   view(group: Group) {

@@ -9,11 +9,11 @@ create table if not exists routes (
    created_at timestamp not null default now(),
    deleted_at timestamp default null,
    namespace_id bigint references namespaces (id) not null,
-   unique (route, method, deleted_at)
+   unique (route, method, namespace_id, deleted_at)
 );
 
 create unique index routes_method_route_deleted_at
-    on routes (method, route, (deleted_at is null))
+    on routes (method, route, namespace_id, (deleted_at is null))
     where deleted_at is null;
 
 

@@ -6,7 +6,7 @@ import {
 } from 'direct-vuex';
 import UserGroupService, { UserGroup } from '@/views/user/services/usergroup';
 
-import { Group } from '@/views/group/services/group';
+import { Group } from '@/views/group/entity';
 import { moduleActionContext } from '../../base/store';
 
 export interface State{

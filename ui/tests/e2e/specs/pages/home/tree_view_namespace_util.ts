@@ -22,3 +22,11 @@ export const assertNamespaceIsNotShown = (namespace: Namespace) => {
 export const clickNamespaceOptions = (system: System, namespace: Namespace) => {
   cy.getBySel(`${system.name}_${namespace.name}_namespace_options`).click();
 };
+
+export const expandNamespaceNode = (system: System, namespace: Namespace) => {
+  cy.getBySel(`${system.name}_${namespace.name}`).click();
+}
+
+export const clickRoutesNode = (system: System, namespace: Namespace) => {
+  cy.getBySel(`${system.name}_${namespace.name}_routes`).click();
+}

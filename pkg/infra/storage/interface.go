@@ -12,6 +12,7 @@ type SqlDriver interface {
 	SelectContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
 	GetContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
 	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
+	QueryRowxContext(ctx context.Context, query string, args ...interface{}) *sqlx.Row
 }
 
 type Tx struct {
@@ -42,4 +43,7 @@ func (tx *Tx) ExecContext(ctx context.Context, query string, args ...interface{}
 
 func (tx *Tx) NamedExecContext(ctx context.Context, query string, arg interface{}) (sql.Result, error) {
 	return tx.origin.NamedExecContext(ctx, query, arg)
+}
+func (tx *Tx) QueryRowxContext(ctx context.Context, query string, args ...interface{}) *sqlx.Row {
+	return tx.origin.QueryRowxContext(ctx, query, args...)
 }

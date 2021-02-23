@@ -26,5 +26,5 @@ export interface QueryParams {
   systemName?: string | null;
   namespaceName?: string| null;
   systemId?: number| null;
-  namespaceId?: number| null;
+  namespaceId?: number;
 }

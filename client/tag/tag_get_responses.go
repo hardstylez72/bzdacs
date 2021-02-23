@@ -35,6 +35,12 @@ func (o *TagGetReader) ReadResponse(response runtime.ClientResponse, consumer ru
 			return nil, err
 		}
 		return nil, result
+	case 404:
+		result := NewTagGetNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 500:
 		result := NewTagGetInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -99,6 +105,38 @@ func (o *TagGetBadRequest) GetPayload() *models.UtilResponseWithError {
 }
 
 func (o *TagGetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.UtilResponseWithError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewTagGetNotFound creates a TagGetNotFound with default headers values
+func NewTagGetNotFound() *TagGetNotFound {
+	return &TagGetNotFound{}
+}
+
+/* TagGetNotFound describes a response with status code 404, with default header values.
+
+Not Found
+*/
+type TagGetNotFound struct {
+	Payload *models.UtilResponseWithError
+}
+
+func (o *TagGetNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/tag/get][%d] tagGetNotFound  %+v", 404, o.Payload)
+}
+func (o *TagGetNotFound) GetPayload() *models.UtilResponseWithError {
+	return o.Payload
+}
+
+func (o *TagGetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.UtilResponseWithError)
 

@@ -7,11 +7,12 @@ create table if not exists groups (
      created_at timestamp default now() not null,
      updated_at timestamp default now() not null,
      deleted_at timestamp default null,
-     unique (code, deleted_at)
+     namespace_id bigint references namespaces (id) not null,
+     unique (code, namespace_id, deleted_at)
 );
 
 create unique index groups_code_deleted_at
-    on groups (code, (deleted_at is null))
+    on groups (code, namespace_id, (deleted_at is null))
     where deleted_at is null;
 
 -- +goose Down

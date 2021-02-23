@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/util"
+	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -134,6 +136,7 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 // @produce application/json
 // @success 200 {object} getResponse
 // @failure 400 {object} util.ResponseWithError
+// @failure 404 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/tag/get [post]
 func (c *controller) get(w http.ResponseWriter, r *http.Request) {
@@ -153,6 +156,11 @@ func (c *controller) get(w http.ResponseWriter, r *http.Request) {
 
 	tag, err := c.rep.GetById(ctx, req.Id)
 	if err != nil {
+		if errors.Is(err, storage.EntityNotFound) {
+			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}

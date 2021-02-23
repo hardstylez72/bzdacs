@@ -43,3 +43,13 @@ codegen({
   include: ['Tag'],
 });
 
+codegen({
+  methodNameMode: 'operationId',
+  source: require(swaggerLocation),
+  outputDir: './src/views/group/generated/',
+  useCustomerRequestInstance: true,
+  serviceNameSuffix: 'Service',
+  useStaticMethod: false,
+  include: ['Group'],
+});
+

@@ -20,7 +20,7 @@ type Session struct {
 	Login   string `json:"login"`
 }
 
-func (c *controller) admin(w http.ResponseWriter, r *http.Request) {
+func (c *controller) login(w http.ResponseWriter, r *http.Request) {
 
 	token, err := getTokenFromRequest(r)
 	if err != nil {

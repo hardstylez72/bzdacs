@@ -55,7 +55,7 @@
 import {
   Component, Vue,
 } from 'vue-property-decorator';
-import { Group } from '@/views/group/services/group';
+import { Group } from '@/views/group/entity';
 import { User } from '@/views/user/services/user';
 import { RouteWithGroups } from '@/views/user/services/userroute';
 import UserGroupsSelectableTable from '../components/UserGroupsSelectableTable.vue';
