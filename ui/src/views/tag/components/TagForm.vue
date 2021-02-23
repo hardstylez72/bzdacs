@@ -3,7 +3,7 @@
     <v-form ref="refss" v-model="valid" lazy-validation>
       <v-row>
         <v-col cols="12" sm="10" md="10">
-          <v-textarea
+          <v-text-field
             v-model="tag.name"
             outlined
             required
@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import {
-  Component, Model, Prop, Vue, Watch,
+  Component, Model, Vue, Watch,
 } from 'vue-property-decorator';
 import { Route } from '@/views/route/entity';
 import { Tag } from '@/views/tag/entity';

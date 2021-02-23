@@ -4,7 +4,7 @@
     <TreeView v-if="isAuthorized" class="left-side-menu"/>
     <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
       <v-main>
-        <v-container :class="isAuthorized ? 'app-body-container' : ''">
+        <v-container :class="isAuthorized ? 'app-body-container' : ''" fluid>
           <router-view />
         </v-container>
       </v-main>
@@ -61,11 +61,7 @@ export default class App extends Vue {
 
 .app-body-container {
   margin-left: 325px;
-  width: 100%;
-}
-
-.top-nav-bar {
-
+  width: auto;
 }
 
 .left-side-menu {

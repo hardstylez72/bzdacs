@@ -39,7 +39,7 @@ import {
 } from 'vue-property-decorator';
 import { Route } from '@/views/route/entity';
 import { Group } from '@/views/group/entity';
-import GroupRoutesSelectableTable from '../components/GroupRoutesSelectableTable.vue';
+import GroupRoutesSelectableTable from '../components/RoutesSelectableTable.vue';
 import AddRoutesButton from '../components/AddRoutesButton.vue';
 
 @Component({
@@ -126,13 +126,5 @@ export default class RoutesTab extends Vue {
 </script>
 
 <style scoped lang="scss">
-.routes-tab-container {
-  display: flex;
-  height: 1000px;
-  justify-content: space-between;
-}
-.create-route-btn {
-  margin: 10px;
 
-}
 </style>

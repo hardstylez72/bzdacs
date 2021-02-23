@@ -2,91 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/group.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/group/repository_list.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/util/times.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/group/api_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/group/asserts.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/group/gen.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/group/lib.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/namespace/utils.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/utils/ss.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/base/components/ItemTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/common/helpers/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/group/entity.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/route/components/DeleteDialog.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/tests/e2e/specs/pages/routes/routes_create_util.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/tests/e2e/specs/pages/routes/routes_delete_util.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/tests/e2e/specs/pages/routes/routes_edit_util.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/tests/e2e/specs/pages/routes/routes_test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/tests/e2e/specs/pages/routes/routes_util.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/group/components/Table.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/route/components/Table.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/tag/components/Table.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/tag/tag_get_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/tag/tag_get_responses.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/backend/backend.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/backend.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/00004_table_groups.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/00004_table_groups.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/00005_table_routes.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/00005_table_routes.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/acs/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/acs/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/group/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/group/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/group/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/group/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/grouproute/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/grouproute/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/grouproute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/grouproute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/infra/storage/interface.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/infra/storage/interface.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/namespace/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/route/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/route/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/route/repository_instert.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository_instert.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/routetag/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/routetag/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/tag/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/controller_admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/controller_admin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/controller_guest.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/usergroup/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/usergroup/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/usergroup/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/usergroup/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/userroute/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/userroute/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/userroute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/userroute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/route/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/route/api_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/tag/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/tag/api_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/cypress.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/cypress.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/CreateGroupDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/CreateDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/DeleteGroupDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/DeleteDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/UpdateGroupDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/UpdateDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/app/components/Tabs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/app/components/Tabs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/app/pages/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/app/pages/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/app/pages/GuestPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/app/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/app/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/AddRoutesButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/AddRoutesButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/GroupRoutesSelectableTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/RoutesSelectableTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/views/group/pages/Group.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/pages/Group.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/views/group/pages/Groups.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/pages/Groups.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/services/group.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/store/group.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/store/group.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/route/components/CreateRouteDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/route/components/CreateDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/route/components/DeleteRouteDialog.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/route/components/RouteForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/route/components/Form.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/route/components/UpdateRouteDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/route/components/UpdateDialog.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/views/route/pages/Routes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/route/pages/Routes.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/route/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/route/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/tree-menu/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/tree-menu/entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/AddGroupsButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/AddGroupsButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/AddRoutesButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/AddRoutesButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/UserGroupsSelectableTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/UserGroupsSelectableTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/UserRoutesSelectableTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/UserRoutesSelectableTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/UserRoutesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/UserRoutesTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/pages/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/pages/User.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/services/usergroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/services/usergroup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/services/userroute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/services/userroute.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/store/usergroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/store/usergroup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/swagger-gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/swagger-gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/tests/e2e/plugins/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/tests/e2e/plugins/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/tests/e2e/specs/pages/home/tree_view_namespace_util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/tests/e2e/specs/pages/home/tree_view_namespace_util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/tag/components/TagForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/tag/components/TagForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/tag/pages/Tags.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/tag/pages/Tags.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,45 +221,45 @@
     </state>
     <state x="1698" y="278" width="424" height="482" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1610535317961" />
     <state x="1274" y="278" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613200352875" />
-    <state width="1227" height="278" key="GridCell.Tab.0.bottom" timestamp="1614066378046">
+    <state width="1227" height="278" key="GridCell.Tab.0.bottom" timestamp="1614078835092">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378046" />
+    <state width="1227" height="278" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
     <state width="1237" height="259" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.0.center" timestamp="1614066378045">
+    <state width="1227" height="278" key="GridCell.Tab.0.center" timestamp="1614078835092">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378045" />
+    <state width="1227" height="278" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
     <state width="1237" height="259" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.0.left" timestamp="1614066378045">
+    <state width="1227" height="278" key="GridCell.Tab.0.left" timestamp="1614078835092">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378045" />
+    <state width="1227" height="278" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
     <state width="1237" height="259" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.0.right" timestamp="1614066378046">
+    <state width="1227" height="278" key="GridCell.Tab.0.right" timestamp="1614078835092">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378046" />
+    <state width="1227" height="278" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
     <state width="1237" height="259" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.1.bottom" timestamp="1614066378973">
+    <state width="1227" height="278" key="GridCell.Tab.1.bottom" timestamp="1614078834985">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378973" />
+    <state width="1227" height="278" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834985" />
     <state width="1237" height="259" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
-    <state width="1227" height="278" key="GridCell.Tab.1.center" timestamp="1614066378972">
+    <state width="1227" height="278" key="GridCell.Tab.1.center" timestamp="1614078834984">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378972" />
+    <state width="1227" height="278" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834984" />
     <state width="1237" height="259" key="GridCell.Tab.1.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
-    <state width="1227" height="278" key="GridCell.Tab.1.left" timestamp="1614066378972">
+    <state width="1227" height="278" key="GridCell.Tab.1.left" timestamp="1614078834984">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378972" />
+    <state width="1227" height="278" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834984" />
     <state width="1237" height="259" key="GridCell.Tab.1.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
-    <state width="1227" height="278" key="GridCell.Tab.1.right" timestamp="1614066378973">
+    <state width="1227" height="278" key="GridCell.Tab.1.right" timestamp="1614078834985">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614066378973" />
+    <state width="1227" height="278" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834985" />
     <state width="1237" height="259" key="GridCell.Tab.1.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
     <state x="1041" y="225" width="468" height="583" key="RollbackChangesDialog" timestamp="1613977461698">
       <screen x="0" y="0" width="2560" height="1040" />
@@ -393,12 +323,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/tests/group/api_test.go</url>
-          <line>40</line>
+          <line>39</line>
           <option name="timeStamp" value="274" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/tests/group/api_test.go</url>
-          <line>39</line>
+          <line>38</line>
           <option name="timeStamp" value="275" />
         </line-breakpoint>
       </breakpoints>

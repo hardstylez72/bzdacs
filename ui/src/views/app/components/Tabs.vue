@@ -30,14 +30,14 @@ import {
   Component, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 
-import TabRouteTable from '@/views/route/pages/Routes.vue';
+import RouteTable from '@/views/route/pages/Routes.vue';
 import TapGroupTable from '@/views/group/pages/Groups.vue';
 import TapUserTable from '@/views/user/pages/Users.vue';
 import TabTagsTable from '@/views/tag/pages/Tags.vue';
 
 @Component({
   components: {
-    TabRouteTable,
+    TabRouteTable: RouteTable,
     TapGroupTable,
     TapUserTable,
     TabTagsTable,

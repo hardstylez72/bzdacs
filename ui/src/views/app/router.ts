@@ -5,8 +5,7 @@ import GroupPages from '@/views/group/routes';
 import UserPages from '@/views/user/routes';
 import TagPages from '@/views/tag/routes';
 import Home from './pages/Home.vue';
-import Admin from './pages/AdminPage.vue';
-import Guest from './pages/GuestPage.vue';
+import Login from './pages/AdminPage.vue';
 
 Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
@@ -16,14 +15,9 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: '/guest',
-    name: 'Guest',
-    component: Guest,
-  },
-  {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin,
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
   ...RoutePages,
   ...GroupPages,
