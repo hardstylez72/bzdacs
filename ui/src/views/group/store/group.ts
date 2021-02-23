@@ -6,10 +6,10 @@ import { client } from '@/views/base/services/utils/requester';
 import {
   serviceOptions,
   GroupService,
-  group_getByIdRequest,
-  group_listRequest,
-  group_updateRequest,
-  group_insertRequest, group_deleteRequest,
+  groupGetByIdRequest,
+  groupListRequest,
+  groupUpdateRequest,
+  groupInsertRequest, groupDeleteRequest,
 } from '@/views/group/generated';
 import { ListResponse } from '@/views/common/helpers/types';
 import { Group } from '../entity';
@@ -28,23 +28,23 @@ const module = defineModule({
     service: new GroupService(),
   } as State<Group>,
   actions: {
-    async GetById(context, req: group_getByIdRequest): Promise<Group> {
+    async GetById(context, req: groupGetByIdRequest): Promise<Group> {
       const { state } = actionContext(context);
       return state.service.groupGetById({ req });
     },
-    async GetList(context, req: group_listRequest): Promise<ListResponse<Group>> {
+    async GetList(context, req: groupListRequest): Promise<ListResponse<Group>> {
       const { state } = actionContext(context);
       return state.service.groupList({ req });
     },
-    async Update(context, req: group_updateRequest): Promise<Group> {
+    async Update(context, req: groupUpdateRequest): Promise<Group> {
       const { state } = actionContext(context);
       return state.service.groupUpdate({ req });
     },
-    async Create(context, req: group_insertRequest): Promise<Group> {
+    async Create(context, req: groupInsertRequest): Promise<Group> {
       const { state } = actionContext(context);
       return state.service.groupCreate({ req });
     },
-    async Delete(context, req: group_deleteRequest): Promise<void> {
+    async Delete(context, req: groupDeleteRequest): Promise<void> {
       const { state } = actionContext(context);
       await state.service.groupDelete({ req });
     },

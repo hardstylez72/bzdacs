@@ -1,12 +1,14 @@
 <template>
   <div>
     <v-data-table
+      v-model="selected"
       :items="items"
       :headers="headers"
       hide-default-footer
       :items-per-page="-1"
       class="elevation-1"
       :loading="loading"
+      :show-select="showSelect"
     >
       <template v-slot:no-data>
         {{$t('no-data')}}
@@ -49,7 +51,11 @@ import { ListResponse } from '@/views/common/helpers/types';
 export default class ItemTable<T extends Entity> extends Vue {
   protected items: T[] = []
 
+  protected selected: T[] = []
+
   protected loading = false
+
+  protected showSelect = false
 
   protected headers: DataTableHeader[] = [];
 

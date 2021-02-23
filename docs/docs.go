@@ -46,7 +46,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/group.insertRequest"
+                            "$ref": "#/definitions/groupInsertRequest"
                         }
                     }
                 ],
@@ -54,7 +54,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/group.getResponse"
+                            "$ref": "#/definitions/groupGetResponse"
                         }
                     },
                     "400": {
@@ -92,7 +92,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/group.deleteRequest"
+                            "$ref": "#/definitions/groupDeleteRequest"
                         }
                     }
                 ],
@@ -135,7 +135,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/group.getByCodeRequest"
+                            "$ref": "#/definitions/groupGetByCodeRequest"
                         }
                     }
                 ],
@@ -143,7 +143,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/group.getResponse"
+                            "$ref": "#/definitions/groupGetResponse"
                         }
                     },
                     "400": {
@@ -187,7 +187,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/group.getByIdRequest"
+                            "$ref": "#/definitions/groupGetByIdRequest"
                         }
                     }
                 ],
@@ -195,7 +195,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/group.getResponse"
+                            "$ref": "#/definitions/groupGetResponse"
                         }
                     },
                     "400": {
@@ -239,7 +239,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/group.listRequest"
+                            "$ref": "#/definitions/groupListRequest"
                         }
                     }
                 ],
@@ -247,7 +247,145 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/group.listResponse"
+                            "$ref": "#/definitions/groupListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/group/route/create": {
+            "post": {
+                "description": "Creates group-routes relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group-route"
+                ],
+                "operationId": "group-routes.create",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/groupRouteInsertRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/groupRouteRoute"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/group/route/delete": {
+            "post": {
+                "description": "Deletes group-routes relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group-route"
+                ],
+                "operationId": "group-routes.delete",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/groupRouteDeleteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/group/route/list": {
+            "post": {
+                "description": "Gets list of group-routes relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group-route"
+                ],
+                "operationId": "group-routes.list",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/groupRouteListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/groupRouteListResponse"
                         }
                     },
                     "400": {
@@ -285,7 +423,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/group.updateRequest"
+                            "$ref": "#/definitions/groupUpdateRequest"
                         }
                     }
                 ],
@@ -293,7 +431,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/group.getResponse"
+                            "$ref": "#/definitions/groupGetResponse"
                         }
                     },
                     "400": {
@@ -1286,21 +1424,6 @@ var doc = `{
         }
     },
     "definitions": {
-        "group.deleteRequest": {
-            "type": "object",
-            "required": [
-                "id",
-                "namespaceId"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "namespaceId": {
-                    "type": "integer"
-                }
-            }
-        },
         "group.filter": {
             "type": "object",
             "required": [
@@ -1323,22 +1446,7 @@ var doc = `{
                 }
             }
         },
-        "group.getByCodeRequest": {
-            "type": "object",
-            "required": [
-                "code",
-                "namespaceId"
-            ],
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "namespaceId": {
-                    "type": "integer"
-                }
-            }
-        },
-        "group.getByIdRequest": {
+        "groupDeleteRequest": {
             "type": "object",
             "required": [
                 "id",
@@ -1353,8 +1461,46 @@ var doc = `{
                 }
             }
         },
-        "group.getResponse": {
+        "groupGetByCodeRequest": {
             "type": "object",
+            "required": [
+                "code",
+                "namespaceId"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "groupGetByIdRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "namespaceId"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "groupGetResponse": {
+            "type": "object",
+            "required": [
+                "code",
+                "createdAt",
+                "description",
+                "id",
+                "namespaceId",
+                "updatedAt"
+            ],
             "properties": {
                 "code": {
                     "type": "string"
@@ -1380,7 +1526,7 @@ var doc = `{
                 }
             }
         },
-        "group.insertRequest": {
+        "groupInsertRequest": {
             "type": "object",
             "required": [
                 "code",
@@ -1402,7 +1548,7 @@ var doc = `{
                 }
             }
         },
-        "group.listRequest": {
+        "groupListRequest": {
             "type": "object",
             "properties": {
                 "filter": {
@@ -1410,13 +1556,17 @@ var doc = `{
                 }
             }
         },
-        "group.listResponse": {
+        "groupListResponse": {
             "type": "object",
+            "required": [
+                "items",
+                "total"
+            ],
             "properties": {
                 "items": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/group.getResponse"
+                        "$ref": "#/definitions/groupGetResponse"
                     }
                 },
                 "total": {
@@ -1424,7 +1574,150 @@ var doc = `{
                 }
             }
         },
-        "group.updateRequest": {
+        "groupRouteDeleteRequest": {
+            "type": "object",
+            "required": [
+                "pairs"
+            ],
+            "properties": {
+                "pairs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/groupRoutePair"
+                    }
+                }
+            }
+        },
+        "groupRouteFilter": {
+            "type": "object",
+            "required": [
+                "groupId",
+                "namespaceId",
+                "page"
+            ],
+            "properties": {
+                "belongToGroup": {
+                    "type": "boolean"
+                },
+                "groupId": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "routePattern": {
+                    "type": "string"
+                }
+            }
+        },
+        "groupRouteInsertRequest": {
+            "type": "object",
+            "required": [
+                "pairs"
+            ],
+            "properties": {
+                "pairs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/groupRoutePair"
+                    }
+                }
+            }
+        },
+        "groupRouteListRequest": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "$ref": "#/definitions/groupRouteFilter"
+                }
+            }
+        },
+        "groupRouteListResponse": {
+            "type": "object",
+            "required": [
+                "items",
+                "total"
+            ],
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/groupRouteRoute"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "groupRoutePair": {
+            "type": "object",
+            "required": [
+                "groupId",
+                "routeId"
+            ],
+            "properties": {
+                "groupId": {
+                    "type": "integer"
+                },
+                "routeId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "groupRouteRoute": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "description",
+                "id",
+                "method",
+                "namespaceId",
+                "route",
+                "tags",
+                "updatedAt"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "groupUpdateRequest": {
             "type": "object",
             "required": [
                 "code",
@@ -1607,6 +1900,16 @@ var doc = `{
         },
         "route.getResponse": {
             "type": "object",
+            "required": [
+                "createdAt",
+                "description",
+                "id",
+                "method",
+                "namespaceId",
+                "route",
+                "tags",
+                "updatedAt"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"

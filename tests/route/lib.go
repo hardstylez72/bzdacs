@@ -118,17 +118,17 @@ func Create(ctx context.Context, client *client.BZDACS, r *Route) (*Route, error
 
 func routeDTO(p *models.RouteGetResponse) *Route {
 	out := &Route{
-		Id:          p.ID,
-		Route:       p.Route,
-		Method:      p.Method,
-		Description: p.Description,
+		Id:          *p.ID,
+		Route:       *p.Route,
+		Method:      *p.Method,
+		Description: *p.Description,
 		Times: tests.Times{
-			CreatedAt: tests.ParseTime(p.CreatedAt),
-			UpdatedAt: tests.ParseTime(p.UpdatedAt),
+			CreatedAt: tests.ParseTime(*p.CreatedAt),
+			UpdatedAt: tests.ParseTime(*p.UpdatedAt),
 			DeletedAt: nil,
 		},
 
-		NamespaceId: p.NamespaceID,
+		NamespaceId: *p.NamespaceID,
 		Tags:        p.Tags,
 	}
 	if p.DeletedAt != nil {

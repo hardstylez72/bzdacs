@@ -50,6 +50,9 @@ codegen({
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
-  include: ['Group'],
+  include: ['Group', 'GroupRoute'],
 });
+
+
+
 

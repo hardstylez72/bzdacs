@@ -1,13 +1,13 @@
-import { group_getResponse } from '@/views/group/generated';
+import { groupGetResponse } from '@/views/group/generated';
 
-export type GroupSwg = group_getResponse
+export type Group = groupGetResponse
 
-export interface Group {
-  code: string;
-  createdAt: string;
-  deletedAt?: string;
-  description: string;
-  id: number;
-  namespaceId: number;
-  updatedAt: string;
-}
+// export interface Group {
+//   code: string;
+//   createdAt: string;
+//   deletedAt?: string;
+//   description: string;
+//   id: number;
+//   namespaceId: number;
+//   updatedAt: string;
+// }

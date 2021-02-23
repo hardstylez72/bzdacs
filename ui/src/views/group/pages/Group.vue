@@ -1,35 +1,7 @@
 <template>
   <div>
-    <h2>Группа {{groupC.code}}</h2>
-    <GroupRoutesSelectableTable
-      v-model="selected"
-      :items="routes"
-    >
-      <template v-slot:top>
-        <v-toolbar
-          flat
-        >
-          <v-toolbar-title>{{ dict.title }}</v-toolbar-title>
-          <v-divider
-            class="mx-4"
-            inset
-            vertical
-          />
-          <v-spacer />
-          <div>
-            <v-btn
-              v-if="showDeleteBtn"
-              color="primary"
-              class="mb-2"
-              @click="deleteSelectedRoutes"
-            >
-              Удалить выбранные маршруты
-            </v-btn>
-          </div>
-          <AddRoutesButton :group-id="groupIdC" />
-        </v-toolbar>
-      </template>
-    </GroupRoutesSelectableTable>
+    <h2>Группа <span style="color: teal">{{getGroup.code}}</span></h2>
+    <RoutesBelongGroupTable :belong="true" :group-id="groupId" />
   </div>
 </template>
 
@@ -37,91 +9,35 @@
 import {
   Component, Vue,
 } from 'vue-property-decorator';
-import { Route } from '@/views/route/entity';
 import { Group } from '@/views/group/entity';
-import GroupRoutesSelectableTable from '../components/RoutesSelectableTable.vue';
-import AddRoutesButton from '../components/AddRoutesButton.vue';
+import RoutesBelongGroupTable from '../components/RoutesBelongGroupTable.vue';
+import AddRoutesButton from '../components/AddRoutesDialog.vue';
 
 @Component({
   components: {
-    GroupRoutesSelectableTable,
+    RoutesBelongGroupTable,
     AddRoutesButton,
   },
 })
 export default class RoutesTab extends Vue {
-  dict = {
-    title: 'Маршруты',
-  }
-
   group: Group = {
     id: -1,
     description: 'не известный',
     code: 'Не определена',
+    namespaceId: Number(this.$route.query.namespaceId),
+    createdAt: '',
+    updatedAt: '',
   }
 
-  get groupIdC(): number {
-    return this.groupId;
-  }
-
-  get groupC(): Group {
+  get getGroup(): Group {
     return this.group;
   }
 
+  async created() {
+    this.group = await this.$store.direct.dispatch.group.GetById({ namespaceId: this.group.namespaceId, id: this.groupId });
+  }
+
   groupId = Number(this.$route.params.id);
-
-  mounted() {
-    this.$store.direct.dispatch.groupRoute.GetListBelongToUser(this.groupId);
-    this.$store.direct.dispatch.group.GetById(this.groupId).then((group) => {
-      this.group = group;
-    });
-  }
-
-  get routes(): readonly Route[] {
-    return this.$store.direct.getters.groupRoute.getRoutesBelongToGroup;
-  }
-
-  get showDeleteBtn(): boolean {
-    return this.selected.length > 0;
-  }
-
-  selected: Route[] = []
-
-  entities: Route[] = []
-
-  valid = true
-
-  editedIndex = -1
-
-  async deleteSelectedRoutes() {
-    const routes = this.selected;
-    const groupId = Number(this.$route.params.id);
-    const params = routes.map((route) => ({
-        groupId,
-        routeId: route.id,
-      }));
-
-    await this.$store.direct.dispatch.groupRoute.Delete(params);
-    this.selected = [];
-  }
-
-  readonly headers = [
-    {
-      text: 'ID',
-      value: 'id',
-    },
-    {
-      text: 'Маршрут',
-      value: 'route',
-    },
-    {
-      text: 'Метод',
-      value: 'method',
-    },
-    {
-      text: 'Описание',
-      value: 'description',
-    },
-  ]
 }
 </script>
 

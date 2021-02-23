@@ -16,7 +16,7 @@ import (
 
 // GroupGetByIDRequest group get by Id request
 //
-// swagger:model group.getByIdRequest
+// swagger:model groupGetByIdRequest
 type GroupGetByIDRequest struct {
 
 	// id

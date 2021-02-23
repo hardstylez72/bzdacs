@@ -1,15 +1,5 @@
 basePath: /api
 definitions:
-  group.deleteRequest:
-    properties:
-      id:
-        type: integer
-      namespaceId:
-        type: integer
-    required:
-    - id
-    - namespaceId
-    type: object
   group.filter:
     properties:
       namespaceId:
@@ -25,17 +15,7 @@ definitions:
     - page
     - pageSize
     type: object
-  group.getByCodeRequest:
-    properties:
-      code:
-        type: string
-      namespaceId:
-        type: integer
-    required:
-    - code
-    - namespaceId
-    type: object
-  group.getByIdRequest:
+  groupDeleteRequest:
     properties:
       id:
         type: integer
@@ -45,7 +25,27 @@ definitions:
     - id
     - namespaceId
     type: object
-  group.getResponse:
+  groupGetByCodeRequest:
+    properties:
+      code:
+        type: string
+      namespaceId:
+        type: integer
+    required:
+    - code
+    - namespaceId
+    type: object
+  groupGetByIdRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  groupGetResponse:
     properties:
       code:
         type: string
@@ -62,8 +62,15 @@ definitions:
         type: integer
       updatedAt:
         type: string
+    required:
+    - code
+    - createdAt
+    - description
+    - id
+    - namespaceId
+    - updatedAt
     type: object
-  group.insertRequest:
+  groupInsertRequest:
     properties:
       baseGroupId:
         type: integer
@@ -78,21 +85,121 @@ definitions:
     - description
     - namespaceId
     type: object
-  group.listRequest:
+  groupListRequest:
     properties:
       filter:
         $ref: '#/definitions/group.filter'
     type: object
-  group.listResponse:
+  groupListResponse:
     properties:
       items:
         items:
-          $ref: '#/definitions/group.getResponse'
+          $ref: '#/definitions/groupGetResponse'
         type: array
       total:
         type: integer
+    required:
+    - items
+    - total
     type: object
-  group.updateRequest:
+  groupRouteDeleteRequest:
+    properties:
+      pairs:
+        items:
+          $ref: '#/definitions/groupRoutePair'
+        type: array
+    required:
+    - pairs
+    type: object
+  groupRouteFilter:
+    properties:
+      belongToGroup:
+        type: boolean
+      groupId:
+        type: integer
+      namespaceId:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      routePattern:
+        type: string
+    required:
+    - groupId
+    - namespaceId
+    - page
+    type: object
+  groupRouteInsertRequest:
+    properties:
+      pairs:
+        items:
+          $ref: '#/definitions/groupRoutePair'
+        type: array
+    required:
+    - pairs
+    type: object
+  groupRouteListRequest:
+    properties:
+      filter:
+        $ref: '#/definitions/groupRouteFilter'
+    type: object
+  groupRouteListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/groupRouteRoute'
+        type: array
+      total:
+        type: integer
+    required:
+    - items
+    - total
+    type: object
+  groupRoutePair:
+    properties:
+      groupId:
+        type: integer
+      routeId:
+        type: integer
+    required:
+    - groupId
+    - routeId
+    type: object
+  groupRouteRoute:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      id:
+        type: integer
+      method:
+        type: string
+      namespaceId:
+        type: integer
+      route:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    required:
+    - createdAt
+    - description
+    - id
+    - method
+    - namespaceId
+    - route
+    - tags
+    - updatedAt
+    type: object
+  groupUpdateRequest:
     properties:
       code:
         type: string
@@ -236,6 +343,15 @@ definitions:
         type: array
       updatedAt:
         type: string
+    required:
+    - createdAt
+    - description
+    - id
+    - method
+    - namespaceId
+    - route
+    - tags
+    - updatedAt
     type: object
   route.insertRequest:
     properties:
@@ -458,14 +574,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/group.insertRequest'
+          $ref: '#/definitions/groupInsertRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/group.getResponse'
+            $ref: '#/definitions/groupGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -488,7 +604,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/group.deleteRequest'
+          $ref: '#/definitions/groupDeleteRequest'
       produces:
       - application/json
       responses:
@@ -516,14 +632,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/group.getByCodeRequest'
+          $ref: '#/definitions/groupGetByCodeRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/group.getResponse'
+            $ref: '#/definitions/groupGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -550,14 +666,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/group.getByIdRequest'
+          $ref: '#/definitions/groupGetByIdRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/group.getResponse'
+            $ref: '#/definitions/groupGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -584,14 +700,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/group.listRequest'
+          $ref: '#/definitions/groupListRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/group.listResponse'
+            $ref: '#/definitions/groupListResponse'
         "400":
           description: Bad Request
           schema:
@@ -602,6 +718,96 @@ paths:
             $ref: '#/definitions/util.ResponseWithError'
       tags:
       - group
+  /v1/group/route/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates group-routes relations
+      operationId: group-routes.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/groupRouteInsertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/groupRouteRoute'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group-route
+  /v1/group/route/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes group-routes relations
+      operationId: group-routes.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/groupRouteDeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group-route
+  /v1/group/route/list:
+    post:
+      consumes:
+      - application/json
+      description: Gets list of group-routes relations
+      operationId: group-routes.list
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/groupRouteListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/groupRouteListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - group-route
   /v1/group/update:
     post:
       consumes:
@@ -614,14 +820,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/group.updateRequest'
+          $ref: '#/definitions/groupUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/group.getResponse'
+            $ref: '#/definitions/groupGetResponse'
         "400":
           description: Bad Request
           schema:

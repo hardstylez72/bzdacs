@@ -100,10 +100,10 @@ export class GroupService {
   groupCreate(
     params: {
       /** request */
-      req: group_insertRequest;
+      req: groupInsertRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<group_getResponse> {
+  ): Promise<groupGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/group/create';
 
@@ -121,7 +121,7 @@ export class GroupService {
   groupDelete(
     params: {
       /** request */
-      req: group_deleteRequest;
+      req: groupDeleteRequest;
     } = {} as any,
     options: IRequestOptions = {}
   ): Promise<any> {
@@ -142,10 +142,10 @@ export class GroupService {
   groupGetByCode(
     params: {
       /** request */
-      req: group_getByCodeRequest;
+      req: groupGetByCodeRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<group_getResponse> {
+  ): Promise<groupGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/group/getByCode';
 
@@ -163,10 +163,10 @@ export class GroupService {
   groupGetById(
     params: {
       /** request */
-      req: group_getByIdRequest;
+      req: groupGetByIdRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<group_getResponse> {
+  ): Promise<groupGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/group/getById';
 
@@ -184,10 +184,10 @@ export class GroupService {
   groupList(
     params: {
       /** request */
-      req: group_listRequest;
+      req: groupListRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<group_listResponse> {
+  ): Promise<groupListResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/group/list';
 
@@ -205,10 +205,10 @@ export class GroupService {
   groupUpdate(
     params: {
       /** request */
-      req: group_updateRequest;
+      req: groupUpdateRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<group_getResponse> {
+  ): Promise<groupGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/group/update';
 
@@ -222,12 +222,70 @@ export class GroupService {
   }
 }
 
-export interface group_deleteRequest {
-  /**  */
-  id: number;
+export class GroupRouteService {
+  /**
+   *
+   */
+  groupRoutesCreate(
+    params: {
+      /** request */
+      req: groupRouteInsertRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<groupRouteRoute[]> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/group/route/create';
 
-  /**  */
-  namespaceId: number;
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  groupRoutesDelete(
+    params: {
+      /** request */
+      req: groupRouteDeleteRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/group/route/delete';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  groupRoutesList(
+    params: {
+      /** request */
+      req: groupRouteListRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<groupRouteListResponse> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/group/route/list';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
 }
 
 export interface group_filter {
@@ -244,15 +302,7 @@ export interface group_filter {
   pattern?: string;
 }
 
-export interface group_getByCodeRequest {
-  /**  */
-  code: string;
-
-  /**  */
-  namespaceId: number;
-}
-
-export interface group_getByIdRequest {
+export interface groupDeleteRequest {
   /**  */
   id: number;
 
@@ -260,30 +310,46 @@ export interface group_getByIdRequest {
   namespaceId: number;
 }
 
-export interface group_getResponse {
+export interface groupGetByCodeRequest {
   /**  */
-  code?: string;
+  code: string;
 
   /**  */
-  createdAt?: string;
+  namespaceId: number;
+}
+
+export interface groupGetByIdRequest {
+  /**  */
+  id: number;
+
+  /**  */
+  namespaceId: number;
+}
+
+export interface groupGetResponse {
+  /**  */
+  code: string;
+
+  /**  */
+  createdAt: string;
 
   /**  */
   deletedAt?: string;
 
   /**  */
-  description?: string;
+  description: string;
 
   /**  */
-  id?: number;
+  id: number;
 
   /**  */
-  namespaceId?: number;
+  namespaceId: number;
 
   /**  */
-  updatedAt?: string;
+  updatedAt: string;
 }
 
-export interface group_insertRequest {
+export interface groupInsertRequest {
   /**  */
   baseGroupId?: number;
 
@@ -297,20 +363,100 @@ export interface group_insertRequest {
   namespaceId: number;
 }
 
-export interface group_listRequest {
+export interface groupListRequest {
   /**  */
   filter?: group_filter;
 }
 
-export interface group_listResponse {
+export interface groupListResponse {
   /**  */
-  items?: group_getResponse[];
+  items: groupGetResponse[];
 
   /**  */
-  total?: number;
+  total: number;
 }
 
-export interface group_updateRequest {
+export interface groupRouteDeleteRequest {
+  /**  */
+  pairs: groupRoutePair[];
+}
+
+export interface groupRouteFilter {
+  /**  */
+  belongToGroup?: boolean;
+
+  /**  */
+  groupId: number;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  page: number;
+
+  /**  */
+  pageSize?: number;
+
+  /**  */
+  routePattern?: string;
+}
+
+export interface groupRouteInsertRequest {
+  /**  */
+  pairs: groupRoutePair[];
+}
+
+export interface groupRouteListRequest {
+  /**  */
+  filter?: groupRouteFilter;
+}
+
+export interface groupRouteListResponse {
+  /**  */
+  items: groupRouteRoute[];
+
+  /**  */
+  total: number;
+}
+
+export interface groupRoutePair {
+  /**  */
+  groupId: number;
+
+  /**  */
+  routeId: number;
+}
+
+export interface groupRouteRoute {
+  /**  */
+  createdAt: string;
+
+  /**  */
+  deletedAt?: string;
+
+  /**  */
+  description: string;
+
+  /**  */
+  id: number;
+
+  /**  */
+  method: string;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  route: string;
+
+  /**  */
+  tags: string[];
+
+  /**  */
+  updatedAt: string;
+}
+
+export interface groupUpdateRequest {
   /**  */
   code: string;
 

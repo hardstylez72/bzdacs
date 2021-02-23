@@ -8,39 +8,130 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GroupGetResponse group get response
 //
-// swagger:model group.getResponse
+// swagger:model groupGetResponse
 type GroupGetResponse struct {
 
 	// code
-	Code string `json:"code,omitempty"`
+	// Required: true
+	Code *string `json:"code"`
 
 	// created at
-	CreatedAt string `json:"createdAt,omitempty"`
+	// Required: true
+	CreatedAt *string `json:"createdAt"`
 
 	// deleted at
 	DeletedAt *string `json:"deletedAt,omitempty"`
 
 	// description
-	Description string `json:"description,omitempty"`
+	// Required: true
+	Description *string `json:"description"`
 
 	// id
-	ID int64 `json:"id,omitempty"`
+	// Required: true
+	ID *int64 `json:"id"`
 
 	// namespace Id
-	NamespaceID int64 `json:"namespaceId,omitempty"`
+	// Required: true
+	NamespaceID *int64 `json:"namespaceId"`
 
 	// updated at
-	UpdatedAt string `json:"updatedAt,omitempty"`
+	// Required: true
+	UpdatedAt *string `json:"updatedAt"`
 }
 
 // Validate validates this group get response
 func (m *GroupGetResponse) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateCode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDescription(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNamespaceID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GroupGetResponse) validateCode(formats strfmt.Registry) error {
+
+	if err := validate.Required("code", "body", m.Code); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *GroupGetResponse) validateCreatedAt(formats strfmt.Registry) error {
+
+	if err := validate.Required("createdAt", "body", m.CreatedAt); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *GroupGetResponse) validateDescription(formats strfmt.Registry) error {
+
+	if err := validate.Required("description", "body", m.Description); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *GroupGetResponse) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *GroupGetResponse) validateNamespaceID(formats strfmt.Registry) error {
+
+	if err := validate.Required("namespaceId", "body", m.NamespaceID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *GroupGetResponse) validateUpdatedAt(formats strfmt.Registry) error {
+
+	if err := validate.Required("updatedAt", "body", m.UpdatedAt); err != nil {
+		return err
+	}
+
 	return nil
 }
 

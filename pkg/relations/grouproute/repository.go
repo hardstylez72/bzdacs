@@ -32,10 +32,6 @@ func (r *repository) deletePair(ctx context.Context, tx *sqlx.Tx, groupId, route
 	return nil
 }
 
-func (r *repository) Insert(ctx context.Context, params Pair) (*Route, error) {
-	return InsertPairDb(ctx, r.conn, params.GroupId, params.RouteId)
-}
-
 func (r *repository) IsPairExist(ctx context.Context, pair Pair) (bool, error) {
 	query := `select count(*) from groups_routes where route_id = $1 and group_id = $2`
 
@@ -72,7 +68,7 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 	return nil
 }
 
-func (r *repository) InsertMany(ctx context.Context, params []Pair) ([]Route, error) {
+func (r *repository) Insert(ctx context.Context, params []Pair) ([]Route, error) {
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
 		if err != nil {
@@ -100,42 +96,6 @@ func InsertLL(ctx context.Context, driver storage.SqlDriver, params []Pair) ([]R
 	return routes, nil
 }
 
-func InsertPairDb(ctx context.Context, conn *sqlx.DB, groupId, routeId int) (*Route, error) {
-	query := `
-		with insert_row as (
-			insert into groups_routes (
-					   route_id,
-					   group_id
-					   )
-				   values (
-					   $1,
-					   $2
-				   ) on conflict do nothing 
-		)
-		select r.id,
-			   r.route,
-		       r.method,
-			   r.description,
-			   r.created_at,
-			   r.updated_at,
-			   r.deleted_at
-		from routes r where r.id = $1;
-`
-
-	rows := conn.QueryRowxContext(ctx, query, routeId, groupId)
-	var route Route
-	err := rows.StructScan(&route)
-	if err != nil {
-		return nil, err
-	}
-
-	if route.Id == 0 {
-		return nil, util.ErrEntityAlreadyExists
-	}
-
-	return &route, nil
-}
-
 func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeId int) (*Route, error) {
 	query := `
 		with insert_row as (
@@ -154,7 +114,8 @@ func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeI
 			   r.description,
 			   r.created_at,
 			   r.updated_at,
-			   r.deleted_at
+			   r.deleted_at,
+			   r.namespace_id
 		from routes r where r.id = $1;
 `
 
@@ -168,8 +129,10 @@ func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeI
 	return &route, nil
 }
 
-func GetGroupIdsByRouteIdDb(ctx context.Context, conn *sqlx.DB, routeId int) ([]int, error) {
-	query := `select gr.group_id from groups_routes gr where gr.route_id = $1`
+func GetGroupIdsByRouteIdLL(ctx context.Context, conn *sqlx.DB, routeId int) ([]int, error) {
+	query := `select gr.group_id 
+				from groups_routes gr
+			   where gr.route_id = $1`
 	groupIds := make([]int, 0)
 	err := conn.SelectContext(ctx, &groupIds, query, routeId)
 	if err != nil {
@@ -197,33 +160,6 @@ func (r *repository) ListNotInGroup(ctx context.Context, groupId int) ([]Route, 
 	err := r.conn.SelectContext(ctx, &routes, query, groupId)
 	if err != nil {
 		return nil, err
-	}
-
-	return routes, nil
-}
-
-func (r *repository) List(ctx context.Context, groupId int) ([]Route, error) {
-	return ListLL(ctx, r.conn, groupId)
-}
-
-func ListLL(ctx context.Context, driver storage.SqlDriver, groupId int) ([]Route, error) {
-	query := `
-		select rg.route_id as id,
-			   r.route,
-		       r.method,
-			   r.description,
-			   r.created_at,
-			   r.updated_at,
-			   r.deleted_at
-		from routes r
-    left join groups_routes rg on rg.route_id = r.id
-        where rg.group_id = $1 
-          and deleted_at is null
-`
-	routes := make([]Route, 0)
-	err := driver.SelectContext(ctx, &routes, query, groupId)
-	if err != nil {
-		return nil, storage.PgError(err)
 	}
 
 	return routes, nil

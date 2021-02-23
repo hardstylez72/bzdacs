@@ -45,7 +45,7 @@ import HttpMethodBox from '../../common/components/HttpMethodBox.vue';
   },
 })
 export default class SelectableTable<T> extends Vue {
-  @Prop({ default: () => ([]), type: Array }) items!: Array<T>
+   items!: Array<T>
 
   protected selected: T[] = []
 

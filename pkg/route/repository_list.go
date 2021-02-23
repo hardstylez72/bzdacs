@@ -20,7 +20,7 @@ func (r *repository) List(ctx context.Context, f filter) ([]Route, int, error) {
 
 	for i := range routes {
 
-		tagNames, err := getTagNamesByRouteId(ctx, r.conn, routes[i].Id, f.NamespaceId)
+		tagNames, err := GetTagNamesByRouteId(ctx, r.conn, routes[i].Id, f.NamespaceId)
 		if err != nil {
 			return nil, 0, err
 		}

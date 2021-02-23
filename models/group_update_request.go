@@ -16,7 +16,7 @@ import (
 
 // GroupUpdateRequest group update request
 //
-// swagger:model group.updateRequest
+// swagger:model groupUpdateRequest
 type GroupUpdateRequest struct {
 
 	// code

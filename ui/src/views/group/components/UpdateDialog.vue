@@ -63,14 +63,16 @@ export default class UpdateGroupDialog extends Vue {
   @Watch('id')
    protected async onChangeItem(groupId: number): Promise<void> {
     const namespaceId = Number(this.$route.query.namespaceId);
-    this.group = await this.$store.direct.dispatch.group.GetById({ namespaceId, id: groupId });
-    this.initialGroupState = this.group;
+    const g = await this.$store.direct.dispatch.group.GetById({ namespaceId, id: groupId });
+    this.group = g;
+     Object.assign(this.initialGroupState, g);
   }
 
   @Watch('group', { deep: true })
   protected onChangeGroup(group: Group): void {
     this.disable = false;
     if (this.groupsSame(this.initialGroupState, group)) {
+      console.log('grewgew');
       this.disable = true;
       return;
     }
@@ -121,7 +123,12 @@ export default class UpdateGroupDialog extends Vue {
       return;
     }
 
-    await this.$store.direct.dispatch.group.Update(this.group);
+    await this.$store.direct.dispatch.group.Update({
+      id: this.group.id,
+      namespaceId: this.group.namespaceId,
+      code: this.group.code,
+      description: this.group.description,
+    });
     this.$emit('change', false);
     this.$emit('groupUpdated');
     this.show = false;

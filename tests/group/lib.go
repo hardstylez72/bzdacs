@@ -111,16 +111,16 @@ func Create(ctx context.Context, client *client.BZDACS, r *Group) (*Group, error
 
 func routeDTO(p *models.GroupGetResponse) *Group {
 	out := &Group{
-		Id:          p.ID,
-		Code:        p.Code,
-		Description: p.Description,
+		Id:          *p.ID,
+		Code:        *p.Code,
+		Description: *p.Description,
 		Times: tests.Times{
-			CreatedAt: tests.ParseTime(p.CreatedAt),
-			UpdatedAt: tests.ParseTime(p.UpdatedAt),
+			CreatedAt: tests.ParseTime(*p.CreatedAt),
+			UpdatedAt: tests.ParseTime(*p.UpdatedAt),
 			DeletedAt: nil,
 		},
 
-		NamespaceId: p.NamespaceID,
+		NamespaceId: *p.NamespaceID,
 	}
 	if p.DeletedAt != nil {
 		t := tests.ParseTime(*p.DeletedAt)

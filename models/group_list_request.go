@@ -15,7 +15,7 @@ import (
 
 // GroupListRequest group list request
 //
-// swagger:model group.listRequest
+// swagger:model groupListRequest
 type GroupListRequest struct {
 
 	// filter

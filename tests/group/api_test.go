@@ -62,5 +62,6 @@ func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS, ns *nam
 	if err != nil {
 		t.Fatal(err)
 	}
+	assertGroups(t, deleted, edited)
 	tests.AssertTimesDeleted(t, deleted.Times)
 }

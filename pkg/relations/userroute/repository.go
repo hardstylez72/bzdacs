@@ -163,7 +163,7 @@ func (r *repository) enrichRoutesWithGroups(ctx context.Context, routes []RouteE
 	routeWithGroups := make([]RouteWithGroups, 0)
 
 	for i := range routes {
-		groupIds, err := grouproute.GetGroupIdsByRouteIdDb(ctx, r.conn, routes[i].Id)
+		groupIds, err := grouproute.GetGroupIdsByRouteIdLL(ctx, r.conn, routes[i].Id)
 		if err != nil {
 			return nil, err
 		}

@@ -262,31 +262,31 @@ export interface route_getByParamsRequest {
 
 export interface route_getResponse {
   /**  */
-  createdAt?: string;
+  createdAt: string;
 
   /**  */
   deletedAt?: string;
 
   /**  */
-  description?: string;
+  description: string;
 
   /**  */
-  id?: number;
+  id: number;
 
   /**  */
-  method?: string;
+  method: string;
 
   /**  */
-  namespaceId?: number;
+  namespaceId: number;
 
   /**  */
-  route?: string;
+  route: string;
 
   /**  */
-  tags?: string[];
+  tags: string[];
 
   /**  */
-  updatedAt?: string;
+  updatedAt: string;
 }
 
 export interface route_insertRequest {

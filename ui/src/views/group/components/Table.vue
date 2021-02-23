@@ -84,7 +84,11 @@ export default class TapGroupTable extends ItemTable<Group> {
   }
 
   view(group: Group) {
-    return this.$router.push({ name: 'Group', params: { id: group.id.toString() } });
+    return this.$router.push({
+      name: 'Group',
+      params: { id: group.id.toString() },
+      query: this.$route.query,
+    });
   }
 }
 </script>

@@ -16,7 +16,7 @@ import (
 
 // GroupDeleteRequest group delete request
 //
-// swagger:model group.deleteRequest
+// swagger:model groupDeleteRequest
 type GroupDeleteRequest struct {
 
 	// id

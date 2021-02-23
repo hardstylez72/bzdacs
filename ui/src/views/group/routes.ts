@@ -5,6 +5,8 @@ import Groups from '@/views/group/pages/Groups.vue';
 
 export const getGroupProps = (route: Route) => ({
   id: route.params.id,
+  systemId: route.query.systemId,
+  namespaceId: route.query.namespaceId,
 });
 
 export const getGroupsProps = (route: Route) => ({

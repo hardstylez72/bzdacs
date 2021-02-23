@@ -16,7 +16,7 @@ import (
 
 // GroupInsertRequest group insert request
 //
-// swagger:model group.insertRequest
+// swagger:model groupInsertRequest
 type GroupInsertRequest struct {
 
 	// base group Id

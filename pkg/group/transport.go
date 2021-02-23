@@ -5,7 +5,7 @@ type insertRequest struct {
 	Code        string `json:"code" validate:"required"`
 	Description string `json:"description" validate:"required"`
 	NamespaceId int    `json:"namespaceId" validate:"required"`
-}
+} // @name groupInsertRequest
 
 func insertRequestConvert(r *insertRequest) *Group {
 	return &Group{
@@ -15,7 +15,7 @@ func insertRequestConvert(r *insertRequest) *Group {
 	}
 }
 
-type getResponse *Group
+type getResponse *Group // @name groupGetResponse
 
 func newInsertResponse(group *Group) getResponse {
 	return group
@@ -26,7 +26,7 @@ type updateRequest struct {
 	Code        string `json:"code" validate:"required"`
 	Description string `json:"description" validate:"required"`
 	NamespaceId int    `json:"namespaceId" validate:"required"`
-}
+} // @name groupUpdateRequest
 
 func updateRequestConvert(r *updateRequest) *Group {
 	return &Group{
@@ -41,9 +41,28 @@ func newUpdateResponse(group *Group) getResponse {
 	return group
 }
 
+type deleteRequest struct {
+	Id          int `json:"id" validate:"required"`
+	NamespaceId int `json:"namespaceId" validate:"required"`
+} // @name groupDeleteRequest
+
+type getByIdRequest struct {
+	Id          int `json:"id" validate:"required"`
+	NamespaceId int `json:"namespaceId" validate:"required"`
+} // @name groupGetByIdRequest
+
+type getByCodeRequest struct {
+	Code        string `json:"code" validate:"required"`
+	NamespaceId int    `json:"namespaceId" validate:"required"`
+} // @name groupGetByCodeRequest
+
+func newGetResponse(group *Group) getResponse {
+	return group
+}
+
 type listRequest struct {
 	Filter filter `json:"filter"`
-}
+} // @name groupListRequest
 
 type filter struct {
 	Page        int    `json:"page"  validate:"required,gte=1"`
@@ -51,29 +70,11 @@ type filter struct {
 	Pattern     string `json:"pattern"`
 	NamespaceId int    `json:"namespaceId" validate:"required,gte=1"`
 }
-type deleteRequest struct {
-	Id          int `json:"id" validate:"required"`
-	NamespaceId int `json:"namespaceId" validate:"required"`
-}
-
-type getByIdRequest struct {
-	Id          int `json:"id" validate:"required"`
-	NamespaceId int `json:"namespaceId" validate:"required"`
-}
-
-type getByCodeRequest struct {
-	Code        string `json:"code" validate:"required"`
-	NamespaceId int    `json:"namespaceId" validate:"required"`
-}
-
-func newGetResponse(group *Group) getResponse {
-	return group
-}
 
 type listResponse struct {
-	Items []getResponse `json:"items"`
-	Total int           `json:"total"`
-}
+	Items []getResponse `json:"items" validate:"required"`
+	Total int           `json:"total" validate:"required"`
+} // @name groupListResponse
 
 func newListResponse(tags []Group, total int) listResponse {
 	out := make([]getResponse, 0, len(tags))

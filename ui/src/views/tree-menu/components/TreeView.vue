@@ -55,7 +55,8 @@ import {
 } from 'vue-property-decorator';
 import { System } from '@/views/system/entity';
 import { Namespace } from '@/views/namespace/entity';
-import { Node, NodeType, QueryParams } from '../entity';
+import { Node, NodeType } from '../entity';
+import { QueryParams } from '../helper';
 import CreateSystemDialog from '../../system/components/CreateDialog.vue';
 import CreateNamespaceDialog from '../../namespace/components/CreateDialog.vue';
 import SystemMenu from './SystemMenu.vue';
@@ -274,15 +275,22 @@ export default class TreeView extends Vue {
 
     const node = nodes[0];
     if (node.type === 'routes') {
-      await this.$router.push({ name: 'Routes', query: this.formQueryParams(node.system, node.namespace) });
+      await this.pushToPage('Routes', node);
     } else if (node.type === 'groups') {
-      await this.$router.push({ name: 'Groups', query: this.formQueryParams(node.system, node.namespace) });
+      await this.pushToPage('Groups', node);
     } else if (node.type === 'users') {
-      await this.$router.push({ name: 'Users', query: this.formQueryParams(node.system, node.namespace) });
+      await this.pushToPage('Users', node);
     } else if (node.type === 'tags') {
-      await this.$router.push({ name: 'Tags', query: this.formQueryParams(node.system, node.namespace) });
+      await this.pushToPage('Tags', node);
     }
     this.clearActiveNodes();
+  }
+
+  async pushToPage(name: string, node: Node) {
+    return this.$router.push({
+      name,
+      query: { ...this.formQueryParams(node.system, node.namespace), lang: this.$route.query.lang },
+    });
   }
 
   formQueryParams(system: System, namespace: Namespace): QueryParams {

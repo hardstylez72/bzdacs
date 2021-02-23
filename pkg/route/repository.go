@@ -83,7 +83,7 @@ func (r *repository) GetByParams(ctx context.Context, route, method string, name
 		return nil, err
 	}
 
-	tagNames, err := getTagNamesByRouteId(ctx, r.conn, rr.Id, namespaceId)
+	tagNames, err := GetTagNamesByRouteId(ctx, r.conn, rr.Id, namespaceId)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Route, 
 		return nil, err
 	}
 
-	tagNames, err := getTagNamesByRouteId(ctx, r.conn, route.Id, namespaceId)
+	tagNames, err := GetTagNamesByRouteId(ctx, r.conn, route.Id, namespaceId)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +106,7 @@ func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Route, 
 	return route, nil
 }
 
-func getTagNamesByRouteId(ctx context.Context, conn *sqlx.DB, routeId, namespaceId int) ([]string, error) {
+func GetTagNamesByRouteId(ctx context.Context, conn *sqlx.DB, routeId, namespaceId int) ([]string, error) {
 	tags, err := routetag.GetRouteTagsLL(ctx, conn, routeId, namespaceId)
 	if err != nil {
 		return nil, err

@@ -2,21 +2,59 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ui/src/views/group/components/Table.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/route/components/Table.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/tag/components/Table.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository_list.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/group/components/AddRoutesDialog.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/group/components/DeleteRoutesButton.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/group/components/RoutesBelongGroupTable.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/group/components/RoutesNotBelongGroupTable.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/views/tree-menu/helper.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/app/components/Tabs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/app/components/Tabs.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/app/pages/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/app/pages/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/app/pages/GuestPage.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/app/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/app/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_get_by_code_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_get_by_code_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_get_by_id_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_get_by_id_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_update_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/group_update_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/route_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/group/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/group/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/group/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/util/times.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/util/times.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/group/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/group/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/group/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/group/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/route/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/route/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/base/components/ItemTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/base/components/ItemTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/base/components/SelectableTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/base/components/SelectableTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/AddRoutesButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/AddRoutesButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/GroupRoutesSelectableTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/RoutesSelectableTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/RoutesSelectableTable.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/Table.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/Table.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/components/UpdateDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/components/UpdateDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/generated/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/generated/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/views/group/pages/Group.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/pages/Group.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/pages/Groups.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/pages/Groups.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/route/pages/Routes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/route/pages/Routes.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/tag/components/TagForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/tag/components/TagForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/tag/pages/Tags.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/tag/pages/Tags.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/store/group.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/store/group.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/group/store/grouproute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/store/grouproute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/route/generated/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/route/generated/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/tree-menu/components/TreeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/tree-menu/components/TreeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/views/tree-menu/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/tree-menu/entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/swagger-gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/swagger-gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/swagger/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/swagger/s.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +225,8 @@
     <MESSAGE value="Updates route api" />
     <MESSAGE value="Adds route get by params api" />
     <MESSAGE value="Updates tag page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates tag page" />
+    <MESSAGE value="Refactors code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactors code" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -201,15 +240,15 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="445" y="346" width="465" height="391" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1610177655254" />
-    <state x="1527" y="80" width="794" height="878" key="CommitChangelistDialog2" timestamp="1614025313679">
+    <state x="1527" y="80" width="794" height="878" key="CommitChangelistDialog2" timestamp="1614081255307">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="1527" y="80" width="794" height="878" key="CommitChangelistDialog2/0.0.2560.1040@0.0.2560.1040" timestamp="1614025313679" />
+    <state x="1527" y="80" width="794" height="878" key="CommitChangelistDialog2/0.0.2560.1040@0.0.2560.1040" timestamp="1614081255307" />
     <state x="1126" y="80" width="794" height="878" key="CommitChangelistDialog2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612679505213" />
-    <state width="946" height="485" key="DebuggerActiveHint" timestamp="1614066332397">
+    <state width="946" height="485" key="DebuggerActiveHint" timestamp="1614113031318">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="946" height="485" key="DebuggerActiveHint/0.0.2560.1040@0.0.2560.1040" timestamp="1614066332397" />
+    <state width="946" height="485" key="DebuggerActiveHint/0.0.2560.1040@0.0.2560.1040" timestamp="1614113031318" />
     <state width="928" height="485" key="DebuggerActiveHint/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612961792752" />
     <state x="133" y="100" width="1439" height="839" key="DiffContextDialog" timestamp="1613907190693">
       <screen x="0" y="0" width="2560" height="1040" />
@@ -221,45 +260,45 @@
     </state>
     <state x="1698" y="278" width="424" height="482" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1610535317961" />
     <state x="1274" y="278" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613200352875" />
-    <state width="1227" height="278" key="GridCell.Tab.0.bottom" timestamp="1614078835092">
+    <state width="1257" height="401" key="GridCell.Tab.0.bottom" timestamp="1614113051070">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
+    <state width="1257" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614113051070" />
     <state width="1237" height="259" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.0.center" timestamp="1614078835092">
+    <state width="1257" height="401" key="GridCell.Tab.0.center" timestamp="1614113051066">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
+    <state width="1257" height="401" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614113051066" />
     <state width="1237" height="259" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.0.left" timestamp="1614078835092">
+    <state width="1257" height="401" key="GridCell.Tab.0.left" timestamp="1614113051064">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
+    <state width="1257" height="401" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614113051064" />
     <state width="1237" height="259" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.0.right" timestamp="1614078835092">
+    <state width="1257" height="401" key="GridCell.Tab.0.right" timestamp="1614113051068">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614078835092" />
+    <state width="1257" height="401" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614113051068" />
     <state width="1237" height="259" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239099" />
-    <state width="1227" height="278" key="GridCell.Tab.1.bottom" timestamp="1614078834985">
+    <state width="613" height="278" key="GridCell.Tab.1.bottom" timestamp="1614112976827">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834985" />
+    <state width="613" height="278" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614112976827" />
     <state width="1237" height="259" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
-    <state width="1227" height="278" key="GridCell.Tab.1.center" timestamp="1614078834984">
+    <state width="613" height="278" key="GridCell.Tab.1.center" timestamp="1614112976827">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834984" />
+    <state width="613" height="278" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614112976827" />
     <state width="1237" height="259" key="GridCell.Tab.1.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
-    <state width="1227" height="278" key="GridCell.Tab.1.left" timestamp="1614078834984">
+    <state width="613" height="278" key="GridCell.Tab.1.left" timestamp="1614112976826">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834984" />
+    <state width="613" height="278" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614112976826" />
     <state width="1237" height="259" key="GridCell.Tab.1.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
-    <state width="1227" height="278" key="GridCell.Tab.1.right" timestamp="1614078834985">
+    <state width="613" height="278" key="GridCell.Tab.1.right" timestamp="1614112976827">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1227" height="278" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614078834985" />
+    <state width="613" height="278" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614112976827" />
     <state width="1237" height="259" key="GridCell.Tab.1.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613025239007" />
     <state x="1041" y="225" width="468" height="583" key="RollbackChangesDialog" timestamp="1613977461698">
       <screen x="0" y="0" width="2560" height="1040" />
@@ -269,19 +308,19 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1424" y="154" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1610091826541" />
-    <state x="1649" y="256" width="642" height="524" key="StructurePopup" timestamp="1614062452291">
+    <state x="1649" y="256" width="642" height="524" key="StructurePopup" timestamp="1614084231602">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="1649" y="256" width="642" height="524" key="StructurePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1614062452291" />
-    <state x="1510" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1614025319011">
+    <state x="1649" y="256" width="642" height="524" key="StructurePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1614084231602" />
+    <state x="1510" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1614081259077">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="1510" y="256" width="800" height="526" key="Vcs.Push.Dialog.v2/0.0.2560.1040@0.0.2560.1040" timestamp="1614025319011" />
+    <state x="1510" y="256" width="800" height="526" key="Vcs.Push.Dialog.v2/0.0.2560.1040@0.0.2560.1040" timestamp="1614081259077" />
     <state x="1110" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612679508976" />
-    <state width="626" height="519" key="XDebugger.FullValuePopup" timestamp="1614018613041">
+    <state width="626" height="519" key="XDebugger.FullValuePopup" timestamp="1614105436903">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="626" height="519" key="XDebugger.FullValuePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1614018613041" />
+    <state width="626" height="519" key="XDebugger.FullValuePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1614105436903" />
     <state width="470" height="519" key="XDebugger.FullValuePopup/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612813165925" />
     <state x="285" y="128" width="698" height="777" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1612113450016">
       <screen x="0" y="0" width="2560" height="1040" />
@@ -322,14 +361,14 @@
           <option name="timeStamp" value="264" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/tests/group/api_test.go</url>
-          <line>39</line>
-          <option name="timeStamp" value="274" />
+          <url>file://$PROJECT_DIR$/pkg/relations/grouproute/controller.go</url>
+          <line>48</line>
+          <option name="timeStamp" value="295" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/tests/group/api_test.go</url>
-          <line>38</line>
-          <option name="timeStamp" value="275" />
+          <url>file://$PROJECT_DIR$/pkg/relations/grouproute/controller.go</url>
+          <line>53</line>
+          <option name="timeStamp" value="296" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

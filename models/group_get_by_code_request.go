@@ -16,7 +16,7 @@ import (
 
 // GroupGetByCodeRequest group get by code request
 //
-// swagger:model group.getByCodeRequest
+// swagger:model groupGetByCodeRequest
 type GroupGetByCodeRequest struct {
 
 	// code

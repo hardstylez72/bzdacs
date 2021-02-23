@@ -12,18 +12,21 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GroupListResponse group list response
 //
-// swagger:model group.listResponse
+// swagger:model groupListResponse
 type GroupListResponse struct {
 
 	// items
+	// Required: true
 	Items []*GroupGetResponse `json:"items"`
 
 	// total
-	Total int64 `json:"total,omitempty"`
+	// Required: true
+	Total *int64 `json:"total"`
 }
 
 // Validate validates this group list response
@@ -34,6 +37,10 @@ func (m *GroupListResponse) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateTotal(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -41,8 +48,9 @@ func (m *GroupListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GroupListResponse) validateItems(formats strfmt.Registry) error {
-	if swag.IsZero(m.Items) { // not required
-		return nil
+
+	if err := validate.Required("items", "body", m.Items); err != nil {
+		return err
 	}
 
 	for i := 0; i < len(m.Items); i++ {
@@ -59,6 +67,15 @@ func (m *GroupListResponse) validateItems(formats strfmt.Registry) error {
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *GroupListResponse) validateTotal(formats strfmt.Registry) error {
+
+	if err := validate.Required("total", "body", m.Total); err != nil {
+		return err
 	}
 
 	return nil

@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // RouteGetResponse route get response
@@ -18,35 +20,152 @@ import (
 type RouteGetResponse struct {
 
 	// created at
-	CreatedAt string `json:"createdAt,omitempty"`
+	// Required: true
+	CreatedAt *string `json:"createdAt"`
 
 	// deleted at
 	DeletedAt *string `json:"deletedAt,omitempty"`
 
 	// description
-	Description string `json:"description,omitempty"`
+	// Required: true
+	Description *string `json:"description"`
 
 	// id
-	ID int64 `json:"id,omitempty"`
+	// Required: true
+	ID *int64 `json:"id"`
 
 	// method
-	Method string `json:"method,omitempty"`
+	// Required: true
+	Method *string `json:"method"`
 
 	// namespace Id
-	NamespaceID int64 `json:"namespaceId,omitempty"`
+	// Required: true
+	NamespaceID *int64 `json:"namespaceId"`
 
 	// route
-	Route string `json:"route,omitempty"`
+	// Required: true
+	Route *string `json:"route"`
 
 	// tags
+	// Required: true
 	Tags []string `json:"tags"`
 
 	// updated at
-	UpdatedAt string `json:"updatedAt,omitempty"`
+	// Required: true
+	UpdatedAt *string `json:"updatedAt"`
 }
 
 // Validate validates this route get response
 func (m *RouteGetResponse) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDescription(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateMethod(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNamespaceID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRoute(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTags(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *RouteGetResponse) validateCreatedAt(formats strfmt.Registry) error {
+
+	if err := validate.Required("createdAt", "body", m.CreatedAt); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *RouteGetResponse) validateDescription(formats strfmt.Registry) error {
+
+	if err := validate.Required("description", "body", m.Description); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *RouteGetResponse) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *RouteGetResponse) validateMethod(formats strfmt.Registry) error {
+
+	if err := validate.Required("method", "body", m.Method); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *RouteGetResponse) validateNamespaceID(formats strfmt.Registry) error {
+
+	if err := validate.Required("namespaceId", "body", m.NamespaceID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *RouteGetResponse) validateRoute(formats strfmt.Registry) error {
+
+	if err := validate.Required("route", "body", m.Route); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *RouteGetResponse) validateTags(formats strfmt.Registry) error {
+
+	if err := validate.Required("tags", "body", m.Tags); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *RouteGetResponse) validateUpdatedAt(formats strfmt.Registry) error {
+
+	if err := validate.Required("updatedAt", "body", m.UpdatedAt); err != nil {
+		return err
+	}
+
 	return nil
 }
 

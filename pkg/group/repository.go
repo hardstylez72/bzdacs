@@ -33,7 +33,14 @@ func (r *repository) InsertGroupWithCopy(ctx context.Context, g *Group, groupBas
 		return nil, err
 	}
 
-	routes, err := grouproute.ListLL(ctx, txx, groupBaseId)
+	routes, _, err := grouproute.ListLL(ctx, txx, grouproute.Filter{
+		Page:          1,
+		PageSize:      0,
+		RoutePattern:  "",
+		BelongToGroup: true,
+		NamespaceId:   group.NamespaceId,
+		GroupId:       groupBaseId,
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +175,8 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId in
 			   description,
 			   created_at,
 			   updated_at,
-			   deleted_at
+			   deleted_at,
+			   namespace_id
 		from groups
 	   where id = $1
 		 and namespace_id = $2

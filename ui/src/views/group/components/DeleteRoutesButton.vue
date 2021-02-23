@@ -3,9 +3,9 @@
     <v-btn
       color="primary"
       class="mb-2"
-      @click="addSelectedRoutes"
+      @click="deleteSelectedRoutes"
     >
-      {{$t('add-selected-routes')}}
+      Удалить выбранные маршруты
     </v-btn>
   </div>
 </template>
@@ -18,10 +18,10 @@ import { Route } from '@/views/route/entity';
 
 @Component
 
-export default class AddRoutesButton extends Vue {
+export default class DeleteRoutesButton extends Vue {
   @Prop() items!: Route[]
 
-  async addSelectedRoutes() {
+  async deleteSelectedRoutes() {
     const routes = this.items;
     const groupId = Number(this.$route.params.id);
     const params = routes.map((route) => ({
@@ -29,8 +29,10 @@ export default class AddRoutesButton extends Vue {
       routeId: route.id,
     }));
 
-    await this.$store.direct.dispatch.groupRoute.Create(params);
-    this.$emit('routesAdded');
+    await this.$store.direct.dispatch.groupRoute.Delete(
+      params,
+    );
+    this.$emit('routesDeleted');
   }
 }
 </script>
@@ -38,13 +40,3 @@ export default class AddRoutesButton extends Vue {
 <style scoped lang="scss">
 
 </style>
-<i18n>
-{
-  "en": {
-    "add-selected-routes": "Add selected routes"
-  },
-  "ru": {
-    "add-selected-routes": "Добавить выбранные маршруты"
-  }
-}
-</i18n>

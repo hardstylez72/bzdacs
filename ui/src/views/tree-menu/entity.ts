@@ -1,5 +1,6 @@
 import { Namespace } from '@/views/namespace/entity';
 import { System } from '@/views/system/entity';
+import { NamespaceQuery } from '@/views/tree-menu/helper';
 
 export type NodeType =
   'routes' |
@@ -20,11 +21,4 @@ export interface Node {
   system?: System;
   namespace?: Namespace;
   testId?: string;
-}
-
-export interface QueryParams {
-  systemName?: string | null;
-  namespaceName?: string| null;
-  systemId?: number| null;
-  namespaceId?: number;
 }
