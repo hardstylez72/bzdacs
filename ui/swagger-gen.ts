@@ -53,6 +53,15 @@ codegen({
   include: ['Group', 'GroupRoute'],
 });
 
+codegen({
+  methodNameMode: 'operationId',
+  source: require(swaggerLocation),
+  outputDir: './src/views/user/generated/',
+  useCustomerRequestInstance: true,
+  serviceNameSuffix: 'Service',
+  useStaticMethod: false,
+  include: ['User'],
+});
 
 
 

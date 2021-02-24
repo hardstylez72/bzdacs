@@ -24,7 +24,7 @@ import {
     'c-dialog': () => import('../../common/components/Dialog.vue'),
   },
 })
-export default class DeleteRouteDialog extends Vue {
+export default class DeleteDialog extends Vue {
   show = false
 
   @Prop() id!: number
@@ -43,8 +43,10 @@ export default class DeleteRouteDialog extends Vue {
   }
 
   async remove() {
-    await this.$store.direct.dispatch.user.Delete(this.id);
+    const namespaceId = Number(this.$route.query.namespaceId);
+    await this.$store.direct.dispatch.user.Delete({ namespaceId, id: this.id });
     this.$emit('change', false);
+    this.$emit('userDeleted');
   }
 }
 </script>

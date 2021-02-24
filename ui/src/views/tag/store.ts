@@ -7,6 +7,8 @@ import {
   serviceOptions, tagDeleteRequest, tagInsertRequest, tagListRequest, tagUpdateRequest,
   TagService,
 } from '@/views/tag/generated';
+import { ListResponse } from '@/views/common/helpers/types';
+import { Route } from '@/views/route/entity';
 import { moduleActionContext } from '../base/store';
 import { TagSwg as Tag } from './entity';
 
@@ -26,7 +28,7 @@ const module = defineModule({
       const { state } = actionContext(context);
       return state.service.tagGet({ req: { id } });
     },
-    async GetList(context, req: tagListRequest): Promise<{items: Tag[]; total: number}> {
+    async GetList(context, req: tagListRequest): Promise<ListResponse<Tag>> {
       const { state } = actionContext(context);
       // @ts-ignore
       return state.service.tagList({ req });

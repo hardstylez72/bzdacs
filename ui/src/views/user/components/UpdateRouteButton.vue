@@ -16,7 +16,7 @@ import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
 import { RouteWithGroups, UpdateUserRoute } from '@/views/user/services/userroute';
-import { User } from '@/views/user/services/user';
+import { User } from '@/views/user/entity';
 
 @Component
 export default class UpdateRouteButton extends Vue {

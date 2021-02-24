@@ -16,6 +16,7 @@ import (
 	"github.com/hardstylez72/bzdacs/client/route"
 	"github.com/hardstylez72/bzdacs/client/system"
 	"github.com/hardstylez72/bzdacs/client/tag"
+	"github.com/hardstylez72/bzdacs/client/user"
 )
 
 // Default b z d a c s HTTP client.
@@ -66,6 +67,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *BZDACS {
 	cli.Route = route.New(transport, formats)
 	cli.System = system.New(transport, formats)
 	cli.Tag = tag.New(transport, formats)
+	cli.User = user.New(transport, formats)
 	return cli
 }
 
@@ -122,6 +124,8 @@ type BZDACS struct {
 
 	Tag tag.ClientService
 
+	User user.ClientService
+
 	Transport runtime.ClientTransport
 }
 
@@ -134,4 +138,5 @@ func (c *BZDACS) SetTransport(transport runtime.ClientTransport) {
 	c.Route.SetTransport(transport)
 	c.System.SetTransport(transport)
 	c.Tag.SetTransport(transport)
+	c.User.SetTransport(transport)
 }

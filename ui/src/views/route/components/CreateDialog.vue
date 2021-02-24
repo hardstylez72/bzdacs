@@ -68,8 +68,6 @@ export default class CreateRouteDialog extends Vue {
 
   valid = true
 
-  title = 'Создание маршрута'
-
   route: Route = {
     description: '',
     id: -1,

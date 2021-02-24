@@ -15,8 +15,7 @@
 import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
-import { RouteWithGroups, UpdateUserRoute } from '@/views/user/services/userroute';
-import { User } from '@/views/user/services/user';
+import { RouteWithGroups } from '@/views/user/services/userroute';
 
 @Component
 export default class StatusIconRouteAccess extends Vue {

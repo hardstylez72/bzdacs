@@ -15,9 +15,9 @@ import {
   Component, Prop, Vue,
 } from 'vue-property-decorator';
 import {
- CreateUserRoute, RouteWithGroups, UpdateUserRoute, UserRoute,
+  RouteWithGroups, UserRoute,
 } from '@/views/user/services/userroute';
-import { User } from '@/views/user/services/user';
+import { User } from '@/views/user/entity';
 
 @Component
 export default class OverwriteRouteButton extends Vue {

@@ -57,7 +57,7 @@ func (c *controller) accessCheck(w http.ResponseWriter, r *http.Request) {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 	}
 
-	u, err := c.userRepository.GetByExternalId(ctx, login)
+	u, err := c.userRepository.GetByLogin(ctx, login, 1) // todo: replace 1 with namespace id
 	if err != nil {
 		if err == user.ErrEntityNotFound {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()

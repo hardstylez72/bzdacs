@@ -557,6 +557,112 @@ definitions:
     - name
     - namespaceId
     type: object
+  user.filter:
+    properties:
+      namespaceId:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      pattern:
+        type: string
+    required:
+    - namespaceId
+    - page
+    type: object
+  userCreateRequest:
+    properties:
+      externalId:
+        type: string
+      namespaceId:
+        type: integer
+    required:
+    - externalId
+    - namespaceId
+    type: object
+  userDeleteRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  userGetByIdRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  userGetByLoginRequest:
+    properties:
+      login:
+        type: string
+      namespaceId:
+        type: integer
+    required:
+    - login
+    - namespaceId
+    type: object
+  userGetResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      externalId:
+        type: string
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+      updatedAt:
+        type: string
+    required:
+    - createdAt
+    - externalId
+    - id
+    - namespaceId
+    - updatedAt
+    type: object
+  userListRequest:
+    properties:
+      filter:
+        $ref: '#/definitions/user.filter'
+    type: object
+  userListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/userGetResponse'
+        type: array
+      total:
+        type: integer
+    required:
+    - items
+    - total
+    type: object
+  userUpdateRequest:
+    properties:
+      externalId:
+        type: string
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - externalId
+    - id
+    - namespaceId
+    type: object
   util.Error:
     properties:
       code:
@@ -1490,6 +1596,192 @@ paths:
             $ref: '#/definitions/util.ResponseWithError'
       tags:
       - tag
+  /v1/user/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates user
+      operationId: user.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userGetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user
+  /v1/user/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes user by id
+      operationId: user.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userDeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user
+  /v1/user/getById:
+    post:
+      consumes:
+      - application/json
+      description: Gets user by id
+      operationId: user.getById
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userGetByIdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userGetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user
+  /v1/user/getByLogin:
+    post:
+      consumes:
+      - application/json
+      description: Gets user by login
+      operationId: user.getByLogin
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userGetByLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userGetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user
+  /v1/user/list:
+    post:
+      consumes:
+      - application/json
+      description: Gets list of users
+      operationId: user.list
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user
+  /v1/user/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates user
+      operationId: user.update
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userGetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user
 securityDefinitions:
   BasicAuth:
     type: basic
