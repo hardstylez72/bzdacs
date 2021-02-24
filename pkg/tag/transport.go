@@ -3,7 +3,7 @@ package tag
 type insertRequest struct {
 	Name        string `json:"name" validate:"required"`
 	NamespaceId int    `json:"namespaceId" validate:"required"`
-}
+} // @name tagInsertRequest
 
 func insertRequestConvert(r *insertRequest) *Tag {
 	return &Tag{
@@ -22,7 +22,7 @@ type updateRequest struct {
 	Id          int    `json:"id"  validate:"required"`
 	Name        string `json:"name" validate:"required"`
 	NamespaceId int    `json:"namespaceId" validate:"required"`
-}
+} // @name tagUpdateRequest
 
 func updateRequestConvert(r *updateRequest) *Tag {
 	return &Tag{
@@ -41,13 +41,13 @@ func newUpdateResponse(tag *Tag) updateResponse {
 type deleteRequest struct {
 	Id          int `json:"id" validate:"required"`
 	NamespaceId int `json:"namespaceId" validate:"required"`
-}
+} // @name tagDeleteRequest
 
 type getRequest struct {
 	Id int `json:"id" validate:"required"`
-}
+} // @name tagGetRequest
 
-type getResponse *Tag
+type getResponse *Tag // @name tagGetResponse
 
 func newGetResponse(tag *Tag) getResponse {
 	return tag
@@ -55,7 +55,7 @@ func newGetResponse(tag *Tag) getResponse {
 
 type listRequest struct {
 	Filter filter `json:"filter"`
-}
+} // @name tagListRequest
 
 type filter struct {
 	Page        int    `json:"page"  validate:"required,gte=1"`
@@ -67,7 +67,7 @@ type filter struct {
 type listResponse struct {
 	Items []getResponse `json:"items"`
 	Total int           `json:"total"`
-}
+} // @name tagListResponse
 
 func newListResponse(tags []Tag, total int) listResponse {
 	out := make([]getResponse, 0, len(tags))

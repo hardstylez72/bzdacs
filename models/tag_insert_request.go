@@ -16,7 +16,7 @@ import (
 
 // TagInsertRequest tag insert request
 //
-// swagger:model tag.insertRequest
+// swagger:model tagInsertRequest
 type TagInsertRequest struct {
 
 	// name

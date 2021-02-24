@@ -469,7 +469,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.insertRequest"
+                            "$ref": "#/definitions/namespaceInsertRequest"
                         }
                     }
                 ],
@@ -477,7 +477,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.getResponse"
+                            "$ref": "#/definitions/namespaceGetResponse"
                         }
                     },
                     "400": {
@@ -515,7 +515,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.deleteRequest"
+                            "$ref": "#/definitions/namespaceDeleteRequest"
                         }
                     }
                 ],
@@ -558,7 +558,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.getRequest"
+                            "$ref": "#/definitions/namespaceGetRequest"
                         }
                     }
                 ],
@@ -566,7 +566,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.getResponse"
+                            "$ref": "#/definitions/namespaceGetResponse"
                         }
                     },
                     "400": {
@@ -610,7 +610,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.listRequest"
+                            "$ref": "#/definitions/namespaceListRequest"
                         }
                     }
                 ],
@@ -620,7 +620,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/namespace.getResponse"
+                                "$ref": "#/definitions/namespaceGetResponse"
                             }
                         }
                     },
@@ -659,7 +659,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.updateRequest"
+                            "$ref": "#/definitions/namespaceUpdateRequest"
                         }
                     }
                 ],
@@ -667,7 +667,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.getResponse"
+                            "$ref": "#/definitions/namespaceGetResponse"
                         }
                     },
                     "400": {
@@ -705,7 +705,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.insertRequest"
+                            "$ref": "#/definitions/routeInsertRequest"
                         }
                     }
                 ],
@@ -713,7 +713,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -751,7 +751,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.deleteRequest"
+                            "$ref": "#/definitions/routeDeleteRequest"
                         }
                     }
                 ],
@@ -794,7 +794,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.getByIdRequest"
+                            "$ref": "#/definitions/routeGetByIdRequest"
                         }
                     }
                 ],
@@ -802,7 +802,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -846,7 +846,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.getByParamsRequest"
+                            "$ref": "#/definitions/routeGetByParamsRequest"
                         }
                     }
                 ],
@@ -854,7 +854,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -898,7 +898,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.listRequest"
+                            "$ref": "#/definitions/routeListRequest"
                         }
                     }
                 ],
@@ -906,7 +906,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.listResponse"
+                            "$ref": "#/definitions/routeListResponse"
                         }
                     },
                     "400": {
@@ -944,7 +944,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.updateRequest"
+                            "$ref": "#/definitions/routeUpdateRequest"
                         }
                     }
                 ],
@@ -952,7 +952,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -990,7 +990,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.insertRequest"
+                            "$ref": "#/definitions/systemInsertRequest"
                         }
                     }
                 ],
@@ -998,7 +998,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.getResponse"
+                            "$ref": "#/definitions/systemGetResponse"
                         }
                     },
                     "400": {
@@ -1036,7 +1036,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.deleteRequest"
+                            "$ref": "#/definitions/systemDeleteRequest"
                         }
                     }
                 ],
@@ -1079,7 +1079,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.getRequest"
+                            "$ref": "#/definitions/systemGetRequest"
                         }
                     }
                 ],
@@ -1087,7 +1087,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.getResponse"
+                            "$ref": "#/definitions/systemGetResponse"
                         }
                     },
                     "400": {
@@ -1130,7 +1130,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/system.getResponse"
+                                "$ref": "#/definitions/systemGetResponse"
                             }
                         }
                     },
@@ -1163,7 +1163,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.updateRequest"
+                            "$ref": "#/definitions/systemUpdateRequest"
                         }
                     }
                 ],
@@ -1171,7 +1171,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.getResponse"
+                            "$ref": "#/definitions/systemGetResponse"
                         }
                     },
                     "400": {
@@ -1209,7 +1209,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.insertRequest"
+                            "$ref": "#/definitions/tagInsertRequest"
                         }
                     }
                 ],
@@ -1217,7 +1217,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.getResponse"
+                            "$ref": "#/definitions/tagGetResponse"
                         }
                     },
                     "400": {
@@ -1255,7 +1255,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.deleteRequest"
+                            "$ref": "#/definitions/tagDeleteRequest"
                         }
                     }
                 ],
@@ -1298,7 +1298,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.getRequest"
+                            "$ref": "#/definitions/tagGetRequest"
                         }
                     }
                 ],
@@ -1306,7 +1306,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.getResponse"
+                            "$ref": "#/definitions/tagGetResponse"
                         }
                     },
                     "400": {
@@ -1350,7 +1350,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.listRequest"
+                            "$ref": "#/definitions/tagListRequest"
                         }
                     }
                 ],
@@ -1358,7 +1358,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.listResponse"
+                            "$ref": "#/definitions/tagListResponse"
                         }
                     },
                     "400": {
@@ -1396,7 +1396,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.updateRequest"
+                            "$ref": "#/definitions/tagUpdateRequest"
                         }
                     }
                 ],
@@ -1404,7 +1404,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.getResponse"
+                            "$ref": "#/definitions/tagGetResponse"
                         }
                     },
                     "400": {
@@ -1740,7 +1740,7 @@ var doc = `{
                 }
             }
         },
-        "namespace.deleteRequest": {
+        "namespaceDeleteRequest": {
             "type": "object",
             "required": [
                 "namespaceId"
@@ -1751,7 +1751,7 @@ var doc = `{
                 }
             }
         },
-        "namespace.getRequest": {
+        "namespaceGetRequest": {
             "type": "object",
             "properties": {
                 "id": {
@@ -1765,8 +1765,15 @@ var doc = `{
                 }
             }
         },
-        "namespace.getResponse": {
+        "namespaceGetResponse": {
             "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "name",
+                "systemId",
+                "updatedAt"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"
@@ -1789,7 +1796,7 @@ var doc = `{
                 }
             }
         },
-        "namespace.insertRequest": {
+        "namespaceInsertRequest": {
             "type": "object",
             "required": [
                 "name",
@@ -1804,7 +1811,7 @@ var doc = `{
                 }
             }
         },
-        "namespace.listRequest": {
+        "namespaceListRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -1815,7 +1822,7 @@ var doc = `{
                 }
             }
         },
-        "namespace.updateRequest": {
+        "namespaceUpdateRequest": {
             "type": "object",
             "required": [
                 "id",
@@ -1827,21 +1834,6 @@ var doc = `{
                 },
                 "name": {
                     "type": "string"
-                }
-            }
-        },
-        "route.deleteRequest": {
-            "type": "object",
-            "required": [
-                "id",
-                "namespaceId"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "namespaceId": {
-                    "type": "integer"
                 }
             }
         },
@@ -1864,7 +1856,7 @@ var doc = `{
                 }
             }
         },
-        "route.getByIdRequest": {
+        "routeDeleteRequest": {
             "type": "object",
             "required": [
                 "id",
@@ -1879,7 +1871,22 @@ var doc = `{
                 }
             }
         },
-        "route.getByParamsRequest": {
+        "routeGetByIdRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "namespaceId"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "routeGetByParamsRequest": {
             "type": "object",
             "required": [
                 "method",
@@ -1898,7 +1905,7 @@ var doc = `{
                 }
             }
         },
-        "route.getResponse": {
+        "routeGetResponse": {
             "type": "object",
             "required": [
                 "createdAt",
@@ -1944,7 +1951,7 @@ var doc = `{
                 }
             }
         },
-        "route.insertRequest": {
+        "routeInsertRequest": {
             "type": "object",
             "required": [
                 "description",
@@ -1973,7 +1980,7 @@ var doc = `{
                 }
             }
         },
-        "route.listRequest": {
+        "routeListRequest": {
             "type": "object",
             "properties": {
                 "filter": {
@@ -1981,13 +1988,13 @@ var doc = `{
                 }
             }
         },
-        "route.listResponse": {
+        "routeListResponse": {
             "type": "object",
             "properties": {
                 "items": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/route.getResponse"
+                        "$ref": "#/definitions/routeGetResponse"
                     }
                 },
                 "total": {
@@ -1995,7 +2002,7 @@ var doc = `{
                 }
             }
         },
-        "route.updateRequest": {
+        "routeUpdateRequest": {
             "type": "object",
             "required": [
                 "description",
@@ -2028,7 +2035,7 @@ var doc = `{
                 }
             }
         },
-        "system.deleteRequest": {
+        "systemDeleteRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -2039,7 +2046,7 @@ var doc = `{
                 }
             }
         },
-        "system.getRequest": {
+        "systemGetRequest": {
             "type": "object",
             "properties": {
                 "id": {
@@ -2050,8 +2057,14 @@ var doc = `{
                 }
             }
         },
-        "system.getResponse": {
+        "systemGetResponse": {
             "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "name",
+                "updatedAt"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"
@@ -2071,7 +2084,7 @@ var doc = `{
                 }
             }
         },
-        "system.insertRequest": {
+        "systemInsertRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -2082,7 +2095,7 @@ var doc = `{
                 }
             }
         },
-        "system.updateRequest": {
+        "systemUpdateRequest": {
             "type": "object",
             "required": [
                 "id",
@@ -2094,21 +2107,6 @@ var doc = `{
                 },
                 "name": {
                     "type": "string"
-                }
-            }
-        },
-        "tag.deleteRequest": {
-            "type": "object",
-            "required": [
-                "id",
-                "namespaceId"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "namespaceId": {
-                    "type": "integer"
                 }
             }
         },
@@ -2134,7 +2132,22 @@ var doc = `{
                 }
             }
         },
-        "tag.getRequest": {
+        "tagDeleteRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "namespaceId"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "tagGetRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -2145,8 +2158,15 @@ var doc = `{
                 }
             }
         },
-        "tag.getResponse": {
+        "tagGetResponse": {
             "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "name",
+                "namespaceId",
+                "updatedAt"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"
@@ -2169,7 +2189,7 @@ var doc = `{
                 }
             }
         },
-        "tag.insertRequest": {
+        "tagInsertRequest": {
             "type": "object",
             "required": [
                 "name",
@@ -2184,7 +2204,7 @@ var doc = `{
                 }
             }
         },
-        "tag.listRequest": {
+        "tagListRequest": {
             "type": "object",
             "properties": {
                 "filter": {
@@ -2192,13 +2212,13 @@ var doc = `{
                 }
             }
         },
-        "tag.listResponse": {
+        "tagListResponse": {
             "type": "object",
             "properties": {
                 "items": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/tag.getResponse"
+                        "$ref": "#/definitions/tagGetResponse"
                     }
                 },
                 "total": {
@@ -2206,7 +2226,7 @@ var doc = `{
                 }
             }
         },
-        "tag.updateRequest": {
+        "tagUpdateRequest": {
             "type": "object",
             "required": [
                 "id",

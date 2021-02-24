@@ -5,9 +5,9 @@ import { defineModule } from 'direct-vuex';
 import { client } from '@/views/base/services/utils/requester';
 import {
   serviceOptions,
-  route_deleteRequest, route_getByIdRequest,
-  route_insertRequest, route_listRequest,
-  route_updateRequest,
+  routeDeleteRequest, routeGetByIdRequest,
+  routeInsertRequest, routeListRequest,
+  routeUpdateRequest,
   RouteService,
 } from '@/views/route/generated';
 import { ListResponse } from '@/views/common/helpers/types';
@@ -40,26 +40,26 @@ const module = defineModule({
     },
   },
   actions: {
-    async GetList(context, req: route_listRequest): Promise<ListResponse<Route>> {
+    async GetList(context, req: routeListRequest): Promise<ListResponse<Route>> {
       const { state, commit } = actionContext(context);
       const res = await state.service.routeList({ req });
       commit.setRoutes(res.items);
       // @ts-ignore
       return res;
     },
-    async GetById(context, req: route_getByIdRequest): Promise<Route> {
+    async GetById(context, req: routeGetByIdRequest): Promise<Route> {
       const { state } = actionContext(context);
       return state.service.routeGetById({ req });
     },
-    async Create(context, req: route_insertRequest): Promise<Route> {
+    async Create(context, req: routeInsertRequest): Promise<Route> {
       const { state } = actionContext(context);
       return state.service.routeCreate({ req });
     },
-    async Update(context, req: route_updateRequest): Promise<Route> {
+    async Update(context, req: routeUpdateRequest): Promise<Route> {
       const { state } = actionContext(context);
       return state.service.routeUpdate({ req });
     },
-    async Delete(context, req: route_deleteRequest): Promise<void> {
+    async Delete(context, req: routeDeleteRequest): Promise<void> {
       const { state } = actionContext(context);
       return state.service.routeDelete({ req });
     },

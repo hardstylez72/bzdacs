@@ -31,15 +31,10 @@ const requester = (req: Request): Promise<any> => {
         if (err.response.status === 401) {
           const evt = new Event('req-status-401');
           window.dispatchEvent(evt);
-
-          if (window.location.pathname === '/guest') {
+          if (window.location.pathname === '/login') {
             return;
           }
-          if (window.location.pathname === '/admin') {
-            return;
-          }
-
-          window.location.pathname = '/guest';
+          window.location.pathname = '/login';
         } else if (err.response.status === 403) {
           const evt = new Event('req-status-403');
           window.dispatchEvent(evt);

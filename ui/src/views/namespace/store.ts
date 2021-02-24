@@ -6,7 +6,7 @@ import { client } from '@/views/base/services/utils/requester';
 import {
   serviceOptions,
   NamespaceService,
-  namespace_insertRequest, namespace_updateRequest, namespace_deleteRequest,
+  namespaceInsertRequest, namespaceUpdateRequest, namespaceDeleteRequest,
 } from '@/views/namespace/generated';
 import { moduleActionContext } from '../base/store';
 import { Namespace } from './entity';
@@ -31,15 +31,15 @@ const module = defineModule({
       const { state } = actionContext(context);
       return state.service.namespaceGet({ req: { id } });
     },
-    async Create(context, req: namespace_insertRequest): Promise<Namespace> {
+    async Create(context, req: namespaceInsertRequest): Promise<Namespace> {
       const { state } = actionContext(context);
       return state.service.namespaceCreate({ req });
     },
-    async Update(context, req: namespace_updateRequest): Promise<Namespace> {
+    async Update(context, req: namespaceUpdateRequest): Promise<Namespace> {
       const { state } = actionContext(context);
       return state.service.namespaceUpdate({ req });
     },
-    async Delete(context, req: namespace_deleteRequest): Promise<void> {
+    async Delete(context, req: namespaceDeleteRequest): Promise<void> {
       const { state } = actionContext(context);
       await state.service.namespaceDelete({ req });
     },

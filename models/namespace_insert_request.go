@@ -16,7 +16,7 @@ import (
 
 // NamespaceInsertRequest namespace insert request
 //
-// swagger:model namespace.insertRequest
+// swagger:model namespaceInsertRequest
 type NamespaceInsertRequest struct {
 
 	// name

@@ -8,33 +8,96 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // SystemGetResponse system get response
 //
-// swagger:model system.getResponse
+// swagger:model systemGetResponse
 type SystemGetResponse struct {
 
 	// created at
-	CreatedAt string `json:"createdAt,omitempty"`
+	// Required: true
+	CreatedAt *string `json:"createdAt"`
 
 	// deleted at
 	DeletedAt *string `json:"deletedAt,omitempty"`
 
 	// id
-	ID int64 `json:"id,omitempty"`
+	// Required: true
+	ID *int64 `json:"id"`
 
 	// name
-	Name string `json:"name,omitempty"`
+	// Required: true
+	Name *string `json:"name"`
 
 	// updated at
-	UpdatedAt string `json:"updatedAt,omitempty"`
+	// Required: true
+	UpdatedAt *string `json:"updatedAt"`
 }
 
 // Validate validates this system get response
 func (m *SystemGetResponse) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *SystemGetResponse) validateCreatedAt(formats strfmt.Registry) error {
+
+	if err := validate.Required("createdAt", "body", m.CreatedAt); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *SystemGetResponse) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *SystemGetResponse) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Required("name", "body", m.Name); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *SystemGetResponse) validateUpdatedAt(formats strfmt.Registry) error {
+
+	if err := validate.Required("updatedAt", "body", m.UpdatedAt); err != nil {
+		return err
+	}
+
 	return nil
 }
 

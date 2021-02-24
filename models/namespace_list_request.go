@@ -16,7 +16,7 @@ import (
 
 // NamespaceListRequest namespace list request
 //
-// swagger:model namespace.listRequest
+// swagger:model namespaceListRequest
 type NamespaceListRequest struct {
 
 	// id

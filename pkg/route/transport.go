@@ -6,7 +6,7 @@ type insertRequest struct {
 	Method      string   `json:"method" validate:"required"`
 	NamespaceId int      `json:"namespaceId" validate:"required"`
 	Tags        []string `json:"tags"`
-}
+} // @name routeInsertRequest
 
 type updateRequest struct {
 	Route       string   `json:"route" validate:"required"`
@@ -15,7 +15,7 @@ type updateRequest struct {
 	Method      string   `json:"method" validate:"required"`
 	NamespaceId int      `json:"namespaceId" validate:"required"`
 	Tags        []string `json:"tags"`
-}
+} // @name routeUpdateRequest
 
 func insertRequestConvert(r *insertRequest) *Route {
 	return &Route{
@@ -53,7 +53,7 @@ func newUpdateResponse(route *Route) updateResponse {
 type listResponse struct {
 	Items []getResponse `json:"items"`
 	Total int           `json:"total"`
-}
+} // @name routeListResponse
 
 func newListResponse(routes []Route, total int) listResponse {
 	out := make([]getResponse, 0, len(routes))
@@ -69,20 +69,20 @@ func newListResponse(routes []Route, total int) listResponse {
 type deleteRequest struct {
 	Id          int `json:"id" validate:"required"`
 	NamespaceId int `json:"namespaceId" validate:"required"`
-}
+} // @name routeDeleteRequest
 
 type getByIdRequest struct {
 	Id          int `json:"id" validate:"required"`
 	NamespaceId int `json:"namespaceId" validate:"required"`
-}
+} // @name routeGetByIdRequest
 
 type getByParamsRequest struct {
 	Route       string `json:"route" validate:"required"`
 	Method      string `json:"method" validate:"required"`
 	NamespaceId int    `json:"namespaceId" validate:"required"`
-}
+} // @name routeGetByParamsRequest
 
-type getResponse *Route
+type getResponse *Route // @name routeGetResponse
 
 func newGetResponse(route *Route) getResponse {
 	return route
@@ -90,7 +90,7 @@ func newGetResponse(route *Route) getResponse {
 
 type listRequest struct {
 	Filter filter `json:"filter"`
-}
+} // @name routeListRequest
 
 type filter struct {
 	Page        int `json:"page"  validate:"required,gte=1"`

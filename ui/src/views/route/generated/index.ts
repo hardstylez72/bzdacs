@@ -100,10 +100,10 @@ export class RouteService {
   routeCreate(
     params: {
       /** request */
-      req: route_insertRequest;
+      req: routeInsertRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<route_getResponse> {
+  ): Promise<routeGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/route/create';
 
@@ -121,7 +121,7 @@ export class RouteService {
   routeDelete(
     params: {
       /** request */
-      req: route_deleteRequest;
+      req: routeDeleteRequest;
     } = {} as any,
     options: IRequestOptions = {}
   ): Promise<any> {
@@ -142,10 +142,10 @@ export class RouteService {
   routeGetById(
     params: {
       /** request */
-      req: route_getByIdRequest;
+      req: routeGetByIdRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<route_getResponse> {
+  ): Promise<routeGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/route/getById';
 
@@ -163,10 +163,10 @@ export class RouteService {
   routeGetByParams(
     params: {
       /** request */
-      req: route_getByParamsRequest;
+      req: routeGetByParamsRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<route_getResponse> {
+  ): Promise<routeGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/route/getByParams';
 
@@ -184,10 +184,10 @@ export class RouteService {
   routeList(
     params: {
       /** request */
-      req: route_listRequest;
+      req: routeListRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<route_listResponse> {
+  ): Promise<routeListResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/route/list';
 
@@ -205,10 +205,10 @@ export class RouteService {
   routeUpdate(
     params: {
       /** request */
-      req: route_updateRequest;
+      req: routeUpdateRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<route_getResponse> {
+  ): Promise<routeGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/route/update';
 
@@ -222,14 +222,6 @@ export class RouteService {
   }
 }
 
-export interface route_deleteRequest {
-  /**  */
-  id: number;
-
-  /**  */
-  namespaceId: number;
-}
-
 export interface route_filter {
   /**  */
   namespaceId: number;
@@ -241,7 +233,7 @@ export interface route_filter {
   pageSize: number;
 }
 
-export interface route_getByIdRequest {
+export interface routeDeleteRequest {
   /**  */
   id: number;
 
@@ -249,7 +241,15 @@ export interface route_getByIdRequest {
   namespaceId: number;
 }
 
-export interface route_getByParamsRequest {
+export interface routeGetByIdRequest {
+  /**  */
+  id: number;
+
+  /**  */
+  namespaceId: number;
+}
+
+export interface routeGetByParamsRequest {
   /**  */
   method: string;
 
@@ -260,7 +260,7 @@ export interface route_getByParamsRequest {
   route: string;
 }
 
-export interface route_getResponse {
+export interface routeGetResponse {
   /**  */
   createdAt: string;
 
@@ -289,7 +289,7 @@ export interface route_getResponse {
   updatedAt: string;
 }
 
-export interface route_insertRequest {
+export interface routeInsertRequest {
   /**  */
   description: string;
 
@@ -306,20 +306,20 @@ export interface route_insertRequest {
   tags?: string[];
 }
 
-export interface route_listRequest {
+export interface routeListRequest {
   /**  */
   filter?: route_filter;
 }
 
-export interface route_listResponse {
+export interface routeListResponse {
   /**  */
-  items?: route_getResponse[];
+  items?: routeGetResponse[];
 
   /**  */
   total?: number;
 }
 
-export interface route_updateRequest {
+export interface routeUpdateRequest {
   /**  */
   description: string;
 

@@ -16,7 +16,7 @@ import (
 
 // RouteDeleteRequest route delete request
 //
-// swagger:model route.deleteRequest
+// swagger:model routeDeleteRequest
 type RouteDeleteRequest struct {
 
 	// id

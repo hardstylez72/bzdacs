@@ -97,12 +97,12 @@ func Create(ctx context.Context, client *client.BZDACS, t *Tag) (*Tag, error) {
 
 func tagDTO(p *models.TagGetResponse) *Tag {
 	out := &Tag{
-		Id:          p.ID,
-		Name:        p.Name,
-		NamespaceId: p.NamespaceID,
+		Id:          *p.ID,
+		Name:        *p.Name,
+		NamespaceId: *p.NamespaceID,
 		Times: tests.Times{
-			CreatedAt: tests.ParseTime(p.CreatedAt),
-			UpdatedAt: tests.ParseTime(p.UpdatedAt),
+			CreatedAt: tests.ParseTime(*p.CreatedAt),
+			UpdatedAt: tests.ParseTime(*p.UpdatedAt),
 			DeletedAt: nil,
 		},
 	}

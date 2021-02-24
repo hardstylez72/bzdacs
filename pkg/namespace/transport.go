@@ -3,7 +3,7 @@ package namespace
 type insertRequest struct {
 	Name     string `json:"name" validate:"required"`
 	SystemId int    `json:"systemId" validate:"required"`
-}
+} // @name namespaceInsertRequest
 
 func insertRequestConvert(r *insertRequest) *Namespace {
 	return &Namespace{
@@ -21,7 +21,7 @@ func newInsertResponse(namespace *Namespace) *insertResponse {
 type updateRequest struct {
 	Id   int    `json:"id"  validate:"required"`
 	Name string `json:"name" validate:"required"`
-}
+} // @name namespaceUpdateRequest
 
 func updateRequestConvert(r *updateRequest) *Namespace {
 	return &Namespace{
@@ -44,15 +44,15 @@ func newListResponse(namespaces []Namespace) listResponse {
 
 type deleteRequest struct {
 	NamespaceId int `json:"namespaceId" validate:"required"`
-}
+} // @name namespaceDeleteRequest
 
 type getRequest struct {
 	Id       int    `json:"id"`
 	Name     string `json:"name"`
 	SystemId int    `json:"systemId"`
-}
+} // @name namespaceGetRequest
 
-type getResponse *Namespace
+type getResponse *Namespace // @name namespaceGetResponse
 
 func newGetResponse(namespace *Namespace) getResponse {
 	return namespace
@@ -60,4 +60,4 @@ func newGetResponse(namespace *Namespace) getResponse {
 
 type listRequest struct {
 	Id int `json:"id" validate:"required"`
-}
+} // @name namespaceListRequest

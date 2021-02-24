@@ -15,7 +15,7 @@ import (
 
 // TagListRequest tag list request
 //
-// swagger:model tag.listRequest
+// swagger:model tagListRequest
 type TagListRequest struct {
 
 	// filter

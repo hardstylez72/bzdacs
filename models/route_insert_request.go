@@ -16,7 +16,7 @@ import (
 
 // RouteInsertRequest route insert request
 //
-// swagger:model route.insertRequest
+// swagger:model routeInsertRequest
 type RouteInsertRequest struct {
 
 	// description

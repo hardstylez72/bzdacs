@@ -454,7 +454,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.insertRequest"
+                            "$ref": "#/definitions/namespaceInsertRequest"
                         }
                     }
                 ],
@@ -462,7 +462,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.getResponse"
+                            "$ref": "#/definitions/namespaceGetResponse"
                         }
                     },
                     "400": {
@@ -500,7 +500,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.deleteRequest"
+                            "$ref": "#/definitions/namespaceDeleteRequest"
                         }
                     }
                 ],
@@ -543,7 +543,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.getRequest"
+                            "$ref": "#/definitions/namespaceGetRequest"
                         }
                     }
                 ],
@@ -551,7 +551,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.getResponse"
+                            "$ref": "#/definitions/namespaceGetResponse"
                         }
                     },
                     "400": {
@@ -595,7 +595,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.listRequest"
+                            "$ref": "#/definitions/namespaceListRequest"
                         }
                     }
                 ],
@@ -605,7 +605,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/namespace.getResponse"
+                                "$ref": "#/definitions/namespaceGetResponse"
                             }
                         }
                     },
@@ -644,7 +644,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/namespace.updateRequest"
+                            "$ref": "#/definitions/namespaceUpdateRequest"
                         }
                     }
                 ],
@@ -652,7 +652,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/namespace.getResponse"
+                            "$ref": "#/definitions/namespaceGetResponse"
                         }
                     },
                     "400": {
@@ -690,7 +690,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.insertRequest"
+                            "$ref": "#/definitions/routeInsertRequest"
                         }
                     }
                 ],
@@ -698,7 +698,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -736,7 +736,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.deleteRequest"
+                            "$ref": "#/definitions/routeDeleteRequest"
                         }
                     }
                 ],
@@ -779,7 +779,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.getByIdRequest"
+                            "$ref": "#/definitions/routeGetByIdRequest"
                         }
                     }
                 ],
@@ -787,7 +787,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -831,7 +831,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.getByParamsRequest"
+                            "$ref": "#/definitions/routeGetByParamsRequest"
                         }
                     }
                 ],
@@ -839,7 +839,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -883,7 +883,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.listRequest"
+                            "$ref": "#/definitions/routeListRequest"
                         }
                     }
                 ],
@@ -891,7 +891,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.listResponse"
+                            "$ref": "#/definitions/routeListResponse"
                         }
                     },
                     "400": {
@@ -929,7 +929,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/route.updateRequest"
+                            "$ref": "#/definitions/routeUpdateRequest"
                         }
                     }
                 ],
@@ -937,7 +937,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/route.getResponse"
+                            "$ref": "#/definitions/routeGetResponse"
                         }
                     },
                     "400": {
@@ -975,7 +975,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.insertRequest"
+                            "$ref": "#/definitions/systemInsertRequest"
                         }
                     }
                 ],
@@ -983,7 +983,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.getResponse"
+                            "$ref": "#/definitions/systemGetResponse"
                         }
                     },
                     "400": {
@@ -1021,7 +1021,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.deleteRequest"
+                            "$ref": "#/definitions/systemDeleteRequest"
                         }
                     }
                 ],
@@ -1064,7 +1064,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.getRequest"
+                            "$ref": "#/definitions/systemGetRequest"
                         }
                     }
                 ],
@@ -1072,7 +1072,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.getResponse"
+                            "$ref": "#/definitions/systemGetResponse"
                         }
                     },
                     "400": {
@@ -1115,7 +1115,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/system.getResponse"
+                                "$ref": "#/definitions/systemGetResponse"
                             }
                         }
                     },
@@ -1148,7 +1148,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.updateRequest"
+                            "$ref": "#/definitions/systemUpdateRequest"
                         }
                     }
                 ],
@@ -1156,7 +1156,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/system.getResponse"
+                            "$ref": "#/definitions/systemGetResponse"
                         }
                     },
                     "400": {
@@ -1194,7 +1194,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.insertRequest"
+                            "$ref": "#/definitions/tagInsertRequest"
                         }
                     }
                 ],
@@ -1202,7 +1202,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.getResponse"
+                            "$ref": "#/definitions/tagGetResponse"
                         }
                     },
                     "400": {
@@ -1240,7 +1240,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.deleteRequest"
+                            "$ref": "#/definitions/tagDeleteRequest"
                         }
                     }
                 ],
@@ -1283,7 +1283,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.getRequest"
+                            "$ref": "#/definitions/tagGetRequest"
                         }
                     }
                 ],
@@ -1291,7 +1291,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.getResponse"
+                            "$ref": "#/definitions/tagGetResponse"
                         }
                     },
                     "400": {
@@ -1335,7 +1335,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.listRequest"
+                            "$ref": "#/definitions/tagListRequest"
                         }
                     }
                 ],
@@ -1343,7 +1343,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.listResponse"
+                            "$ref": "#/definitions/tagListResponse"
                         }
                     },
                     "400": {
@@ -1381,7 +1381,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.updateRequest"
+                            "$ref": "#/definitions/tagUpdateRequest"
                         }
                     }
                 ],
@@ -1389,7 +1389,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.getResponse"
+                            "$ref": "#/definitions/tagGetResponse"
                         }
                     },
                     "400": {
@@ -1725,7 +1725,7 @@
                 }
             }
         },
-        "namespace.deleteRequest": {
+        "namespaceDeleteRequest": {
             "type": "object",
             "required": [
                 "namespaceId"
@@ -1736,7 +1736,7 @@
                 }
             }
         },
-        "namespace.getRequest": {
+        "namespaceGetRequest": {
             "type": "object",
             "properties": {
                 "id": {
@@ -1750,8 +1750,15 @@
                 }
             }
         },
-        "namespace.getResponse": {
+        "namespaceGetResponse": {
             "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "name",
+                "systemId",
+                "updatedAt"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"
@@ -1774,7 +1781,7 @@
                 }
             }
         },
-        "namespace.insertRequest": {
+        "namespaceInsertRequest": {
             "type": "object",
             "required": [
                 "name",
@@ -1789,7 +1796,7 @@
                 }
             }
         },
-        "namespace.listRequest": {
+        "namespaceListRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -1800,7 +1807,7 @@
                 }
             }
         },
-        "namespace.updateRequest": {
+        "namespaceUpdateRequest": {
             "type": "object",
             "required": [
                 "id",
@@ -1812,21 +1819,6 @@
                 },
                 "name": {
                     "type": "string"
-                }
-            }
-        },
-        "route.deleteRequest": {
-            "type": "object",
-            "required": [
-                "id",
-                "namespaceId"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "namespaceId": {
-                    "type": "integer"
                 }
             }
         },
@@ -1849,7 +1841,7 @@
                 }
             }
         },
-        "route.getByIdRequest": {
+        "routeDeleteRequest": {
             "type": "object",
             "required": [
                 "id",
@@ -1864,7 +1856,22 @@
                 }
             }
         },
-        "route.getByParamsRequest": {
+        "routeGetByIdRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "namespaceId"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "routeGetByParamsRequest": {
             "type": "object",
             "required": [
                 "method",
@@ -1883,7 +1890,7 @@
                 }
             }
         },
-        "route.getResponse": {
+        "routeGetResponse": {
             "type": "object",
             "required": [
                 "createdAt",
@@ -1929,7 +1936,7 @@
                 }
             }
         },
-        "route.insertRequest": {
+        "routeInsertRequest": {
             "type": "object",
             "required": [
                 "description",
@@ -1958,7 +1965,7 @@
                 }
             }
         },
-        "route.listRequest": {
+        "routeListRequest": {
             "type": "object",
             "properties": {
                 "filter": {
@@ -1966,13 +1973,13 @@
                 }
             }
         },
-        "route.listResponse": {
+        "routeListResponse": {
             "type": "object",
             "properties": {
                 "items": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/route.getResponse"
+                        "$ref": "#/definitions/routeGetResponse"
                     }
                 },
                 "total": {
@@ -1980,7 +1987,7 @@
                 }
             }
         },
-        "route.updateRequest": {
+        "routeUpdateRequest": {
             "type": "object",
             "required": [
                 "description",
@@ -2013,7 +2020,7 @@
                 }
             }
         },
-        "system.deleteRequest": {
+        "systemDeleteRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -2024,7 +2031,7 @@
                 }
             }
         },
-        "system.getRequest": {
+        "systemGetRequest": {
             "type": "object",
             "properties": {
                 "id": {
@@ -2035,8 +2042,14 @@
                 }
             }
         },
-        "system.getResponse": {
+        "systemGetResponse": {
             "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "name",
+                "updatedAt"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"
@@ -2056,7 +2069,7 @@
                 }
             }
         },
-        "system.insertRequest": {
+        "systemInsertRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -2067,7 +2080,7 @@
                 }
             }
         },
-        "system.updateRequest": {
+        "systemUpdateRequest": {
             "type": "object",
             "required": [
                 "id",
@@ -2079,21 +2092,6 @@
                 },
                 "name": {
                     "type": "string"
-                }
-            }
-        },
-        "tag.deleteRequest": {
-            "type": "object",
-            "required": [
-                "id",
-                "namespaceId"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "namespaceId": {
-                    "type": "integer"
                 }
             }
         },
@@ -2119,7 +2117,22 @@
                 }
             }
         },
-        "tag.getRequest": {
+        "tagDeleteRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "namespaceId"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "tagGetRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -2130,8 +2143,15 @@
                 }
             }
         },
-        "tag.getResponse": {
+        "tagGetResponse": {
             "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "name",
+                "namespaceId",
+                "updatedAt"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"
@@ -2154,7 +2174,7 @@
                 }
             }
         },
-        "tag.insertRequest": {
+        "tagInsertRequest": {
             "type": "object",
             "required": [
                 "name",
@@ -2169,7 +2189,7 @@
                 }
             }
         },
-        "tag.listRequest": {
+        "tagListRequest": {
             "type": "object",
             "properties": {
                 "filter": {
@@ -2177,13 +2197,13 @@
                 }
             }
         },
-        "tag.listResponse": {
+        "tagListResponse": {
             "type": "object",
             "properties": {
                 "items": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/tag.getResponse"
+                        "$ref": "#/definitions/tagGetResponse"
                     }
                 },
                 "total": {
@@ -2191,7 +2211,7 @@
                 }
             }
         },
-        "tag.updateRequest": {
+        "tagUpdateRequest": {
             "type": "object",
             "required": [
                 "id",

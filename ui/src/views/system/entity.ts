@@ -1,6 +1,6 @@
-import { system_getResponse } from '@/views/system/generated';
+import { systemGetResponse } from '@/views/system/generated';
 
-export type SystemSwg = system_getResponse
+export type SystemSwg = systemGetResponse
 
 export type System = {
   createdAt: string;

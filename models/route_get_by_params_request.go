@@ -16,7 +16,7 @@ import (
 
 // RouteGetByParamsRequest route get by params request
 //
-// swagger:model route.getByParamsRequest
+// swagger:model routeGetByParamsRequest
 type RouteGetByParamsRequest struct {
 
 	// method

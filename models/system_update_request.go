@@ -16,7 +16,7 @@ import (
 
 // SystemUpdateRequest system update request
 //
-// swagger:model system.updateRequest
+// swagger:model systemUpdateRequest
 type SystemUpdateRequest struct {
 
 	// id

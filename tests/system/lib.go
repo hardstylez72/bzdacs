@@ -105,11 +105,11 @@ func Create(ctx context.Context, client *client.BZDACS, s *System) (*System, err
 
 func systemDTO(p *models.SystemGetResponse) *System {
 	out := &System{
-		Id:   p.ID,
-		Name: p.Name,
+		Id:   *p.ID,
+		Name: *p.Name,
 		Times: tests.Times{
-			CreatedAt: tests.ParseTime(p.CreatedAt),
-			UpdatedAt: tests.ParseTime(p.UpdatedAt),
+			CreatedAt: tests.ParseTime(*p.CreatedAt),
+			UpdatedAt: tests.ParseTime(*p.UpdatedAt),
 			DeletedAt: nil,
 		},
 	}

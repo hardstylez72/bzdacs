@@ -16,7 +16,7 @@ import (
 
 // TagDeleteRequest tag delete request
 //
-// swagger:model tag.deleteRequest
+// swagger:model tagDeleteRequest
 type TagDeleteRequest struct {
 
 	// id

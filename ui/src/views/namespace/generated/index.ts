@@ -100,10 +100,10 @@ export class NamespaceService {
   namespaceCreate(
     params: {
       /** request */
-      req: namespace_insertRequest;
+      req: namespaceInsertRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<namespace_getResponse> {
+  ): Promise<namespaceGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/namespace/create';
 
@@ -121,7 +121,7 @@ export class NamespaceService {
   namespaceDelete(
     params: {
       /** request */
-      req: namespace_deleteRequest;
+      req: namespaceDeleteRequest;
     } = {} as any,
     options: IRequestOptions = {}
   ): Promise<any> {
@@ -142,10 +142,10 @@ export class NamespaceService {
   namespaceGet(
     params: {
       /** request */
-      req: namespace_getRequest;
+      req: namespaceGetRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<namespace_getResponse> {
+  ): Promise<namespaceGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/namespace/get';
 
@@ -163,10 +163,10 @@ export class NamespaceService {
   namespaceList(
     params: {
       /** request */
-      req: namespace_listRequest;
+      req: namespaceListRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<namespace_getResponse[]> {
+  ): Promise<namespaceGetResponse[]> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/namespace/list';
 
@@ -184,10 +184,10 @@ export class NamespaceService {
   namespaceUpdate(
     params: {
       /** request */
-      req: namespace_updateRequest;
+      req: namespaceUpdateRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<namespace_getResponse> {
+  ): Promise<namespaceGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/namespace/update';
 
@@ -201,12 +201,12 @@ export class NamespaceService {
   }
 }
 
-export interface namespace_deleteRequest {
+export interface namespaceDeleteRequest {
   /**  */
   namespaceId: number;
 }
 
-export interface namespace_getRequest {
+export interface namespaceGetRequest {
   /**  */
   id?: number;
 
@@ -217,27 +217,27 @@ export interface namespace_getRequest {
   systemId?: number;
 }
 
-export interface namespace_getResponse {
+export interface namespaceGetResponse {
   /**  */
-  createdAt?: string;
+  createdAt: string;
 
   /**  */
   deletedAt?: string;
 
   /**  */
-  id?: number;
+  id: number;
 
   /**  */
-  name?: string;
+  name: string;
 
   /**  */
-  systemId?: number;
+  systemId: number;
 
   /**  */
-  updatedAt?: string;
+  updatedAt: string;
 }
 
-export interface namespace_insertRequest {
+export interface namespaceInsertRequest {
   /**  */
   name: string;
 
@@ -245,12 +245,12 @@ export interface namespace_insertRequest {
   systemId: number;
 }
 
-export interface namespace_listRequest {
+export interface namespaceListRequest {
   /**  */
   id: number;
 }
 
-export interface namespace_updateRequest {
+export interface namespaceUpdateRequest {
   /**  */
   id: number;
 

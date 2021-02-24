@@ -16,7 +16,7 @@ import (
 
 // NamespaceDeleteRequest namespace delete request
 //
-// swagger:model namespace.deleteRequest
+// swagger:model namespaceDeleteRequest
 type NamespaceDeleteRequest struct {
 
 	// namespace Id

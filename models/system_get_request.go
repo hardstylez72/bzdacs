@@ -14,7 +14,7 @@ import (
 
 // SystemGetRequest system get request
 //
-// swagger:model system.getRequest
+// swagger:model systemGetRequest
 type SystemGetRequest struct {
 
 	// id

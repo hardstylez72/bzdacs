@@ -100,10 +100,10 @@ export class SystemService {
   systemCreate(
     params: {
       /** request */
-      req: system_insertRequest;
+      req: systemInsertRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<system_getResponse> {
+  ): Promise<systemGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/system/create';
 
@@ -121,7 +121,7 @@ export class SystemService {
   systemDelete(
     params: {
       /** request */
-      req: system_deleteRequest;
+      req: systemDeleteRequest;
     } = {} as any,
     options: IRequestOptions = {}
   ): Promise<any> {
@@ -142,10 +142,10 @@ export class SystemService {
   systemGet(
     params: {
       /** request */
-      req: system_getRequest;
+      req: systemGetRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<system_getResponse> {
+  ): Promise<systemGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/system/get';
 
@@ -160,7 +160,7 @@ export class SystemService {
   /**
    *
    */
-  systemList(options: IRequestOptions = {}): Promise<system_getResponse[]> {
+  systemList(options: IRequestOptions = {}): Promise<systemGetResponse[]> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/system/list';
 
@@ -178,10 +178,10 @@ export class SystemService {
   systemUpdate(
     params: {
       /** request */
-      req: system_updateRequest;
+      req: systemUpdateRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<system_getResponse> {
+  ): Promise<systemGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/system/update';
 
@@ -195,12 +195,12 @@ export class SystemService {
   }
 }
 
-export interface system_deleteRequest {
+export interface systemDeleteRequest {
   /**  */
   id: number;
 }
 
-export interface system_getRequest {
+export interface systemGetRequest {
   /**  */
   id?: number;
 
@@ -208,29 +208,29 @@ export interface system_getRequest {
   name?: string;
 }
 
-export interface system_getResponse {
+export interface systemGetResponse {
   /**  */
-  createdAt?: string;
+  createdAt: string;
 
   /**  */
   deletedAt?: string;
 
   /**  */
-  id?: number;
+  id: number;
 
   /**  */
-  name?: string;
+  name: string;
 
   /**  */
-  updatedAt?: string;
+  updatedAt: string;
 }
 
-export interface system_insertRequest {
+export interface systemInsertRequest {
   /**  */
   name: string;
 }
 
-export interface system_updateRequest {
+export interface systemUpdateRequest {
   /**  */
   id: number;
 

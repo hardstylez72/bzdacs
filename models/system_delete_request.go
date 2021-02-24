@@ -16,7 +16,7 @@ import (
 
 // SystemDeleteRequest system delete request
 //
-// swagger:model system.deleteRequest
+// swagger:model systemDeleteRequest
 type SystemDeleteRequest struct {
 
 	// id

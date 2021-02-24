@@ -16,7 +16,7 @@ import (
 
 // NamespaceUpdateRequest namespace update request
 //
-// swagger:model namespace.updateRequest
+// swagger:model namespaceUpdateRequest
 type NamespaceUpdateRequest struct {
 
 	// id

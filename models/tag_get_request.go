@@ -16,7 +16,7 @@ import (
 
 // TagGetRequest tag get request
 //
-// swagger:model tag.getRequest
+// swagger:model tagGetRequest
 type TagGetRequest struct {
 
 	// id

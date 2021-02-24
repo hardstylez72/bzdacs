@@ -52,7 +52,10 @@ export default class App extends Vue {
       this.$store.direct.commit.showError(this.$t('401').toString());
     });
 
-    this.$store.direct.dispatch.userSession();
+    this.$store.direct.dispatch.userSession().catch(() => {
+      console.log('login');
+      this.$router.push({ name: 'Login' });
+    });
   }
 }
 </script>

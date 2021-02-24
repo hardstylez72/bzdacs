@@ -16,7 +16,7 @@ import (
 
 // TagListResponse tag list response
 //
-// swagger:model tag.listResponse
+// swagger:model tagListResponse
 type TagListResponse struct {
 
 	// items

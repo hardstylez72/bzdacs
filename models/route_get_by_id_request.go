@@ -16,7 +16,7 @@ import (
 
 // RouteGetByIDRequest route get by Id request
 //
-// swagger:model route.getByIdRequest
+// swagger:model routeGetByIdRequest
 type RouteGetByIDRequest struct {
 
 	// id

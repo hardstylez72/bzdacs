@@ -1,6 +1,6 @@
-import { route_getResponse } from '@/views/route/generated';
+import { routeGetResponse } from '@/views/route/generated';
 
-export type RouteSwg = route_getResponse
+export type RouteSwg = routeGetResponse
 
 export type Route = {
   createdAt: string;

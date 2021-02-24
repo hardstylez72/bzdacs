@@ -16,7 +16,7 @@ import (
 
 // RouteUpdateRequest route update request
 //
-// swagger:model route.updateRequest
+// swagger:model routeUpdateRequest
 type RouteUpdateRequest struct {
 
 	// description

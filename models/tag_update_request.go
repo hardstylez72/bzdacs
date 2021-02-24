@@ -16,7 +16,7 @@ import (
 
 // TagUpdateRequest tag update request
 //
-// swagger:model tag.updateRequest
+// swagger:model tagUpdateRequest
 type TagUpdateRequest struct {
 
 	// id

@@ -16,7 +16,7 @@ import (
 
 // RouteListResponse route list response
 //
-// swagger:model route.listResponse
+// swagger:model routeListResponse
 type RouteListResponse struct {
 
 	// items

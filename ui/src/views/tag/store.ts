@@ -4,7 +4,7 @@
 import { defineModule } from 'direct-vuex';
 import { client } from '@/views/base/services/utils/requester';
 import {
-  serviceOptions, tag_deleteRequest, tag_insertRequest, tag_listRequest, tag_updateRequest,
+  serviceOptions, tagDeleteRequest, tagInsertRequest, tagListRequest, tagUpdateRequest,
   TagService,
 } from '@/views/tag/generated';
 import { moduleActionContext } from '../base/store';
@@ -26,26 +26,26 @@ const module = defineModule({
       const { state } = actionContext(context);
       return state.service.tagGet({ req: { id } });
     },
-    async GetList(context, req: tag_listRequest): Promise<{items: Tag[]; total: number}> {
+    async GetList(context, req: tagListRequest): Promise<{items: Tag[]; total: number}> {
       const { state } = actionContext(context);
       // @ts-ignore
       return state.service.tagList({ req });
     },
-    async Create(context, req: tag_insertRequest): Promise<Tag> {
+    async Create(context, req: tagInsertRequest): Promise<Tag> {
       const { state } = actionContext(context);
       return state.service.tagCreate({ req });
     },
-    async GetByPattern(context, req: tag_listRequest): Promise<Tag[]> {
+    async GetByPattern(context, req: tagListRequest): Promise<Tag[]> {
       const { state } = actionContext(context);
       const res = await state.service.tagList({ req });
       // @ts-ignore
       return res.items;
     },
-    async Update(context, req: tag_updateRequest): Promise<Tag> {
+    async Update(context, req: tagUpdateRequest): Promise<Tag> {
       const { state } = actionContext(context);
       return state.service.tagUpdate({ req });
     },
-    async Delete(context, req: tag_deleteRequest): Promise<void> {
+    async Delete(context, req: tagDeleteRequest): Promise<void> {
       const { state } = actionContext(context);
       await state.service.tagDelete({ req });
     },

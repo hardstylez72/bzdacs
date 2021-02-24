@@ -100,10 +100,10 @@ export class TagService {
   tagCreate(
     params: {
       /** request */
-      req: tag_insertRequest;
+      req: tagInsertRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<tag_getResponse> {
+  ): Promise<tagGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/tag/create';
 
@@ -121,7 +121,7 @@ export class TagService {
   tagDelete(
     params: {
       /** request */
-      req: tag_deleteRequest;
+      req: tagDeleteRequest;
     } = {} as any,
     options: IRequestOptions = {}
   ): Promise<any> {
@@ -142,10 +142,10 @@ export class TagService {
   tagGet(
     params: {
       /** request */
-      req: tag_getRequest;
+      req: tagGetRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<tag_getResponse> {
+  ): Promise<tagGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/tag/get';
 
@@ -163,10 +163,10 @@ export class TagService {
   tagList(
     params: {
       /** request */
-      req: tag_listRequest;
+      req: tagListRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<tag_listResponse> {
+  ): Promise<tagListResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/tag/list';
 
@@ -184,10 +184,10 @@ export class TagService {
   tagUpdate(
     params: {
       /** request */
-      req: tag_updateRequest;
+      req: tagUpdateRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<tag_getResponse> {
+  ): Promise<tagGetResponse> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/tag/update';
 
@@ -199,14 +199,6 @@ export class TagService {
       axios(configs, resolve, reject);
     });
   }
-}
-
-export interface tag_deleteRequest {
-  /**  */
-  id: number;
-
-  /**  */
-  namespaceId: number;
 }
 
 export interface tag_filter {
@@ -223,32 +215,40 @@ export interface tag_filter {
   pattern?: string;
 }
 
-export interface tag_getRequest {
+export interface tagDeleteRequest {
+  /**  */
+  id: number;
+
+  /**  */
+  namespaceId: number;
+}
+
+export interface tagGetRequest {
   /**  */
   id: number;
 }
 
-export interface tag_getResponse {
+export interface tagGetResponse {
   /**  */
-  createdAt?: string;
+  createdAt: string;
 
   /**  */
   deletedAt?: string;
 
   /**  */
-  id?: number;
+  id: number;
 
   /**  */
-  name?: string;
+  name: string;
 
   /**  */
-  namespaceId?: number;
+  namespaceId: number;
 
   /**  */
-  updatedAt?: string;
+  updatedAt: string;
 }
 
-export interface tag_insertRequest {
+export interface tagInsertRequest {
   /**  */
   name: string;
 
@@ -256,20 +256,20 @@ export interface tag_insertRequest {
   namespaceId: number;
 }
 
-export interface tag_listRequest {
+export interface tagListRequest {
   /**  */
   filter?: tag_filter;
 }
 
-export interface tag_listResponse {
+export interface tagListResponse {
   /**  */
-  items?: tag_getResponse[];
+  items?: tagGetResponse[];
 
   /**  */
   total?: number;
 }
 
-export interface tag_updateRequest {
+export interface tagUpdateRequest {
   /**  */
   id: number;
 

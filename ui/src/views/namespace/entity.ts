@@ -1,6 +1,6 @@
-import { namespace_getResponse } from '@/views/namespace/generated';
+import { namespaceGetResponse } from '@/views/namespace/generated';
 
-type Namespace = namespace_getResponse
+type Namespace = namespaceGetResponse
 
 // eslint-disable-next-line import/prefer-default-export
 export { Namespace };

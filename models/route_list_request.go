@@ -15,7 +15,7 @@ import (
 
 // RouteListRequest route list request
 //
-// swagger:model route.listRequest
+// swagger:model routeListRequest
 type RouteListRequest struct {
 
 	// filter

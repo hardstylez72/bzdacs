@@ -16,7 +16,7 @@ import (
 
 // RouteGetResponse route get response
 //
-// swagger:model route.getResponse
+// swagger:model routeGetResponse
 type RouteGetResponse struct {
 
 	// created at

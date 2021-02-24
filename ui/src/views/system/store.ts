@@ -7,8 +7,8 @@ import { moduleActionContext } from '../base/store';
 import { SystemSwg as System } from './entity';
 import {
   serviceOptions,
-  system_insertRequest,
-  system_updateRequest,
+  systemInsertRequest,
+  systemUpdateRequest,
   SystemService,
 } from './generated/index';
 
@@ -32,11 +32,11 @@ const module = defineModule({
       const { state } = actionContext(context);
       return state.service.systemList();
     },
-    async Create(context, req: system_insertRequest): Promise<System> {
+    async Create(context, req: systemInsertRequest): Promise<System> {
       const { state } = actionContext(context);
       return state.service.systemCreate({ req });
     },
-    async Update(context, req: system_updateRequest): Promise<System> {
+    async Update(context, req: systemUpdateRequest): Promise<System> {
       const { state } = actionContext(context);
       return state.service.systemUpdate({ req });
     },

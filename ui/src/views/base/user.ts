@@ -24,27 +24,11 @@ export default class User {
     return makeRequest(req);
   }
 
-  async guestLogin(login: string): Promise<void> {
-    const req: Request = {
-      data: {},
-      method: 'POST',
-      url: '/api/v1/user/guest/login',
-    };
-    if (login) {
-      req.headers = {
-        login:
-          encodeURIComponent(login),
-      };
-    }
-
-    return makeRequest(req);
-  }
-
   adminLogin(payload?: {login: string; password: string}): Promise<void> {
     const req: Request = {
       data: {},
       method: 'POST',
-      url: '/api/v1/user/admin/login',
+      url: '/api/v1/user/login',
     };
     if (payload) {
       req.headers = { token: window.btoa(`${payload.login}:${payload.password}`) };

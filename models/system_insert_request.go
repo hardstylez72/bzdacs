@@ -16,7 +16,7 @@ import (
 
 // SystemInsertRequest system insert request
 //
-// swagger:model system.insertRequest
+// swagger:model systemInsertRequest
 type SystemInsertRequest struct {
 
 	// name

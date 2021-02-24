@@ -2,7 +2,7 @@ package system
 
 type insertRequest struct {
 	Name string `json:"name" validate:"required"`
-}
+} // @name systemInsertRequest
 
 func insertRequestConvert(r *insertRequest) *System {
 	return &System{
@@ -19,7 +19,7 @@ func newInsertResponse(group *System) *insertResponse {
 type updateRequest struct {
 	Id   int    `json:"id"  validate:"required"`
 	Name string `json:"name" validate:"required"`
-}
+} // @name systemUpdateRequest
 
 func updateRequestConvert(r *updateRequest) *System {
 	return &System{
@@ -34,7 +34,7 @@ func newUpdateResponse(group *System) *updateResponse {
 	return (*updateResponse)(group)
 }
 
-type listResponse []System
+type listResponse []System // @name systemListResponse
 
 func newListResponse(systems []System) listResponse {
 	return systems
@@ -42,14 +42,14 @@ func newListResponse(systems []System) listResponse {
 
 type deleteRequest struct {
 	Id int `json:"id" validate:"required"`
-}
+} // @name systemDeleteRequest
 
 type getRequest struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
-}
+} // @name systemGetRequest
 
-type getResponse *System
+type getResponse *System // @name systemGetResponse
 
 func newGetResponse(system *System) getResponse {
 	return system

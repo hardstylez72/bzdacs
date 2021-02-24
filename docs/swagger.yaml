@@ -215,14 +215,14 @@ definitions:
     - id
     - namespaceId
     type: object
-  namespace.deleteRequest:
+  namespaceDeleteRequest:
     properties:
       namespaceId:
         type: integer
     required:
     - namespaceId
     type: object
-  namespace.getRequest:
+  namespaceGetRequest:
     properties:
       id:
         type: integer
@@ -231,7 +231,7 @@ definitions:
       systemId:
         type: integer
     type: object
-  namespace.getResponse:
+  namespaceGetResponse:
     properties:
       createdAt:
         type: string
@@ -246,8 +246,14 @@ definitions:
         type: integer
       updatedAt:
         type: string
+    required:
+    - createdAt
+    - id
+    - name
+    - systemId
+    - updatedAt
     type: object
-  namespace.insertRequest:
+  namespaceInsertRequest:
     properties:
       name:
         type: string
@@ -257,14 +263,14 @@ definitions:
     - name
     - systemId
     type: object
-  namespace.listRequest:
+  namespaceListRequest:
     properties:
       id:
         type: integer
     required:
     - id
     type: object
-  namespace.updateRequest:
+  namespaceUpdateRequest:
     properties:
       id:
         type: integer
@@ -273,16 +279,6 @@ definitions:
     required:
     - id
     - name
-    type: object
-  route.deleteRequest:
-    properties:
-      id:
-        type: integer
-      namespaceId:
-        type: integer
-    required:
-    - id
-    - namespaceId
     type: object
   route.filter:
     properties:
@@ -297,7 +293,7 @@ definitions:
     - page
     - pageSize
     type: object
-  route.getByIdRequest:
+  routeDeleteRequest:
     properties:
       id:
         type: integer
@@ -307,7 +303,17 @@ definitions:
     - id
     - namespaceId
     type: object
-  route.getByParamsRequest:
+  routeGetByIdRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  routeGetByParamsRequest:
     properties:
       method:
         type: string
@@ -320,7 +326,7 @@ definitions:
     - namespaceId
     - route
     type: object
-  route.getResponse:
+  routeGetResponse:
     properties:
       createdAt:
         type: string
@@ -353,7 +359,7 @@ definitions:
     - tags
     - updatedAt
     type: object
-  route.insertRequest:
+  routeInsertRequest:
     properties:
       description:
         type: string
@@ -373,21 +379,21 @@ definitions:
     - namespaceId
     - route
     type: object
-  route.listRequest:
+  routeListRequest:
     properties:
       filter:
         $ref: '#/definitions/route.filter'
     type: object
-  route.listResponse:
+  routeListResponse:
     properties:
       items:
         items:
-          $ref: '#/definitions/route.getResponse'
+          $ref: '#/definitions/routeGetResponse'
         type: array
       total:
         type: integer
     type: object
-  route.updateRequest:
+  routeUpdateRequest:
     properties:
       description:
         type: string
@@ -410,21 +416,21 @@ definitions:
     - namespaceId
     - route
     type: object
-  system.deleteRequest:
+  systemDeleteRequest:
     properties:
       id:
         type: integer
     required:
     - id
     type: object
-  system.getRequest:
+  systemGetRequest:
     properties:
       id:
         type: integer
       name:
         type: string
     type: object
-  system.getResponse:
+  systemGetResponse:
     properties:
       createdAt:
         type: string
@@ -437,15 +443,20 @@ definitions:
         type: string
       updatedAt:
         type: string
+    required:
+    - createdAt
+    - id
+    - name
+    - updatedAt
     type: object
-  system.insertRequest:
+  systemInsertRequest:
     properties:
       name:
         type: string
     required:
     - name
     type: object
-  system.updateRequest:
+  systemUpdateRequest:
     properties:
       id:
         type: integer
@@ -454,16 +465,6 @@ definitions:
     required:
     - id
     - name
-    type: object
-  tag.deleteRequest:
-    properties:
-      id:
-        type: integer
-      namespaceId:
-        type: integer
-    required:
-    - id
-    - namespaceId
     type: object
   tag.filter:
     properties:
@@ -480,14 +481,24 @@ definitions:
     - page
     - pageSize
     type: object
-  tag.getRequest:
+  tagDeleteRequest:
+    properties:
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+    required:
+    - id
+    - namespaceId
+    type: object
+  tagGetRequest:
     properties:
       id:
         type: integer
     required:
     - id
     type: object
-  tag.getResponse:
+  tagGetResponse:
     properties:
       createdAt:
         type: string
@@ -502,8 +513,14 @@ definitions:
         type: integer
       updatedAt:
         type: string
+    required:
+    - createdAt
+    - id
+    - name
+    - namespaceId
+    - updatedAt
     type: object
-  tag.insertRequest:
+  tagInsertRequest:
     properties:
       name:
         type: string
@@ -513,21 +530,21 @@ definitions:
     - name
     - namespaceId
     type: object
-  tag.listRequest:
+  tagListRequest:
     properties:
       filter:
         $ref: '#/definitions/tag.filter'
     type: object
-  tag.listResponse:
+  tagListResponse:
     properties:
       items:
         items:
-          $ref: '#/definitions/tag.getResponse'
+          $ref: '#/definitions/tagGetResponse'
         type: array
       total:
         type: integer
     type: object
-  tag.updateRequest:
+  tagUpdateRequest:
     properties:
       id:
         type: integer
@@ -850,14 +867,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/namespace.insertRequest'
+          $ref: '#/definitions/namespaceInsertRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/namespace.getResponse'
+            $ref: '#/definitions/namespaceGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -880,7 +897,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/namespace.deleteRequest'
+          $ref: '#/definitions/namespaceDeleteRequest'
       produces:
       - application/json
       responses:
@@ -908,14 +925,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/namespace.getRequest'
+          $ref: '#/definitions/namespaceGetRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/namespace.getResponse'
+            $ref: '#/definitions/namespaceGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -942,7 +959,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/namespace.listRequest'
+          $ref: '#/definitions/namespaceListRequest'
       produces:
       - application/json
       responses:
@@ -950,7 +967,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/namespace.getResponse'
+              $ref: '#/definitions/namespaceGetResponse'
             type: array
         "400":
           description: Bad Request
@@ -974,14 +991,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/namespace.updateRequest'
+          $ref: '#/definitions/namespaceUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/namespace.getResponse'
+            $ref: '#/definitions/namespaceGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1004,14 +1021,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/route.insertRequest'
+          $ref: '#/definitions/routeInsertRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/route.getResponse'
+            $ref: '#/definitions/routeGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1034,7 +1051,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/route.deleteRequest'
+          $ref: '#/definitions/routeDeleteRequest'
       produces:
       - application/json
       responses:
@@ -1062,14 +1079,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/route.getByIdRequest'
+          $ref: '#/definitions/routeGetByIdRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/route.getResponse'
+            $ref: '#/definitions/routeGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1096,14 +1113,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/route.getByParamsRequest'
+          $ref: '#/definitions/routeGetByParamsRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/route.getResponse'
+            $ref: '#/definitions/routeGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1130,14 +1147,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/route.listRequest'
+          $ref: '#/definitions/routeListRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/route.listResponse'
+            $ref: '#/definitions/routeListResponse'
         "400":
           description: Bad Request
           schema:
@@ -1160,14 +1177,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/route.updateRequest'
+          $ref: '#/definitions/routeUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/route.getResponse'
+            $ref: '#/definitions/routeGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1190,14 +1207,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/system.insertRequest'
+          $ref: '#/definitions/systemInsertRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/system.getResponse'
+            $ref: '#/definitions/systemGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1220,7 +1237,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/system.deleteRequest'
+          $ref: '#/definitions/systemDeleteRequest'
       produces:
       - application/json
       responses:
@@ -1248,14 +1265,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/system.getRequest'
+          $ref: '#/definitions/systemGetRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/system.getResponse'
+            $ref: '#/definitions/systemGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1283,7 +1300,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/system.getResponse'
+              $ref: '#/definitions/systemGetResponse'
             type: array
         "500":
           description: Internal Server Error
@@ -1303,14 +1320,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/system.updateRequest'
+          $ref: '#/definitions/systemUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/system.getResponse'
+            $ref: '#/definitions/systemGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1333,14 +1350,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/tag.insertRequest'
+          $ref: '#/definitions/tagInsertRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/tag.getResponse'
+            $ref: '#/definitions/tagGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1363,7 +1380,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/tag.deleteRequest'
+          $ref: '#/definitions/tagDeleteRequest'
       produces:
       - application/json
       responses:
@@ -1391,14 +1408,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/tag.getRequest'
+          $ref: '#/definitions/tagGetRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/tag.getResponse'
+            $ref: '#/definitions/tagGetResponse'
         "400":
           description: Bad Request
           schema:
@@ -1425,14 +1442,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/tag.listRequest'
+          $ref: '#/definitions/tagListRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/tag.listResponse'
+            $ref: '#/definitions/tagListResponse'
         "400":
           description: Bad Request
           schema:
@@ -1455,14 +1472,14 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/tag.updateRequest'
+          $ref: '#/definitions/tagUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/tag.getResponse'
+            $ref: '#/definitions/tagGetResponse'
         "400":
           description: Bad Request
           schema:

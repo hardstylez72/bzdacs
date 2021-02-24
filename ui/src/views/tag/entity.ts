@@ -1,6 +1,6 @@
-import { tag_getResponse } from '@/views/tag/generated';
+import { tagGetResponse } from '@/views/tag/generated';
 
-export type TagSwg = tag_getResponse
+export type TagSwg = tagGetResponse
 
 export type Tag = {
   createdAt?: string;

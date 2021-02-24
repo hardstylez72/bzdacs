@@ -90,19 +90,11 @@ const {
             commit.setAuthorized(true);
             return s;
           }
+          return Promise.reject();
         })
         .catch((err) => {
           commit.setAuthorized(false);
           return err;
-        });
-    },
-
-    guestLogin(context, login): Promise<void> {
-      const { state, dispatch } = actionContext(context);
-
-      return state.service.guestLogin(login)
-        .finally(() => {
-          dispatch.userSession();
         });
     },
     adminLogin(context, payload?: {login: string; password: string}): Promise<void> {
