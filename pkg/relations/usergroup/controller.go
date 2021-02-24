@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
@@ -13,14 +12,11 @@ import (
 type Pair struct {
 	GroupId int `json:"groupId" validate:"required"`
 	UserId  int `json:"userId" validate:"required"`
-}
+} // @name userGroupPair
 
 type Repository interface {
-	ListUserGroups(ctx context.Context, userId int) ([]Group, error)
-	ListUserNotInGroups(ctx context.Context, groupId int) ([]Group, error)
-	InsertMany(ctx context.Context, params []Pair) ([]Group, error)
-	Insert(ctx context.Context, pair Pair) (*Group, error)
-	IsPairExist(ctx context.Context, pair Pair) (bool, error)
+	List(ctx context.Context, filter Filter) ([]Group, int, error)
+	Insert(ctx context.Context, params []Pair) ([]Group, error)
 	Delete(ctx context.Context, params []Pair) error
 }
 
@@ -36,6 +32,16 @@ func NewController(rep Repository) *controller {
 	}
 }
 
+// @tags user-group
+// @description Creates user-group relations
+// @id user-group.create
+// @accept application/json
+// @param req body insertRequest true "request"
+// @produce application/json
+// @success 200	{object} insertResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/user/group/create [post]
 func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var req insertRequest
@@ -45,15 +51,30 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	routes, err := c.rep.InsertMany(ctx, insertRequestConvert(req))
+	if err := c.validator.Struct(req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	routes, err := c.rep.Insert(ctx, req.Pairs)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	util.NewResp(w, r).Json(routes).Send()
+	util.NewResp(w, r).Json(routes).Status(http.StatusOK).Send()
 }
 
+// @tags user-group
+// @description Gets list of user-group relations
+// @id user-group.list
+// @accept application/json
+// @param req body listRequest true "request"
+// @produce application/json
+// @success 200	{object} listResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/user/group/list [post]
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -69,41 +90,41 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var list []Group
-	var err error
-
-	if req.BelongToUser {
-		list, err = c.rep.ListUserGroups(ctx, req.UserId)
-	} else {
-		list, err = c.rep.ListUserNotInGroups(ctx, req.UserId)
-	}
-
+	list, total, err := c.rep.List(ctx, req.Filter)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	render.JSON(w, r, newListResponse(list))
+	util.NewResp(w, r).Json(newListResponse(list, total)).Status(http.StatusOK).Send()
 }
 
+// @tags user-group
+// @description Deletes user-group relations
+// @id user-group.delete
+// @accept application/json
+// @param req body deleteRequest true "request"
+// @produce application/json
+// @success 200
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/user/group/delete [post]
 func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	var req []Pair
+	var req deleteRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
-	rr := deleteRequest{Params: req}
-
-	if err := c.validator.Struct(rr); err != nil {
+	if err := c.validator.Struct(req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
-	err := c.rep.Delete(ctx, req)
+	err := c.rep.Delete(ctx, req.Pairs)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return

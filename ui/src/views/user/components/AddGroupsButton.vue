@@ -1,45 +1,13 @@
 <template>
-  <Dialog v-model="show" max-width="2000px">
-    <template v-slot:activator="props">
-      <v-btn
-        color="primary"
-        class="mb-2"
-        v-bind="props"
-        v-on="props.on"
-      >
-        {{$t('add-btn')}}
-      </v-btn>
-    </template>
-
-    <v-card>
-      <v-card-title class="headline grey lighten-2">
-        {{$t('title')}}
-      </v-card-title>
-
-      <UserGroupsSelectableTable v-model="selected" :items="routes">
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-spacer />
-            <div>
-              <v-btn
-                v-if="showAddBtn"
-                color="primary"
-                class="mb-2"
-                @click="addSelectedGroups"
-              >
-                {{$t('add-selected')}}
-              </v-btn>
-            </div>
-          </v-toolbar>
-        </template>
-      </UserGroupsSelectableTable>
-      <v-card-actions>
-        <v-spacer />
-        <v-btn color="blue darken-1" text @click="close">{{$t('cancel')}}</v-btn>
-        <v-spacer />
-      </v-card-actions>
-    </v-card>
-  </Dialog>
+  <div>
+    <v-btn
+      color="primary"
+      class="mb-2"
+      @click="addSelectedRoutes"
+    >
+      {{$t('add-selected-routes')}}
+    </v-btn>
+  </div>
 </template>
 
 <script lang="ts">
@@ -48,69 +16,35 @@ import {
 } from 'vue-property-decorator';
 import { Group } from '@/views/group/entity';
 
-import Dialog from '@/views/common/components/Dialog.vue';
-import UserGroupsSelectableTable from './UserGroupsSelectableTable.vue';
+@Component
 
-@Component({
-  components: {
-    Dialog,
-    UserGroupsSelectableTable,
-  },
-})
-export default class RoutesTableSelectAddDialog extends Vue {
-  show = false
+export default class AddGroupsButton extends Vue {
+  @Prop() items!: Group[]
 
-  @Prop({ type: Number, default: -1 })
-  private readonly userId!: number
-
-  entities: Group[] =[]
-
-  selected: Group[] =[]
-
-  mounted() {
-    this.$store.direct.dispatch.userGroup.GetListNotBelongToUser(this.userId);
-  }
-
-  get routes(): readonly Group[] {
-    return this.$store.direct.getters.userGroup.getGroupsNotBelongToUser;
-  }
-
-  get showAddBtn(): boolean {
-    return this.selected.length > 0;
-  }
-
-  async addSelectedGroups() {
-    const groups = this.selected;
-    const params = groups.map((group) => ({
-      userId: this.userId,
+  async addSelectedRoutes() {
+    const routes = this.items;
+    const userId = Number(this.$route.params.id);
+    const params = routes.map((group) => ({
+      userId,
       groupId: group.id,
     }));
 
     await this.$store.direct.dispatch.userGroup.Create(params);
-    this.selected = [];
-    this.show = false;
-    this.$store.direct.dispatch.userRoute.GetListBelongToUser(this.userId);
-  }
-
-  close() {
-    this.show = false;
+    this.$emit('groupsAdded');
   }
 }
 </script>
 
+<style scoped lang="scss">
+
+</style>
 <i18n>
 {
   "en": {
-    "add-btn": "Add groups",
-    "title": "Adding group to the user",
-    "add-selected": "Add selected groups",
-    "cancel": "Cancel"
+    "add-selected-routes": "Add selected routes"
   },
   "ru": {
-    "add-btn": "Добавить группы",
-    "title": "Добавление групп к пользователю",
-    "add-selected": "Добавить выбранные группы",
-    "cancel": "Отмена"
+    "add-selected-routes": "Добавить выбранные маршруты"
   }
 }
 </i18n>

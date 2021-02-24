@@ -60,7 +60,7 @@ codegen({
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
-  include: ['User'],
+  include: ['User', 'UserGroup'],
 });
 
 

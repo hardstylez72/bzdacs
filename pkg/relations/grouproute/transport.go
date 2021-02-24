@@ -6,13 +6,13 @@ type insertRequest struct {
 
 type insertResponse []Route // @name groupRouteInsertResponse
 
-type listRequest struct {
-	Filter Filter `json:"filter"`
-} // @name groupRouteListRequest
-
 type deleteRequest struct {
 	Pairs []Pair `json:"pairs" validate:"required,dive"`
 } // @name groupRouteDeleteRequest
+
+type listRequest struct {
+	Filter Filter `json:"filter"`
+} // @name groupRouteListRequest
 
 type Filter struct {
 	Page          int    `json:"page"  validate:"required,gte=1"`

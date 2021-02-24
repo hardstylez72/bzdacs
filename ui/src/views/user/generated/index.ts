@@ -222,6 +222,72 @@ export class UserService {
   }
 }
 
+export class UserGroupService {
+  /**
+   *
+   */
+  userGroupCreate(
+    params: {
+      /** request */
+      req: userGroupInsertRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<usergroup_Group[]> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/user/group/create';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  userGroupDelete(
+    params: {
+      /** request */
+      req: userGroupDeleteRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/user/group/delete';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  userGroupList(
+    params: {
+      /** request */
+      req: userGroupListRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<userGroupListResponse> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/user/group/list';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export interface user_filter {
   /**  */
   namespaceId: number;
@@ -288,6 +354,57 @@ export interface userGetResponse {
   updatedAt: string;
 }
 
+export interface userGroupDeleteRequest {
+  /**  */
+  pairs: userGroupPair[];
+}
+
+export interface userGroupFilter {
+  /**  */
+  belongToUser?: boolean;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  page: number;
+
+  /**  */
+  pageSize?: number;
+
+  /**  */
+  pattern?: string;
+
+  /**  */
+  userId: number;
+}
+
+export interface userGroupInsertRequest {
+  /**  */
+  pairs: userGroupPair[];
+}
+
+export interface userGroupListRequest {
+  /**  */
+  filter?: userGroupFilter;
+}
+
+export interface userGroupListResponse {
+  /**  */
+  items: usergroup_Group[];
+
+  /**  */
+  total: number;
+}
+
+export interface userGroupPair {
+  /**  */
+  groupId: number;
+
+  /**  */
+  userId: number;
+}
+
 export interface userListRequest {
   /**  */
   filter?: user_filter;
@@ -310,4 +427,27 @@ export interface userUpdateRequest {
 
   /**  */
   namespaceId: number;
+}
+
+export interface usergroup_Group {
+  /**  */
+  code: string;
+
+  /**  */
+  createdAt: string;
+
+  /**  */
+  deletedAt?: string;
+
+  /**  */
+  description: string;
+
+  /**  */
+  id: number;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  updatedAt: string;
 }

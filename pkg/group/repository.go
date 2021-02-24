@@ -149,7 +149,8 @@ func GetByCodeLL(ctx context.Context, driver storage.SqlDriver, code string, nam
 			   description,
 			   created_at,
 			   updated_at,
-			   deleted_at
+			   deleted_at,
+			   namespace_id
 		from groups
 	   where deleted_at is null
 	     and code = $1

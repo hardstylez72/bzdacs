@@ -1,26 +1,7 @@
 <template>
   <div>
-    <h2>{{$t('user')}} {{userC.externalId}}</h2>
-    <UserGroupsSelectableTable v-model="selectedGroups" :items="groups">
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title>{{ $t('titleGroup') }}</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical/>
-          <v-spacer/>
-          <div>
-            <v-btn
-              v-if="showDeleteGroupButton"
-              color="primary"
-              class="mb-2"
-              @click="deleteSelectedGroups"
-            >
-              {{$t('delete-group-btn')}}
-            </v-btn>
-          </div>
-          <AddGroupsButton :user-id="userIdC" />
-        </v-toolbar>
-      </template>
-    </UserGroupsSelectableTable>
+    <h2>{{ $t('user') }} {{ getUser.externalId }}</h2>
+    <GroupsBelongUserTable :user-id="getUserId" />
 
     <UserRoutesTable :items="routes" >
       <template v-slot:top>
@@ -34,9 +15,9 @@
 
       <template v-slot:item.actions="{ item }">
         <div class="d-flex">
-          <UpdateRouteButton :item="item" :user="userC"/>
-          <OverwriteRouteButton :item="item" :user="userC"/>
-          <DeleteRouteButton :item="item" :user="userC"/>
+          <UpdateRouteButton :item="item" :user="getUser"/>
+          <OverwriteRouteButton :item="item" :user="getUser"/>
+          <DeleteRouteButton :item="item" :user="getUser"/>
         </div>
       </template>
 
@@ -58,9 +39,7 @@ import {
 import { Group } from '@/views/group/entity';
 import { User } from '@/views/user/entity';
 import { RouteWithGroups } from '@/views/user/services/userroute';
-import UserGroupsSelectableTable from '../components/UserGroupsSelectableTable.vue';
 import UserRoutesSelectableTable from '../components/UserRoutesSelectableTable.vue';
-import AddGroupsButton from '../components/AddGroupsButton.vue';
 import AddRoutesButton from '../components/AddRoutesButton.vue';
 import UpdateRouteButton from '../components/UpdateRouteButton.vue';
 import StatusIconRouteOverwritten from '../components/StatusIconRouteOverwritten.vue';
@@ -68,12 +47,11 @@ import StatusIconRouteAccess from '../components/StatusIconRouteAccess.vue';
 import OverwriteRouteButton from '../components/OverwriteRouteButton.vue';
 import DeleteRouteButton from '../components/DeleteRouteButton.vue';
 import UserRoutesTable from '../components/UserRoutesTable.vue';
+import GroupsBelongUserTable from '../components/GroupsBelongUserTable.vue';
 
 @Component({
   components: {
-    UserGroupsSelectableTable,
     UserRoutesSelectableTable,
-    AddGroupsButton,
     AddRoutesButton,
     UpdateRouteButton,
     StatusIconRouteOverwritten,
@@ -81,35 +59,32 @@ import UserRoutesTable from '../components/UserRoutesTable.vue';
     OverwriteRouteButton,
     DeleteRouteButton,
     UserRoutesTable,
+    GroupsBelongUserTable,
 },
 })
 export default class UserPage extends Vue {
   userId = Number(this.$route.params.id);
+
+  namespaceId = Number(this.$route.query.namespaceId);
 
   user: User = {
     externalId: 'Не найден',
     id: -1,
   }
 
-  titleGroup = 'Группы'
-
   titleRoute = 'Маршруты'
 
   selectedGroups: Group[] = []
 
-  async mounted() {
-    this.$store.direct.dispatch.userGroup.GetListBelongToUser(this.userId);
-    this.$store.direct.dispatch.userRoute.GetListBelongToUser(this.userId);
-    this.$store.direct.dispatch.user.GetById(this.userId).then((user) => {
-       this.user = user;
-     });
+  async created() {
+    this.user = await this.$store.direct.dispatch.user.GetById({ id: this.userId, namespaceId: this.namespaceId });
   }
 
-  get userC(): User {
+  get getUser(): User {
     return this.user;
   }
 
-  get userIdC(): number {
+  get getUserId(): number {
     return this.userId;
   }
 

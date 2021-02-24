@@ -1600,6 +1600,144 @@
                 }
             }
         },
+        "/v1/user/group/create": {
+            "post": {
+                "description": "Creates user-group relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-group"
+                ],
+                "operationId": "user-group.create",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userGroupInsertRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/usergroup.Group"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/group/delete": {
+            "post": {
+                "description": "Deletes user-group relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-group"
+                ],
+                "operationId": "user-group.delete",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userGroupDeleteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/group/list": {
+            "post": {
+                "description": "Gets list of user-group relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-group"
+                ],
+                "operationId": "user-group.list",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userGroupListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userGroupListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/user/list": {
             "post": {
                 "description": "Gets list of users",
@@ -2627,6 +2765,103 @@
                 }
             }
         },
+        "userGroupDeleteRequest": {
+            "type": "object",
+            "required": [
+                "pairs"
+            ],
+            "properties": {
+                "pairs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userGroupPair"
+                    }
+                }
+            }
+        },
+        "userGroupFilter": {
+            "type": "object",
+            "required": [
+                "namespaceId",
+                "page",
+                "userId"
+            ],
+            "properties": {
+                "belongToUser": {
+                    "type": "boolean"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "pattern": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userGroupInsertRequest": {
+            "type": "object",
+            "required": [
+                "pairs"
+            ],
+            "properties": {
+                "pairs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userGroupPair"
+                    }
+                }
+            }
+        },
+        "userGroupListRequest": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "$ref": "#/definitions/userGroupFilter"
+                }
+            }
+        },
+        "userGroupListResponse": {
+            "type": "object",
+            "required": [
+                "items",
+                "total"
+            ],
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/usergroup.Group"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userGroupPair": {
+            "type": "object",
+            "required": [
+                "groupId",
+                "userId"
+            ],
+            "properties": {
+                "groupId": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
         "userListRequest": {
             "type": "object",
             "properties": {
@@ -2669,6 +2904,41 @@
                 },
                 "namespaceId": {
                     "type": "integer"
+                }
+            }
+        },
+        "usergroup.Group": {
+            "type": "object",
+            "required": [
+                "code",
+                "createdAt",
+                "description",
+                "id",
+                "namespaceId",
+                "updatedAt"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
                 }
             }
         },

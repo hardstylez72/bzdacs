@@ -75,12 +75,7 @@ func (c *controller) accessCheck(w http.ResponseWriter, r *http.Request) {
 
 	isAccessAllowed := AccessAllowed(route, routeMethod, userRoutes)
 
-	groups, err := c.userGroupRepository.ListUserGroups(ctx, u.Id)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
-	}
-
-	util.NewResp(w, r).Json(newCheckAccessResponse(groups, isAccessAllowed, login)).Status(http.StatusOK).Send()
+	util.NewResp(w, r).Json(newCheckAccessResponse(nil, isAccessAllowed, login)).Status(http.StatusOK).Send()
 }
 
 func getRequestedMethodFromRequest(r *http.Request) (string, error) {

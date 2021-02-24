@@ -633,6 +633,70 @@ definitions:
     - namespaceId
     - updatedAt
     type: object
+  userGroupDeleteRequest:
+    properties:
+      pairs:
+        items:
+          $ref: '#/definitions/userGroupPair'
+        type: array
+    required:
+    - pairs
+    type: object
+  userGroupFilter:
+    properties:
+      belongToUser:
+        type: boolean
+      namespaceId:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      pattern:
+        type: string
+      userId:
+        type: integer
+    required:
+    - namespaceId
+    - page
+    - userId
+    type: object
+  userGroupInsertRequest:
+    properties:
+      pairs:
+        items:
+          $ref: '#/definitions/userGroupPair'
+        type: array
+    required:
+    - pairs
+    type: object
+  userGroupListRequest:
+    properties:
+      filter:
+        $ref: '#/definitions/userGroupFilter'
+    type: object
+  userGroupListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/usergroup.Group'
+        type: array
+      total:
+        type: integer
+    required:
+    - items
+    - total
+    type: object
+  userGroupPair:
+    properties:
+      groupId:
+        type: integer
+      userId:
+        type: integer
+    required:
+    - groupId
+    - userId
+    type: object
   userListRequest:
     properties:
       filter:
@@ -662,6 +726,31 @@ definitions:
     - externalId
     - id
     - namespaceId
+    type: object
+  usergroup.Group:
+    properties:
+      code:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+      updatedAt:
+        type: string
+    required:
+    - code
+    - createdAt
+    - description
+    - id
+    - namespaceId
+    - updatedAt
     type: object
   util.Error:
     properties:
@@ -1722,6 +1811,96 @@ paths:
             $ref: '#/definitions/util.ResponseWithError'
       tags:
       - user
+  /v1/user/group/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates user-group relations
+      operationId: user-group.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userGroupInsertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/usergroup.Group'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user-group
+  /v1/user/group/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes user-group relations
+      operationId: user-group.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userGroupDeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user-group
+  /v1/user/group/list:
+    post:
+      consumes:
+      - application/json
+      description: Gets list of user-group relations
+      operationId: user-group.list
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userGroupListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userGroupListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user-group
   /v1/user/list:
     post:
       consumes:

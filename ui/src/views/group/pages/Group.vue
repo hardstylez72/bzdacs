@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Группа <span style="color: teal">{{getGroup.code}}</span></h2>
-    <RoutesBelongGroupTable :belong="true" :group-id="groupId" />
+    <RoutesBelongGroupTable :group-id="groupId" />
   </div>
 </template>
 

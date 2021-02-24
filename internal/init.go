@@ -13,6 +13,7 @@ const (
 	Namespace        = "internal"
 	GroupName        = "system"
 	GroupDescription = "BZDACS system group"
+	User             = "admin"
 )
 
 type Config struct {
@@ -36,12 +37,22 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 		return err
 	}
 
-	_, err = resolveRoutes(ctx, c, *routes, ns.Id)
+	_, err = resolveUser(ctx, c, User, ns.Id)
 	if err != nil {
 		return err
 	}
 
-	_, err = resolveGroup(ctx, c, GroupName, GroupDescription, ns.Id)
+	rs, err := resolveRoutes(ctx, c, *routes, ns.Id)
+	if err != nil {
+		return err
+	}
+
+	g, err := resolveGroup(ctx, c, GroupName, GroupDescription, ns.Id)
+	if err != nil {
+		return err
+	}
+
+	err = resolveGroupAndRoutes(ctx, c, g, rs)
 	if err != nil {
 		return err
 	}
