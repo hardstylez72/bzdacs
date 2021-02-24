@@ -40,7 +40,7 @@ import {
 import { DataTableHeader } from 'vuetify';
 import { Entity } from '@/views/base/services/entity';
 import TablePagination from '@/views/common/components/TablePagination.vue';
-import { QueryParams } from '@/views/tree-menu/entity';
+import { QueryParams } from '@/views/tree-menu/helper';
 import { ListResponse } from '@/views/common/helpers/types';
 
 @Component({
@@ -72,7 +72,7 @@ export default class ItemTable<T extends Entity> extends Vue {
   protected total = 0
 
   @Watch('items', { deep: true })
-  itemsChanged(items) {
+  itemsChanged(items: T[]) {
     this.items = items;
   }
 

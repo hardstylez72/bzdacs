@@ -50,12 +50,12 @@ export default class SimpleEntityUpdateDialog<T extends SimpleEntity> extends Vu
     this.show = value;
   }
 
-  local: T = {
+  local: SimpleEntity = {
     name: '',
     id: -1,
   }
 
-   propInitialState: T = this.local
+   propInitialState: SimpleEntity = this.local
 
   @Watch('id', { immediate: true })
    protected async onChangeItem(id: number) {
@@ -73,7 +73,7 @@ export default class SimpleEntityUpdateDialog<T extends SimpleEntity> extends Vu
 
   // @ts-ignore
   async loadItemWithId(id: number): Promise<T> {
-    console.warn('override this method!');
+    console.error('override this method!');
   }
 
   @Watch('local', { deep: true })
@@ -103,11 +103,11 @@ export default class SimpleEntityUpdateDialog<T extends SimpleEntity> extends Vu
   }
 
   // @ts-ignore
-  async updateValid(entity: T) {
+  async updateValid(entity: SimpleEntity) {
     console.warn('override this method!');
   }
 
-  areSame(a: T, b: T): boolean {
+  areSame(a: SimpleEntity, b: SimpleEntity): boolean {
     return (a.name === b.name);
   }
 

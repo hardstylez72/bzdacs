@@ -60,24 +60,24 @@ export default class CreateNamespaceDialog<T extends SimpleEntity> extends Vue {
 
   valid = true
 
-  local: T = {
+  local: SimpleEntity = {
     name: '',
     id: -1,
   }
 
   disableCreateButton = true
 
-  propInitialState: T = {
+  propInitialState: SimpleEntity = {
     name: '',
     id: -1,
   }
 
   @Watch('local', { deep: true })
-  protected localChanged(local: T): void {
+  protected localChanged(local: SimpleEntity): void {
     this.disableCreateButton = this.areSame(this.propInitialState, local);
   }
 
-  areSame(a: T, b: T): boolean {
+  areSame(a: SimpleEntity, b: SimpleEntity): boolean {
     return a.name === b.name;
   }
 
@@ -95,7 +95,7 @@ export default class CreateNamespaceDialog<T extends SimpleEntity> extends Vue {
     this.show = false;
   }
 
-  async saveValid(entity: T) {
+  async saveValid(entity: SimpleEntity) {
     // must be overwritten
   }
 

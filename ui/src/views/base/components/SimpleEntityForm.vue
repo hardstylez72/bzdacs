@@ -32,7 +32,7 @@ import { SimpleEntity } from '@/views/base/services/entity';
 export default class NamespaceForm<T extends SimpleEntity> extends Vue {
   valid = true
 
-  local: T = {
+  local: SimpleEntity = {
     id: -1,
     name: '',
   }
