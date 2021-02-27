@@ -48,12 +48,3 @@ func resolveGroupAndRoutes(ctx context.Context, c *client.BZDACS, g *group.Group
 	}
 	return nil
 }
-
-func contains(routes []string, target string) bool {
-	for _, r := range routes {
-		if r == target {
-			return true
-		}
-	}
-	return false
-}

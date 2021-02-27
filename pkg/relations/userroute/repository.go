@@ -26,7 +26,7 @@ func (r *repository) deletePair(ctx context.Context, tx *sqlx.Tx, routeId, userI
 	return nil
 }
 
-func (r *repository) Delete(ctx context.Context, params []params) error {
+func (r *repository) Delete(ctx context.Context, params []Pair) error {
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
 		if err != nil {
@@ -47,7 +47,7 @@ func (r *repository) Delete(ctx context.Context, params []params) error {
 	return nil
 }
 
-func (r *repository) Update(ctx context.Context, params params) (*UserRoute, error) {
+func (r *repository) Update(ctx context.Context, params Pair) (*UserRoute, error) {
 
 	query := `
 	with insert_row as (
@@ -111,7 +111,7 @@ func insertPair(ctx context.Context, tx *sqlx.Tx, routeId, userId int, isExclude
 	return &route, nil
 }
 
-func (r *repository) Insert(ctx context.Context, params []params) ([]UserRoute, error) {
+func (r *repository) Insert(ctx context.Context, params []Pair) ([]UserRoute, error) {
 
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
@@ -251,7 +251,7 @@ func contains(routes []RouteExt, id int) (bool, int) {
 
 func ListGroupRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userId int) ([]UserRoute, error) {
 	query := `
-select r.id,
+		select r.id,
 			   r.route,
                r.method,
 			   r.description,
@@ -260,11 +260,9 @@ select r.id,
 			   r.deleted_at,
 		       false as is_excluded
 		from routes r
-   inner join groups_routes gr on gr.route_id = r.id
-   inner join groups g on gr.group_id = g.id
+        join groups_routes gr on gr.route_id = r.id and gr.group_id in (select group_id from users_groups where user_id = $1)
+        join groups g on gr.group_id = g.id and g.deleted_at is null
        where r.deleted_at is null
-         and gr.group_id in (select group_id from users_groups where user_id = $1)
-         and g.deleted_at is null
     group by r.id
 `
 	routes := make([]UserRoute, 0)
@@ -287,7 +285,7 @@ func ListOverwrittenRoutesBelongUserDb(ctx context.Context, conn *sqlx.DB, userI
 			   r.deleted_at,
 		       rg.is_excluded
 		from routes r
-    left join users_routes rg on rg.route_id = r.id
+        join users_routes rg on rg.route_id = r.id
         where rg.user_id = $1
           and deleted_at is null
 `

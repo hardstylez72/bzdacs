@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-type params struct {
+type Pair struct {
 	RouteId    int  `json:"routeId" validate:"required"`
 	UserId     int  `json:"userId" validate:"required"`
 	IsExcluded bool `json:"isExcluded"`
@@ -19,9 +19,9 @@ type params struct {
 type Repository interface {
 	RoutesBelongUser(ctx context.Context, userId int) ([]RouteWithGroups, error)
 	RoutesNotBelongUser(ctx context.Context, userId int) ([]RouteWithGroups, error)
-	Insert(ctx context.Context, params []params) ([]UserRoute, error)
-	Delete(ctx context.Context, params []params) error
-	Update(ctx context.Context, params params) (*UserRoute, error)
+	Insert(ctx context.Context, params []Pair) ([]UserRoute, error)
+	Delete(ctx context.Context, params []Pair) error
+	Update(ctx context.Context, params Pair) (*UserRoute, error)
 }
 
 type controller struct {
@@ -90,7 +90,7 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	var req []params
+	var req []Pair
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
@@ -116,7 +116,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	var req params
+	var req Pair
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()

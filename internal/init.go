@@ -37,7 +37,7 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 		return err
 	}
 
-	_, err = resolveUser(ctx, c, User, ns.Id)
+	u, err := resolveUser(ctx, c, User, ns.Id)
 	if err != nil {
 		return err
 	}
@@ -53,6 +53,11 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 	}
 
 	err = resolveGroupAndRoutes(ctx, c, g, rs)
+	if err != nil {
+		return err
+	}
+
+	err = resolveUserAndGroup(ctx, c, g, u)
 	if err != nil {
 		return err
 	}

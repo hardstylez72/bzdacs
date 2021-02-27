@@ -3,6 +3,8 @@ package internal
 import (
 	"context"
 	"github.com/hardstylez72/bzdacs/client"
+	"github.com/hardstylez72/bzdacs/tests/group"
+	"github.com/hardstylez72/bzdacs/tests/relations/usergroup"
 	"github.com/hardstylez72/bzdacs/tests/user"
 )
 
@@ -20,4 +22,33 @@ func resolveUser(ctx context.Context, c *client.BZDACS, login string, namespaceI
 
 	}
 	return u, nil
+}
+
+func resolveUserAndGroup(ctx context.Context, c *client.BZDACS, g *group.Group, u *user.User) error {
+
+	currentGroups, err := usergroup.List(ctx, c, u.NamespaceId, u.Id)
+	if err != nil {
+		return err
+	}
+
+	if !contains(currentGroups, g.Code) {
+		err = usergroup.Create(ctx, c, []usergroup.Pair{{
+			GroupID: g.Id,
+			UserID:  u.Id,
+		}})
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func contains(routes []string, target string) bool {
+	for _, r := range routes {
+		if r == target {
+			return true
+		}
+	}
+	return false
 }

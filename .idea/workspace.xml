@@ -2,35 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/relations/usergroup/repository_list.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/relations/grouproute/lib.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/AddGroupsDialog.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/DeleteGroupsButton.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/GroupsBelongUserTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/GroupsNotBelongUserTable.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/relations/usergroup/lib.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/group.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/group.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/route.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/route.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/acs/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/group/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/usergroup/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/usergroup/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/usergroup/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/controller_admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/controller_login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/group/pages/Group.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/group/pages/Group.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/AddGroupsButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/AddGroupsButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/UserGroupsSelectableTable.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/generated/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/generated/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/pages/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/pages/User.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/store/usergroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/store/usergroup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/swagger-gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/swagger-gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/cypress.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/cypress.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/tests/e2e/videos/pages/home/tree_view_test.ts.mp4" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +46,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pkg/relations/usergroup" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../gitlab.services.mts.ru/Teleport/back" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -76,11 +57,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/relations" />
       <recent name="$PROJECT_DIR$/pkg/relations/usergroup" />
       <recent name="$PROJECT_DIR$/tests/relations/grouproute" />
       <recent name="$PROJECT_DIR$/internal" />
       <recent name="$PROJECT_DIR$/tests" />
-      <recent name="$PROJECT_DIR$/pkg/user" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pkg/relations" />
@@ -205,7 +186,8 @@
     <MESSAGE value="Fixes swagger" />
     <MESSAGE value="Refactors code" />
     <MESSAGE value="Fixes user controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes user controller" />
+    <MESSAGE value="Fixes user - group relation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes user - group relation" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -219,82 +201,82 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="445" y="346" width="465" height="391" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1610177655254" />
-    <state x="1126" y="80" width="794" height="912" key="CommitChangelistDialog2" timestamp="1614188623904">
+    <state x="1126" y="80" width="794" height="912" key="CommitChangelistDialog2" timestamp="1614199984459">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1527" y="80" width="794" height="878" key="CommitChangelistDialog2/0.0.2560.1040@0.0.2560.1040" timestamp="1614113138805" />
-    <state x="1126" y="80" width="794" height="878" key="CommitChangelistDialog2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614188623904" />
+    <state x="1126" y="80" width="794" height="878" key="CommitChangelistDialog2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199984459" />
     <state x="1126" y="83" width="794" height="912" key="CommitChangelistDialog2/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614181250616" />
-    <state width="928" height="485" key="DebuggerActiveHint" timestamp="1614191447334">
+    <state width="928" height="485" key="DebuggerActiveHint" timestamp="1614319308493">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="946" height="485" key="DebuggerActiveHint/0.0.2560.1040@0.0.2560.1040" timestamp="1614113031318" />
-    <state width="928" height="485" key="DebuggerActiveHint/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614191447334" />
+    <state width="928" height="485" key="DebuggerActiveHint/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614319308493" />
     <state x="133" y="100" width="1439" height="839" key="DiffContextDialog" timestamp="1613907190693">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="133" y="100" width="1439" height="839" key="DiffContextDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1613907190693" />
     <state x="100" y="100" width="1079" height="839" key="DiffContextDialog/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612611111394" />
-    <state x="1274" y="278" width="424" height="482" key="FileChooserDialogImpl" timestamp="1613200352875">
+    <state x="1274" y="278" width="424" height="479" key="FileChooserDialogImpl" timestamp="1614335312456">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1698" y="278" width="424" height="482" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1610535317961" />
-    <state x="1274" y="278" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1613200352875" />
-    <state width="2518" height="340" key="GridCell.Tab.0.bottom" timestamp="1614199095854">
+    <state x="1274" y="278" width="424" height="479" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614335312456" />
+    <state width="1878" height="340" key="GridCell.Tab.0.bottom" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614113103333" />
     <state width="938" height="401" key="GridCell.Tab.0.bottom/0.0.3840.1040@0.0.3840.1040" timestamp="1614157046214" />
-    <state width="2518" height="340" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095854" />
+    <state width="1878" height="340" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818960" />
-    <state width="2518" height="340" key="GridCell.Tab.0.center" timestamp="1614199095854">
+    <state width="1878" height="340" key="GridCell.Tab.0.center" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614113103332" />
     <state width="938" height="401" key="GridCell.Tab.0.center/0.0.3840.1040@0.0.3840.1040" timestamp="1614157046213" />
-    <state width="2518" height="340" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095854" />
+    <state width="1878" height="340" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818960" />
-    <state width="2518" height="340" key="GridCell.Tab.0.left" timestamp="1614199095854">
+    <state width="1878" height="340" key="GridCell.Tab.0.left" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614113103332" />
     <state width="938" height="401" key="GridCell.Tab.0.left/0.0.3840.1040@0.0.3840.1040" timestamp="1614157046213" />
-    <state width="2518" height="340" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095854" />
+    <state width="1878" height="340" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818959" />
-    <state width="2518" height="340" key="GridCell.Tab.0.right" timestamp="1614199095854">
+    <state width="1878" height="340" key="GridCell.Tab.0.right" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614113103332" />
     <state width="938" height="401" key="GridCell.Tab.0.right/0.0.3840.1040@0.0.3840.1040" timestamp="1614157046214" />
-    <state width="2518" height="340" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095854" />
+    <state width="1878" height="340" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818960" />
-    <state width="2518" height="340" key="GridCell.Tab.1.bottom" timestamp="1614199095805">
+    <state width="1878" height="340" key="GridCell.Tab.1.bottom" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1614113104776" />
     <state width="938" height="401" key="GridCell.Tab.1.bottom/0.0.3840.1040@0.0.3840.1040" timestamp="1614159312525" />
-    <state width="2518" height="340" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095805" />
+    <state width="1878" height="340" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818961" />
-    <state width="2518" height="340" key="GridCell.Tab.1.center" timestamp="1614199095805">
+    <state width="1878" height="340" key="GridCell.Tab.1.center" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1614113104776" />
     <state width="938" height="401" key="GridCell.Tab.1.center/0.0.3840.1040@0.0.3840.1040" timestamp="1614159312525" />
-    <state width="2518" height="340" key="GridCell.Tab.1.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095805" />
+    <state width="1878" height="340" key="GridCell.Tab.1.center/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.1.center/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818961" />
-    <state width="2518" height="340" key="GridCell.Tab.1.left" timestamp="1614199095805">
+    <state width="1878" height="340" key="GridCell.Tab.1.left" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1614113104776" />
     <state width="938" height="401" key="GridCell.Tab.1.left/0.0.3840.1040@0.0.3840.1040" timestamp="1614159312525" />
-    <state width="2518" height="340" key="GridCell.Tab.1.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095805" />
+    <state width="1878" height="340" key="GridCell.Tab.1.left/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.1.left/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818960" />
-    <state width="2518" height="340" key="GridCell.Tab.1.right" timestamp="1614199095805">
+    <state width="1878" height="340" key="GridCell.Tab.1.right" timestamp="1614426256602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="617" height="401" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1614113104776" />
     <state width="938" height="401" key="GridCell.Tab.1.right/0.0.3840.1040@0.0.3840.1040" timestamp="1614159312525" />
-    <state width="2518" height="340" key="GridCell.Tab.1.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199095805" />
+    <state width="1878" height="340" key="GridCell.Tab.1.right/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614426256602" />
     <state width="1237" height="340" key="GridCell.Tab.1.right/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614179818961" />
     <state x="1041" y="225" width="468" height="583" key="RollbackChangesDialog" timestamp="1613977461698">
       <screen x="0" y="0" width="2560" height="1040" />
@@ -308,17 +290,17 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1649" y="256" width="642" height="524" key="StructurePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1614084231602" />
-    <state x="1110" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1614188627197">
+    <state x="1110" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1614199990902">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1510" y="256" width="800" height="526" key="Vcs.Push.Dialog.v2/0.0.2560.1040@0.0.2560.1040" timestamp="1614113143496" />
-    <state x="1110" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614188627197" />
+    <state x="1110" y="256" width="800" height="523" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614199990902" />
     <state x="1960" y="266" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.0.1920.1040@1920.0.1920.1080" timestamp="1614180703040" />
-    <state width="626" height="519" key="XDebugger.FullValuePopup" timestamp="1614105436903">
-      <screen x="0" y="0" width="2560" height="1040" />
+    <state width="470" height="519" key="XDebugger.FullValuePopup" timestamp="1614318858694">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="626" height="519" key="XDebugger.FullValuePopup/0.0.2560.1040@0.0.2560.1040" timestamp="1614105436903" />
-    <state width="470" height="519" key="XDebugger.FullValuePopup/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1612813165925" />
+    <state width="470" height="519" key="XDebugger.FullValuePopup/1920.0.1920.1080/0.0.1920.1040@0.0.1920.1040" timestamp="1614318858694" />
     <state x="285" y="128" width="698" height="777" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1612113450016">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
@@ -361,6 +343,11 @@
           <url>file://$PROJECT_DIR$/pkg/util/response.go</url>
           <line>79</line>
           <option name="timeStamp" value="264" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/user.go</url>
+          <line>35</line>
+          <option name="timeStamp" value="308" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
