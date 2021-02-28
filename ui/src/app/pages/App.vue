@@ -26,7 +26,7 @@ import TreeView from '@/tree-menu/components/TreeView.vue';
 })
 export default class App extends Vue {
   get isAuthorized(): boolean {
-    return this.$store.direct.getters.isAuthorized;
+    return this.$store.direct.getters.sysUser.isAuthorized;
   }
 
   get snackbarMessage(): string {
@@ -51,9 +51,10 @@ export default class App extends Vue {
     window.addEventListener('req-status-401', () => {
       this.$store.direct.commit.showError(this.$t('401').toString());
     });
-
-    this.$store.direct.dispatch.userSession().catch(() => {
-      console.log('login');
+    this.$store.direct.dispatch.sysUser.userSession().catch(() => {
+      if (this.$route.path === '/login' || this.$route.path === '/register') {
+        return;
+      }
       this.$router.push({ name: 'Login' });
     });
   }

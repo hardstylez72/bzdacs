@@ -38,7 +38,7 @@ import {
   Component, Vue, Watch,
 } from 'vue-property-decorator';
 import { DataTableHeader } from 'vuetify';
-import { Entity } from '@/base/services/entity';
+import { Entity } from '@/base/entity';
 import TablePagination from '@/common/components/TablePagination.vue';
 import { QueryParams } from '@/tree-menu/helper';
 import { ListResponse } from '@/common/helpers/types';

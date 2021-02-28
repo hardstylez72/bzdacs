@@ -63,5 +63,13 @@ codegen({
   include: ['User', 'UserGroup', 'UserRoute'],
 });
 
-
+codegen({
+  methodNameMode: 'operationId',
+  source: require(swaggerLocation),
+  outputDir: './src/app/generated/',
+  useCustomerRequestInstance: true,
+  serviceNameSuffix: 'Service',
+  useStaticMethod: false,
+  include: ['SysUser'],
+});
 

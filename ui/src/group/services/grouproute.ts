@@ -1,7 +1,7 @@
 import { Method } from 'axios';
 import { Route } from '@/route/entity';
 
-import { makeRequest, Request } from '../../base/services/utils/requester';
+import { makeRequest, Request } from '../../app/util/requester';
 
 export interface GroupRoute {
   groupId: number;

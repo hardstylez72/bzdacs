@@ -115,7 +115,7 @@ func (r *repository) Get(ctx context.Context, id int, name string) (*System, err
 	return GetLL(ctx, r.conn, id, name)
 }
 
-func GetLL(ctx context.Context, conn *sqlx.DB, id int, name string) (*System, error) {
+func GetLL(ctx context.Context, driver storage.SqlDriver, id int, name string) (*System, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 	builder := psql.Select(`
@@ -140,7 +140,7 @@ func GetLL(ctx context.Context, conn *sqlx.DB, id int, name string) (*System, er
 	}
 
 	var system System
-	err = conn.GetContext(ctx, &system, query, args...)
+	err = driver.GetContext(ctx, &system, query, args...)
 	if err != nil {
 		return nil, storage.PgError(err)
 	}

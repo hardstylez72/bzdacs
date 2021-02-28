@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
-import { client } from '@/base/services/utils/requester';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions,
   routeDeleteRequest, routeGetByIdRequest,
@@ -11,7 +11,7 @@ import {
   RouteService,
 } from '@/route/generated';
 import { ListResponse } from '@/common/helpers/types';
-import { moduleActionContext } from '../base/store';
+import { moduleActionContext } from '../app/store';
 import { Route } from './entity';
 
 serviceOptions.axios = client;

@@ -1,5 +1,6 @@
 <template>
   <div class="login-form">
+
     <v-form ref="form">
         <v-text-field
           v-model="login"
@@ -14,7 +15,8 @@
           :label="$t('input-password-label')"
           @keyup.enter.native="loginAction"
         />
-      <v-btn @click="loginAction">{{ $t('login-btn-text')}}</v-btn>
+      <v-btn @click="loginAction">{{ $t('register-btn-text')}}</v-btn>
+      <span>or <a @click="$router.push({name: 'Login'})">login</a></span>
     </v-form>
   </div>
 </template>
@@ -36,7 +38,7 @@ export default class LoginPage extends Vue {
   ]
 
   get isAuthorized(): boolean {
-    return this.$store.direct.getters.isAuthorized;
+    return this.$store.direct.getters.sysUser.isAuthorized;
   }
 
   goHome() {
@@ -60,18 +62,7 @@ export default class LoginPage extends Vue {
     if (!this.validate()) {
       return;
     }
-
-    this.$store.direct.dispatch.adminLogin({ login: this.login, password: this.password });
-  }
-
-  created() {
-    this.$store.direct.dispatch.adminLogin()
-      .finally(() => {
-        if (this.isAuthorized) {
-          this.$store.direct.dispatch.userSession();
-          this.goHome();
-        }
-      });
+    this.$store.direct.dispatch.sysUser.register({ login: this.login, password: this.password });
   }
 }
 </script>
@@ -93,13 +84,13 @@ export default class LoginPage extends Vue {
   "en": {
     "input-login-label": "Enter login",
     "input-password-label": "Enter password",
-    "login-btn-text": "login",
+    "register-btn-text": "register",
     "required": "required"
   },
   "ru": {
     "input-login-label": "Введите логин",
     "input-password-label": "Введите пароль",
-    "login-btn-text": "войти",
+    "register-btn-text": "Зарегистрироваться",
     "required": "Обязательно для заполнения"
   }
 }

@@ -2,13 +2,13 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
-import { client } from '@/base/services/utils/requester';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions,
   NamespaceService,
   namespaceInsertRequest, namespaceUpdateRequest, namespaceDeleteRequest,
 } from '@/namespace/generated';
-import { moduleActionContext } from '../base/store';
+import { moduleActionContext } from '../app/store';
 import { Namespace } from './entity';
 
 serviceOptions.axios = client;

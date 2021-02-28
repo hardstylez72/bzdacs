@@ -2,14 +2,14 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
-import { client } from '@/base/services/utils/requester';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions, tagDeleteRequest, tagInsertRequest, tagListRequest, tagUpdateRequest,
   TagService,
 } from '@/tag/generated';
 import { ListResponse } from '@/common/helpers/types';
 import { Route } from '@/route/entity';
-import { moduleActionContext } from '../base/store';
+import { moduleActionContext } from '../app/store';
 import { TagSwg as Tag } from './entity';
 
 serviceOptions.axios = client;

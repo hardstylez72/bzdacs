@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable import/no-cycle */
-import { moduleActionContext } from '@/base/store';
+import { moduleActionContext } from '@/app/store';
 import { defineModule } from 'direct-vuex';
 
 import { Group } from '@/group/entity';
-import { client } from '@/base/services/utils/requester';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions, userGroupListRequest, userGroupPair, UserGroupService,
 } from '@/user/generated';

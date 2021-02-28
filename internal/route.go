@@ -5,8 +5,6 @@ import (
 	"github.com/hardstylez72/bzdacs/generated/client"
 	rt "github.com/hardstylez72/bzdacs/pkg/route"
 	"github.com/hardstylez72/bzdacs/tests/route"
-
-	"strings"
 )
 
 func resolveRoutes(ctx context.Context, c *client.BZDACS, routes []rt.Route, namespaceId int64) ([]route.Route, error) {
@@ -45,18 +43,4 @@ func resolveRoute(ctx context.Context, c *client.BZDACS, r rt.Route, namespaceId
 
 	}
 	return s, nil
-}
-
-func filterGuestRoutes(in []route.Route) []route.Route {
-	out := make([]route.Route, 0)
-
-	for _, r := range in {
-		if strings.Contains(r.Route, "/update") ||
-			strings.Contains(r.Route, "/delete") ||
-			strings.Contains(r.Route, "/create") {
-			continue
-		}
-		out = append(out, r)
-	}
-	return out
 }

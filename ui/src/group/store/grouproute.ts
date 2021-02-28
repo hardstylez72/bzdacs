@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
-import { client } from '@/base/services/utils/requester';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions,
   GroupRouteService, groupRoutePair, groupRouteListRequest,
@@ -10,7 +10,7 @@ import {
 
 import { Route } from '@/route/entity';
 import { ListResponse } from '@/common/helpers/types';
-import { moduleActionContext } from '../../base/store';
+import { moduleActionContext } from '../../app/store';
 
 serviceOptions.axios = client;
 export interface State{

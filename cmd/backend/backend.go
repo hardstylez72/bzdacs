@@ -4,6 +4,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	sysuser "github.com/hardstylez72/bzdacs/internal/user"
 	"github.com/hardstylez72/bzdacs/pkg/acs"
 	"github.com/hardstylez72/bzdacs/pkg/group"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
@@ -40,6 +41,7 @@ type Server struct {
 		userroute  userroute.Repository
 		namespace  namespace.Repository
 		system     system.Repository
+		sysuser    sysuser.Repository
 	}
 }
 
@@ -82,7 +84,7 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan str
 }
 
 func extractLogin(req *http.Request) string {
-	return user.GetLoginFromContext(req.Context())
+	return sysuser.GetLoginFromContext(req.Context())
 }
 
 func extractRouteAndMethod(req *http.Request) (route, method string) {
@@ -115,6 +117,7 @@ func (s *Server) Start(r chi.Router) error {
 	s.repository.userroute = userroute.NewRepository(pgx)
 	s.repository.namespace = namespace.NewRepository(pgx)
 	s.repository.system = system.NewRepository(pgx)
+	s.repository.sysuser = sysuser.NewRepository(pgx)
 
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Timeout(60 * time.Second))
@@ -123,14 +126,14 @@ func (s *Server) Start(r chi.Router) error {
 	host := "http://localhost" + viper.GetString("backend.port")
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
+			private.Use(sysuser.Auth())
 
 			swaggerUrl := "/swagger/source"
-			r.Get("/swagger/*", httpSwagger.Handler(
-				httpSwagger.URL(host+swaggerUrl), //The url pointing to API definition"
-			))
-			r.Get(swaggerUrl, getSwaggerSource)
-			private.Use(user.Auth())
+
 			//private.Use(acsmw.AccessCheck(acsmw.NewService(host), extractLogin, extractRouteAndMethod))
+			public.Get("/swagger/*", httpSwagger.Handler(httpSwagger.URL(host+swaggerUrl)))
+			public.Get(swaggerUrl, getSwaggerSource)
+			sysuser.NewController(s.repository.sysuser, s.repository.group, s.repository.usergroup).Mount(private, public)
 			namespace.NewController(s.repository.namespace).Mount(private)
 			system.NewController(s.repository.system).Mount(private)
 			acs.NewController(s.repository.userroute, s.repository.user, s.repository.usergroup).Mount(public)
@@ -154,7 +157,7 @@ func getSwaggerSource(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	file, err := os.Open(path.Join(curDir, "/docs/swagger.json"))
+	file, err := os.Open(path.Join(curDir, "/generated/swagger.json"))
 	if err != nil {
 		return
 	}

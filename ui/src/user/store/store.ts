@@ -2,8 +2,8 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
-import { moduleActionContext } from '@/base/store';
-import { client } from '@/base/services/utils/requester';
+import { moduleActionContext } from '@/app/store';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions,
   userCreateRequest, userDeleteRequest,

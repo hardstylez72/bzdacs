@@ -4,6 +4,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { createDirectStore } from 'direct-vuex';
+
+import { SysUserService } from '@/app/generated';
 import routeModule from '../route/store';
 import groupModule from '../group/store/group';
 import userModule from '../user/store/store';
@@ -13,17 +15,13 @@ import userRouteModule from '../user/store/userroute';
 import tagModule from '../tag/store';
 import namespaceModule from '../namespace/store';
 import systemModule from '../system/store';
-import AuthService, { Session } from './user';
+import sysUserModule from './user';
 
 Vue.use(Vuex);
 
 export interface State{
-  isAuthorized: boolean;
   showSnackbar: boolean;
   snackbarMessage: string;
-  service: AuthService;
-  login: string;
-  isAdmin: boolean;
 }
 
 const {
@@ -33,22 +31,11 @@ const {
   rootGetterContext,
   moduleGetterContext,
 } = createDirectStore({
-
   state: {
-    isAuthorized: false,
     showSnackbar: false,
     snackbarMessage: '',
-    service: new AuthService(),
-    login: '',
-    isAdmin: false,
   } as State,
   getters: {
-    login(state) {
-      return state.login;
-    },
-    isAuthorized(state) {
-      return state.isAuthorized;
-    },
     snackbarMessage(state) {
       return state.snackbarMessage;
     },
@@ -61,50 +48,6 @@ const {
       state.snackbarMessage = msg;
       state.showSnackbar = true;
     },
-
-    setAuthorized(state, isAuthorized: boolean) {
-      state.isAuthorized = isAuthorized;
-    },
-    setUser(state, payload: {login: string; isAdmin: boolean}) {
-      state.login = payload.login;
-      state.isAdmin = payload.isAdmin;
-    },
-  },
-  actions: {
-
-    async logout(context): Promise<void> {
-      const { state } = actionContext(context);
-
-      return state.service.logout()
-        .then(() => {
-          window.location.reload();
-        });
-    },
-    async userSession(context): Promise<Session | Error> {
-      const { commit, state } = actionContext(context);
-
-      return state.service.userSession()
-        .then((s: Session) => {
-          if (s.login !== '') {
-            commit.setUser({ login: s.login, isAdmin: s.isAdmin });
-            commit.setAuthorized(true);
-            return s;
-          }
-          return Promise.reject();
-        })
-        .catch((err) => {
-          commit.setAuthorized(false);
-          return err;
-        });
-    },
-    adminLogin(context, payload?: {login: string; password: string}): Promise<void> {
-      const { state, dispatch } = actionContext(context);
-
-      return state.service.adminLogin(payload)
-        .finally(() => {
-          dispatch.userSession();
-        });
-    },
   },
   modules: {
     route: routeModule,
@@ -116,6 +59,7 @@ const {
     tag: tagModule,
     namespace: namespaceModule,
     system: systemModule,
+    sysUser: sysUserModule,
   },
 });
 

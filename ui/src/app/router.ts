@@ -5,10 +5,16 @@ import GroupPages from '@/group/routes';
 import UserPages from '@/user/routes';
 import TagPages from '@/tag/routes';
 import Home from './pages/Home.vue';
-import Login from './pages/AdminPage.vue';
+import Login from './pages/Login.vue';
+import Registration from './pages/Registration.vue';
 
 Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
+  {
+    path: '/register',
+    name: 'Registration',
+    component: Registration,
+  },
   {
     path: '/',
     name: 'Home',

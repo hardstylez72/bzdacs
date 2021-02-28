@@ -254,8 +254,4 @@ func (c *controller) Mount(private, public chi.Router) {
 	private.Post("/v1/user/create", c.create)
 	private.Post("/v1/user/delete", c.delete)
 	private.Post("/v1/user/update", c.update)
-
-	public.Post("/v1/user/login", c.login)
-	public.Post("/v1/user/session/get", c.session)
-	public.Post("/v1/user/logout", c.logout)
 }

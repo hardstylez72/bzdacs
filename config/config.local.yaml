@@ -6,4 +6,14 @@ database:
 user:
   login: hs
   password: 1234
+  SessionExpirationInSeconds: 600
+app:
+  system: BZDACS
+  namespace: internal
+  adminGroupName: admin
+  adminGroupDescription: internal admin system group, all grants
+
+  hasGuest: true
+  guestGroupName: guest
+  guestGroupDescription: internal guest system group, grunts for views
 

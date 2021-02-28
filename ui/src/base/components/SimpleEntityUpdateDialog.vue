@@ -24,7 +24,7 @@ import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import Dialog from '@/common/components/Dialog.vue';
-import { SimpleEntity } from '@/base/services/entity';
+import { SimpleEntity } from '@/base/entity';
 import SimpleEntityForm from './SimpleEntityForm.vue';
 
 @Component({

@@ -970,6 +970,147 @@ var doc = `{
                 }
             }
         },
+        "/v1/sys-user/login": {
+            "post": {
+                "description": "Login sys-user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-user"
+                ],
+                "operationId": "sys-user.login",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sysUserLoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sys-user/logout": {
+            "post": {
+                "description": "Logout sys-user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-user"
+                ],
+                "operationId": "sys-user.logout",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/v1/sys-user/register": {
+            "post": {
+                "description": "Creates sys-user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-user"
+                ],
+                "operationId": "sys-user.register",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sysUserRegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sys-user/session": {
+            "post": {
+                "description": "Gets sys-user session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-user"
+                ],
+                "operationId": "sys-user.session",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user.sessionResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/system/create": {
             "post": {
                 "description": "Creates system",
@@ -2642,6 +2783,36 @@ var doc = `{
                 }
             }
         },
+        "sysUserLoginRequest": {
+            "type": "object",
+            "required": [
+                "login",
+                "password"
+            ],
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "sysUserRegisterRequest": {
+            "type": "object",
+            "required": [
+                "login",
+                "password"
+            ],
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "systemDeleteRequest": {
             "type": "object",
             "required": [
@@ -2869,6 +3040,14 @@ var doc = `{
                     "type": "integer"
                 },
                 "pattern": {
+                    "type": "string"
+                }
+            }
+        },
+        "user.sessionResponse": {
+            "type": "object",
+            "properties": {
+                "login": {
                     "type": "string"
                 }
             }

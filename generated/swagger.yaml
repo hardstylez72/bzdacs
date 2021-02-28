@@ -416,6 +416,26 @@ definitions:
     - namespaceId
     - route
     type: object
+  sysUserLoginRequest:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    required:
+    - login
+    - password
+    type: object
+  sysUserRegisterRequest:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    required:
+    - login
+    - password
+    type: object
   systemDeleteRequest:
     properties:
       id:
@@ -570,6 +590,11 @@ definitions:
     required:
     - namespaceId
     - page
+    type: object
+  user.sessionResponse:
+    properties:
+      login:
+        type: string
     type: object
   userCreateRequest:
     properties:
@@ -1604,6 +1629,98 @@ paths:
             $ref: '#/definitions/util.ResponseWithError'
       tags:
       - route
+  /v1/sys-user/login:
+    post:
+      consumes:
+      - application/json
+      description: Login sys-user
+      operationId: sys-user.login
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/sysUserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - sys-user
+  /v1/sys-user/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout sys-user
+      operationId: sys-user.logout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      tags:
+      - sys-user
+  /v1/sys-user/register:
+    post:
+      consumes:
+      - application/json
+      description: Creates sys-user
+      operationId: sys-user.register
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/sysUserRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - sys-user
+  /v1/sys-user/session:
+    post:
+      consumes:
+      - application/json
+      description: Gets sys-user session
+      operationId: sys-user.session
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.sessionResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - sys-user
   /v1/system/create:
     post:
       consumes:

@@ -21,10 +21,10 @@ func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 
-func (r *repository) deletePair(ctx context.Context, tx *sqlx.Tx, groupId, routeId int) error {
+func (r *repository) deletePairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeId int) error {
 	query := `delete from groups_routes where route_id = $1 and group_id = $2`
 
-	_, err := tx.ExecContext(ctx, query, routeId, groupId)
+	_, err := driver.ExecContext(ctx, query, routeId, groupId)
 	if err != nil {
 		return err
 	}
@@ -56,10 +56,11 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 			_ = tx.Commit()
 		}
 	}()
+	txx := storage.WrapSqlxTx(tx)
 
 	for _, pair := range params {
 
-		err := r.deletePair(ctx, tx, pair.GroupId, pair.RouteId)
+		err := r.deletePairLL(ctx, txx, pair.GroupId, pair.RouteId)
 		if err != nil {
 			return err
 		}

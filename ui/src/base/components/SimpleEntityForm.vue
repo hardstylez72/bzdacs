@@ -26,7 +26,7 @@ import {
   Component, Model, Vue, Watch,
 } from 'vue-property-decorator';
 import { Namespace } from '@/namespace/entity';
-import { SimpleEntity } from '@/base/services/entity';
+import { SimpleEntity } from '@/base/entity';
 
 @Component
 export default class NamespaceForm<T extends SimpleEntity> extends Vue {

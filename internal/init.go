@@ -5,15 +5,21 @@ import (
 	libc "github.com/go-openapi/runtime/client"
 	"github.com/hardstylez72/bzdacs/generated/client"
 	"github.com/hardstylez72/bzdacs/pkg/route"
+	"github.com/spf13/viper"
+	"strings"
 	"time"
 )
 
-const (
-	SystemName       = "BZDACS"
-	Namespace        = "internal"
-	GroupName        = "system"
-	GroupDescription = "BZDACS system group"
-	User             = "admin"
+var (
+	SystemName                 string
+	Namespace                  string
+	AdminGroupName             string
+	AdminGroupDescription      string
+	GuestGroupName             string
+	GuestGroupDescription      string
+	HasGuest                   bool
+	Admin                      string
+	SessionExpirationInSeconds int
 )
 
 type Config struct {
@@ -26,6 +32,16 @@ type Config struct {
 
 func Init(ctx context.Context, routes *[]route.Route) error {
 
+	SystemName = viper.GetString("app.system")
+	Namespace = viper.GetString("app.namespace")
+	AdminGroupName = viper.GetString("app.adminGroupName")
+	AdminGroupDescription = viper.GetString("app.adminGroupDescription")
+	GuestGroupName = viper.GetString("app.guestGroupName")
+	GuestGroupDescription = viper.GetString("app.guestGroupDescription")
+	HasGuest = viper.GetBool("app.hasGuest")
+	Admin = viper.GetString("user.login")
+	SessionExpirationInSeconds = viper.GetInt("user.sessionExpirationInSeconds")
+
 	c := GetClient()
 	s, err := resolveSystem(ctx, c, SystemName)
 	if err != nil {
@@ -37,7 +53,7 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 		return err
 	}
 
-	u, err := resolveUser(ctx, c, User, ns.Id)
+	u, err := resolveUser(ctx, c, Admin, ns.Id)
 	if err != nil {
 		return err
 	}
@@ -47,7 +63,7 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 		return err
 	}
 
-	g, err := resolveGroup(ctx, c, GroupName, GroupDescription, ns.Id)
+	g, err := resolveGroup(ctx, c, AdminGroupName, AdminGroupDescription, ns.Id)
 	if err != nil {
 		return err
 	}
@@ -60,6 +76,21 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 	err = resolveUserAndGroup(ctx, c, g, u)
 	if err != nil {
 		return err
+	}
+
+	if HasGuest {
+		guestRoutes, err := resolveRoutes(ctx, c, filterGuestRoutes(*routes), ns.Id)
+		if err != nil {
+			return err
+		}
+		guestGroup, err := resolveGroup(ctx, c, GuestGroupName, GuestGroupDescription, ns.Id)
+		if err != nil {
+			return err
+		}
+		err = resolveGroupAndRoutes(ctx, c, guestGroup, guestRoutes)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -79,4 +110,18 @@ func GetClient() *client.BZDACS {
 	transport := libc.New(GetConfig().Host, GetConfig().BasePath, nil)
 	transport.DefaultAuthentication = libc.BasicAuth(GetConfig().Login, GetConfig().Password)
 	return client.New(transport, nil)
+}
+
+func filterGuestRoutes(in []route.Route) []route.Route {
+	out := make([]route.Route, 0)
+
+	for _, r := range in {
+		if strings.Contains(r.Route, "/update") ||
+			strings.Contains(r.Route, "/delete") ||
+			strings.Contains(r.Route, "/create") {
+			continue
+		}
+		out = append(out, r)
+	}
+	return out
 }

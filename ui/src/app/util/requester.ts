@@ -31,7 +31,7 @@ const requester = (req: Request): Promise<any> => {
         if (err.response.status === 401) {
           const evt = new Event('req-status-401');
           window.dispatchEvent(evt);
-          if (window.location.pathname === '/login') {
+          if (window.location.pathname === '/login' || window.location.pathname === '/register') {
             return;
           }
           window.location.pathname = '/login';

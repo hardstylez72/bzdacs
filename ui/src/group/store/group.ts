@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
-import { client } from '@/base/services/utils/requester';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions,
   GroupService,
@@ -14,7 +14,7 @@ import {
 import { ListResponse } from '@/common/helpers/types';
 import { Group } from '../entity';
 
-import { moduleActionContext } from '../../base/store';
+import { moduleActionContext } from '../../app/store';
 
 serviceOptions.axios = client;
 

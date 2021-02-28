@@ -3,7 +3,7 @@
 
 import { defineModule } from 'direct-vuex';
 
-import { client } from '@/base/services/utils/requester';
+import { client } from '@/app/util/requester';
 import {
   serviceOptions, userGroupPair,
   userRouteListRequest,
@@ -14,7 +14,7 @@ import {
 } from '@/user/generated';
 
 import { ListResponse } from '@/common/helpers/types';
-import { moduleActionContext } from '../../base/store';
+import { moduleActionContext } from '../../app/store';
 
 serviceOptions.axios = client;
 

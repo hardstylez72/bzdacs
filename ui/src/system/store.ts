@@ -2,8 +2,8 @@
 /* eslint-disable import/no-cycle */
 
 import { defineModule } from 'direct-vuex';
-import { client } from '@/base/services/utils/requester';
-import { moduleActionContext } from '../base/store';
+import { client } from '@/app/util/requester';
+import { moduleActionContext } from '../app/store';
 import { SystemSwg as System } from './entity';
 import {
   serviceOptions,

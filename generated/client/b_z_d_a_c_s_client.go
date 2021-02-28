@@ -14,6 +14,7 @@ import (
 	"github.com/hardstylez72/bzdacs/generated/client/group_route"
 	"github.com/hardstylez72/bzdacs/generated/client/namespace"
 	"github.com/hardstylez72/bzdacs/generated/client/route"
+	"github.com/hardstylez72/bzdacs/generated/client/sys_user"
 	"github.com/hardstylez72/bzdacs/generated/client/system"
 	"github.com/hardstylez72/bzdacs/generated/client/tag"
 	"github.com/hardstylez72/bzdacs/generated/client/user"
@@ -67,6 +68,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *BZDACS {
 	cli.GroupRoute = group_route.New(transport, formats)
 	cli.Namespace = namespace.New(transport, formats)
 	cli.Route = route.New(transport, formats)
+	cli.SysUser = sys_user.New(transport, formats)
 	cli.System = system.New(transport, formats)
 	cli.Tag = tag.New(transport, formats)
 	cli.User = user.New(transport, formats)
@@ -124,6 +126,8 @@ type BZDACS struct {
 
 	Route route.ClientService
 
+	SysUser sys_user.ClientService
+
 	System system.ClientService
 
 	Tag tag.ClientService
@@ -144,6 +148,7 @@ func (c *BZDACS) SetTransport(transport runtime.ClientTransport) {
 	c.GroupRoute.SetTransport(transport)
 	c.Namespace.SetTransport(transport)
 	c.Route.SetTransport(transport)
+	c.SysUser.SetTransport(transport)
 	c.System.SetTransport(transport)
 	c.Tag.SetTransport(transport)
 	c.User.SetTransport(transport)
