@@ -1,62 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Changes generation rules">
-      <change afterPath="$PROJECT_DIR$/internal/session/inmem.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/session/service.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/session/store.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/user/controller.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/user/controller_register.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/user/controller_session.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/user/model.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/user/password.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/user/password_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/user/repository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/app/generated/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/app/pages/Registration.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/backend/backend.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/backend.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.local.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.local.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/client/b_z_d_a_c_s_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/b_z_d_a_c_s_client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/generated/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generated/swagger.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/route.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/route.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/system/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/system/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/controller_login.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller_login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/controller_session.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/mw.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/mw.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/pages/AdminPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/pages/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/pages/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/pages/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/components/ItemTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/ItemTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityCreateDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityCreateDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityDeleteDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityDeleteDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityUpdateDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityUpdateDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/services/default.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/services/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/services/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/services/utils/requester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/util/requester.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/group/services/grouproute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/services/grouproute.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/group/store/group.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/store/group.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/group/store/grouproute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/store/grouproute.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/namespace/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/namespace/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/route/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/route/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/system/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/system/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/tag/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/tag/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/user/services/userroute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/services/userroute.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/user/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/store/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/user/store/usergroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/store/usergroup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/user/store/userroute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/store/userroute.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/swagger-gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/swagger-gen.ts" afterDir="false" />
+    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Changes sys user domain">
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_login_parameters.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_login_responses.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_logout_parameters.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_logout_responses.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_register_parameters.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_register_responses.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_session_parameters.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_session_responses.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/models/sys_user_login_request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/models/sys_user_register_request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generated/models/user_session_response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/user/controller_login.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/app/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/user/controller_login.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller_session.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/base/user.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,7 +229,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixes cycle import ui" />
     <MESSAGE value="Add logout and fixes ui bugs" />
     <MESSAGE value="Changes default guest group" />
     <MESSAGE value="Fixed cfg for local deployment" />
@@ -293,7 +253,8 @@
     <MESSAGE value="Fixes user - route relation" />
     <MESSAGE value="Changes ui structure" />
     <MESSAGE value="Changes generation rules" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes generation rules" />
+    <MESSAGE value="Changes sys user domain" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes sys user domain" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

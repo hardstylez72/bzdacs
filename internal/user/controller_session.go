@@ -3,48 +3,41 @@ package user
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"github.com/hardstylez72/bzdacs/pkg/util"
-	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 	"net/http"
 	"time"
 )
 
-const (
-	CookieSessionName = "session-token"
-)
-
-type Session struct {
-	Token   string `json:"token"`
-	IsAdmin bool   `json:"isAdmin"`
-	Login   string `json:"login"`
+type sessionResponse struct {
+	Login string
 }
 
-func (c *controller) login(w http.ResponseWriter, r *http.Request) {
+// @tags sys-user
+// @description Gets sys-user session
+// @id sys-user.session
+// @accept application/json
+// @produce application/json
+// @success 200 {object} sessionResponse
+// @failure 401 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/sys-user/session [post]
+func (c *controller) session(w http.ResponseWriter, r *http.Request) {
 
-	token, err := getTokenFromRequest(r)
+	s, err := getSessionFromCookie(r.Cookies())
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusUnauthorized).Send()
 		return
 	}
 
-	isValid, login, err := validateToken(token)
-	if err != nil || !isValid {
+	session, err := c.sessionService.GetByToken(s.Token)
+	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusUnauthorized).Send()
 		return
 	}
 
-	err = setSessionInCookie(w, &Session{
-		Token:   token,
-		IsAdmin: true,
-		Login:   login,
-	})
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
-		return
-	}
-
-	util.NewResp(w, r).Status(http.StatusOK).Send()
+	util.NewResp(w, r).Json(&sessionResponse{session.Login}).Status(http.StatusOK).Send()
 }
 
 func getSessionFromCookie(cookies []*http.Cookie) (*Session, error) {
@@ -71,6 +64,18 @@ func getSessionFromCookie(cookies []*http.Cookie) (*Session, error) {
 	}
 
 	return &session, nil
+}
+
+func clearSession(w http.ResponseWriter) {
+	cookie := &http.Cookie{
+		Name:     CookieSessionName,
+		Value:    "",
+		Path:     "/",
+		Domain:   "",
+		Expires:  time.Now().Add(-1 * time.Hour),
+		SameSite: 2,
+	}
+	w.Header().Set("Set-Cookie", cookie.String())
 }
 
 func setSessionInCookie(w http.ResponseWriter, session *Session) error {
