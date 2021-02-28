@@ -3,9 +3,9 @@ package user
 import (
 	"context"
 	"errors"
-	"github.com/hardstylez72/bzdacs/client"
-	"github.com/hardstylez72/bzdacs/client/user"
-	"github.com/hardstylez72/bzdacs/models"
+	"github.com/hardstylez72/bzdacs/generated/client"
+	"github.com/hardstylez72/bzdacs/generated/client/user"
+	"github.com/hardstylez72/bzdacs/generated/models"
 	"github.com/hardstylez72/bzdacs/tests"
 )
 

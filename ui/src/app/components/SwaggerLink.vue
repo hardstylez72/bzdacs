@@ -1,5 +1,5 @@
 <template>
-  <a href="/api/swagger/index.html">
+  <a target="_blank" href="/api/swagger/index.html">
     <v-icon color="black">mdi-api</v-icon>
   </a>
 </template>

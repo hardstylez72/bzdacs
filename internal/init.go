@@ -3,7 +3,7 @@ package internal
 import (
 	"context"
 	libc "github.com/go-openapi/runtime/client"
-	"github.com/hardstylez72/bzdacs/client"
+	"github.com/hardstylez72/bzdacs/generated/client"
 	"github.com/hardstylez72/bzdacs/pkg/route"
 	"time"
 )

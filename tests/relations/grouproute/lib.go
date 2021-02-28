@@ -2,9 +2,9 @@ package grouproute
 
 import (
 	"context"
-	"github.com/hardstylez72/bzdacs/client"
-	grouproute "github.com/hardstylez72/bzdacs/client/group_route"
-	"github.com/hardstylez72/bzdacs/models"
+	"github.com/hardstylez72/bzdacs/generated/client"
+	grouproute "github.com/hardstylez72/bzdacs/generated/client/group_route"
+	"github.com/hardstylez72/bzdacs/generated/models"
 )
 
 func List(ctx context.Context, client *client.BZDACS, namespaceId, groupId int64) ([]string, error) {

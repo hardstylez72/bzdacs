@@ -2,7 +2,7 @@ package tests
 
 import (
 	libc "github.com/go-openapi/runtime/client"
-	"github.com/hardstylez72/bzdacs/client"
+	"github.com/hardstylez72/bzdacs/generated/client"
 	"time"
 )
 

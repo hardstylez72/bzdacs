@@ -1,67 +1,246 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Fixes user - route relation">
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_create_parameters.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_create_responses.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_delete_parameters.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_delete_responses.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_list_parameters.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_list_responses.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_update_parameters.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/user_route/user_route_update_responses.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/backend/backend" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_delete_request.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_filter.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_insert_request.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_list_request.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_list_response.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_pair.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_pair_to_delete.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_route.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_route_with_groups.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user_route_update_response.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/userroute_group.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/userroute_pair.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/userroute_pair_to_delete.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/userroute_route.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/userroute_route_with_groups.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository_list.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/AddRoutesDialog.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/DeleteRoutesButton.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/RoutesBelongUserTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/views/user/components/RoutesNotBelongUserTable.vue" afterDir="false" />
+    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Changes ui structure">
+      <change afterPath="$PROJECT_DIR$/migrations/00011_table_sys_users.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/b_z_d_a_c_s_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/b_z_d_a_c_s_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_deletes_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_deletes_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_deletes_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_deletes_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_get_by_code_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_get_by_code_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_get_by_code_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_get_by_code_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_get_by_id_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_get_by_id_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_get_by_id_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_get_by_id_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_update_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_update_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_update_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_update_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_updates_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_updates_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group/group_updates_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group/group_updates_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group_route/group_route_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group_route/group_route_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group_route/group_routes_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group_route/group_routes_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group_route/group_routes_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group_route/group_routes_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group_route/group_routes_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group_route/group_routes_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group_route/group_routes_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group_route/group_routes_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group_route/group_routes_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group_route/group_routes_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/group_route/group_routes_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/group_route/group_routes_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_get_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_get_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_get_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_get_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_update_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_update_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/namespace/namespace_update_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/namespace/namespace_update_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/relations/group_routes_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/relations/group_routes_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/relations/group_routes_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/relations/group_routes_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/relations/relations_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/relations/relations_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/relations_group_route/group_routes_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/relations_group_route/group_routes_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/relations_group_route/group_routes_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/relations_group_route/group_routes_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/relations_group_route/relations_group_route_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/relations_group_route/relations_group_route_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_get_by_id_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_get_by_id_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_get_by_id_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_get_by_id_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_get_by_params_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_get_by_params_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_get_by_params_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_get_by_params_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_update_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_update_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/route/route_update_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/route/route_update_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_get_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_get_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_get_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_get_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_update_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_update_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/system/system_update_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/system/system_update_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_get_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_get_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_get_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_get_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_update_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_update_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tag/tag_update_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/tag/tag_update_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_get_by_id_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_get_by_id_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_get_by_id_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_get_by_id_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_get_by_login_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_get_by_login_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_get_by_login_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_get_by_login_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_get_by_name_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_get_by_name_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_get_by_name_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_get_by_name_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_update_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_update_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user/user_update_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user/user_update_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_group/user_group_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_group/user_group_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_group/user_group_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_group/user_group_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_group/user_group_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_group/user_group_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_group/user_group_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_group/user_group_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_group/user_group_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_group/user_group_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_group/user_group_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_group/user_group_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_group/user_group_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_group/user_group_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_create_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_create_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_create_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_create_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_delete_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_delete_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_delete_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_delete_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_list_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_list_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_list_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_list_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_update_parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_update_parameters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/user_route/user_route_update_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/user_route/user_route_update_responses.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/docs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/generated/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generated/swagger.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/generate.go" beforeDir="false" afterPath="$PROJECT_DIR$/generate.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/acs/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/.eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/AddGroupsButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/AddGroupsButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/AddRoutesButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/AddRoutesButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/DeleteRouteButton.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/DictTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/DictTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/GroupsNotBelongUserTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/GroupsNotBelongUserTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/OverwriteRouteButton.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/StatusIconRouteOverwritten.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/UpdateRouteButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/components/UpdateRouteButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/UserRoutesSelectableTable.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/components/UserRoutesTable.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/generated/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/generated/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/pages/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/pages/User.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/services/usergroup.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/store/usergroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/store/usergroup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/views/user/store/userroute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/views/user/store/userroute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/group.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/group.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/namespace.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/route.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/route.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/system.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/system.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_get_by_code_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_get_by_code_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_get_by_id_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_get_by_id_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_get_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_get_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_route_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_route_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_route_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_route_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_route_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_route_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_route_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_route_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_route_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_route_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_route_pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_route_pair.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_route_route.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_route_route.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/group_update_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/group_update_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/grouproute_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/grouproute_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/grouproute_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/grouproute_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/grouproute_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/grouproute_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/grouproute_pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/grouproute_pair.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/grouproute_route.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/grouproute_route.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_get_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_get_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_insert_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_insert_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_namespace.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_update_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_update_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/namespace_update_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/namespace_update_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_get_by_id_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_get_by_id_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_get_by_params_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_get_by_params_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_get_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_get_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_insert_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_insert_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_update_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_update_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/route_update_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/route_update_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_get_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_get_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_insert_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_insert_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_system.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_system.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_update_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_update_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/system_update_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/system_update_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_get_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_get_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_insert_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_insert_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_tag.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_tag.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_update_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_update_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag_update_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/tag_update_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_create_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_create_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_get_by_id_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_get_by_id_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_get_by_login_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_get_by_login_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_get_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_get_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_group_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_group_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_group_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_group_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_group_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_group_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_group_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_group_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_group_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_group_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_group_pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_group_pair.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_delete_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_delete_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_insert_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_insert_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_list_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_list_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_list_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_list_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_pair.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_pair_to_delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_pair_to_delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_route.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_route.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_route_with_groups.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_route_with_groups.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_route_update_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_route_update_response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_update_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_update_request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/usergroup_group.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/usergroup_group.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/usergroup_pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/usergroup_pair.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userroute_group.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/userroute_group.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userroute_pair.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/userroute_pair.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userroute_pair_to_delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/userroute_pair_to_delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userroute_route.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/userroute_route.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userroute_route_with_groups.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/userroute_route_with_groups.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/util_error.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/util_error.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/util_response_with_error.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/util_response_with_error.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/group/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/group/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/group/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/group/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/namespace/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/namespace/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/namespace/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/namespace/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/namespace/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/namespace/utils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/relations/grouproute/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/relations/grouproute/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/relations/usergroup/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/relations/usergroup/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/route/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/route/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/route/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/route/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/system/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/system/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/system/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/system/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tag/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/tag/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tag/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/tag/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/user/api_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/user/api_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/user/lib.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/user/lib.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/app/components/GithubLink.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/components/GithubLink.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/app/components/SwaggerLink.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/components/SwaggerLink.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/app/components/Tabs.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/base/components/DictTable.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/base/services/utils/errors.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/swagger-gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/swagger-gen.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +288,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pkg/relations/userroute" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/migrations" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -122,18 +301,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/migrations" />
       <recent name="$PROJECT_DIR$/pkg/relations/userroute" />
       <recent name="$PROJECT_DIR$/tests/relations" />
       <recent name="$PROJECT_DIR$/pkg/relations/usergroup" />
       <recent name="$PROJECT_DIR$/tests/relations/grouproute" />
-      <recent name="$PROJECT_DIR$/internal" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/generated" />
       <recent name="$PROJECT_DIR$/pkg/relations" />
       <recent name="$PROJECT_DIR$/tests/route" />
       <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$/pkg/namespace" />
-      <recent name="$PROJECT_DIR$/pkg/systemnamespace" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend">
@@ -266,7 +445,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixe postgres uniq null index and add generic err response" />
     <MESSAGE value="Adds access role mw" />
     <MESSAGE value="Fixes cycle import ui" />
     <MESSAGE value="Add logout and fixes ui bugs" />
@@ -291,7 +469,8 @@
     <MESSAGE value="Fixes user controller" />
     <MESSAGE value="Fixes user - group relation" />
     <MESSAGE value="Fixes user - route relation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes user - route relation" />
+    <MESSAGE value="Changes ui structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes ui structure" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

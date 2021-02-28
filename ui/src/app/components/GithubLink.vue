@@ -1,5 +1,5 @@
 <template>
-  <a href="https://github.com/hardstylez72/bzdacs">
+  <a target="_blank" href="https://github.com/hardstylez72/bzdacs">
     <v-icon color="black">mdi-github</v-icon>
   </a>
 </template>

@@ -2,7 +2,7 @@ package internal
 
 import (
 	"context"
-	"github.com/hardstylez72/bzdacs/client"
+	"github.com/hardstylez72/bzdacs/generated/client"
 	rt "github.com/hardstylez72/bzdacs/pkg/route"
 	"github.com/hardstylez72/bzdacs/tests/route"
 

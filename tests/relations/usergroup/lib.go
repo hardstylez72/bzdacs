@@ -2,9 +2,9 @@ package usergroup
 
 import (
 	"context"
-	"github.com/hardstylez72/bzdacs/client"
-	usergroup "github.com/hardstylez72/bzdacs/client/user_group"
-	"github.com/hardstylez72/bzdacs/models"
+	"github.com/hardstylez72/bzdacs/generated/client"
+	usergroup "github.com/hardstylez72/bzdacs/generated/client/user_group"
+	"github.com/hardstylez72/bzdacs/generated/models"
 )
 
 func List(ctx context.Context, client *client.BZDACS, namespaceId, userId int64) ([]string, error) {

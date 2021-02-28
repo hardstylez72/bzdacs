@@ -1,12 +1,12 @@
 // tslint:disable
 /* eslint-disable */
 const { codegen } = require('swagger-axios-codegen');
-const swaggerLocation = "../docs/swagger.json"
+const swaggerLocation = "../generated/swagger.json"
 
 codegen({
   methodNameMode: 'operationId',
   source: require(swaggerLocation),
-  outputDir: './src/views/route/generated/',
+  outputDir: './src/route/generated/',
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
@@ -16,7 +16,7 @@ codegen({
 codegen({
   methodNameMode: 'operationId',
   source: require(swaggerLocation),
-  outputDir: './src/views/system/generated/',
+  outputDir: './src/system/generated/',
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
@@ -26,7 +26,7 @@ codegen({
 codegen({
   methodNameMode: 'operationId',
   source: require(swaggerLocation),
-  outputDir: './src/views/namespace/generated/',
+  outputDir: './src/namespace/generated/',
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
@@ -36,7 +36,7 @@ codegen({
 codegen({
   methodNameMode: 'operationId',
   source: require(swaggerLocation),
-  outputDir: './src/views/tag/generated/',
+  outputDir: './src/tag/generated/',
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
@@ -46,7 +46,7 @@ codegen({
 codegen({
   methodNameMode: 'operationId',
   source: require(swaggerLocation),
-  outputDir: './src/views/group/generated/',
+  outputDir: './src/group/generated/',
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
@@ -56,7 +56,7 @@ codegen({
 codegen({
   methodNameMode: 'operationId',
   source: require(swaggerLocation),
-  outputDir: './src/views/user/generated/',
+  outputDir: './src/user/generated/',
   useCustomerRequestInstance: true,
   serviceNameSuffix: 'Service',
   useStaticMethod: false,
