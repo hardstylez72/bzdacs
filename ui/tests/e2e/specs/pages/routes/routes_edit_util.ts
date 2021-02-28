@@ -1,4 +1,4 @@
-import { System } from '../../../../../src/views/system/entity';
+import { System } from '../../../../../src/system/entity';
 import { fillForm } from './routes_util';
 
 const clickSystemOptions = (system: System) => {

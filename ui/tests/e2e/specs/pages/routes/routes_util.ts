@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { RouteSwg as Route } from '../../../../../src/views/route/entity';
+import { RouteSwg as Route } from '../../../../../src/route/entity';
 
 export const buildRoute = (): Route => ({
   route: '/' + faker.lorem.word(),

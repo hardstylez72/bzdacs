@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { System } from '../../../../../src/views/system/entity';
+import { System } from '../../../../../src/system/entity';
 
 export const buildSystem = (): System => ({
   id: -1,

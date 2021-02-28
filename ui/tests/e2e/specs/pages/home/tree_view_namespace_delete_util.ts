@@ -1,5 +1,5 @@
-import {System} from "../../../../../src/views/system/entity";
-import {Namespace} from "../../../../../src/views/namespace/entity";
+import {System} from "../../../../../src/system/entity";
+import {Namespace} from "../../../../../src/namespace/entity";
 import {clickNamespaceOptions} from "./tree_view_namespace_util";
 
 const clickSystemDeleteOption = () => {

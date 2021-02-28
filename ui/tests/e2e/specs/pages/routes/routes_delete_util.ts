@@ -1,4 +1,4 @@
-import { RouteSwg as Route } from '../../../../../src/views/route/entity';
+import { RouteSwg as Route } from '../../../../../src/route/entity';
 
 const clickRouteDelete = (route: Route) => {
   cy.contains(route.route)

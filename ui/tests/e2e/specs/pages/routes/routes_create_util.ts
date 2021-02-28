@@ -1,6 +1,6 @@
-import { RouteSwg as Route }  from '../../../../../src/views/route/entity';
+import { RouteSwg as Route }  from '../../../../../src/route/entity';
 import { assertSystemIsShown, buildRoute, fillForm } from './routes_util';
-import {Namespace} from "../../../../../src/views/namespace/entity";
+import {Namespace} from "../../../../../src/namespace/entity";
 
 const clickNewRouteButton = () => {
   cy.getBySel('add-route-btn').click();

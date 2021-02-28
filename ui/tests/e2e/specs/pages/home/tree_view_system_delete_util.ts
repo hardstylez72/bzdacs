@@ -1,4 +1,4 @@
-import { System } from '../../../../../src/views/system/entity';
+import { System } from '../../../../../src/system/entity';
 
 const clickSystemOptions = (system: System) => {
   cy.getBySel(`${system.name}_system_options`).click();
