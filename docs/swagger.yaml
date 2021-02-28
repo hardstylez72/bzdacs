@@ -714,6 +714,195 @@ definitions:
     - items
     - total
     type: object
+  userRouteDeleteRequest:
+    properties:
+      pairs:
+        items:
+          $ref: '#/definitions/userRoutePairToDelete'
+        type: array
+    required:
+    - pairs
+    type: object
+  userRouteFilter:
+    properties:
+      belongToUser:
+        type: boolean
+      namespaceId:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      pattern:
+        type: string
+      userId:
+        type: integer
+    required:
+    - namespaceId
+    - page
+    - userId
+    type: object
+  userRouteInsertRequest:
+    properties:
+      pairs:
+        items:
+          $ref: '#/definitions/userRoutePair'
+        type: array
+    required:
+    - pairs
+    type: object
+  userRouteListRequest:
+    properties:
+      filter:
+        $ref: '#/definitions/userRouteFilter'
+    type: object
+  userRouteListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/userRouteRouteWithGroups'
+        type: array
+      total:
+        type: integer
+    required:
+    - items
+    - total
+    type: object
+  userRoutePair:
+    properties:
+      isExcluded:
+        type: boolean
+      routeId:
+        type: integer
+      userId:
+        type: integer
+    required:
+    - routeId
+    - userId
+    type: object
+  userRoutePairToDelete:
+    properties:
+      routeId:
+        type: integer
+      userId:
+        type: integer
+    required:
+    - routeId
+    - userId
+    type: object
+  userRouteRoute:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      id:
+        type: integer
+      isExcluded:
+        type: boolean
+      method:
+        type: string
+      namespaceId:
+        type: integer
+      route:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    required:
+    - createdAt
+    - description
+    - id
+    - isExcluded
+    - method
+    - namespaceId
+    - route
+    - tags
+    - updatedAt
+    type: object
+  userRouteRouteWithGroups:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      groups:
+        items:
+          $ref: '#/definitions/userroute.Group'
+        type: array
+      id:
+        type: integer
+      isExcluded:
+        type: boolean
+      method:
+        type: string
+      namespaceId:
+        type: integer
+      route:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    required:
+    - createdAt
+    - description
+    - groups
+    - id
+    - isExcluded
+    - method
+    - namespaceId
+    - route
+    - tags
+    - updatedAt
+    type: object
+  userRouteUpdateResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      id:
+        type: integer
+      isExcluded:
+        type: boolean
+      method:
+        type: string
+      namespaceId:
+        type: integer
+      route:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    required:
+    - createdAt
+    - description
+    - id
+    - isExcluded
+    - method
+    - namespaceId
+    - route
+    - tags
+    - updatedAt
+    type: object
   userUpdateRequest:
     properties:
       externalId:
@@ -728,6 +917,31 @@ definitions:
     - namespaceId
     type: object
   usergroup.Group:
+    properties:
+      code:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+      id:
+        type: integer
+      namespaceId:
+        type: integer
+      updatedAt:
+        type: string
+    required:
+    - code
+    - createdAt
+    - description
+    - id
+    - namespaceId
+    - updatedAt
+    type: object
+  userroute.Group:
     properties:
       code:
         type: string
@@ -1931,6 +2145,126 @@ paths:
             $ref: '#/definitions/util.ResponseWithError'
       tags:
       - user
+  /v1/user/route/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates pairs of user-route relations
+      operationId: user-route.create
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userRouteInsertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/userRouteRoute'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user-route
+  /v1/user/route/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes list of user-route relations
+      operationId: user-route.delete
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userRouteDeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user-route
+  /v1/user/route/list:
+    post:
+      consumes:
+      - application/json
+      description: Gets list of user-route relations
+      operationId: user-route.list
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userRouteListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userRouteListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user-route
+  /v1/user/route/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates pair of user-route relations
+      operationId: user-route.update
+      parameters:
+      - description: request
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/userRoutePair'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userRouteUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+      tags:
+      - user-route
   /v1/user/update:
     post:
       consumes:

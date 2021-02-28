@@ -22,11 +22,11 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'max-len': 'warn',
     'consistent-return': 'off',
     'class-methods-use-this': ['warn'],
     '@typescript-eslint/ban-ts-ignore': 0,
     'import/extensions': 0,
-    'no-param-reassign': 0
+    'no-param-reassign': 0,
+    'max-len': 0
   },
 };

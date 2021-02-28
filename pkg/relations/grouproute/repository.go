@@ -129,12 +129,14 @@ func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeI
 	return &route, nil
 }
 
-func GetGroupIdsByRouteIdLL(ctx context.Context, conn *sqlx.DB, routeId int) ([]int, error) {
+func GetGroupIdsByRouteIdLL(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) ([]int, error) {
 	query := `select gr.group_id 
 				from groups_routes gr
-			   where gr.route_id = $1`
+			    join groups g on gr.group_id = g.id and g.namespace_id = $2
+			   where gr.route_id = $1
+			   	`
 	groupIds := make([]int, 0)
-	err := conn.SelectContext(ctx, &groupIds, query, routeId)
+	err := driver.SelectContext(ctx, &groupIds, query, routeId, namespaceId)
 	if err != nil {
 		return nil, err
 	}

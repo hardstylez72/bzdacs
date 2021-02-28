@@ -30,7 +30,7 @@ const module = defineModule({
       return state.service.userGroupCreate({ req: { pairs } });
     },
     async Delete(context, pairs: userGroupPair[]): Promise<void> {
-      const { state, commit } = actionContext(context);
+      const { state } = actionContext(context);
       await state.service.userGroupDelete({ req: { pairs } });
     },
   },

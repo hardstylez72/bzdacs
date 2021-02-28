@@ -10,18 +10,22 @@ import (
 	"net/http"
 )
 
+type PairToDelete struct {
+	RouteId int `json:"routeId" validate:"required"`
+	UserId  int `json:"userId" validate:"required"`
+} // @name userRoutePairToDelete
+
 type Pair struct {
 	RouteId    int  `json:"routeId" validate:"required"`
 	UserId     int  `json:"userId" validate:"required"`
 	IsExcluded bool `json:"isExcluded"`
-}
+} // @name userRoutePair
 
 type Repository interface {
-	RoutesBelongUser(ctx context.Context, userId int) ([]RouteWithGroups, error)
-	RoutesNotBelongUser(ctx context.Context, userId int) ([]RouteWithGroups, error)
-	Insert(ctx context.Context, params []Pair) ([]UserRoute, error)
-	Delete(ctx context.Context, params []Pair) error
-	Update(ctx context.Context, params Pair) (*UserRoute, error)
+	List(ctx context.Context, filter Filter) ([]RouteWithGroups, int, error)
+	Insert(ctx context.Context, params []Pair) ([]Route, error)
+	Delete(ctx context.Context, params []PairToDelete) error
+	Update(ctx context.Context, params Pair) (*Route, error)
 }
 
 type controller struct {
@@ -36,6 +40,16 @@ func NewController(rep Repository) *controller {
 	}
 }
 
+// @tags user-route
+// @description Creates pairs of user-route relations
+// @id user-route.create
+// @accept application/json
+// @param req body insertRequest true "request"
+// @produce application/json
+// @success 200	{object} insertResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/user/route/create [post]
 func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var req insertRequest
@@ -45,7 +59,12 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	routes, err := c.rep.Insert(ctx, insertRequestConvert(req))
+	if err := c.validator.Struct(req); err != nil {
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+
+	routes, err := c.rep.Insert(ctx, req.Pairs)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -54,6 +73,16 @@ func (c *controller) create(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Json(routes).Send()
 }
 
+// @tags user-route
+// @description Gets list of user-route relations
+// @id user-route.list
+// @accept application/json
+// @param req body listRequest true "request"
+// @produce application/json
+// @success 200	{object} listResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/user/route/list [post]
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -66,45 +95,44 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 
 	if err := c.validator.Struct(req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-		_, _ = w.Write([]byte(err.Error()))
 		return
 	}
 
-	var list []RouteWithGroups
-	var err error
-
-	if req.BelongToUser {
-		list, err = c.rep.RoutesBelongUser(ctx, req.UserId)
-	} else {
-		list, err = c.rep.RoutesNotBelongUser(ctx, req.UserId)
-	}
-
+	list, total, err := c.rep.List(ctx, req.Filter)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	render.JSON(w, r, newListResponse(list))
+	render.JSON(w, r, newListResponse(list, total))
 }
 
+// @tags user-route
+// @description Deletes list of user-route relations
+// @id user-route.delete
+// @accept application/json
+// @param req body deleteRequest true "request"
+// @produce application/json
+// @success 200
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/user/route/delete [post]
 func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	var req []Pair
+	var req deleteRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
-	rr := deleteRequest{Params: req}
-
-	if err := c.validator.Struct(rr); err != nil {
+	if err := c.validator.Struct(req); err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
 		return
 	}
 
-	err := c.rep.Delete(ctx, req)
+	err := c.rep.Delete(ctx, req.Pairs)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -113,6 +141,16 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Send()
 }
 
+// @tags user-route
+// @description Updates pair of user-route relations
+// @id user-route.update
+// @accept application/json
+// @param req body Pair true "request"
+// @produce application/json
+// @success 200	{object} updateResponse
+// @failure 400 {object} util.ResponseWithError
+// @failure 500 {object} util.ResponseWithError
+// @router /v1/user/route/update [post]
 func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 

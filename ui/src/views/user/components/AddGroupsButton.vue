@@ -5,7 +5,7 @@
       class="mb-2"
       @click="addSelectedRoutes"
     >
-      {{$t('add-selected-routes')}}
+      {{$t('add-selected')}}
     </v-btn>
   </div>
 </template>
@@ -41,10 +41,10 @@ export default class AddGroupsButton extends Vue {
 <i18n>
 {
   "en": {
-    "add-selected-routes": "Add selected routes"
+    "add-selected": "Add selected groups"
   },
   "ru": {
-    "add-selected-routes": "Добавить выбранные маршруты"
+    "add-selected": "Добавить выбранные группы"
   }
 }
 </i18n>

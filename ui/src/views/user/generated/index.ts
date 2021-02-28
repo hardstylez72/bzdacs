@@ -288,6 +288,93 @@ export class UserGroupService {
   }
 }
 
+export class UserRouteService {
+  /**
+   *
+   */
+  userRouteCreate(
+    params: {
+      /** request */
+      req: userRouteInsertRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<userRouteRoute[]> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/user/route/create';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  userRouteDelete(
+    params: {
+      /** request */
+      req: userRouteDeleteRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/user/route/delete';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  userRouteList(
+    params: {
+      /** request */
+      req: userRouteListRequest;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<userRouteListResponse> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/user/route/list';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  userRouteUpdate(
+    params: {
+      /** request */
+      req: userRoutePair;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<userRouteUpdateResponse> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/v1/user/route/update';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params['req'];
+
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export interface user_filter {
   /**  */
   namespaceId: number;
@@ -418,6 +505,167 @@ export interface userListResponse {
   total: number;
 }
 
+export interface userRouteDeleteRequest {
+  /**  */
+  pairs: userRoutePairToDelete[];
+}
+
+export interface userRouteFilter {
+  /**  */
+  belongToUser?: boolean;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  page: number;
+
+  /**  */
+  pageSize?: number;
+
+  /**  */
+  pattern?: string;
+
+  /**  */
+  userId: number;
+}
+
+export interface userRouteInsertRequest {
+  /**  */
+  pairs: userRoutePair[];
+}
+
+export interface userRouteListRequest {
+  /**  */
+  filter?: userRouteFilter;
+}
+
+export interface userRouteListResponse {
+  /**  */
+  items: userRouteRouteWithGroups[];
+
+  /**  */
+  total: number;
+}
+
+export interface userRoutePair {
+  /**  */
+  isExcluded?: boolean;
+
+  /**  */
+  routeId: number;
+
+  /**  */
+  userId: number;
+}
+
+export interface userRoutePairToDelete {
+  /**  */
+  routeId: number;
+
+  /**  */
+  userId: number;
+}
+
+export interface userRouteRoute {
+  /**  */
+  createdAt: string;
+
+  /**  */
+  deletedAt?: string;
+
+  /**  */
+  description: string;
+
+  /**  */
+  id: number;
+
+  /**  */
+  isExcluded: boolean;
+
+  /**  */
+  method: string;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  route: string;
+
+  /**  */
+  tags: string[];
+
+  /**  */
+  updatedAt: string;
+}
+
+export interface userRouteRouteWithGroups {
+  /**  */
+  createdAt: string;
+
+  /**  */
+  deletedAt?: string;
+
+  /**  */
+  description: string;
+
+  /**  */
+  groups: userroute_Group[];
+
+  /**  */
+  id: number;
+
+  /**  */
+  isExcluded: boolean;
+
+  /**  */
+  method: string;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  route: string;
+
+  /**  */
+  tags: string[];
+
+  /**  */
+  updatedAt: string;
+}
+
+export interface userRouteUpdateResponse {
+  /**  */
+  createdAt: string;
+
+  /**  */
+  deletedAt?: string;
+
+  /**  */
+  description: string;
+
+  /**  */
+  id: number;
+
+  /**  */
+  isExcluded: boolean;
+
+  /**  */
+  method: string;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  route: string;
+
+  /**  */
+  tags: string[];
+
+  /**  */
+  updatedAt: string;
+}
+
 export interface userUpdateRequest {
   /**  */
   externalId: string;
@@ -430,6 +678,29 @@ export interface userUpdateRequest {
 }
 
 export interface usergroup_Group {
+  /**  */
+  code: string;
+
+  /**  */
+  createdAt: string;
+
+  /**  */
+  deletedAt?: string;
+
+  /**  */
+  description: string;
+
+  /**  */
+  id: number;
+
+  /**  */
+  namespaceId: number;
+
+  /**  */
+  updatedAt: string;
+}
+
+export interface userroute_Group {
   /**  */
   code: string;
 

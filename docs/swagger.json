@@ -1784,6 +1784,190 @@
                 }
             }
         },
+        "/v1/user/route/create": {
+            "post": {
+                "description": "Creates pairs of user-route relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-route"
+                ],
+                "operationId": "user-route.create",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userRouteInsertRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/userRouteRoute"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/route/delete": {
+            "post": {
+                "description": "Deletes list of user-route relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-route"
+                ],
+                "operationId": "user-route.delete",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userRouteDeleteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/route/list": {
+            "post": {
+                "description": "Gets list of user-route relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-route"
+                ],
+                "operationId": "user-route.list",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userRouteListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userRouteListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/route/update": {
+            "post": {
+                "description": "Updates pair of user-route relations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-route"
+                ],
+                "operationId": "user-route.update",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userRoutePair"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userRouteUpdateResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/user/update": {
             "post": {
                 "description": "Updates user",
@@ -2888,6 +3072,278 @@
                 }
             }
         },
+        "userRouteDeleteRequest": {
+            "type": "object",
+            "required": [
+                "pairs"
+            ],
+            "properties": {
+                "pairs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userRoutePairToDelete"
+                    }
+                }
+            }
+        },
+        "userRouteFilter": {
+            "type": "object",
+            "required": [
+                "namespaceId",
+                "page",
+                "userId"
+            ],
+            "properties": {
+                "belongToUser": {
+                    "type": "boolean"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "pattern": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userRouteInsertRequest": {
+            "type": "object",
+            "required": [
+                "pairs"
+            ],
+            "properties": {
+                "pairs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userRoutePair"
+                    }
+                }
+            }
+        },
+        "userRouteListRequest": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "$ref": "#/definitions/userRouteFilter"
+                }
+            }
+        },
+        "userRouteListResponse": {
+            "type": "object",
+            "required": [
+                "items",
+                "total"
+            ],
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userRouteRouteWithGroups"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userRoutePair": {
+            "type": "object",
+            "required": [
+                "routeId",
+                "userId"
+            ],
+            "properties": {
+                "isExcluded": {
+                    "type": "boolean"
+                },
+                "routeId": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userRoutePairToDelete": {
+            "type": "object",
+            "required": [
+                "routeId",
+                "userId"
+            ],
+            "properties": {
+                "routeId": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userRouteRoute": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "description",
+                "id",
+                "isExcluded",
+                "method",
+                "namespaceId",
+                "route",
+                "tags",
+                "updatedAt"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isExcluded": {
+                    "type": "boolean"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "userRouteRouteWithGroups": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "description",
+                "groups",
+                "id",
+                "isExcluded",
+                "method",
+                "namespaceId",
+                "route",
+                "tags",
+                "updatedAt"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userroute.Group"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isExcluded": {
+                    "type": "boolean"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "userRouteUpdateResponse": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "description",
+                "id",
+                "isExcluded",
+                "method",
+                "namespaceId",
+                "route",
+                "tags",
+                "updatedAt"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isExcluded": {
+                    "type": "boolean"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
         "userUpdateRequest": {
             "type": "object",
             "required": [
@@ -2908,6 +3364,41 @@
             }
         },
         "usergroup.Group": {
+            "type": "object",
+            "required": [
+                "code",
+                "createdAt",
+                "description",
+                "id",
+                "namespaceId",
+                "updatedAt"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "namespaceId": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "userroute.Group": {
             "type": "object",
             "required": [
                 "code",

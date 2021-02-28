@@ -7,7 +7,6 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
 	"github.com/hardstylez72/bzdacs/pkg/relations/userroute"
 	"github.com/hardstylez72/bzdacs/pkg/user"
-	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
 )
 
@@ -40,42 +39,42 @@ func NewController(userRouteRepository userroute.Repository, userRepository user
 }
 
 func (c *controller) accessCheck(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
+	//ctx := r.Context()
+	//
+	//login, err := getLoginFromRequest(r)
+	//if err != nil {
+	//	util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+	//}
+	//
+	//route, err := getRequestedRouteFromRequest(r)
+	//if err != nil {
+	//	util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+	//}
+	//
+	//routeMethod, err := getRequestedMethodFromRequest(r)
+	//if err != nil {
+	//	util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+	//}
+	//
+	//u, err := c.userRepository.GetByLogin(ctx, login, 1) // todo: replace 1 with namespace id
+	//if err != nil {
+	//	if err == user.ErrEntityNotFound {
+	//		util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+	//	} else {
+	//		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+	//	}
+	//	return
+	//}
 
-	login, err := getLoginFromRequest(r)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-	}
+	//userRoutes, err := c.userRouteRepository.RoutesBelongUser(ctx, u.Id)
+	//if err != nil {
+	//	util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+	//	return
+	//}
 
-	route, err := getRequestedRouteFromRequest(r)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-	}
-
-	routeMethod, err := getRequestedMethodFromRequest(r)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-	}
-
-	u, err := c.userRepository.GetByLogin(ctx, login, 1) // todo: replace 1 with namespace id
-	if err != nil {
-		if err == user.ErrEntityNotFound {
-			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
-		} else {
-			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
-		}
-		return
-	}
-
-	userRoutes, err := c.userRouteRepository.RoutesBelongUser(ctx, u.Id)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
-		return
-	}
-
-	isAccessAllowed := AccessAllowed(route, routeMethod, userRoutes)
-
-	util.NewResp(w, r).Json(newCheckAccessResponse(nil, isAccessAllowed, login)).Status(http.StatusOK).Send()
+	//isAccessAllowed := AccessAllowed(route, routeMethod, userRoutes)
+	//
+	//util.NewResp(w, r).Json(newCheckAccessResponse(nil, isAccessAllowed, login)).Status(http.StatusOK).Send()
 }
 
 func getRequestedMethodFromRequest(r *http.Request) (string, error) {

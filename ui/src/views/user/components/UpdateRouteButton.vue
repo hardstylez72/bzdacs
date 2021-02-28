@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip bottom v-if="item.isIndependent && !item.isOverwritten">
+  <v-tooltip>
     <template v-slot:activator="{ on, attrs }">
       <div @click="updateRoute" v-on="on" style="cursor: pointer">
         <v-icon v-if="!item.isExcluded" >mdi-account-minus</v-icon>
@@ -22,7 +22,7 @@ import { User } from '@/views/user/entity';
 export default class UpdateRouteButton extends Vue {
   @Prop({ default: {} }) item!: RouteWithGroups
 
-  @Prop({ default: {} }) user!: User
+  @Prop() userId!: number
 
   loading = false
 
@@ -30,12 +30,13 @@ export default class UpdateRouteButton extends Vue {
     const param: UpdateUserRoute = {
       isExcluded: !this.item.isExcluded,
       routeId: this.item.id,
-      userId: this.user.id,
+      userId: this.userId,
     };
 
     try {
       this.loading = true;
       await this.$store.direct.dispatch.userRoute.UpdateRoute(param);
+      this.$emit('routeUpdated');
     } finally {
       this.loading = false;
     }

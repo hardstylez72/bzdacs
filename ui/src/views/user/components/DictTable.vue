@@ -102,6 +102,7 @@ export default class UserTable extends ItemTable<User> {
     "title": "Groups",
     "code": "Code",
     "id": "Id",
+    "externalId": "externalId",
     "description": "Description",
     "actions": "Actions"
   },
@@ -110,6 +111,7 @@ export default class UserTable extends ItemTable<User> {
     "title": "Группы",
     "code": "Код",
     "id": "Id",
+    "externalId": "Идентификатор",
     "description": "Описание",
     "actions": "Дейтсвия"
   }

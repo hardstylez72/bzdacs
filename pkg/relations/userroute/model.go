@@ -5,19 +5,15 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/route"
 )
 
-type UserRoute struct {
-	route.Route
-	IsExcluded bool `json:"isExcluded" db:"is_excluded"`
-}
+type Group group.Group
+type RouteOrig route.Route
+
+type Route struct {
+	RouteOrig
+	IsExcluded bool `json:"isExcluded" db:"is_excluded" validate:"required"`
+} // @name userRouteRoute
 
 type RouteWithGroups struct {
-	Groups []group.Group `json:"groups"`
-	RouteExt
-}
-
-type RouteExt struct {
-	route.Route
-	IsExcluded    bool `json:"isExcluded" db:"is_excluded"`
-	IsOverwritten bool `json:"isOverwritten"`
-	IsIndependent bool `json:"isIndependent"`
-}
+	Groups []Group `json:"groups" validate:"required"`
+	Route
+} // @name userRouteRouteWithGroups
