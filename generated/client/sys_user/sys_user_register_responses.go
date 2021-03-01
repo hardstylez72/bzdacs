@@ -35,6 +35,12 @@ func (o *SysUserRegisterReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return nil, result
+	case 422:
+		result := NewSysUserRegisterUnprocessableEntity()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 500:
 		result := NewSysUserRegisterInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -88,6 +94,38 @@ func (o *SysUserRegisterBadRequest) GetPayload() *models.UtilResponseWithError {
 }
 
 func (o *SysUserRegisterBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.UtilResponseWithError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewSysUserRegisterUnprocessableEntity creates a SysUserRegisterUnprocessableEntity with default headers values
+func NewSysUserRegisterUnprocessableEntity() *SysUserRegisterUnprocessableEntity {
+	return &SysUserRegisterUnprocessableEntity{}
+}
+
+/* SysUserRegisterUnprocessableEntity describes a response with status code 422, with default header values.
+
+Unprocessable Entity
+*/
+type SysUserRegisterUnprocessableEntity struct {
+	Payload *models.UtilResponseWithError
+}
+
+func (o *SysUserRegisterUnprocessableEntity) Error() string {
+	return fmt.Sprintf("[POST /v1/sys-user/register][%d] sysUserRegisterUnprocessableEntity  %+v", 422, o.Payload)
+}
+func (o *SysUserRegisterUnprocessableEntity) GetPayload() *models.UtilResponseWithError {
+	return o.Payload
+}
+
+func (o *SysUserRegisterUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.UtilResponseWithError)
 

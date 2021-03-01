@@ -1067,6 +1067,12 @@ var doc = `{
                             "$ref": "#/definitions/util.ResponseWithError"
                         }
                     },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/util.ResponseWithError"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -3046,6 +3052,9 @@ var doc = `{
         },
         "user.sessionResponse": {
             "type": "object",
+            "required": [
+                "login"
+            ],
             "properties": {
                 "login": {
                     "type": "string"

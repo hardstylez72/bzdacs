@@ -18,7 +18,8 @@ var (
 	GuestGroupName             string
 	GuestGroupDescription      string
 	HasGuest                   bool
-	Admin                      string
+	AdminLogin                 string
+	AdminPassword              string
 	SessionExpirationInSeconds int
 )
 
@@ -39,10 +40,17 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 	GuestGroupName = viper.GetString("app.guestGroupName")
 	GuestGroupDescription = viper.GetString("app.guestGroupDescription")
 	HasGuest = viper.GetBool("app.hasGuest")
-	Admin = viper.GetString("user.login")
+	AdminLogin = viper.GetString("user.login")
+	AdminPassword = viper.GetString("user.password")
 	SessionExpirationInSeconds = viper.GetInt("user.sessionExpirationInSeconds")
 
 	c := GetClient()
+
+	err := registerUser(ctx, c, AdminLogin, AdminPassword)
+	if err != nil {
+		return err
+	}
+
 	s, err := resolveSystem(ctx, c, SystemName)
 	if err != nil {
 		return err
@@ -53,7 +61,7 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 		return err
 	}
 
-	u, err := resolveUser(ctx, c, Admin, ns.Id)
+	u, err := resolveUser(ctx, c, AdminLogin, ns.Id)
 	if err != nil {
 		return err
 	}
@@ -100,9 +108,9 @@ func GetConfig() *Config {
 	return &Config{
 		Host:     "localhost:4000",
 		BasePath: "/api",
-		Login:    "hs",
-		Password: "1234",
-		Timeout:  time.Second * 100,
+		Login:    AdminLogin,
+		Password: AdminPassword,
+		Timeout:  time.Second * 10,
 	}
 }
 

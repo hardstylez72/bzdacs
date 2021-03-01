@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-avatar color="#1B5E20">
-      <span class="white--text" data-test="avatar">{{ login }}</span>
-    </v-avatar>
+    <span class="white--text" data-test="avatar">{{$t('user')}}: <b style="color: black">{{ login }}</b></span>
   </div>
 </template>
 
@@ -20,3 +18,14 @@ export default class Avatar extends Vue {
 <style scoped lang="scss">
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "user": "User"
+  },
+  "ru": {
+    "user": "Пользователь"
+  }
+}
+</i18n>

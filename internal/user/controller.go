@@ -5,8 +5,6 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 	"github.com/hardstylez72/bzdacs/internal/session"
-	"github.com/hardstylez72/bzdacs/pkg/group"
-	"github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
 )
@@ -18,20 +16,16 @@ type Repository interface {
 }
 
 type controller struct {
-	userRepository      Repository
-	groupRepository     group.Repository
-	userGroupRepository usergroup.Repository
-	validator           *validator.Validate
-	sessionService      *session.Service
+	userRepository Repository
+	validator      *validator.Validate
+	sessionService *session.Service
 }
 
-func NewController(rep Repository, groupRepository group.Repository, userGroupRepository usergroup.Repository) *controller {
+func NewController(rep Repository, sessionService *session.Service) *controller {
 	return &controller{
-		userRepository:      rep,
-		groupRepository:     groupRepository,
-		userGroupRepository: userGroupRepository,
-		validator:           validator.New(),
-		sessionService:      session.NewSessionService(),
+		userRepository: rep,
+		validator:      validator.New(),
+		sessionService: sessionService,
 	}
 }
 

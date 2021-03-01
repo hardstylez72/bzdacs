@@ -4,6 +4,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	"github.com/hardstylez72/bzdacs/internal/session"
 	sysuser "github.com/hardstylez72/bzdacs/internal/user"
 	"github.com/hardstylez72/bzdacs/pkg/acs"
 	"github.com/hardstylez72/bzdacs/pkg/group"
@@ -119,21 +120,21 @@ func (s *Server) Start(r chi.Router) error {
 	s.repository.system = system.NewRepository(pgx)
 	s.repository.sysuser = sysuser.NewRepository(pgx)
 
+	sessionService := session.NewSessionService()
+
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Mount(apiPathPrefix, r)
 
 	host := "http://localhost" + viper.GetString("backend.port")
+	swaggerUrl := "/swagger/source"
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
-			private.Use(sysuser.Auth())
-
-			swaggerUrl := "/swagger/source"
-
+			private.Use(sysuser.Auth(sessionService, s.repository.sysuser))
 			//private.Use(acsmw.AccessCheck(acsmw.NewService(host), extractLogin, extractRouteAndMethod))
 			public.Get("/swagger/*", httpSwagger.Handler(httpSwagger.URL(host+swaggerUrl)))
 			public.Get(swaggerUrl, getSwaggerSource)
-			sysuser.NewController(s.repository.sysuser, s.repository.group, s.repository.usergroup).Mount(private, public)
+			sysuser.NewController(s.repository.sysuser, sessionService).Mount(private, public)
 			namespace.NewController(s.repository.namespace).Mount(private)
 			system.NewController(s.repository.system).Mount(private)
 			acs.NewController(s.repository.userroute, s.repository.user, s.repository.usergroup).Mount(public)

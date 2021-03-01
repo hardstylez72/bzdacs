@@ -3,7 +3,9 @@ package user
 import (
 	"encoding/json"
 	"github.com/hardstylez72/bzdacs/internal"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/util"
+	"github.com/pkg/errors"
 	"net/http"
 	"time"
 )
@@ -21,6 +23,7 @@ type registerRequest struct {
 // @produce application/json
 // @success 200
 // @failure 400 {object} util.ResponseWithError
+// @failure 422 {object} util.ResponseWithError
 // @failure 500 {object} util.ResponseWithError
 // @router /v1/sys-user/register [post]
 func (c *controller) register(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +46,11 @@ func (c *controller) register(w http.ResponseWriter, r *http.Request) {
 		Password: Encode(req.Password),
 	})
 	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		if errors.Is(err, storage.EntityAlreadyExist) {
+			util.NewResp(w, r).Error(err).Status(http.StatusUnprocessableEntity).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
 		return
 	}
 	expiresInSeconds := internal.SessionExpirationInSeconds

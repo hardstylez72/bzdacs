@@ -595,6 +595,8 @@ definitions:
     properties:
       login:
         type: string
+    required:
+    - login
     type: object
   userCreateRequest:
     properties:
@@ -1690,6 +1692,10 @@ paths:
           description: ""
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/util.ResponseWithError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/util.ResponseWithError'
         "500":

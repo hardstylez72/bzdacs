@@ -287,6 +287,8 @@ export default class TreeView extends Vue {
   }
 
   async pushToPage(name: string, node: Node) {
+    if (this.$route.name === name) return;
+
     return this.$router.push({
       name,
       query: { ...this.formQueryParams(node.system, node.namespace), lang: this.$route.query.lang },

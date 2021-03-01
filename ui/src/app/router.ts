@@ -7,6 +7,7 @@ import TagPages from '@/tag/routes';
 import Home from './pages/Home.vue';
 import Login from './pages/Login.vue';
 import Registration from './pages/Registration.vue';
+import store from './store';
 
 Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
@@ -34,6 +35,24 @@ const routes: Array<RouteConfig> = [
 const router = new VueRouter({
   mode: 'history',
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  // Auth guard
+  if (!store.getters.sysUser.isAuthorized) {
+    if (to.name === 'Login' || to.name === 'Registration') {
+      next();
+    } else {
+      next({ name: 'Login' });
+    }
+    // Tries to go 404 url => redirect home
+  } else if (!to.name) {
+    next('Home');
+  } else if (to.name === from.name) {
+    next(false);
+  } else {
+    next();
+  }
 });
 
 export default router;

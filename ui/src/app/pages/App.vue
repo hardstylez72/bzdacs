@@ -5,7 +5,7 @@
     <v-snackbar v-if="showSnackbar" v-model="showSnackbar">{{snackbarMessage}}</v-snackbar>
       <v-main>
         <v-container :class="isAuthorized ? 'app-body-container' : ''" fluid>
-          <router-view />
+          <router-view/>
         </v-container>
       </v-main>
   </v-app>

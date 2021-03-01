@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // UserSessionResponse user session response
@@ -18,11 +20,30 @@ import (
 type UserSessionResponse struct {
 
 	// login
-	Login string `json:"login,omitempty"`
+	// Required: true
+	Login *string `json:"login"`
 }
 
 // Validate validates this user session response
 func (m *UserSessionResponse) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateLogin(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UserSessionResponse) validateLogin(formats strfmt.Registry) error {
+
+	if err := validate.Required("login", "body", m.Login); err != nil {
+		return err
+	}
+
 	return nil
 }
 

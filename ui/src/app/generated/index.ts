@@ -186,5 +186,5 @@ export interface sysUserRegisterRequest {
 
 export interface user_sessionResponse {
   /**  */
-  login?: string;
+  login: string;
 }

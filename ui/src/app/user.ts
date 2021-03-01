@@ -60,13 +60,12 @@ const module = defineModule({
           }
         })
         .catch((err) => {
-          console.error(err);
           commit.setAuthorized(false);
           throw err;
         });
     },
     async login(context, req: sysUserLoginRequest): Promise<void> {
-      const { state, dispatch } = actionContext(context);
+      const { state } = actionContext(context);
 
       return state.service.sysUserLogin({ req })
         .catch((err) => {
@@ -74,15 +73,8 @@ const module = defineModule({
         });
     },
     async register(context, req: sysUserRegisterRequest): Promise<void> {
-      const { state, dispatch } = actionContext(context);
-
-      return state.service.sysUserRegister({ req })
-        .catch((err) => {
-          store.commit.showError('Invalid login or password');
-        })
-        .finally(() => {
-          dispatch.userSession();
-        });
+      const { state } = actionContext(context);
+      return state.service.sysUserRegister({ req });
     },
   },
 });

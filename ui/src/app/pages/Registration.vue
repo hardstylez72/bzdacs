@@ -1,8 +1,8 @@
 <template>
   <div class="login-form">
-
     <v-form ref="form">
         <v-text-field
+          autofocus
           v-model="login"
           :rules="rules"
           :label="$t('input-login-label')"
@@ -25,6 +25,7 @@
 import {
   Component, Vue, Watch,
 } from 'vue-property-decorator';
+import store from '@/app/store';
 
 @Component
 
@@ -62,20 +63,29 @@ export default class LoginPage extends Vue {
     if (!this.validate()) {
       return;
     }
-    this.$store.direct.dispatch.sysUser.register({ login: this.login, password: this.password });
+    this.$store.direct.dispatch.sysUser.register({ login: this.login, password: this.password })
+      .then(() => {
+        this.$store.direct.dispatch.sysUser.userSession()
+          .then(() => {
+            this.$router.push({ name: 'Home' });
+          });
+      })
+      .catch((err: Error) => {
+        if (err.message === 'Request failed with status code 422') {
+          store.commit.showError('User with that login already exist');
+        } else {
+          store.commit.showError('Invalid login or password');
+        }
+      });
   }
 }
 </script>
 
 <style scoped lang="scss">
 .login-form {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
   text-align: center;
-  margin: 20% auto;
+  max-width: 250px;
+  margin: 250px auto auto auto;
 }
 </style>
 

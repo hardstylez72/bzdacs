@@ -41,15 +41,15 @@ export default class Nav extends Vue {
   }
 
   get isAuthorized(): boolean {
-    return this.$store.direct.getters.isAuthorized;
+    return this.$store.direct.getters.sysUser.isAuthorized;
   }
 
   get login(): string {
-    return this.$store.direct.getters.login;
+    return this.$store.direct.getters.sysUser.login;
   }
 
   logout(): Promise<void> {
-    return this.$store.direct.dispatch.logout();
+    return this.$store.direct.dispatch.sysUser.logout();
   }
 }
 </script>

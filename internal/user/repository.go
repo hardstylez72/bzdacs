@@ -14,7 +14,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var ErrEntityNotFound = errors.New("entity not found")
+var ErrUserAlreadyExist = errors.New("user already exist")
 
 type repository struct {
 	conn *sqlx.DB
@@ -25,11 +25,6 @@ func NewRepository(conn *sqlx.DB) *repository {
 }
 
 func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
-
-	if u.Login == internal.Admin {
-		// admin does not need to register, app does it for first start
-		return u, nil
-	}
 
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
@@ -44,6 +39,10 @@ func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
 	sysUser, err := InsertLL(ctx, txx, u)
 	if err != nil {
 		return nil, err
+	}
+
+	if internal.AdminLogin == u.Login {
+		return sysUser, nil
 	}
 
 	if internal.HasGuest {
@@ -61,7 +60,6 @@ func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
 			ExternalId:  sysUser.Login,
 			NamespaceId: ns.Id,
 		})
-
 		if err != nil {
 			return nil, err
 		}

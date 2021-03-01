@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"github.com/hardstylez72/bzdacs/internal/session"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/spf13/viper"
 	"net/http"
@@ -11,7 +12,7 @@ import (
 )
 
 type sessionResponse struct {
-	Login string
+	Login string `json:"login" validate:"required"`
 }
 
 // @tags sys-user
@@ -25,19 +26,26 @@ type sessionResponse struct {
 // @router /v1/sys-user/session [post]
 func (c *controller) session(w http.ResponseWriter, r *http.Request) {
 
-	s, err := getSessionFromCookie(r.Cookies())
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusUnauthorized).Send()
-		return
-	}
-
-	session, err := c.sessionService.GetByToken(s.Token)
+	session, err := getSession(r, c.sessionService)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusUnauthorized).Send()
 		return
 	}
 
 	util.NewResp(w, r).Json(&sessionResponse{session.Login}).Status(http.StatusOK).Send()
+}
+
+func getSession(r *http.Request, service *session.Service) (*session.Session, error) {
+	s, err := getSessionFromCookie(r.Cookies())
+	if err != nil {
+		return nil, err
+	}
+
+	session, err := service.GetByToken(s.Token)
+	if err != nil {
+		return nil, err
+	}
+	return session, nil
 }
 
 func getSessionFromCookie(cookies []*http.Cookie) (*Session, error) {

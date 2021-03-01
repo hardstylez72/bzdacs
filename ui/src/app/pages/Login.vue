@@ -1,21 +1,22 @@
 <template>
   <div class="login-form">
     <v-form ref="form">
-        <v-text-field
-          v-model="login"
-          :rules="rules"
-          :label="$t('input-login-label')"
-          @keyup.enter.native="loginAction"
-        />
-        <v-text-field
-          v-model="password"
-          :rules="rules"
-          type="password"
-          :label="$t('input-password-label')"
-          @keyup.enter.native="loginAction"
-        />
+      <v-text-field
+        autofocus
+        v-model="login"
+        :rules="rules"
+        :label="$t('input-login-label')"
+        @keyup.enter.native="loginAction"
+      />
+      <v-text-field
+        v-model="password"
+        :rules="rules"
+        type="password"
+        :label="$t('input-password-label')"
+        @keyup.enter.native="loginAction"
+      />
       <v-btn @click="loginAction">{{ $t('login-btn-text')}}</v-btn>
-      <span>or <a @click="$router.push({name: 'Registration'})">register</a></span>
+      <span> or <a @click="$router.push({name: 'Registration'})">register</a></span>
     </v-form>
   </div>
 </template>
@@ -74,13 +75,9 @@ export default class LoginPage extends Vue {
 
 <style scoped lang="scss">
 .login-form {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
   text-align: center;
-  margin: 20% auto;
+  max-width: 250px;
+  margin: 250px auto auto auto;
 }
 </style>
 
