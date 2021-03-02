@@ -72,10 +72,12 @@ export default class RoutesNotBelongGroupTable extends ItemTable<Group> {
 
   showSelect = true
 
+  namespaceId = Number(this.$route.query.namespaceId)
+
   async loadItems(): Promise<ListResponse<Group>> {
     return this.$store.direct.dispatch.userGroup.GetList({
       filter: {
-        namespaceId: this.queryParams.namespaceId,
+        namespaceId: this.namespaceId,
         page: this.page,
         pageSize: this.pageSize,
         belongToUser: false,

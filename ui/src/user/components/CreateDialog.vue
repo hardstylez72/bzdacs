@@ -50,6 +50,7 @@ export default class CreateDialog extends Vue {
   namespaceId = Number(this.$route.query.namespaceId);
 
   user: User = {
+    namespaceId: 1,
     id: -1,
     externalId: '',
   }

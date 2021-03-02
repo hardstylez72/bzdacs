@@ -85,10 +85,12 @@ export default class RoutesBelongUserTable extends ItemTable<Route> {
 
   showSelect = true
 
+  namespaceId = Number(this.$route.query.namespaceId)
+
   async loadItems(): Promise<ListResponse<Route>> {
     return this.$store.direct.dispatch.userRoute.GetList({
       filter: {
-        namespaceId: this.queryParams.namespaceId,
+        namespaceId: this.namespaceId,
         page: this.page,
         pageSize: this.pageSize,
         belongToUser: true,

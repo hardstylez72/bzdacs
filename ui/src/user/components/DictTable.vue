@@ -72,10 +72,12 @@ export default class UserTable extends ItemTable<User> {
     },
   ];
 
+  namespaceId = Number(this.$route.query.namespaceId)
+
   async loadItems(): Promise<ListResponse<User>> {
     return this.$store.direct.dispatch.user.GetList({
       filter: {
-        namespaceId: this.queryParams.namespaceId,
+        namespaceId: this.namespaceId,
         pageSize: this.pageSize,
         page: this.page,
       },

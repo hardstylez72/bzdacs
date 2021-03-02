@@ -9,12 +9,12 @@ import {
   groupGetByIdRequest,
   groupListRequest,
   groupUpdateRequest,
-  groupInsertRequest, groupDeleteRequest,
+  groupInsertRequest, groupDeleteRequest, groupGetResponse,
 } from '@/group/generated';
 import { ListResponse } from '@/common/helpers/types';
-import { Group } from '../entity';
-
 import { moduleActionContext } from '../../app/store';
+
+export type Group = groupGetResponse
 
 serviceOptions.axios = client;
 

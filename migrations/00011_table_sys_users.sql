@@ -7,7 +7,7 @@ create table if not exists sys_users (
     created_at timestamp not null default now(),
     updated_at timestamp not null default now(),
     deleted_at timestamp default null,
-    unique (id, login)
+    unique (login)
 );
 
 -- +goose Down

@@ -19,14 +19,14 @@ import {
   Component, Model, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import Dialog from '@/common/components/Dialog.vue';
-import { SimpleEntity } from '@/base/entity';
+import { Entity, SimpleEntity } from '@/base/entity';
 
 @Component({
   components: {
     Dialog,
   },
 })
-export default class SimpleEntityDeleteDialog<T extends SimpleEntity> extends Vue {
+export default class SimpleEntityDeleteDialog<T extends Entity> extends Vue {
   show = false
 
   @Prop() id!: number

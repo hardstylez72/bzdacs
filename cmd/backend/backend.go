@@ -118,7 +118,7 @@ func (s *Server) Start(r chi.Router) error {
 	s.repository.userroute = userroute.NewRepository(pgx)
 	s.repository.namespace = namespace.NewRepository(pgx)
 	s.repository.system = system.NewRepository(pgx)
-	s.repository.sysuser = sysuser.NewRepository(pgx)
+	s.repository.sysuser = sysuser.NewSecurityGuard(sysuser.NewRepository(pgx))
 
 	sessionService := session.NewSessionService()
 

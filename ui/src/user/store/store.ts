@@ -7,14 +7,15 @@ import { client } from '@/app/util/requester';
 import {
   serviceOptions,
   userCreateRequest, userDeleteRequest,
-  userGetByIdRequest,
+  userGetByIdRequest, userGetResponse,
   userListRequest,
   UserService,
   userUpdateRequest,
 } from '@/user/generated';
 import { ListResponse } from '@/common/helpers/types';
-import { User } from '../entity';
+// import { User } from '../entity';
 
+type User = userGetResponse
 serviceOptions.axios = client;
 export interface State<T>{
   service: UserService;

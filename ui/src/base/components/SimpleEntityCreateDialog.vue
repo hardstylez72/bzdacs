@@ -60,7 +60,7 @@ export default class CreateNamespaceDialog<T extends SimpleEntity> extends Vue {
 
   valid = true
 
-  local: T = {
+  local = {
     name: '',
     id: -1,
   }

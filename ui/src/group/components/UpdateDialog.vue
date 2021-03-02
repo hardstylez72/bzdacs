@@ -94,6 +94,7 @@ export default class UpdateGroupDialog extends Vue {
   group: Group = {
     description: '',
     id: 0,
+    namespaceId: 0,
     code: '',
   }
 

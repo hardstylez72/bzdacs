@@ -128,10 +128,9 @@ func GetByParams(ctx context.Context, driver storage.SqlDriver, login, password 
 			   password
 		from sys_users
 	   where login = $1
- 		 and password = $2
 `
 	var user User
-	err := driver.GetContext(ctx, &user, query, login, password)
+	err := driver.GetContext(ctx, &user, query, login)
 	if err != nil {
 		return nil, storage.PgError(err)
 	}

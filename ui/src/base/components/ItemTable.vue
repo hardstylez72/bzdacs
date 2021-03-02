@@ -99,6 +99,7 @@ export default class ItemTable<T extends Entity> extends Vue {
 
   protected getViewTreeQueryParams(): QueryParams {
     return {
+      // @ts-ignore
       systemName: this.$route.query.systemName,
       systemId: Number(this.$route.query.systemId),
       namespaceName: this.$route.query.namespaceName,

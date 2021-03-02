@@ -15,6 +15,6 @@ export interface NamespaceQuery {
   namespaceId?: number;
 }
 export interface SystemQuery {
-  systemName?: string | null;
-  systemId?: number| null;
+  systemName?: string | undefined;
+  systemId?: number| undefined;
 }

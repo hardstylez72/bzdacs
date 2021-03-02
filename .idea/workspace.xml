@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Changes sys user domain">
-      <change afterPath="$PROJECT_DIR$/internal/sysuser.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/sysuser/lib.go" afterDir="false" />
+    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Updates auth">
+      <change afterPath="$PROJECT_DIR$/internal/user/encripton.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/user/encripton_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/user/repository_secured.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/backend/backend.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/backend.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/client/sys_user/sys_user_register_responses.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/client/sys_user/sys_user_register_responses.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/models/user_session_response.go" beforeDir="false" afterPath="$PROJECT_DIR$/generated/models/user_session_response.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/generated/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generated/swagger.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/user/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.build.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.local.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.local.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/controller_login.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller_login.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/user/controller_register.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller_register.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/user/controller_session.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller_session.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/user/mw.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/mw.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/password.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/password_test.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/user/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/components/Avatar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/components/Avatar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/components/Nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/components/Nav.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/generated/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/generated/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/pages/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/pages/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/pages/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/pages/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/pages/Registration.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/pages/Registration.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/00011_table_sys_users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/00011_table_sys_users.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/app/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/base/components/ItemTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/ItemTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityCreateDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityCreateDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityDeleteDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityDeleteDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/group/components/CreateDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/components/CreateDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/group/components/RoutesBelongGroupTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/components/RoutesBelongGroupTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/group/components/RoutesNotBelongGroupTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/components/RoutesNotBelongGroupTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/group/components/Table.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/components/Table.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/group/components/UpdateDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/components/UpdateDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/group/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/group/store/group.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/group/store/group.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/route/components/Table.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/route/components/Table.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/route/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/route/entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/tag/components/Table.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/tag/components/Table.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/tree-menu/components/TreeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/tree-menu/components/TreeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/tree-menu/helper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/tree-menu/helper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/components/CreateDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/components/CreateDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/components/DictTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/components/DictTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/components/GroupsBelongUserTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/components/GroupsBelongUserTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/components/GroupsNotBelongUserTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/components/GroupsNotBelongUserTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/components/RoutesBelongUserTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/components/RoutesBelongUserTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/components/RoutesNotBelongUserTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/components/RoutesNotBelongUserTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/components/UpdateRouteButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/components/UpdateRouteButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/services/userroute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/services/userroute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/user/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/user/store/store.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +145,17 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestPassword in github.com/hardstylez72/bzdacs/internal/user" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bzdacs" />
+      <working_directory value="$PROJECT_DIR$/internal/user" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hardstylez72/bzdacs/internal/user" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestPassword\E$" />
+      <method v="2" />
+    </configuration>
     <configuration name="Test_tag_api in github.com/hardstylez72/bzdacs/tests/group" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bzdacs" />
       <working_directory value="$PROJECT_DIR$/tests/group" />
@@ -162,30 +189,20 @@
       <pattern value="^Test_tag_api$/^404$" />
       <method v="2" />
     </configuration>
-    <configuration name="go test github.com/hardstylez72/bzdacs/tests/system" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="bzdacs" />
-      <working_directory value="$PROJECT_DIR$/tests/system" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/hardstylez72/bzdacs/tests/system" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend" />
-      <item itemvalue="Go Test.go test github.com/hardstylez72/bzdacs/tests/system" />
       <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" />
       <item itemvalue="Go Test.Test_tag_api/404 in github.com/hardstylez72/bzdacs/tests/route" />
       <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/group" />
+      <item itemvalue="Go Test.TestPassword in github.com/hardstylez72/bzdacs/internal/user" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend" />
+        <item itemvalue="Go Test.TestPassword in github.com/hardstylez72/bzdacs/internal/user" />
         <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/group" />
         <item itemvalue="Go Test.Test_tag_api/404 in github.com/hardstylez72/bzdacs/tests/route" />
         <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" />
-        <item itemvalue="Go Test.go test github.com/hardstylez72/bzdacs/tests/system" />
       </list>
     </recent_temporary>
   </component>
@@ -238,7 +255,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add logout and fixes ui bugs" />
     <MESSAGE value="Changes default guest group" />
     <MESSAGE value="Fixed cfg for local deployment" />
     <MESSAGE value="Add update user func" />
@@ -263,7 +279,8 @@
     <MESSAGE value="Changes ui structure" />
     <MESSAGE value="Changes generation rules" />
     <MESSAGE value="Changes sys user domain" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes sys user domain" />
+    <MESSAGE value="Updates auth" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updates auth" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -295,6 +312,16 @@
           <url>file://$PROJECT_DIR$/pkg/util/response.go</url>
           <line>79</line>
           <option name="timeStamp" value="264" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/user/encripton.go</url>
+          <line>5</line>
+          <option name="timeStamp" value="277" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/user/encripton_test.go</url>
+          <line>15</line>
+          <option name="timeStamp" value="282" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

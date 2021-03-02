@@ -48,8 +48,12 @@ router.beforeEach((to, from, next) => {
     // Tries to go 404 url => redirect home
   } else if (!to.name) {
     next('Home');
-  } else if (to.name === from.name) {
-    next(false);
+  } else if (store.getters.sysUser.isAuthorized) {
+    if (to.name === 'Login' || to.name === 'Registration') {
+      next(false);
+    } else {
+      next();
+    }
   } else {
     next();
   }

@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip>
+  <v-tooltip bottom>
     <template v-slot:activator="{ on, attrs }">
       <div @click="updateRoute" v-on="on" style="cursor: pointer">
         <v-icon v-if="!item.isExcluded" >mdi-account-minus</v-icon>
@@ -17,6 +17,7 @@ import {
 } from 'vue-property-decorator';
 import { RouteWithGroups, UpdateUserRoute } from '@/user/services/userroute';
 import { User } from '@/user/entity';
+import { userRoutePair } from '@/user/generated';
 
 @Component
 export default class UpdateRouteButton extends Vue {
@@ -27,7 +28,7 @@ export default class UpdateRouteButton extends Vue {
   loading = false
 
   async updateRoute() {
-    const param: UpdateUserRoute = {
+    const param: userRoutePair = {
       isExcluded: !this.item.isExcluded,
       routeId: this.item.id,
       userId: this.userId,

@@ -60,10 +60,12 @@ import TablePagination from '../../common/components/TablePagination.vue';
   },
 })
 export default class TabRouteTable extends ItemTable<Tag> {
+  namespaceId = Number(this.$route.query.namespaceId)
+
   async loadItems() {
     return this.$store.direct.dispatch.tag.GetList({
       filter: {
-        namespaceId: this.queryParams.namespaceId,
+        namespaceId: this.namespaceId,
         page: this.page,
         pageSize: this.pageSize,
       },

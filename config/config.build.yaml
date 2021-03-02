@@ -9,6 +9,19 @@ user:
   login: admin
   #defauilt, can be overwritten by $BZDACS_PASSWORD env
   password: admin
+
+  SessionExpirationInSeconds: 600
+
+app:
+  system: BZDACS
+  namespace: internal
+  adminGroupName: admin
+  adminGroupDescription: internal admin system group, all grants
+
+  hasGuest: true
+  guestGroupName: guest
+  guestGroupDescription: internal guest system group, grants for views
+
 proxy:
   port: :8080
 ui:

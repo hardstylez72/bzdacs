@@ -73,10 +73,12 @@ export default class TapGroupTable extends ItemTable<Group> {
 },
   ]
 
+  namespaceId = Number(this.$route.query.namespaceId)
+
   async loadItems(): Promise<ListResponse<Group>> {
     return this.$store.direct.dispatch.group.GetList({
       filter: {
-        namespaceId: this.queryParams.namespaceId,
+        namespaceId: this.namespaceId,
         pageSize: this.pageSize,
         page: this.page,
       },

@@ -68,6 +68,7 @@ export default class CreateRouteDialog extends Vue {
   valid = false
 
   group: Group = {
+    namespaceId: 0,
     description: '',
     id: 0,
     code: '',

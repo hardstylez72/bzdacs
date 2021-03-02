@@ -29,7 +29,7 @@ func Auth(service *session.Service, user Repository) func(next http.Handler) htt
 			}
 
 			authFn := func(ctx context.Context, login string, password string) (context.Context, interface{}, error) {
-				u, err := user.GetByParams(ctx, login, Encode(password))
+				u, err := user.GetByParams(ctx, login, password)
 				if err != nil {
 					return nil, nil, err
 				}

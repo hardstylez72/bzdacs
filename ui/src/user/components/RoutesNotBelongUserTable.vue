@@ -74,12 +74,14 @@ import AddRoutesButton from './AddRoutesButton.vue';
 export default class RoutesNotBelongGroupTable extends ItemTable<Route> {
   @Prop() userId!: number
 
+  namespaceId = Number(this.$route.query.namespaceId)
+
   showSelect = true
 
   async loadItems(): Promise<ListResponse<Route>> {
     return this.$store.direct.dispatch.userRoute.GetList({
       filter: {
-        namespaceId: this.queryParams.namespaceId,
+        namespaceId: this.namespaceId,
         page: this.page,
         pageSize: this.pageSize,
         belongToUser: false,

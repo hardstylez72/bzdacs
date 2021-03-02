@@ -291,6 +291,7 @@ export default class TreeView extends Vue {
 
     return this.$router.push({
       name,
+      // @ts-ignore
       query: { ...this.formQueryParams(node.system, node.namespace), lang: this.$route.query.lang },
     });
   }
