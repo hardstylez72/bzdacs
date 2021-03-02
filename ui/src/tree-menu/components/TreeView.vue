@@ -87,7 +87,7 @@ export default class TreeView extends Vue {
   createNewNamespaceBtn(system: System): Node {
     return {
       id: this.generateRandom(),
-      name: 'Новое пространство имен',
+      name: this.$t('new-namespace').toString(),
       type: 'createNewNamespaceBtn',
       color: 'green',
       testId: `${system.name}_createNewNamespaceBtn`,
@@ -97,7 +97,7 @@ export default class TreeView extends Vue {
 
   createNewSystemBtn: Node ={
     id: 'createNewSystemBtn',
-    name: 'Новая система',
+    name: this.$t('new-system').toString(),
     type: 'createNewSystemBtn',
     testId: 'createNewSystemBtn',
     color: 'green',
@@ -342,3 +342,16 @@ async created() {
   background: aliceblue;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "new-system": "New system",
+    "new-namespace": "New service"
+  },
+  "ru": {
+    "new-system": "Новая система",
+    "new-namespace": "Новый сервис"
+  }
+}
+</i18n>

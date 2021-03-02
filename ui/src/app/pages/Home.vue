@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1>Добро пожаловать в систему управления доступом BZDACS</h1>
-    <h2><- Для начала работы выберите систему или создайте новую</h2>
+  <div style="opacity: 0.7">
+    <h1>{{$t('welcome')}}</h1>
+    <h2>{{$t('hint')}}</h2>
   </div>
 </template>
 
@@ -19,3 +19,15 @@ export default class Home extends Vue {
 <style scoped lang="scss">
 
 </style>
+<i18n>
+{
+  "en": {
+    "welcome": "Welcome to access control system BZDACS",
+    "hint": "<- To start create a system and service"
+  },
+  "ru": {
+    "welcome": "Добро пожаловать в систему управления доступом BZDACS",
+    "hint": "<- Для начала работы создайте систему и сервис"
+  }
+}
+</i18n>

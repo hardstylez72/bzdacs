@@ -58,19 +58,19 @@ export default class NamespaceForm<T extends SimpleEntity> extends Vue {
 }
 </script>
 
-<i18n>
-{
-  "en": {
-    "label": {
-      "name": "Namespace"
-    },
-    "required": "Required"
-  },
-  "ru": {
-    "label": {
-      "name": "Пространство имен"
-    },
-    "required": "Обязательное поле"
-  }
-}
-</i18n>
+<!--<i18n>-->
+<!--{-->
+<!--  "en": {-->
+<!--    "label": {-->
+<!--      "name": "Namespace"-->
+<!--    },-->
+<!--    "required": "Required"-->
+<!--  },-->
+<!--  "ru": {-->
+<!--    "label": {-->
+<!--      "name": "Пространство имен"-->
+<!--    },-->
+<!--    "required": "Обязательное поле"-->
+<!--  }-->
+<!--}-->
+<!--</i18n>-->
