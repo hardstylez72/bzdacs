@@ -6,6 +6,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	acsmw "github.com/hardstylez72/bzdacs-go"
+	"github.com/hardstylez72/bzdacs/config"
 	"github.com/hardstylez72/bzdacs/internal/session"
 	sysuser "github.com/hardstylez72/bzdacs/internal/user"
 	"github.com/hardstylez72/bzdacs/internal/warmup"
@@ -65,15 +66,19 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan str
 
 	err := s.Start(r)
 	if err != nil {
+		log.Error("error while launching internal services", err)
 		return err
 	}
+	log.Info("internal services successfully launched")
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 	err = warmup.Init(ctx, buildRoutes(r))
 	if err != nil {
+		log.Error("error while warmup", err)
 		return err
 	}
+	log.Info("warmup successfully finished")
 
 	httpServer := &http.Server{
 		Addr:    viper.GetString("backend.port"),
@@ -107,7 +112,7 @@ func extractAuthorizationParams(req *http.Request) *acsmw.InputParams {
 
 func (s *Server) Start(r chi.Router) error {
 
-	pg, err := storage.NewPGConnection(viper.GetString("database.postgres"))
+	pg, err := storage.NewPGConnection(config.GetPostgresConn())
 	if err != nil {
 		return err
 	}
@@ -140,16 +145,15 @@ func (s *Server) Start(r chi.Router) error {
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Mount(apiPathPrefix, r)
 
-	host := "http://localhost" + viper.GetString("backend.port")
 	swaggerUrl := "/swagger/source"
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
 			private.Use(sysuser.Auth(sessionService, s.repository.sysuser))
-			private.Use(acsmw.AccessCheck(host, extractAuthorizationParams))
-			public.Get("/swagger/*", httpSwagger.Handler(httpSwagger.URL(host+swaggerUrl)))
+			private.Use(acsmw.AccessCheck(config.GetBackendHost(), extractAuthorizationParams))
+			public.Get("/swagger/*", httpSwagger.Handler())
 			public.Get(swaggerUrl, getSwaggerSource)
 
-			sysuser.NewController(s.repository.sysuser, sessionService).Mount(private, public)
+			sysuser.NewController(s.repository.sysuser, sessionService).Mount(public)
 			acs.NewController(s.repository.user, s.repository.acs, s.repository.namespace, s.repository.system).Mount(public)
 
 			namespace.NewController(s.repository.namespace).Mount(private)

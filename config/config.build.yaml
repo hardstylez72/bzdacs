@@ -1,16 +1,24 @@
 env: "prod"
+host: http://localhost:8080
 backend:
   port: :4000
+proxy:
+  port: :8080
+ui:
+  path: /opt/bzdacs/ui
+#  path: /home/hs/go/src/github.com/hardstylez72/bzdacs/ui/dist
+  port: :3000
+
 database:
   #defauilt, can be overwritten by $BZDACS_POSTGRES env
-  postgres: "host=postgres port=5432 user=postgres password=postgres dbname=postgres sslmode=disable"
+  postgres: "host=localhost port=6667 user=postgres password=postgres dbname=postgres sslmode=disable"
 user:
   #defauilt, can be overwritten by $BZDACS_LOGIN env
   login: admin
   #defauilt, can be overwritten by $BZDACS_PASSWORD env
   password: admin
-
-  SessionExpirationInSeconds: 600
+  #defauilt, can be overwritten by $BZDACS_SESSION_LIFETIME_IN_SECONDS env
+  sessionExpirationInSeconds: 600
 
 app:
   system: BZDACS
@@ -22,10 +30,6 @@ app:
   guestGroupName: guest
   guestGroupDescription: internal guest system group, grants for views
 
-proxy:
-  port: :8080
-ui:
- path: /opt/bzdacs/ui
- port: :3000
+
 
 

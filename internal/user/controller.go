@@ -41,9 +41,9 @@ func (c *controller) logout(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Send()
 }
 
-func (c *controller) Mount(private, public chi.Router) {
+func (c *controller) Mount(public chi.Router) {
 	public.Post("/v1/sys-user/register", c.register)
 	public.Post("/v1/sys-user/login", c.login)
 	public.Post("/v1/sys-user/session", c.session)
-	private.Post("/v1/sys-user/logout", c.logout)
+	public.Post("/v1/sys-user/logout", c.logout)
 }

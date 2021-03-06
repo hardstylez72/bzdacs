@@ -1,4 +1,5 @@
 env: dev
+host: http://localhost:4000
 backend:
   port: :4000
 database:
@@ -6,7 +7,7 @@ database:
 user:
   login: hs
   password: 1234
-  SessionExpirationInSeconds: 600
+  sessionExpirationInSeconds: 600
 app:
   system: BZDACS
   namespace: internal

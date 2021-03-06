@@ -4,7 +4,9 @@ import (
 	"flag"
 	"github.com/go-chi/chi"
 	"github.com/hardstylez72/bzdacs/config"
+	"github.com/hardstylez72/bzdacs/generated"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
+	"strings"
 	"time"
 
 	"github.com/spf13/viper"
@@ -67,6 +69,8 @@ func (s *Server) Run() error {
 	//if err != nil {
 	//	return err
 	//}
+
+	generated.SwaggerInfo.Host = strings.ReplaceAll(config.GetHost(), "http://", "")
 
 	done := make(chan struct{})
 	ready := make(chan struct{})

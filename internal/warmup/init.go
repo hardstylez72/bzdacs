@@ -2,6 +2,7 @@ package warmup
 
 import (
 	"context"
+	"github.com/hardstylez72/bzdacs/config"
 	sysuser "github.com/hardstylez72/bzdacs/internal/user"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/route"
@@ -44,7 +45,7 @@ func Init(ctx context.Context, routes []route.Route) error {
 	AdminPassword = viper.GetString("user.password")
 	SessionExpirationInSeconds = viper.GetInt("user.sessionExpirationInSeconds")
 
-	pg, err := storage.NewPGConnection(viper.GetString("database.postgres"))
+	pg, err := storage.NewPGConnection(config.GetPostgresConn())
 	if err != nil {
 		return err
 	}
