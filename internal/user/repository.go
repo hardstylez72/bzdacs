@@ -2,14 +2,13 @@ package user
 
 import (
 	"context"
+	"github.com/hardstylez72/bzdacs/config"
 	"github.com/hardstylez72/bzdacs/pkg/group"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/namespace"
 	"github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
 	"github.com/hardstylez72/bzdacs/pkg/system"
 	"github.com/hardstylez72/bzdacs/pkg/user"
-	"github.com/spf13/viper"
-
 	"github.com/jmoiron/sqlx"
 )
 
@@ -38,23 +37,19 @@ func (r *repository) Insert(ctx context.Context, u *SysUser) (*SysUser, error) {
 		return nil, err
 	}
 
-	SystemName := viper.GetString("app.system")
-	Namespace := viper.GetString("app.namespace")
-	GuestGroupName := viper.GetString("app.guestGroupName")
-	HasGuest := viper.GetBool("app.hasGuest")
-	AdminLogin := viper.GetString("user.login")
+	internal := config.GetInternal()
 
-	if AdminLogin == u.Login {
+	if internal.AdminLogin == u.Login {
 		return sysUser, nil
 	}
 
-	if HasGuest {
-		s, err := system.Get(ctx, txx, 0, SystemName)
+	if internal.HasGuest {
+		s, err := system.Get(ctx, txx, 0, internal.System)
 		if err != nil {
 			return nil, err
 		}
 
-		ns, err := namespace.Get(ctx, txx, s.Id, 0, Namespace)
+		ns, err := namespace.Get(ctx, txx, s.Id, 0, internal.Namespace)
 		if err != nil {
 			return nil, err
 		}
@@ -67,7 +62,7 @@ func (r *repository) Insert(ctx context.Context, u *SysUser) (*SysUser, error) {
 			return nil, err
 		}
 
-		g, err := group.GetByCode(ctx, txx, GuestGroupName, ns.Id)
+		g, err := group.GetByCode(ctx, txx, internal.GuestGroup.Name, ns.Id)
 		if err != nil {
 			return nil, err
 		}

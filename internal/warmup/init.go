@@ -6,7 +6,6 @@ import (
 	sysuser "github.com/hardstylez72/bzdacs/internal/user"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/route"
-	"github.com/spf13/viper"
 	"strings"
 	"time"
 )
@@ -33,17 +32,17 @@ type Config struct {
 }
 
 func Init(ctx context.Context, routes []route.Route) error {
-
-	SystemName = viper.GetString("app.system")
-	Namespace = viper.GetString("app.namespace")
-	AdminGroupName = viper.GetString("app.adminGroupName")
-	AdminGroupDescription = viper.GetString("app.adminGroupDescription")
-	GuestGroupName = viper.GetString("app.guestGroupName")
-	GuestGroupDescription = viper.GetString("app.guestGroupDescription")
-	HasGuest = viper.GetBool("app.hasGuest")
-	AdminLogin = viper.GetString("user.login")
-	AdminPassword = viper.GetString("user.password")
-	SessionExpirationInSeconds = viper.GetInt("user.sessionExpirationInSeconds")
+	internal := config.GetInternal()
+	SystemName = internal.System
+	Namespace = internal.Namespace
+	AdminGroupName = internal.AdminGroup.Name
+	AdminGroupDescription = internal.AdminGroup.Description
+	GuestGroupName = internal.GuestGroup.Name
+	GuestGroupDescription = internal.GuestGroup.Description
+	HasGuest = internal.HasGuest
+	AdminLogin = internal.AdminLogin
+	AdminPassword = internal.AdminPassword
+	SessionExpirationInSeconds = internal.SessionExpirationInSeconds
 
 	pg, err := storage.NewPGConnection(config.GetPostgresConn())
 	if err != nil {

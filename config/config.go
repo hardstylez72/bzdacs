@@ -14,7 +14,7 @@ func Load(filePath string) error {
 		return err
 	}
 
-	if viper.Get("env") == "prod" {
+	if IsProd() {
 		login := os.Getenv("BZDACS_LOGIN")
 		if login != "" {
 			viper.Set("user.login", login)
@@ -46,14 +46,6 @@ func Load(filePath string) error {
 	return nil
 }
 
-func GetHost() string {
-	return viper.GetString("host")
-}
-
-func GetBackendHost() string {
-	return "http://localhost" + viper.GetString("backend.port")
-}
-
-func GetPostgresConn() string {
-	return viper.GetString("database.postgres")
+func IsProd() bool {
+	return viper.GetString("env") == "prod"
 }

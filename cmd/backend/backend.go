@@ -22,7 +22,6 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/system"
 	"github.com/hardstylez72/bzdacs/pkg/tag"
 	"github.com/hardstylez72/bzdacs/pkg/user"
-	"github.com/spf13/viper"
 	"github.com/swaggo/http-swagger"
 	"go.uber.org/zap"
 	"io/ioutil"
@@ -81,11 +80,11 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan str
 	log.Info("warmup successfully finished")
 
 	httpServer := &http.Server{
-		Addr:    viper.GetString("backend.port"),
+		Addr:    config.GetBackend().Port,
 		Handler: r,
 	}
 
-	log.Info("app is successfully running on port " + viper.GetString("backend.port"))
+	log.Info("app is successfully running on port " + config.GetBackend().Port)
 
 	go func() {
 		err = httpServer.ListenAndServe()
@@ -149,8 +148,8 @@ func (s *Server) Start(r chi.Router) error {
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
 			private.Use(sysuser.Auth(sessionService, s.repository.sysuser))
-			private.Use(acsmw.AccessCheck(config.GetBackendHost(), extractAuthorizationParams))
-			public.Get("/swagger/*", httpSwagger.Handler())
+			private.Use(acsmw.AccessCheck(config.GetBackend().Host, extractAuthorizationParams))
+			public.Get("/swagger/*", httpSwagger.Handler(httpSwagger.URL(config.GetApp().Host+apiPathPrefix+swaggerUrl)))
 			public.Get(swaggerUrl, getSwaggerSource)
 
 			sysuser.NewController(s.repository.sysuser, sessionService).Mount(public)

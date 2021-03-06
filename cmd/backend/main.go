@@ -6,10 +6,8 @@ import (
 	"github.com/hardstylez72/bzdacs/config"
 	"github.com/hardstylez72/bzdacs/generated"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
-	"strings"
 	"time"
 
-	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"log"
 )
@@ -70,17 +68,16 @@ func (s *Server) Run() error {
 	//	return err
 	//}
 
-	generated.SwaggerInfo.Host = strings.ReplaceAll(config.GetHost(), "http://", "")
+	generated.SwaggerInfo.Host = config.GetApp().Domain
 
 	done := make(chan struct{})
 	ready := make(chan struct{})
 
-	if viper.GetString("env") == "prod" {
-
-		proxyPort := viper.GetString("proxy.port")
-		staticServerHost := "http://localhost" + viper.GetString("ui.port")
-		pathToStaticFiles := viper.GetString("ui.path")
-		apiServerHost := "http://localhost" + viper.GetString("backend.port")
+	if config.IsProd() {
+		proxyPort := config.GetProxy().Port
+		staticServerHost := config.GetStaticServer().Host
+		pathToStaticFiles := config.GetStaticServer().Path
+		backendServerHost := config.GetBackend().Host
 		go func() {
 			err := startStaticServer(staticServerHost, pathToStaticFiles, done)
 			if err != nil {
@@ -90,7 +87,7 @@ func (s *Server) Run() error {
 		}()
 
 		go func() {
-			err = startProxyServer(apiServerHost, staticServerHost, proxyPort, done)
+			err = startProxyServer(backendServerHost, staticServerHost, proxyPort, done)
 			if err != nil {
 				done <- struct{}{}
 				log.Fatal(err)

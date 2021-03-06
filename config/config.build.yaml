@@ -12,15 +12,15 @@ ui:
 database:
   #defauilt, can be overwritten by $BZDACS_POSTGRES env
   postgres: "host=localhost port=6667 user=postgres password=postgres dbname=postgres sslmode=disable"
-user:
+
+internal:
   #defauilt, can be overwritten by $BZDACS_LOGIN env
-  login: admin
+  login: hs
   #defauilt, can be overwritten by $BZDACS_PASSWORD env
-  password: admin
+  password: 1234
   #defauilt, can be overwritten by $BZDACS_SESSION_LIFETIME_IN_SECONDS env
   sessionExpirationInSeconds: 600
 
-app:
   system: BZDACS
   namespace: internal
   adminGroupName: admin
@@ -28,8 +28,7 @@ app:
 
   hasGuest: true
   guestGroupName: guest
-  guestGroupDescription: internal guest system group, grants for views
-
+  guestGroupDescription: internal guest system group, grunts for views
 
 
 

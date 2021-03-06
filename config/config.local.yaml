@@ -4,11 +4,13 @@ backend:
   port: :4000
 database:
   postgres: host=localhost port=6667 user=postgres password=postgres dbname=postgres sslmode=disable
-user:
+
+internal:
   login: hs
   password: 1234
+
   sessionExpirationInSeconds: 600
-app:
+
   system: BZDACS
   namespace: internal
   adminGroupName: admin
