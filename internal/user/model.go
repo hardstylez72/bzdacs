@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type User struct {
+type SysUser struct {
 	Id        int               `json:"id" db:"id"  validate:"required"`
 	Login     string            `json:"login" db:"login"  validate:"required"`
 	Password  string            `json:"password" db:"password" validate:"required"`

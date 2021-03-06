@@ -5,16 +5,16 @@ import { defineModule } from 'direct-vuex';
 
 import { client } from '@/app/util/requester';
 import {
-  serviceOptions, userGroupPair,
+  serviceOptions,
   userRouteListRequest,
-  userRoutePair, userRoutePairToDelete, userRouteRoute,
+  userRoutePair, userRoutePairToDelete,
   userRouteRouteWithGroups,
   UserRouteService,
   userRouteUpdateResponse,
 } from '@/user/generated';
 
 import { ListResponse } from '@/common/helpers/types';
-import { moduleActionContext } from '../../app/store';
+import { moduleActionContext } from '@/app/store';
 
 serviceOptions.axios = client;
 
@@ -36,7 +36,7 @@ const module = defineModule({
       const { state } = actionContext(context);
       return state.service.userRouteList({ req });
     },
-    async Create(context, pairs: userRoutePair[]): Promise<userRouteRoute[]> {
+    async Create(context, pairs: userRoutePair[]): Promise<userRouteRouteWithGroups[]> {
       const { state } = actionContext(context);
       return state.service.userRouteCreate({ req: { pairs } });
     },

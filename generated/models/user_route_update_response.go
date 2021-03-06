@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -29,6 +30,10 @@ type UserRouteUpdateResponse struct {
 	// description
 	// Required: true
 	Description *string `json:"description"`
+
+	// groups
+	// Required: true
+	Groups []*UserrouteGroup `json:"groups"`
 
 	// id
 	// Required: true
@@ -68,6 +73,10 @@ func (m *UserRouteUpdateResponse) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDescription(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateGroups(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -118,6 +127,31 @@ func (m *UserRouteUpdateResponse) validateDescription(formats strfmt.Registry) e
 
 	if err := validate.Required("description", "body", m.Description); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *UserRouteUpdateResponse) validateGroups(formats strfmt.Registry) error {
+
+	if err := validate.Required("groups", "body", m.Groups); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(m.Groups); i++ {
+		if swag.IsZero(m.Groups[i]) { // not required
+			continue
+		}
+
+		if m.Groups[i] != nil {
+			if err := m.Groups[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("groups" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -186,8 +220,35 @@ func (m *UserRouteUpdateResponse) validateUpdatedAt(formats strfmt.Registry) err
 	return nil
 }
 
-// ContextValidate validates this user route update response based on context it is used
+// ContextValidate validate this user route update response based on the context it is used
 func (m *UserRouteUpdateResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateGroups(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UserRouteUpdateResponse) contextValidateGroups(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Groups); i++ {
+
+		if m.Groups[i] != nil {
+			if err := m.Groups[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("groups" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

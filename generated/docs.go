@@ -1976,7 +1976,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/userRouteRoute"
+                                "$ref": "#/definitions/userRouteRouteWithGroups"
                             }
                         }
                     },
@@ -3390,56 +3390,6 @@ var doc = `{
                 }
             }
         },
-        "userRouteRoute": {
-            "type": "object",
-            "required": [
-                "createdAt",
-                "description",
-                "id",
-                "isExcluded",
-                "method",
-                "namespaceId",
-                "route",
-                "tags",
-                "updatedAt"
-            ],
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "type": "string",
-                    "x-nullable": true
-                },
-                "description": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "isExcluded": {
-                    "type": "boolean"
-                },
-                "method": {
-                    "type": "string"
-                },
-                "namespaceId": {
-                    "type": "integer"
-                },
-                "route": {
-                    "type": "string"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
         "userRouteRouteWithGroups": {
             "type": "object",
             "required": [
@@ -3502,6 +3452,7 @@ var doc = `{
             "required": [
                 "createdAt",
                 "description",
+                "groups",
                 "id",
                 "isExcluded",
                 "method",
@@ -3520,6 +3471,12 @@ var doc = `{
                 },
                 "description": {
                     "type": "string"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userroute.Group"
+                    }
                 },
                 "id": {
                     "type": "integer"

@@ -18,7 +18,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
 	github.com/google/uuid v1.1.1
-	//github.com/hardstylez72/bzdacs-go v0.1.3
+	github.com/hardstylez72/bzdacs-go v0.1.4
 	github.com/jackc/pgconn v1.8.0
 	github.com/jackc/pgx/v4 v4.10.1
 	github.com/jmoiron/sqlx v1.3.1

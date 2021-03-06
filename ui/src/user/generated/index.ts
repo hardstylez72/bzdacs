@@ -298,7 +298,7 @@ export class UserRouteService {
       req: userRouteInsertRequest;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<userRouteRoute[]> {
+  ): Promise<userRouteRouteWithGroups[]> {
     return new Promise((resolve, reject) => {
       let url = basePath + '/v1/user/route/create';
 
@@ -567,38 +567,6 @@ export interface userRoutePairToDelete {
   userId: number;
 }
 
-export interface userRouteRoute {
-  /**  */
-  createdAt: string;
-
-  /**  */
-  deletedAt?: string;
-
-  /**  */
-  description: string;
-
-  /**  */
-  id: number;
-
-  /**  */
-  isExcluded: boolean;
-
-  /**  */
-  method: string;
-
-  /**  */
-  namespaceId: number;
-
-  /**  */
-  route: string;
-
-  /**  */
-  tags: string[];
-
-  /**  */
-  updatedAt: string;
-}
-
 export interface userRouteRouteWithGroups {
   /**  */
   createdAt: string;
@@ -643,6 +611,9 @@ export interface userRouteUpdateResponse {
 
   /**  */
   description: string;
+
+  /**  */
+  groups: userroute_Group[];
 
   /**  */
   id: number;

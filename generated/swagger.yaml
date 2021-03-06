@@ -817,42 +817,6 @@ definitions:
     - routeId
     - userId
     type: object
-  userRouteRoute:
-    properties:
-      createdAt:
-        type: string
-      deletedAt:
-        type: string
-        x-nullable: true
-      description:
-        type: string
-      id:
-        type: integer
-      isExcluded:
-        type: boolean
-      method:
-        type: string
-      namespaceId:
-        type: integer
-      route:
-        type: string
-      tags:
-        items:
-          type: string
-        type: array
-      updatedAt:
-        type: string
-    required:
-    - createdAt
-    - description
-    - id
-    - isExcluded
-    - method
-    - namespaceId
-    - route
-    - tags
-    - updatedAt
-    type: object
   userRouteRouteWithGroups:
     properties:
       createdAt:
@@ -903,6 +867,10 @@ definitions:
         x-nullable: true
       description:
         type: string
+      groups:
+        items:
+          $ref: '#/definitions/userroute.Group'
+        type: array
       id:
         type: integer
       isExcluded:
@@ -922,6 +890,7 @@ definitions:
     required:
     - createdAt
     - description
+    - groups
     - id
     - isExcluded
     - method
@@ -2288,7 +2257,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/userRouteRoute'
+              $ref: '#/definitions/userRouteRouteWithGroups'
             type: array
         "400":
           description: Bad Request

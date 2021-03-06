@@ -1,4 +1,4 @@
-package user
+package user // @name user
 
 import (
 	"context"
@@ -247,7 +247,7 @@ func (c *controller) delete(w http.ResponseWriter, r *http.Request) {
 	util.NewResp(w, r).Status(http.StatusOK).Send()
 }
 
-func (c *controller) Mount(private, public chi.Router) {
+func (c *controller) Mount(private chi.Router) {
 	private.Post("/v1/user/list", c.list)
 	private.Post("/v1/user/getById", c.getById)
 	private.Post("/v1/user/getByLogin", c.getByLogin)

@@ -71,11 +71,11 @@ func Update(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, err
 	return &g, nil
 }
 
-func (r *repository) Insert(ctx context.Context, namespace *System) (*System, error) {
-	return Insert(ctx, r.conn, namespace)
+func (r *repository) Insert(ctx context.Context, system *System) (*System, error) {
+	return Insert(ctx, r.conn, system)
 }
 
-func Insert(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, error) {
+func Insert(ctx context.Context, driver storage.SqlDriver, system *System) (*System, error) {
 	query := `
 insert into systems (
                        name,
@@ -95,7 +95,7 @@ insert into systems (
                                deleted_at;
 `
 
-	rows, err := conn.NamedQueryContext(ctx, query, namespace)
+	rows, err := driver.NamedQueryContext(ctx, query, system)
 	if err != nil {
 		return nil, storage.PgError(err)
 	}
@@ -138,6 +138,7 @@ func Get(ctx context.Context, driver storage.SqlDriver, id int, name string) (*S
 	if err != nil {
 		return nil, err
 	}
+	query += ";"
 
 	var system System
 	err = driver.GetContext(ctx, &system, query, args...)

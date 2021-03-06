@@ -10,9 +10,9 @@ import (
 )
 
 type Repository interface {
-	GetById(ctx context.Context, id, namespaceId int) (*User, error)
-	GetByParams(ctx context.Context, login, password string) (*User, error)
-	Insert(ctx context.Context, user *User) (*User, error)
+	GetById(ctx context.Context, id, namespaceId int) (*SysUser, error)
+	GetByParams(ctx context.Context, login, password string) (*SysUser, error)
+	Insert(ctx context.Context, user *SysUser) (*SysUser, error)
 }
 
 type controller struct {

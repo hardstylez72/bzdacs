@@ -2,10 +2,10 @@ package user
 
 import (
 	"encoding/json"
-	"github.com/hardstylez72/bzdacs/internal"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/pkg/errors"
+	"github.com/spf13/viper"
 	"net/http"
 	"time"
 )
@@ -63,8 +63,7 @@ func (c *controller) login(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
-	expiresInSeconds := internal.SessionExpirationInSeconds
+	expiresInSeconds := viper.GetInt("user.sessionExpirationInSeconds")
 	session := c.sessionService.GenerateSession(u.Login, req.Password, time.Now().Add(time.Duration(expiresInSeconds)*time.Second))
 	token, err := c.sessionService.Set(session)
 	if err != nil {

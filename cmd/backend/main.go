@@ -1,13 +1,10 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"github.com/go-chi/chi"
 	"github.com/hardstylez72/bzdacs/config"
-	"github.com/hardstylez72/bzdacs/internal"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
-	"github.com/hardstylez72/bzdacs/pkg/route"
 	"time"
 
 	"github.com/spf13/viper"
@@ -97,9 +94,8 @@ func (s *Server) Run() error {
 		}()
 	}
 
-	var routes *[]route.Route
 	go func() {
-		routes, err = s.startBackendServer(s.log, done, ready)
+		err = s.startBackendServer(s.log, done, ready)
 		if err != nil {
 			done <- struct{}{}
 			log.Fatal(err)
@@ -109,10 +105,6 @@ func (s *Server) Run() error {
 	go func() {
 		<-ready
 		time.Sleep(time.Millisecond * 100)
-		err = internal.Init(context.Background(), routes)
-		if err != nil {
-			done <- struct{}{}
-		}
 	}()
 
 	<-done

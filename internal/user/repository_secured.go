@@ -13,7 +13,7 @@ func NewSecurityGuard(rep Repository) *secRepository {
 	return &secRepository{rep: rep}
 }
 
-func (r *secRepository) Insert(ctx context.Context, user *User) (*User, error) {
+func (r *secRepository) Insert(ctx context.Context, user *SysUser) (*SysUser, error) {
 	encPassword, err := Encrypt(user.Password)
 	if err != nil {
 		return nil, err
@@ -28,7 +28,7 @@ func (r *secRepository) Insert(ctx context.Context, user *User) (*User, error) {
 
 	return u, nil
 }
-func (r *secRepository) GetByParams(ctx context.Context, login, password string) (*User, error) {
+func (r *secRepository) GetByParams(ctx context.Context, login, password string) (*SysUser, error) {
 
 	encPassword, err := Encrypt(password)
 	if err != nil {
@@ -48,7 +48,7 @@ func (r *secRepository) GetByParams(ctx context.Context, login, password string)
 
 	return u, nil
 }
-func (r *secRepository) GetById(ctx context.Context, id, namespaceId int) (*User, error) {
+func (r *secRepository) GetById(ctx context.Context, id, namespaceId int) (*SysUser, error) {
 	u, err := r.rep.GetById(ctx, id, namespaceId)
 	if err != nil {
 		return nil, err

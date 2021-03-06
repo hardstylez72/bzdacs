@@ -1,9 +1,9 @@
-package internal
+package warmup
 
 import (
 	"context"
-	libc "github.com/go-openapi/runtime/client"
-	"github.com/hardstylez72/bzdacs/generated/client"
+	sysuser "github.com/hardstylez72/bzdacs/internal/user"
+	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/route"
 	"github.com/spf13/viper"
 	"strings"
@@ -31,7 +31,7 @@ type Config struct {
 	Timeout  time.Duration
 }
 
-func Init(ctx context.Context, routes *[]route.Route) error {
+func Init(ctx context.Context, routes []route.Route) error {
 
 	SystemName = viper.GetString("app.system")
 	Namespace = viper.GetString("app.namespace")
@@ -44,80 +44,75 @@ func Init(ctx context.Context, routes *[]route.Route) error {
 	AdminPassword = viper.GetString("user.password")
 	SessionExpirationInSeconds = viper.GetInt("user.sessionExpirationInSeconds")
 
-	c := GetClient()
-
-	err := registerUser(ctx, c, AdminLogin, AdminPassword)
+	pg, err := storage.NewPGConnection(viper.GetString("database.postgres"))
 	if err != nil {
 		return err
 	}
 
-	s, err := resolveSystem(ctx, c, SystemName)
+	pgx, err := storage.WrapPgConnWithSqlx(pg)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = pgx.Close() }()
+
+	sysUserRepository := sysuser.NewSecurityGuard(sysuser.NewRepository(pgx))
+
+	err = registerUser(ctx, sysUserRepository, AdminLogin, AdminPassword)
 	if err != nil {
 		return err
 	}
 
-	ns, err := resolveNamespace(ctx, c, Namespace, s.Id)
+	s, err := resolveSystem(ctx, pgx, SystemName)
 	if err != nil {
 		return err
 	}
 
-	u, err := resolveUser(ctx, c, AdminLogin, ns.Id)
+	ns, err := resolveNamespace(ctx, pgx, Namespace, s.Id)
 	if err != nil {
 		return err
 	}
 
-	rs, err := resolveRoutes(ctx, c, *routes, ns.Id)
+	u, err := resolveUser(ctx, pgx, AdminLogin, ns.Id)
 	if err != nil {
 		return err
 	}
 
-	g, err := resolveGroup(ctx, c, AdminGroupName, AdminGroupDescription, ns.Id)
+	rs, err := resolveRoutes(ctx, pgx, routes, ns.Id)
 	if err != nil {
 		return err
 	}
 
-	err = resolveGroupAndRoutes(ctx, c, g, rs)
+	g, err := resolveGroup(ctx, pgx, AdminGroupName, AdminGroupDescription, ns.Id)
 	if err != nil {
 		return err
 	}
 
-	err = resolveUserAndGroup(ctx, c, g, u)
+	err = resolveGroupAndRoutes(ctx, pgx, g, rs)
+	if err != nil {
+		return err
+	}
+
+	err = resolveUserAndGroup(ctx, pgx, g, u)
 	if err != nil {
 		return err
 	}
 
 	if HasGuest {
-		guestRoutes, err := resolveRoutes(ctx, c, filterGuestRoutes(*routes), ns.Id)
+		guestRoutes, err := resolveRoutes(ctx, pgx, filterGuestRoutes(routes), ns.Id)
 		if err != nil {
 			return err
 		}
-		guestGroup, err := resolveGroup(ctx, c, GuestGroupName, GuestGroupDescription, ns.Id)
+		guestGroup, err := resolveGroup(ctx, pgx, GuestGroupName, GuestGroupDescription, ns.Id)
 		if err != nil {
 			return err
 		}
-		err = resolveGroupAndRoutes(ctx, c, guestGroup, guestRoutes)
+		err = resolveGroupAndRoutes(ctx, pgx, guestGroup, guestRoutes)
 		if err != nil {
 			return err
 		}
 	}
 
 	return nil
-}
-
-func GetConfig() *Config {
-	return &Config{
-		Host:     "localhost:4000",
-		BasePath: "/api",
-		Login:    AdminLogin,
-		Password: AdminPassword,
-		Timeout:  time.Second * 10,
-	}
-}
-
-func GetClient() *client.BZDACS {
-	transport := libc.New(GetConfig().Host, GetConfig().BasePath, nil)
-	transport.DefaultAuthentication = libc.BasicAuth(GetConfig().Login, GetConfig().Password)
-	return client.New(transport, nil)
 }
 
 func filterGuestRoutes(in []route.Route) []route.Route {

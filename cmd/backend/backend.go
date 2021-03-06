@@ -1,15 +1,14 @@
 package main
 
 import (
+	"context"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
-	"github.com/hardstylez72/bzdacs/internal"
-
-	//acsmw "github.com/hardstylez72/bzdacs-go"
-	acsmw "github.com/hardstylez72/bzdacs/asc"
+	acsmw "github.com/hardstylez72/bzdacs-go"
 	"github.com/hardstylez72/bzdacs/internal/session"
 	sysuser "github.com/hardstylez72/bzdacs/internal/user"
+	"github.com/hardstylez72/bzdacs/internal/warmup"
 	"github.com/hardstylez72/bzdacs/pkg/acs"
 	"github.com/hardstylez72/bzdacs/pkg/group"
 	"github.com/hardstylez72/bzdacs/pkg/infra/logger"
@@ -51,7 +50,7 @@ type Server struct {
 	}
 }
 
-func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan struct{}) (*[]route.Route, error) {
+func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan struct{}) error {
 	log.Info("app is initializing")
 
 	r := chi.NewRouter()
@@ -66,7 +65,14 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan str
 
 	err := s.Start(r)
 	if err != nil {
-		return nil, err
+		return err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+	err = warmup.Init(ctx, buildRoutes(r))
+	if err != nil {
+		return err
 	}
 
 	httpServer := &http.Server{
@@ -85,16 +91,16 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan str
 	}()
 
 	ready <- struct{}{}
-	routes := buildRoutes(r)
-	return &routes, nil
+
+	return nil
 }
 
 func extractAuthorizationParams(req *http.Request) *acsmw.InputParams {
 	return &acsmw.InputParams{
 		Login:       sysuser.GetLoginFromContext(req.Context()),
 		Route:       req.RequestURI,
-		Namespace:   internal.Namespace,
-		System:      internal.SystemName,
+		Namespace:   warmup.Namespace,
+		System:      warmup.SystemName,
 		RouteMethod: req.Method,
 	}
 }
@@ -152,7 +158,7 @@ func (s *Server) Start(r chi.Router) error {
 			route.NewController(s.repository.route).Mount(private)
 			group.NewController(s.repository.group).Mount(private)
 			grouproute.NewController(s.repository.grouproute).Mount(private)
-			user.NewController(s.repository.user, s.repository.group, s.repository.usergroup).Mount(private, public)
+			user.NewController(s.repository.user, s.repository.group, s.repository.usergroup).Mount(private)
 			usergroup.NewController(s.repository.usergroup).Mount(private)
 			userroute.NewController(s.repository.userroute).Mount(private)
 		})

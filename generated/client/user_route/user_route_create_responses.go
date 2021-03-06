@@ -56,13 +56,13 @@ func NewUserRouteCreateOK() *UserRouteCreateOK {
 OK
 */
 type UserRouteCreateOK struct {
-	Payload []*models.UserRouteRoute
+	Payload []*models.UserRouteRouteWithGroups
 }
 
 func (o *UserRouteCreateOK) Error() string {
 	return fmt.Sprintf("[POST /v1/user/route/create][%d] userRouteCreateOK  %+v", 200, o.Payload)
 }
-func (o *UserRouteCreateOK) GetPayload() []*models.UserRouteRoute {
+func (o *UserRouteCreateOK) GetPayload() []*models.UserRouteRouteWithGroups {
 	return o.Payload
 }
 
