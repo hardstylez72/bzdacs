@@ -45,6 +45,14 @@ func main (
 |Namespace|like schema name in DBMS| name|
 |Tag|additional label to route| name|
 
+## Config
+|ENV|Example|Description|
+--- | --- | ---
+|BZDACS_LOGIN| admin |admin login|
+|BZDACS_PASSWORD|admin| admin password|
+|BZDACS_POSTGRES|host=postgres port=5432 user=postgres password=postgres dbname=default sslmode=disable| postgres connection |
+|BZDACS_HOST| http://my-site.com| where app deployed|
+|BZDACS_SESSION_LIFETIME_IN_SECONDS|3600|session lifetime|
 
 
 ## Stack
