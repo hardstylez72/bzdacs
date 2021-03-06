@@ -23,7 +23,7 @@
       </v-list>
     </v-menu>
     <DeleteDialog v-model="showDeleteDialog" :system-id="system.id" :id="namespace.id" @deleted="namespaceDeleted"/>
-    <UpdateDialog v-model="showUpdateDialog" :id="namespace.id" @updated="namespaceUpdated"/>
+    <UpdateDialog v-model="showUpdateDialog" :system-id="system.id" :id="namespace.id" @updated="namespaceUpdated"/>
   </div>
 </template>
 

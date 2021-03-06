@@ -6,9 +6,9 @@ import { client } from '@/app/util/requester';
 import {
   serviceOptions,
   NamespaceService,
-  namespaceInsertRequest, namespaceUpdateRequest, namespaceDeleteRequest,
+  namespaceInsertRequest, namespaceUpdateRequest, namespaceDeleteRequest, namespaceGetRequest,
 } from '@/namespace/generated';
-import { moduleActionContext } from '../app/store';
+import { moduleActionContext } from '@/app/store';
 import { Namespace } from './entity';
 
 serviceOptions.axios = client;
@@ -27,9 +27,9 @@ const module = defineModule({
       const { state } = actionContext(context);
       return state.service.namespaceList({ req: { id } });
     },
-    async GetById(context, id: number): Promise<Namespace> {
+    async GetById(context, req: namespaceGetRequest): Promise<Namespace> {
       const { state } = actionContext(context);
-      return state.service.namespaceGet({ req: { id } });
+      return state.service.namespaceGet({ req });
     },
     async Create(context, req: namespaceInsertRequest): Promise<Namespace> {
       const { state } = actionContext(context);

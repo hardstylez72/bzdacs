@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import {
-  Component,
+  Component, Prop,
 } from 'vue-property-decorator';
 
 import Dialog from '@/common/components/Dialog.vue';
@@ -36,13 +36,15 @@ import Form from './Form.vue';
 })
 
 export default class UpdateDialog extends SimpleEntityUpdateDialog<Namespace> {
+  @Prop() readonly systemId!: number
+
   async updateValid(namespace: Namespace) {
     const ns = await this.$store.direct.dispatch.namespace.Update(namespace);
     this.$emit('updated', ns);
   }
 
   async loadItemWithId(id: number): Promise<Namespace> {
-    return this.$store.direct.dispatch.namespace.GetById(id);
+    return this.$store.direct.dispatch.namespace.GetById({ id, systemId: this.systemId });
   }
 }
 </script>
