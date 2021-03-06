@@ -59,7 +59,7 @@ func acceptanceTest(ctx context.Context, t *testing.T, c *client.BZDACS) {
 		t.Fatal(err)
 	}
 
-	deleted, err := GetById(ctx, c, edited.Id)
+	deleted, err := GetById(ctx, c, edited.Id, ns.SystemId)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -55,11 +55,12 @@ func GetByName(ctx context.Context, client *client.BZDACS, name string, SystemID
 	return namespaceDTO(res.GetPayload()), nil
 }
 
-func GetById(ctx context.Context, client *client.BZDACS, id int64) (*Namespace, error) {
+func GetById(ctx context.Context, client *client.BZDACS, id, systemId int64) (*Namespace, error) {
 	res, err := client.Namespace.NamespaceGet(
 		&namespace.NamespaceGetParams{
 			Req: &models.NamespaceGetRequest{
-				ID: id,
+				ID:       id,
+				SystemID: systemId,
 			},
 			Context: ctx,
 		},

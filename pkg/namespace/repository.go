@@ -2,7 +2,6 @@ package namespace
 
 import (
 	"context"
-	sq "github.com/Masterminds/squirrel"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/jmoiron/sqlx"
 )
@@ -48,44 +47,6 @@ func Update(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (
 		return nil, storage.EntityNotFound
 	}
 	return &g, nil
-}
-
-func (r *repository) Get(ctx context.Context, systemId, namespaceId int, name string) (*Namespace, error) {
-	return Get(ctx, r.conn, systemId, namespaceId, name)
-}
-
-func Get(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int, name string) (*Namespace, error) {
-	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
-
-	builder := psql.Select(`
- 			   n.id,
-			   n.name,
-			   n.created_at,
-			   n.updated_at,
-			   n.deleted_at,
-			   n.system_id
-			`).From("namespaces n")
-
-	if namespaceId != 0 {
-		builder = builder.Where(sq.Eq{"n.id": namespaceId})
-	} else {
-		if name != "" {
-			builder = builder.Where(sq.Eq{"n.name": name})
-		}
-		builder = builder.Where(sq.Eq{"n.system_id": systemId})
-	}
-
-	query, args, err := builder.ToSql()
-	if err != nil {
-		return nil, err
-	}
-	var namespace Namespace
-	err = conn.GetContext(ctx, &namespace, query, args...)
-	if err != nil {
-		return nil, storage.PgError(err)
-	}
-
-	return &namespace, nil
 }
 
 func (r *repository) Delete(ctx context.Context, namespaceId int) error {

@@ -2,11 +2,20 @@ package namespace
 
 import (
 	"context"
+	"errors"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 )
 
-func (r *repository) List(ctx context.Context, systemId int) ([]Namespace, error) {
-	return List(ctx, r.conn, systemId)
+const (
+	ListBySystemId ListKind = "ListBySystemId"
+)
+
+func (r *repository) List(ctx context.Context, kind ListKind, systemId int, arg ...interface{}) ([]Namespace, error) {
+	switch kind {
+	case ListBySystemId:
+		return List(ctx, r.conn, systemId)
+	}
+	return nil, errors.New("invalid input params")
 }
 
 func List(ctx context.Context, conn storage.SqlDriver, systemId int) ([]Namespace, error) {

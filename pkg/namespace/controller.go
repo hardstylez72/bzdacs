@@ -11,12 +11,15 @@ import (
 	"net/http"
 )
 
+type GetKind string
+type ListKind string
+
 type Repository interface {
-	List(ctx context.Context, systemId int) ([]Namespace, error)
 	Insert(ctx context.Context, namespace *Namespace) (*Namespace, error)
 	Delete(ctx context.Context, namespaceId int) error
 	Update(ctx context.Context, namespace *Namespace) (*Namespace, error)
-	Get(ctx context.Context, systemId, namespaceId int, name string) (*Namespace, error)
+	Get(ctx context.Context, kind GetKind, systemId int, arg ...interface{}) (*Namespace, error)
+	List(ctx context.Context, kind ListKind, systemId int, arg ...interface{}) ([]Namespace, error)
 }
 
 type controller struct {
@@ -127,15 +130,19 @@ func (c *controller) get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Id <= 0 {
-		if req.SystemId <= 0 && req.Name == "" {
-			err := errors.New("name and systemId must be set")
-			util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-			return
-		}
+	if req.SystemId <= 0 {
+		err := errors.New("systemId must be set")
+		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
+	}
+	var namespace *Namespace
+	var err error
+	if req.Id != 0 {
+		namespace, err = c.rep.Get(ctx, GetById, req.SystemId, req.Id)
+	} else {
+		namespace, err = c.rep.Get(ctx, GetByName, req.SystemId, req.Name)
 	}
 
-	namespace, err := c.rep.Get(ctx, req.SystemId, req.Id, req.Name)
 	if err != nil {
 		if errors.Is(err, storage.EntityNotFound) {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
@@ -173,7 +180,7 @@ func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	namespaces, err := c.rep.List(ctx, req.Id)
+	namespaces, err := c.rep.List(ctx, ListBySystemId, req.Id)
 	if err != nil {
 		return
 	}

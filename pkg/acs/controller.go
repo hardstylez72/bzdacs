@@ -67,7 +67,7 @@ func (c *controller) accessCheck(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s, err := c.systemRepository.Get(ctx, 0, params.System)
+	s, err := c.systemRepository.Get(ctx, system.GetByName, params.System)
 	if err != nil {
 		if err == user.ErrEntityNotFound {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
@@ -77,7 +77,7 @@ func (c *controller) accessCheck(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ns, err := c.namespaceRepository.Get(ctx, s.Id, 0, params.Namespace)
+	ns, err := c.namespaceRepository.Get(ctx, namespace.GetByName, s.Id, params.Namespace)
 	if err != nil {
 		if err == user.ErrEntityNotFound {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()

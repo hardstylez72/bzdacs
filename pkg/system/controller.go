@@ -11,12 +11,15 @@ import (
 	"net/http"
 )
 
+type GetKind string
+type ListKind string
+
 type Repository interface {
-	Get(ctx context.Context, id int, name string) (*System, error)
-	List(ctx context.Context) ([]System, error)
 	Insert(ctx context.Context, system *System) (*System, error)
 	Delete(ctx context.Context, id int) error
 	Update(ctx context.Context, system *System) (*System, error)
+	Get(ctx context.Context, kind GetKind, arg ...interface{}) (*System, error)
+	List(ctx context.Context, kind ListKind, arg ...interface{}) ([]System, error)
 }
 
 type controller struct {
@@ -106,7 +109,7 @@ func (c *controller) update(w http.ResponseWriter, r *http.Request) {
 func (c *controller) list(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	list, err := c.rep.List(ctx)
+	list, err := c.rep.List(ctx, ListNoFilter)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
@@ -145,7 +148,14 @@ func (c *controller) get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	system, err := c.rep.Get(ctx, req.Id, req.Name)
+	var system *System
+	var err error
+	if req.Id != 0 {
+		system, err = c.rep.Get(ctx, GetById, req.Id)
+	} else {
+		system, err = c.rep.Get(ctx, GetByName, req.Name)
+	}
+
 	if err != nil {
 		if errors.Is(err, storage.EntityNotFound) {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
