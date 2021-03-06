@@ -2,7 +2,7 @@ version: '3'
 
 services:
   bzdacs:
-    build: .
+    build: hardstylez72/bzdacs:lastest
     restart: always
     ports:
       - 8888:8080
@@ -16,7 +16,6 @@ services:
     image: postgres
     restart: always
     ports:
-      - 6667:5432
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres

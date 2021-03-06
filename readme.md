@@ -1,18 +1,31 @@
-### site http://bzdacs.eblog.cyou/
+# BZDACS - simple lightweight access control system
+## Goal - allows setting certain policy for certain user in terms of api routes
+##[Demo](http://bzdacs.eblog.cyou/)
 
+## Stack
+- [Postgres](https://github.com/postgres/postgres)
+- [VueJS 2.x](https://github.com/vuejs/vue) ([typescript](https://github.com/microsoft/TypeScript))
+- [Golang](https://github.com/golang/go)
+
+<details>
+    <summary>Database schema</summary>
+    ![Image of Yaktocat](./docs/schema.png){:class="img-responsive"}
+</details>
 
 ### build
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o backend .
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o static .
+> sh build.sh
+### local 
+via docker-compose
+> docker-compose -f docker-compose.build.yml up
+### for contributors
+server
+> go run -config ./config/config.local.yaml
 
-docker build -t hardstylez72/bzdacss .
-docker login
-docker push hardstylez72/bzdacss:latest
-
-docker build -t hardstylez72/bzdacsui .
-docker login
-docker push hardstylez72/bzdacsui:latest
+ui 
+> npm run --prefix ./ui serve
  
  
 # Swagger
-Generate docs - swag init -g ./cmd/backend/main.go
+[UI](http://bzdacs.eblog.cyou/api/swagger/index.html)
+and
+[Spec](http://bzdacs.eblog.cyou/api/swagger/source)
