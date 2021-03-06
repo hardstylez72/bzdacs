@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bzdacs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bzdacs
+  template:
+    metadata:
+      labels:
+        app: bzdacs
+    spec:
+      containers:
+        - name: bzdacs
+          image: hardstylez72/bzdacs:latest
+          imagePullPolicy: Always
+          env:
+            - name: BZDACS_LOGIN
+              value: "admin"
+            - name: BZDACS_PASSWORD
+              value: "admin"
+            - name: BZDACS_POSTGRES
+              value: "postgres://login:password@postgres:5432/postgres?sslmode=disable"
+            - name: BZDACS_HOST
+              value: "http://your-site.com"
+            - name: BZDACS_SESSION_LIFETIME_IN_SECONDS
+              value: "86400"
+          ports:
+            - containerPort: 8080
