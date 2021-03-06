@@ -36,7 +36,7 @@ func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
 	}()
 	txx := storage.WrapSqlxTx(tx)
 
-	sysUser, err := InsertLL(ctx, txx, u)
+	sysUser, err := Insert(ctx, txx, u)
 	if err != nil {
 		return nil, err
 	}
@@ -46,17 +46,17 @@ func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
 	}
 
 	if internal.HasGuest {
-		s, err := system.GetLL(ctx, txx, 0, internal.SystemName)
+		s, err := system.Get(ctx, txx, 0, internal.SystemName)
 		if err != nil {
 			return nil, err
 		}
 
-		ns, err := namespace.GetLL(ctx, txx, s.Id, 0, internal.Namespace)
+		ns, err := namespace.Get(ctx, txx, s.Id, 0, internal.Namespace)
 		if err != nil {
 			return nil, err
 		}
 
-		appUser, err := user.InsertLL(ctx, txx, &user.User{
+		appUser, err := user.Insert(ctx, txx, &user.User{
 			ExternalId:  sysUser.Login,
 			NamespaceId: ns.Id,
 		})
@@ -64,12 +64,12 @@ func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
 			return nil, err
 		}
 
-		g, err := group.GetByCodeLL(ctx, txx, internal.GuestGroupName, ns.Id)
+		g, err := group.GetByCode(ctx, txx, internal.GuestGroupName, ns.Id)
 		if err != nil {
 			return nil, err
 		}
 
-		_, err = usergroup.InsertPairLL(ctx, txx, g.Id, appUser.Id)
+		_, err = usergroup.InsertPair(ctx, txx, g.Id, appUser.Id)
 		if err != nil {
 			return nil, err
 		}
@@ -77,7 +77,7 @@ func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
 
 	return sysUser, nil
 }
-func InsertLL(ctx context.Context, driver storage.SqlDriver, entity *User) (*User, error) {
+func Insert(ctx context.Context, driver storage.SqlDriver, entity *User) (*User, error) {
 	query := `
 insert into sys_users (
                        login,
@@ -139,10 +139,10 @@ func GetByParams(ctx context.Context, driver storage.SqlDriver, login, password 
 }
 
 func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*User, error) {
-	return GetByIdLL(ctx, r.conn, id, namespaceId)
+	return GetById(ctx, r.conn, id, namespaceId)
 }
 
-func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*User, error) {
+func GetById(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*User, error) {
 	query := `
 		select id,
 			   external_id,

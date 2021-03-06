@@ -6,6 +6,9 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 )
 
+const NoPageSizeLimit = 0
+const NoPattern = ""
+
 type RouteWithGroupsWithTotal struct {
 	RouteWithGroups
 	Total int `db:"total"`
@@ -14,9 +17,9 @@ type RouteWithGroupsWithTotal struct {
 func (r *repository) List(ctx context.Context, filter Filter) (routes []RouteWithGroups, total int, err error) {
 
 	if filter.BelongToUser {
-		routes, total, err = ListBelongUserLL(ctx, r.conn, filter)
+		routes, total, err = ListBelongUser(ctx, r.conn, filter)
 	} else {
-		routes, total, err = ListNotBelongUserLL(ctx, r.conn, filter)
+		routes, total, err = ListNotBelongUser(ctx, r.conn, filter)
 	}
 
 	if err != nil {
@@ -34,7 +37,7 @@ func (r *repository) List(ctx context.Context, filter Filter) (routes []RouteWit
 	return routes, total, nil
 }
 
-func ListNotBelongUserLL(ctx context.Context, driver storage.SqlDriver, f Filter) ([]RouteWithGroups, int, error) {
+func ListNotBelongUser(ctx context.Context, driver storage.SqlDriver, f Filter) ([]RouteWithGroups, int, error) {
 
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
@@ -86,7 +89,7 @@ func ListNotBelongUserLL(ctx context.Context, driver storage.SqlDriver, f Filter
 
 	return RouteWithGroups, total, nil
 }
-func ListBelongUserLL(ctx context.Context, driver storage.SqlDriver, f Filter) ([]RouteWithGroups, int, error) {
+func ListBelongUser(ctx context.Context, driver storage.SqlDriver, f Filter) ([]RouteWithGroups, int, error) {
 
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 

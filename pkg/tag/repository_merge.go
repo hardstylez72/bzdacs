@@ -6,14 +6,14 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 )
 
-func MergeLL(ctx context.Context, driver storage.SqlDriver, tagNames []string, namespaceId int) ([]Tag, error) {
+func Merge(ctx context.Context, driver storage.SqlDriver, tagNames []string, namespaceId int) ([]Tag, error) {
 	merged := make([]Tag, 0)
 	for _, tagName := range tagNames {
-		tag, err := GetByNameLL(ctx, driver, tagName, namespaceId)
+		tag, err := GetByName(ctx, driver, tagName, namespaceId)
 		if err != nil {
 			if errors.Is(err, storage.EntityNotFound) {
 				var insertErr error
-				tag, insertErr = InsertLL(ctx, driver, &Tag{
+				tag, insertErr = Insert(ctx, driver, &Tag{
 					Name:        tagName,
 					NamespaceId: namespaceId,
 				})
@@ -29,7 +29,7 @@ func MergeLL(ctx context.Context, driver storage.SqlDriver, tagNames []string, n
 	return merged, nil
 }
 
-func GetByNameLL(ctx context.Context, driver storage.SqlDriver, name string, namespaceId int) (*Tag, error) {
+func GetByName(ctx context.Context, driver storage.SqlDriver, name string, namespaceId int) (*Tag, error) {
 	query := `
 		select id,
 			   name,

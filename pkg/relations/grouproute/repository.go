@@ -2,7 +2,6 @@ package grouproute
 
 import (
 	"context"
-	"database/sql"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
@@ -13,15 +12,14 @@ type repository struct {
 }
 
 var (
-	ErrEntityAlreadyExists = util.ErrEntityAlreadyExists
-	ErrEntityNotFound      = util.ErrEntityNotFound
+	ErrEntityNotFound = util.ErrEntityNotFound
 )
 
 func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 
-func (r *repository) deletePairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeId int) error {
+func (r *repository) deletePair(ctx context.Context, driver storage.SqlDriver, groupId, routeId int) error {
 	query := `delete from groups_routes where route_id = $1 and group_id = $2`
 
 	_, err := driver.ExecContext(ctx, query, routeId, groupId)
@@ -30,21 +28,6 @@ func (r *repository) deletePairLL(ctx context.Context, driver storage.SqlDriver,
 	}
 
 	return nil
-}
-
-func (r *repository) IsPairExist(ctx context.Context, pair Pair) (bool, error) {
-	query := `select count(*) from groups_routes where route_id = $1 and group_id = $2`
-
-	var cnt = 0
-	err := r.conn.GetContext(ctx, &cnt, query, pair.RouteId, pair.GroupId)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return false, ErrEntityNotFound
-		}
-		return false, err
-	}
-
-	return cnt >= 1, nil
 }
 
 func (r *repository) Delete(ctx context.Context, params []Pair) error {
@@ -60,7 +43,7 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 
 	for _, pair := range params {
 
-		err := r.deletePairLL(ctx, txx, pair.GroupId, pair.RouteId)
+		err := r.deletePair(ctx, txx, pair.GroupId, pair.RouteId)
 		if err != nil {
 			return err
 		}
@@ -79,15 +62,15 @@ func (r *repository) Insert(ctx context.Context, params []Pair) ([]Route, error)
 		}
 	}()
 	txx := storage.WrapSqlxTx(tx)
-	return InsertLL(ctx, txx, params)
+	return Insert(ctx, txx, params)
 }
 
-func InsertLL(ctx context.Context, driver storage.SqlDriver, params []Pair) ([]Route, error) {
+func Insert(ctx context.Context, driver storage.SqlDriver, params []Pair) ([]Route, error) {
 
 	routes := make([]Route, 0)
 	for _, pair := range params {
 
-		route, err := InsertPairLL(ctx, driver, pair.GroupId, pair.RouteId)
+		route, err := InsertPair(ctx, driver, pair.GroupId, pair.RouteId)
 		if err != nil {
 			return nil, err
 		}
@@ -97,7 +80,7 @@ func InsertLL(ctx context.Context, driver storage.SqlDriver, params []Pair) ([]R
 	return routes, nil
 }
 
-func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeId int) (*Route, error) {
+func InsertPair(ctx context.Context, driver storage.SqlDriver, groupId, routeId int) (*Route, error) {
 	query := `
 		with insert_row as (
 			insert into groups_routes (
@@ -130,7 +113,7 @@ func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, routeI
 	return &route, nil
 }
 
-func GetGroupIdsByRouteIdLL(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) ([]int, error) {
+func GetGroupIdsByRouteId(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) ([]int, error) {
 	query := `select gr.group_id 
 				from groups_routes gr
 			    join groups g on gr.group_id = g.id and g.namespace_id = $2

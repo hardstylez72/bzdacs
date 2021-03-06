@@ -19,12 +19,12 @@ func (r *repository) Insert(ctx context.Context, route *Route) (*Route, error) {
 	}()
 
 	txx := storage.WrapSqlxTx(tx)
-	newRoute, err := InsertLL(ctx, txx, route)
+	newRoute, err := Insert(ctx, txx, route)
 	if err != nil {
 		return nil, err
 	}
 
-	tags, err := routetag.MergeLL(ctx, txx, newRoute.Id, route.Tags, route.NamespaceId)
+	tags, err := routetag.Merge(ctx, txx, newRoute.Id, route.Tags, route.NamespaceId)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func getTagIdsFromArray(tags []tag.Tag) []string {
 	return names
 }
 
-func InsertLL(ctx context.Context, driver storage.SqlDriver, route *Route) (*Route, error) {
+func Insert(ctx context.Context, driver storage.SqlDriver, route *Route) (*Route, error) {
 	query := `
 insert into routes (
                        route,

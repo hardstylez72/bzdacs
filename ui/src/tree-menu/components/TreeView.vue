@@ -110,7 +110,7 @@ export default class TreeView extends Vue {
     return this.inc.toString();
   }
 
-  namespaceChildren(system: System, namespace: Namespace): Node[] {
+  getNamespaceChildren(system: System, namespace: Namespace): Node[] {
   return [
     {
       id: this.generateRandom(),
@@ -150,7 +150,7 @@ export default class TreeView extends Vue {
       node.children = await this.getNamespacesBelongToSystem(node.system);
     }
    if (node.type === 'namespace' && node.namespace && node.system) {
-     node.children = this.namespaceChildren(node.system, node.namespace);
+     node.children = this.getNamespaceChildren(node.system, node.namespace);
    }
   }
 

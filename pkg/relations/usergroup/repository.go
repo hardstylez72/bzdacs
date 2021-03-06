@@ -25,7 +25,7 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 	}()
 	txx := storage.WrapSqlxTx(tx)
 	for _, pair := range params {
-		err := r.deletePairLL(ctx, txx, pair.GroupId, pair.UserId)
+		err := r.deletePair(ctx, txx, pair.GroupId, pair.UserId)
 		if err != nil {
 			return err
 		}
@@ -34,7 +34,7 @@ func (r *repository) Delete(ctx context.Context, params []Pair) error {
 	return nil
 }
 
-func (r *repository) deletePairLL(ctx context.Context, driver storage.SqlDriver, groupId, userId int) error {
+func (r *repository) deletePair(ctx context.Context, driver storage.SqlDriver, groupId, userId int) error {
 	query := `delete from users_groups where user_id = $1 and group_id = $2`
 
 	_, err := driver.ExecContext(ctx, query, userId, groupId)
@@ -56,10 +56,11 @@ func (r *repository) Insert(ctx context.Context, params []Pair) ([]Group, error)
 		}
 	}()
 	txx := storage.WrapSqlxTx(tx)
+
 	routes := make([]Group, 0)
 	for _, pair := range params {
 
-		route, err := InsertPairLL(ctx, txx, pair.GroupId, pair.UserId)
+		route, err := InsertPair(ctx, txx, pair.GroupId, pair.UserId)
 		if err != nil {
 			return nil, err
 		}
@@ -68,7 +69,7 @@ func (r *repository) Insert(ctx context.Context, params []Pair) ([]Group, error)
 
 	return routes, nil
 }
-func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, userId int) (*Group, error) {
+func InsertPair(ctx context.Context, driver storage.SqlDriver, groupId, userId int) (*Group, error) {
 	query := `
 		with insert_row as (
 			insert into users_groups (
@@ -85,7 +86,8 @@ func InsertPairLL(ctx context.Context, driver storage.SqlDriver, groupId, userId
 			   r.description,
 			   r.created_at,
 			   r.updated_at,
-			   r.deleted_at
+			   r.deleted_at,
+		       r.namespace_id
 		from groups r where r.id = $2;
 `
 

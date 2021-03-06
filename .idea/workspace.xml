@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Adds password encryption">
-      <change afterPath="$PROJECT_DIR$/pkg/acs/repository.go" afterDir="false" />
+    <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Fixes translations">
+      <change afterPath="$PROJECT_DIR$/asc/midleware.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/asc/service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/acs/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/backend/backend.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/backend.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/controller_session.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller_session.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/repository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/acs/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/app/pages/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/app/pages/Home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/base/components/SimpleEntityForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/acs/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/acs/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/group/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/group/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/namespace/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/namespace/repository_insert.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/repository_insert.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/namespace/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/routetag/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/routetag/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/usergroup/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/usergroup/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/repository_instert.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository_instert.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/route/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/system/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/system/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/tag/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/tag/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/tag/repository_merge.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/repository_merge.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/user/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/user/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/repository_list.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/tree-menu/components/TreeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/tree-menu/components/TreeView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +94,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/sysuser" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/asc" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -75,11 +107,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/asc" />
       <recent name="$PROJECT_DIR$/tests/sysuser" />
       <recent name="$PROJECT_DIR$/internal/user" />
       <recent name="$PROJECT_DIR$/internal/session" />
       <recent name="$PROJECT_DIR$/pkg" />
-      <recent name="$PROJECT_DIR$/migrations" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/internal" />
@@ -220,7 +252,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed cfg for local deployment" />
     <MESSAGE value="Add update user func" />
     <MESSAGE value="Fixe init func" />
     <MESSAGE value="Delete config.yaml" />
@@ -245,7 +276,8 @@
     <MESSAGE value="Changes sys user domain" />
     <MESSAGE value="Updates auth" />
     <MESSAGE value="Adds password encryption" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds password encryption" />
+    <MESSAGE value="Fixes translations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes translations" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -253,11 +285,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/pkg/relations/grouproute/repository.go</url>
-          <line>44</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/config/config.go</url>
           <line>16</line>
@@ -287,11 +314,6 @@
           <url>file://$PROJECT_DIR$/internal/user/encripton_test.go</url>
           <line>15</line>
           <option name="timeStamp" value="282" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/pkg/acs/controller.go</url>
-          <line>112</line>
-          <option name="timeStamp" value="298" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

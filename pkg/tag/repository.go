@@ -20,10 +20,10 @@ func NewRepository(conn *sqlx.DB) *repository {
 }
 
 func (r *repository) Update(ctx context.Context, tag *Tag) (*Tag, error) {
-	return UpdateLL(ctx, r.conn, tag)
+	return Update(ctx, r.conn, tag)
 }
 
-func UpdateLL(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, error) {
+func Update(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, error) {
 	query := `
 	update tags 
 	   set name = :name,
@@ -53,9 +53,9 @@ func UpdateLL(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, er
 }
 
 func (r *repository) Insert(ctx context.Context, tag *Tag) (*Tag, error) {
-	return InsertLL(ctx, r.conn, tag)
+	return Insert(ctx, r.conn, tag)
 }
-func InsertLL(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, error) {
+func Insert(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, error) {
 	query := `
 	insert into tags (
                        name,
@@ -95,10 +95,10 @@ func InsertLL(ctx context.Context, driver storage.SqlDriver, tag *Tag) (*Tag, er
 }
 
 func (r *repository) GetById(ctx context.Context, id int) (*Tag, error) {
-	return GetByIdLL(ctx, r.conn, id)
+	return GetById(ctx, r.conn, id)
 }
 
-func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Tag, error) {
+func GetById(ctx context.Context, driver storage.SqlDriver, id int) (*Tag, error) {
 	query := `
 		select id,
 			   name,
@@ -118,9 +118,9 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Tag, err
 }
 
 func (r *repository) Delete(ctx context.Context, id, namespaceId int) error {
-	return DeleteLL(ctx, r.conn, id, namespaceId)
+	return Delete(ctx, r.conn, id, namespaceId)
 }
-func DeleteLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
+func Delete(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
 	query := `
 		update tags 
 			set deleted_at = now()

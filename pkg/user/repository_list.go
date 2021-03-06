@@ -13,7 +13,7 @@ type userWithTotal struct {
 
 func (u *repository) List(ctx context.Context, f filter) ([]User, int, error) {
 
-	users, total, err := ListLL(ctx, u.conn, f)
+	users, total, err := List(ctx, u.conn, f)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -21,7 +21,7 @@ func (u *repository) List(ctx context.Context, f filter) ([]User, int, error) {
 	return users, total, nil
 }
 
-func ListLL(ctx context.Context, driver storage.SqlDriver, f filter) ([]User, int, error) {
+func List(ctx context.Context, driver storage.SqlDriver, f filter) ([]User, int, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 	rb := psql.Select(`

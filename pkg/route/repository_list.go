@@ -13,7 +13,7 @@ type routeWithTotal struct {
 
 func (r *repository) List(ctx context.Context, f filter) ([]Route, int, error) {
 
-	routes, total, err := ListLL(ctx, r.conn, f)
+	routes, total, err := List(ctx, r.conn, f)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -30,7 +30,7 @@ func (r *repository) List(ctx context.Context, f filter) ([]Route, int, error) {
 	return routes, total, nil
 }
 
-func ListLL(ctx context.Context, driver storage.SqlDriver, f filter) ([]Route, int, error) {
+func List(ctx context.Context, driver storage.SqlDriver, f filter) ([]Route, int, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 	rb := psql.Select(`

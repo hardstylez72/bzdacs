@@ -6,15 +6,15 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/tag"
 )
 
-func MergeLL(ctx context.Context, driver storage.SqlDriver, routeId int, tagNames []string, namespaceId int) ([]tag.Tag, error) {
+func Merge(ctx context.Context, driver storage.SqlDriver, routeId int, tagNames []string, namespaceId int) ([]tag.Tag, error) {
 
-	oldRouteTags, err := GetRouteTagsLL(ctx, driver, routeId, namespaceId)
+	oldRouteTags, err := GetRouteTags(ctx, driver, routeId, namespaceId)
 	if err != nil {
 		return nil, err
 	}
 	oldRouteTagIds := getTagIdsFromArray(oldRouteTags)
 
-	tags, err := tag.MergeLL(ctx, driver, tagNames, namespaceId)
+	tags, err := tag.Merge(ctx, driver, tagNames, namespaceId)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func contains(set []int, el int) bool {
 	return false
 }
 
-func GetRouteTagsLL(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) ([]tag.Tag, error) {
+func GetRouteTags(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) ([]tag.Tag, error) {
 	query := `
 			select 	   t.id, 
 					   t.name,

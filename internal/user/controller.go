@@ -37,7 +37,7 @@ func NewController(rep Repository, sessionService *session.Service) *controller 
 // @success 200
 // @router /v1/sys-user/logout [post]
 func (c *controller) logout(w http.ResponseWriter, r *http.Request) {
-	clearSession(w)
+	clearCookieSession(w)
 	util.NewResp(w, r).Status(http.StatusOK).Send()
 }
 

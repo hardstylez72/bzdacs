@@ -19,9 +19,9 @@ func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 func (r *repository) Update(ctx context.Context, user *User) (*User, error) {
-	return UpdateLL(ctx, r.conn, user)
+	return Update(ctx, r.conn, user)
 }
-func UpdateLL(ctx context.Context, driver storage.SqlDriver, user *User) (*User, error) {
+func Update(ctx context.Context, driver storage.SqlDriver, user *User) (*User, error) {
 	query := `
 	update users 
 	   set external_id = :external_id,
@@ -51,9 +51,9 @@ func UpdateLL(ctx context.Context, driver storage.SqlDriver, user *User) (*User,
 	return &u, nil
 }
 func (r *repository) Insert(ctx context.Context, u *User) (*User, error) {
-	return InsertLL(ctx, r.conn, u)
+	return Insert(ctx, r.conn, u)
 }
-func InsertLL(ctx context.Context, driver storage.SqlDriver, entity *User) (*User, error) {
+func Insert(ctx context.Context, driver storage.SqlDriver, entity *User) (*User, error) {
 	query := `
 insert into users (
                        external_id,
@@ -116,10 +116,10 @@ func GetByExternalId(ctx context.Context, driver storage.SqlDriver, login string
 }
 
 func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*User, error) {
-	return GetByIdLL(ctx, r.conn, id, namespaceId)
+	return GetById(ctx, r.conn, id, namespaceId)
 }
 
-func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*User, error) {
+func GetById(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*User, error) {
 	query := `
 		select id,
 			   external_id,
@@ -141,9 +141,9 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId in
 }
 
 func (r *repository) Delete(ctx context.Context, id, namespaceId int) error {
-	return DeleteLL(ctx, r.conn, id, namespaceId)
+	return Delete(ctx, r.conn, id, namespaceId)
 }
-func DeleteLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
+func Delete(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
 	query := `
 		update users 
 			set deleted_at = now()

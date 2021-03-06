@@ -17,7 +17,7 @@ func (r *repository) Insert(ctx context.Context, namespace *Namespace) (*Namespa
 
 	txx := storage.WrapSqlxTx(tx)
 
-	n, err := InsertLL(ctx, txx, namespace)
+	n, err := Insert(ctx, txx, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +25,7 @@ func (r *repository) Insert(ctx context.Context, namespace *Namespace) (*Namespa
 	return n, nil
 }
 
-func InsertLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
+func Insert(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
 	query := `
 insert into namespaces (
                        name,

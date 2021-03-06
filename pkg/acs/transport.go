@@ -1,23 +1,13 @@
 package acs
 
-import "github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
-
 type checkAccessResponse struct {
-	Login         string   `json:"login"`
-	AccessAllowed bool     `json:"accessAllowed"`
-	Groups        []string `json:"groups"`
+	Login         string `json:"login"`
+	AccessAllowed bool   `json:"accessAllowed"`
 }
 
-func newCheckAccessResponse(groups []usergroup.Group, isAllowed bool, login string) *checkAccessResponse {
-	groupNames := make([]string, 0)
-
-	for _, group := range groups {
-		groupNames = append(groupNames, group.Code)
-	}
-
+func newCheckAccessResponse(isAllowed bool, login string) *checkAccessResponse {
 	return &checkAccessResponse{
 		Login:         login,
 		AccessAllowed: isAllowed,
-		Groups:        groupNames,
 	}
 }

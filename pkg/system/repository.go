@@ -17,10 +17,10 @@ func NewRepository(conn *sqlx.DB) *repository {
 }
 
 func (r *repository) List(ctx context.Context) ([]System, error) {
-	return ListLL(ctx, r.conn)
+	return List(ctx, r.conn)
 }
 
-func ListLL(ctx context.Context, driver storage.SqlDriver) ([]System, error) {
+func List(ctx context.Context, driver storage.SqlDriver) ([]System, error) {
 	query := `
 		select id,
 			   name,
@@ -40,10 +40,10 @@ func ListLL(ctx context.Context, driver storage.SqlDriver) ([]System, error) {
 }
 
 func (r *repository) Update(ctx context.Context, namespace *System) (*System, error) {
-	return UpdateLL(ctx, r.conn, namespace)
+	return Update(ctx, r.conn, namespace)
 }
 
-func UpdateLL(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, error) {
+func Update(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, error) {
 	query := `
 	update systems 
 	   set name = :name,
@@ -72,10 +72,10 @@ func UpdateLL(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, e
 }
 
 func (r *repository) Insert(ctx context.Context, namespace *System) (*System, error) {
-	return InsertLL(ctx, r.conn, namespace)
+	return Insert(ctx, r.conn, namespace)
 }
 
-func InsertLL(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, error) {
+func Insert(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, error) {
 	query := `
 insert into systems (
                        name,
@@ -112,10 +112,10 @@ insert into systems (
 }
 
 func (r *repository) Get(ctx context.Context, id int, name string) (*System, error) {
-	return GetLL(ctx, r.conn, id, name)
+	return Get(ctx, r.conn, id, name)
 }
 
-func GetLL(ctx context.Context, driver storage.SqlDriver, id int, name string) (*System, error) {
+func Get(ctx context.Context, driver storage.SqlDriver, id int, name string) (*System, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 	builder := psql.Select(`
@@ -150,21 +150,21 @@ func GetLL(ctx context.Context, driver storage.SqlDriver, id int, name string) (
 
 func (r *repository) Delete(ctx context.Context, id int) error {
 
-	namespaces, err := namespace.ListLL(ctx, r.conn, id)
+	namespaces, err := namespace.List(ctx, r.conn, id)
 	if err != nil {
 		return err
 	}
 
 	for _, ns := range namespaces {
-		err = namespace.DeleteLL(ctx, r.conn, ns.Id)
+		err = namespace.Delete(ctx, r.conn, ns.Id)
 		if err != nil {
 			return err
 		}
 	}
-	return DeleteLL(ctx, r.conn, id)
+	return Delete(ctx, r.conn, id)
 }
 
-func DeleteLL(ctx context.Context, conn *sqlx.DB, id int) error {
+func Delete(ctx context.Context, conn *sqlx.DB, id int) error {
 	query := `
 		update systems 
 			set deleted_at = now()

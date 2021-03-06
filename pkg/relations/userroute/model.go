@@ -6,10 +6,10 @@ import (
 )
 
 type Group group.Group
-type RouteOrig route.Route
+type OriginalRoute route.Route
 
 type Route struct {
-	RouteOrig
+	OriginalRoute
 	IsExcluded bool `json:"isExcluded" db:"is_excluded" validate:"required"`
 } // @name userRouteRoute
 

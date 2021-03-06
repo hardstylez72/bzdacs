@@ -29,7 +29,7 @@ func (r *repository) Delete(ctx context.Context, params []PairToDelete) error {
 
 	for _, pair := range params {
 
-		err := r.deletePairLL(ctx, tx, pair.RouteId, pair.UserId)
+		err := r.deletePair(ctx, tx, pair.RouteId, pair.UserId)
 		if err != nil {
 			return err
 		}
@@ -38,7 +38,7 @@ func (r *repository) Delete(ctx context.Context, params []PairToDelete) error {
 	return nil
 }
 
-func (r *repository) deletePairLL(ctx context.Context, tx *sqlx.Tx, routeId, userId int) error {
+func (r *repository) deletePair(ctx context.Context, tx *sqlx.Tx, routeId, userId int) error {
 	query := `delete from users_routes where user_id = $1 and route_id = $2`
 
 	_, err := tx.ExecContext(ctx, query, userId, routeId)
@@ -49,10 +49,24 @@ func (r *repository) deletePairLL(ctx context.Context, tx *sqlx.Tx, routeId, use
 	return nil
 }
 
-func (r *repository) Update(ctx context.Context, params Pair) (*Route, error) {
-	return UpdateLL(ctx, r.conn, params)
+func (r *repository) Update(ctx context.Context, params Pair) (*RouteWithGroups, error) {
+	route, err := Update(ctx, r.conn, params)
+	if err != nil {
+		return nil, err
+	}
+
+	groups, err := r.getRouteGroups(ctx, route.Id, route.NamespaceId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &RouteWithGroups{
+		Groups: groups,
+		Route:  *route,
+	}, nil
+
 }
-func UpdateLL(ctx context.Context, driver storage.SqlDriver, params Pair) (*Route, error) {
+func Update(ctx context.Context, driver storage.SqlDriver, params Pair) (*Route, error) {
 
 	query := `
 	with insert_row as (
@@ -80,7 +94,7 @@ func UpdateLL(ctx context.Context, driver storage.SqlDriver, params Pair) (*Rout
 	return &route, nil
 }
 
-func (r *repository) Insert(ctx context.Context, params []Pair) ([]Route, error) {
+func (r *repository) Insert(ctx context.Context, params []Pair) ([]RouteWithGroups, error) {
 
 	tx, err := r.conn.BeginTxx(ctx, nil)
 	defer func() {
@@ -92,20 +106,30 @@ func (r *repository) Insert(ctx context.Context, params []Pair) ([]Route, error)
 	}()
 	txx := storage.WrapSqlxTx(tx)
 
-	routes := make([]Route, 0)
+	routes := make([]RouteWithGroups, 0)
 	for _, pair := range params {
 
-		route, err := insertPairLL(ctx, txx, pair.RouteId, pair.UserId, pair.IsExcluded)
+		route, err := insertPair(ctx, txx, pair.RouteId, pair.UserId, pair.IsExcluded)
 		if err != nil {
 			return nil, err
 		}
-		routes = append(routes, *route)
+		routes = append(routes, RouteWithGroups{
+			Route: *route,
+		})
+	}
+
+	for i := range routes {
+		groups, err := r.getRouteGroups(ctx, routes[i].Id, routes[i].NamespaceId)
+		if err != nil {
+			return nil, err
+		}
+		routes[i].Groups = groups
 	}
 
 	return routes, nil
 }
 
-func insertPairLL(ctx context.Context, driver storage.SqlDriver, routeId, userId int, isExcluded bool) (*Route, error) {
+func insertPair(ctx context.Context, driver storage.SqlDriver, routeId, userId int, isExcluded bool) (*Route, error) {
 	query := `
 		with insert_row as (
 			insert into users_routes (
@@ -142,14 +166,14 @@ func insertPairLL(ctx context.Context, driver storage.SqlDriver, routeId, userId
 
 func (r *repository) getRouteGroups(ctx context.Context, routeId, namespaceId int) ([]Group, error) {
 
-	groupIds, err := grouproute.GetGroupIdsByRouteIdLL(ctx, r.conn, routeId, namespaceId)
+	groupIds, err := grouproute.GetGroupIdsByRouteId(ctx, r.conn, routeId, namespaceId)
 	if err != nil {
 		return nil, err
 	}
 
 	groups := make([]Group, 0)
 	for j := range groupIds {
-		g, err := group.GetByIdLL(ctx, r.conn, groupIds[j], namespaceId)
+		g, err := group.GetById(ctx, r.conn, groupIds[j], namespaceId)
 		if err != nil {
 			return nil, err
 		}

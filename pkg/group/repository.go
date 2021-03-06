@@ -28,12 +28,12 @@ func (r *repository) InsertGroupWithCopy(ctx context.Context, g *Group, groupBas
 
 	txx := storage.WrapSqlxTx(tx)
 
-	group, err := InsertLL(ctx, txx, g)
+	group, err := Insert(ctx, txx, g)
 	if err != nil {
 		return nil, err
 	}
 
-	routes, _, err := grouproute.ListLL(ctx, txx, grouproute.Filter{
+	routes, _, err := grouproute.List(ctx, txx, grouproute.Filter{
 		Page:          1,
 		PageSize:      0,
 		RoutePattern:  "",
@@ -53,7 +53,7 @@ func (r *repository) InsertGroupWithCopy(ctx context.Context, g *Group, groupBas
 		})
 	}
 
-	_, err = grouproute.InsertLL(ctx, txx, groupRoutePairs)
+	_, err = grouproute.Insert(ctx, txx, groupRoutePairs)
 	if err != nil {
 		return nil, err
 	}
@@ -61,9 +61,9 @@ func (r *repository) InsertGroupWithCopy(ctx context.Context, g *Group, groupBas
 	return group, nil
 }
 func (r *repository) Update(ctx context.Context, group *Group) (*Group, error) {
-	return UpdateLL(ctx, r.conn, group)
+	return Update(ctx, r.conn, group)
 }
-func UpdateLL(ctx context.Context, driver storage.SqlDriver, group *Group) (*Group, error) {
+func Update(ctx context.Context, driver storage.SqlDriver, group *Group) (*Group, error) {
 	query := `
 	update groups 
 	   set code = :code,
@@ -94,9 +94,9 @@ func UpdateLL(ctx context.Context, driver storage.SqlDriver, group *Group) (*Gro
 	return &g, nil
 }
 func (r *repository) Insert(ctx context.Context, group *Group) (*Group, error) {
-	return InsertLL(ctx, r.conn, group)
+	return Insert(ctx, r.conn, group)
 }
-func InsertLL(ctx context.Context, driver storage.SqlDriver, group *Group) (*Group, error) {
+func Insert(ctx context.Context, driver storage.SqlDriver, group *Group) (*Group, error) {
 	query := `
 insert into groups (
                        code,
@@ -139,10 +139,10 @@ insert into groups (
 }
 
 func (r *repository) GetByCode(ctx context.Context, code string, namespaceId int) (*Group, error) {
-	return GetByCodeLL(ctx, r.conn, code, namespaceId)
+	return GetByCode(ctx, r.conn, code, namespaceId)
 }
 
-func GetByCodeLL(ctx context.Context, driver storage.SqlDriver, code string, namespaceId int) (*Group, error) {
+func GetByCode(ctx context.Context, driver storage.SqlDriver, code string, namespaceId int) (*Group, error) {
 	query := `
 		select id,
 			   code,
@@ -166,10 +166,10 @@ func GetByCodeLL(ctx context.Context, driver storage.SqlDriver, code string, nam
 }
 
 func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Group, error) {
-	return GetByIdLL(ctx, r.conn, id, namespaceId)
+	return GetById(ctx, r.conn, id, namespaceId)
 }
 
-func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*Group, error) {
+func GetById(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) (*Group, error) {
 	query := `
 		select id,
 			   code,
@@ -192,9 +192,9 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId in
 }
 
 func (r *repository) Delete(ctx context.Context, id, namespaceId int) error {
-	return DeleteLL(ctx, r.conn, id, namespaceId)
+	return Delete(ctx, r.conn, id, namespaceId)
 }
-func DeleteLL(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
+func Delete(ctx context.Context, driver storage.SqlDriver, id, namespaceId int) error {
 	query := `
 		update groups 
 			set deleted_at = now()

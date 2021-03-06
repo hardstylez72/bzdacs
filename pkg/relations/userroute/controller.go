@@ -23,9 +23,9 @@ type Pair struct {
 
 type Repository interface {
 	List(ctx context.Context, filter Filter) ([]RouteWithGroups, int, error)
-	Insert(ctx context.Context, params []Pair) ([]Route, error)
+	Insert(ctx context.Context, params []Pair) ([]RouteWithGroups, error)
 	Delete(ctx context.Context, params []PairToDelete) error
-	Update(ctx context.Context, params Pair) (*Route, error)
+	Update(ctx context.Context, params Pair) (*RouteWithGroups, error)
 }
 
 type controller struct {

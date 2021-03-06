@@ -4,8 +4,8 @@ type insertRequest struct {
 	Pairs []Pair `json:"pairs" validate:"required,dive"`
 } // @name userRouteInsertRequest
 
-type insertResponse []Route // @name userRouteInsertResponse
-type updateResponse *Route  // @name userRouteUpdateResponse
+type insertResponse []RouteWithGroups // @name userRouteInsertResponse
+type updateResponse *RouteWithGroups  // @name userRouteUpdateResponse
 
 type deleteRequest struct {
 	Pairs []PairToDelete `json:"pairs" validate:"required,dive"`

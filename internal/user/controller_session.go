@@ -6,7 +6,6 @@ import (
 	"errors"
 	"github.com/hardstylez72/bzdacs/internal/session"
 	"github.com/hardstylez72/bzdacs/pkg/util"
-	"github.com/spf13/viper"
 	"net/http"
 	"time"
 )
@@ -74,7 +73,7 @@ func getSessionFromCookie(cookies []*http.Cookie) (*Session, error) {
 	return &session, nil
 }
 
-func clearSession(w http.ResponseWriter) {
+func clearCookieSession(w http.ResponseWriter) {
 	cookie := &http.Cookie{
 		Name:     CookieSessionName,
 		Value:    "",
@@ -106,57 +105,4 @@ func setSessionInCookie(w http.ResponseWriter, session *Session) error {
 	w.Header().Set("Set-Cookie", c.String())
 
 	return nil
-}
-
-func getTokenFromRequest(r *http.Request) (string, error) {
-	var token string
-
-	token = r.Header.Get("token")
-	if token != "" {
-		return token, nil
-	}
-
-	session, _ := getSessionFromCookie(r.Cookies())
-	if session != nil {
-		return session.Token, nil
-	}
-
-	return "", errors.New("token not found")
-}
-
-func validateToken(token string) (bool, string, error) {
-	var (
-		login    = viper.GetString("user.login")
-		password = viper.GetString("user.password")
-	)
-	tokenB, err := base64.StdEncoding.DecodeString(token)
-	if err != nil {
-		return false, "", err
-	}
-	if string(tokenB) != login+":"+password {
-		return false, "", errors.New("wrong credentials")
-	}
-
-	return true, login, nil
-}
-
-func parseToken(token string) (string, error) {
-	isValid, login, err := validateToken(token)
-	if isValid {
-		return login, nil
-	}
-	return "", err
-}
-
-func ExtractLogin(r *http.Request) (string, error) {
-	token, err := getTokenFromRequest(r)
-	if err != nil {
-		return "", err
-	}
-
-	login, err := parseToken(token)
-	if err != nil {
-		return "", err
-	}
-	return login, nil
 }

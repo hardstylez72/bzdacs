@@ -28,12 +28,12 @@ func (r *repository) Update(ctx context.Context, route *Route) (*Route, error) {
 
 	txx := storage.WrapSqlxTx(tx)
 
-	updatedRoute, err := UpdateLL(ctx, txx, route)
+	updatedRoute, err := Update(ctx, txx, route)
 	if err != nil {
 		return nil, err
 	}
 
-	tags, err := routetag.MergeLL(ctx, txx, updatedRoute.Id, route.Tags, route.NamespaceId)
+	tags, err := routetag.Merge(ctx, txx, updatedRoute.Id, route.Tags, route.NamespaceId)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (r *repository) Update(ctx context.Context, route *Route) (*Route, error) {
 	return updatedRoute, nil
 }
 
-func UpdateLL(ctx context.Context, driver storage.SqlDriver, route *Route) (*Route, error) {
+func Update(ctx context.Context, driver storage.SqlDriver, route *Route) (*Route, error) {
 	query := `
 	
 			update routes
@@ -78,7 +78,7 @@ func UpdateLL(ctx context.Context, driver storage.SqlDriver, route *Route) (*Rou
 }
 
 func (r *repository) GetByParams(ctx context.Context, route, method string, namespaceId int) (*Route, error) {
-	rr, err := GetByParamsLL(ctx, r.conn, method, route, namespaceId)
+	rr, err := GetByParams(ctx, r.conn, method, route, namespaceId)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (r *repository) GetByParams(ctx context.Context, route, method string, name
 }
 
 func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Route, error) {
-	route, err := GetByIdLL(ctx, r.conn, id)
+	route, err := GetById(ctx, r.conn, id)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (r *repository) GetById(ctx context.Context, id, namespaceId int) (*Route, 
 }
 
 func GetTagNamesByRouteId(ctx context.Context, conn *sqlx.DB, routeId, namespaceId int) ([]string, error) {
-	tags, err := routetag.GetRouteTagsLL(ctx, conn, routeId, namespaceId)
+	tags, err := routetag.GetRouteTags(ctx, conn, routeId, namespaceId)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func GetTagNamesByRouteId(ctx context.Context, conn *sqlx.DB, routeId, namespace
 	return tagNames, nil
 }
 
-func GetByParamsLL(ctx context.Context, driver storage.SqlDriver, method, route string, namespaceId int) (*Route, error) {
+func GetByParams(ctx context.Context, driver storage.SqlDriver, method, route string, namespaceId int) (*Route, error) {
 	query := `
 		select id,
 			   route,
@@ -144,7 +144,7 @@ func GetByParamsLL(ctx context.Context, driver storage.SqlDriver, method, route 
 	return &r, nil
 }
 
-func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Route, error) {
+func GetById(ctx context.Context, driver storage.SqlDriver, id int) (*Route, error) {
 	query := `
 		select id,
 			   route,
@@ -166,9 +166,9 @@ func GetByIdLL(ctx context.Context, driver storage.SqlDriver, id int) (*Route, e
 }
 
 func (r *repository) Delete(ctx context.Context, routeId, namespaceId int) error {
-	return DeleteLL(ctx, r.conn, routeId, namespaceId)
+	return Delete(ctx, r.conn, routeId, namespaceId)
 }
-func DeleteLL(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) error {
+func Delete(ctx context.Context, driver storage.SqlDriver, routeId, namespaceId int) error {
 	query := `
 		update routes 
 			set deleted_at = now()

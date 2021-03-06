@@ -4,6 +4,10 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	"github.com/hardstylez72/bzdacs/internal"
+
+	//acsmw "github.com/hardstylez72/bzdacs-go"
+	acsmw "github.com/hardstylez72/bzdacs/asc"
 	"github.com/hardstylez72/bzdacs/internal/session"
 	sysuser "github.com/hardstylez72/bzdacs/internal/user"
 	"github.com/hardstylez72/bzdacs/pkg/acs"
@@ -43,6 +47,7 @@ type Server struct {
 		namespace  namespace.Repository
 		system     system.Repository
 		sysuser    sysuser.Repository
+		acs        acs.Repository
 	}
 }
 
@@ -84,12 +89,14 @@ func (s *Server) startBackendServer(log *zap.SugaredLogger, done, ready chan str
 	return &routes, nil
 }
 
-func extractLogin(req *http.Request) string {
-	return sysuser.GetLoginFromContext(req.Context())
-}
-
-func extractRouteAndMethod(req *http.Request) (route, method string) {
-	return req.URL.Path, req.Method
+func extractAuthorizationParams(req *http.Request) *acsmw.InputParams {
+	return &acsmw.InputParams{
+		Login:       sysuser.GetLoginFromContext(req.Context()),
+		Route:       req.RequestURI,
+		Namespace:   internal.Namespace,
+		System:      internal.SystemName,
+		RouteMethod: req.Method,
+	}
 }
 
 func (s *Server) Start(r chi.Router) error {
@@ -119,6 +126,7 @@ func (s *Server) Start(r chi.Router) error {
 	s.repository.namespace = namespace.NewRepository(pgx)
 	s.repository.system = system.NewRepository(pgx)
 	s.repository.sysuser = sysuser.NewSecurityGuard(sysuser.NewRepository(pgx))
+	s.repository.acs = acs.NewRepository(pgx)
 
 	sessionService := session.NewSessionService()
 
@@ -131,13 +139,15 @@ func (s *Server) Start(r chi.Router) error {
 	r.Group(func(public chi.Router) {
 		r.Group(func(private chi.Router) {
 			private.Use(sysuser.Auth(sessionService, s.repository.sysuser))
-			//private.Use(acsmw.AccessCheck(acsmw.NewService(host), extractLogin, extractRouteAndMethod))
+			private.Use(acsmw.AccessCheck(host, extractAuthorizationParams))
 			public.Get("/swagger/*", httpSwagger.Handler(httpSwagger.URL(host+swaggerUrl)))
 			public.Get(swaggerUrl, getSwaggerSource)
+
 			sysuser.NewController(s.repository.sysuser, sessionService).Mount(private, public)
+			acs.NewController(s.repository.user, s.repository.acs, s.repository.namespace, s.repository.system).Mount(public)
+
 			namespace.NewController(s.repository.namespace).Mount(private)
 			system.NewController(s.repository.system).Mount(private)
-			acs.NewController(s.repository.userroute, s.repository.user, s.repository.usergroup).Mount(public)
 			tag.NewController(s.repository.tag).Mount(private)
 			route.NewController(s.repository.route).Mount(private)
 			group.NewController(s.repository.group).Mount(private)
@@ -151,7 +161,7 @@ func (s *Server) Start(r chi.Router) error {
 	return nil
 }
 
-func getSwaggerSource(writer http.ResponseWriter, request *http.Request) {
+func getSwaggerSource(writer http.ResponseWriter, _ *http.Request) {
 
 	curDir, err := os.Getwd()
 	if err != nil {

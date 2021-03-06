@@ -15,10 +15,10 @@ func NewRepository(conn *sqlx.DB) *repository {
 	return &repository{conn: conn}
 }
 func (r *repository) Update(ctx context.Context, namespace *Namespace) (*Namespace, error) {
-	return UpdateLL(ctx, r.conn, namespace)
+	return Update(ctx, r.conn, namespace)
 }
 
-func UpdateLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
+func Update(ctx context.Context, conn storage.SqlDriver, namespace *Namespace) (*Namespace, error) {
 	query := `
 	update namespaces
 	   set name = :name,
@@ -51,10 +51,10 @@ func UpdateLL(ctx context.Context, conn storage.SqlDriver, namespace *Namespace)
 }
 
 func (r *repository) Get(ctx context.Context, systemId, namespaceId int, name string) (*Namespace, error) {
-	return GetLL(ctx, r.conn, systemId, namespaceId, name)
+	return Get(ctx, r.conn, systemId, namespaceId, name)
 }
 
-func GetLL(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int, name string) (*Namespace, error) {
+func Get(ctx context.Context, conn storage.SqlDriver, systemId, namespaceId int, name string) (*Namespace, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 	builder := psql.Select(`
@@ -100,14 +100,14 @@ func (r *repository) Delete(ctx context.Context, namespaceId int) error {
 
 	txx := storage.WrapSqlxTx(tx)
 
-	err = DeleteLL(ctx, txx, namespaceId)
+	err = Delete(ctx, txx, namespaceId)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func DeleteLL(ctx context.Context, conn storage.SqlDriver, namespaceId int) error {
+func Delete(ctx context.Context, conn storage.SqlDriver, namespaceId int) error {
 
 	query := `
 			update namespaces

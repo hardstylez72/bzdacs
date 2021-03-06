@@ -12,10 +12,10 @@ type groupWithTotal struct {
 }
 
 func (r *repository) List(ctx context.Context, filter filter) ([]Group, int, error) {
-	return ListLL(ctx, r.conn, filter)
+	return List(ctx, r.conn, filter)
 }
 
-func ListLL(ctx context.Context, driver storage.SqlDriver, f filter) ([]Group, int, error) {
+func List(ctx context.Context, driver storage.SqlDriver, f filter) ([]Group, int, error) {
 
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 

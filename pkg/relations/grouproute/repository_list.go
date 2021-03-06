@@ -7,6 +7,9 @@ import (
 	"github.com/hardstylez72/bzdacs/pkg/route"
 )
 
+const NoPageSizeLimit = 0
+const NoPattern = ""
+
 type routeWithTotal struct {
 	Route
 	Total int `db:"total"`
@@ -14,7 +17,7 @@ type routeWithTotal struct {
 
 func (r *repository) List(ctx context.Context, filter Filter) ([]Route, int, error) {
 
-	routes, total, err := ListLL(ctx, r.conn, filter)
+	routes, total, err := List(ctx, r.conn, filter)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -31,7 +34,7 @@ func (r *repository) List(ctx context.Context, filter Filter) ([]Route, int, err
 	return routes, total, nil
 }
 
-func ListLL(ctx context.Context, driver storage.SqlDriver, f Filter) ([]Route, int, error) {
+func List(ctx context.Context, driver storage.SqlDriver, f Filter) ([]Route, int, error) {
 
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 

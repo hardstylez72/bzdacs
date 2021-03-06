@@ -1,42 +1,59 @@
 package acs
 
 import (
+	"context"
 	"errors"
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
-	"github.com/hardstylez72/bzdacs/pkg/relations/usergroup"
-	"github.com/hardstylez72/bzdacs/pkg/relations/userroute"
+	"github.com/hardstylez72/bzdacs/pkg/namespace"
+	"github.com/hardstylez72/bzdacs/pkg/system"
 	"github.com/hardstylez72/bzdacs/pkg/user"
 	"github.com/hardstylez72/bzdacs/pkg/util"
 	"net/http"
-	"strconv"
 )
 
 const (
-	loginHeaderName                      = "login"
-	requestedRouteHeaderName             = "route"
-	requestedRouteMethodHeaderName       = "method"
-	requestedNamespaceIdMethodHeaderName = "namespaceId"
+	loginHeaderName                = "login"
+	requestedRouteHeaderName       = "route"
+	requestedRouteMethodHeaderName = "method"
+	requestedNamespaceHeaderName   = "namespace"
+	requestedSystemHeaderName      = "system"
 )
+
+type inputParams struct {
+	Login       string
+	Route       string
+	Namespace   string
+	System      string
+	RouteMethod string
+}
+
+type controller struct {
+	userRepository      user.Repository
+	acsRepository       Repository
+	namespaceRepository namespace.Repository
+	systemRepository    system.Repository
+	validator           *validator.Validate
+}
 
 var (
 	ErrLoginNotFoundInRequest                = errors.New("request does not contains login")
 	ErrRequestedRouteNotFoundInRequest       = errors.New("request does not contains requested route")
 	ErrRequestedRouteMethodNotFoundInRequest = errors.New("request does not contains requested route method")
+	ErrRequestedSystemNotFoundInRequest      = errors.New("request does not contains requested system")
+	ErrRequestedNamespaceNotFoundInRequest   = errors.New("request does not contains requested namespace")
 )
 
-type controller struct {
-	userRouteRepository userroute.Repository
-	userRepository      user.Repository
-	userGroupRepository usergroup.Repository
-	validator           *validator.Validate
+type Repository interface {
+	GetUserRoutes(ctx context.Context, userId, namespaceId int) ([]UserRoute, error)
 }
 
-func NewController(userRouteRepository userroute.Repository, userRepository user.Repository, userGroupRepository usergroup.Repository) *controller {
+func NewController(userRepository user.Repository, acsRepository Repository, namespaceRepository namespace.Repository, systemRepository system.Repository) *controller {
 	return &controller{
-		userRouteRepository: userRouteRepository,
 		userRepository:      userRepository,
-		userGroupRepository: userGroupRepository,
+		acsRepository:       acsRepository,
+		namespaceRepository: namespaceRepository,
+		systemRepository:    systemRepository,
 		validator:           validator.New(),
 	}
 }
@@ -44,27 +61,13 @@ func NewController(userRouteRepository userroute.Repository, userRepository user
 func (c *controller) accessCheck(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	login, err := getLoginFromRequest(r)
+	params, err := getInputParams(r)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
+		return
 	}
 
-	route, err := getRequestedRouteFromRequest(r)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-	}
-
-	namespaceId, err := getRequestedNamespaceIdFromRequest(r)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-	}
-
-	routeMethod, err := getRequestedMethodFromRequest(r)
-	if err != nil {
-		util.NewResp(w, r).Error(err).Status(http.StatusBadRequest).Send()
-	}
-
-	u, err := c.userRepository.GetByLogin(ctx, login, namespaceId)
+	s, err := c.systemRepository.Get(ctx, 0, params.System)
 	if err != nil {
 		if err == user.ErrEntityNotFound {
 			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
@@ -74,22 +77,69 @@ func (c *controller) accessCheck(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rs, _, err := c.userRouteRepository.List(ctx, userroute.Filter{
-		Page:         1,
-		PageSize:     0,
-		Pattern:      "",
-		BelongToUser: true,
-		NamespaceId:  namespaceId,
-		UserId:       u.Id,
-	})
+	ns, err := c.namespaceRepository.Get(ctx, s.Id, 0, params.Namespace)
+	if err != nil {
+		if err == user.ErrEntityNotFound {
+			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
+		return
+	}
+
+	u, err := c.userRepository.GetByLogin(ctx, params.Login, ns.Id)
+	if err != nil {
+		if err == user.ErrEntityNotFound {
+			util.NewResp(w, r).Error(err).Status(http.StatusNotFound).Send()
+		} else {
+			util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
+		}
+		return
+	}
+
+	userRoutes, err := c.acsRepository.GetUserRoutes(ctx, u.Id, ns.Id)
 	if err != nil {
 		util.NewResp(w, r).Error(err).Status(http.StatusInternalServerError).Send()
 		return
 	}
 
-	isAccessAllowed := AccessAllowed(route, routeMethod, rs)
+	isAccessAllowed := AccessAllowed(params.Route, params.RouteMethod, userRoutes)
 
-	util.NewResp(w, r).Json(newCheckAccessResponse(nil, isAccessAllowed, login)).Status(http.StatusOK).Send()
+	util.NewResp(w, r).Json(newCheckAccessResponse(isAccessAllowed, u.ExternalId)).Status(http.StatusOK).Send()
+}
+
+func getInputParams(r *http.Request) (*inputParams, error) {
+	login, err := getLoginFromRequest(r)
+	if err != nil {
+		return nil, err
+	}
+
+	route, err := getRequestedRouteFromRequest(r)
+	if err != nil {
+		return nil, err
+	}
+
+	ns, err := getRequestedNamespaceFromRequest(r)
+	if err != nil {
+		return nil, err
+	}
+
+	s, err := getRequestedSystemFromRequest(r)
+	if err != nil {
+		return nil, err
+	}
+
+	routeMethod, err := getRequestedMethodFromRequest(r)
+	if err != nil {
+		return nil, err
+	}
+	return &inputParams{
+		Login:       login,
+		Route:       route,
+		Namespace:   ns,
+		System:      s,
+		RouteMethod: routeMethod,
+	}, nil
 }
 
 func getRequestedMethodFromRequest(r *http.Request) (string, error) {
@@ -110,15 +160,22 @@ func getRequestedRouteFromRequest(r *http.Request) (string, error) {
 	return "", ErrRequestedRouteNotFoundInRequest
 }
 
-func getRequestedNamespaceIdFromRequest(r *http.Request) (int, error) {
-	route := r.Header.Get(requestedNamespaceIdMethodHeaderName)
-
-	id, err := strconv.Atoi(route)
-	if err != nil {
-		return 0, err
+func getRequestedNamespaceFromRequest(r *http.Request) (string, error) {
+	ns := r.Header.Get(requestedNamespaceHeaderName)
+	if ns != "" {
+		return ns, nil
 	}
 
-	return id, nil
+	return "", ErrRequestedNamespaceNotFoundInRequest
+}
+
+func getRequestedSystemFromRequest(r *http.Request) (string, error) {
+	s := r.Header.Get(requestedSystemHeaderName)
+	if s != "" {
+		return s, nil
+	}
+
+	return "", ErrRequestedSystemNotFoundInRequest
 }
 
 func getLoginFromRequest(r *http.Request) (string, error) {
@@ -130,7 +187,7 @@ func getLoginFromRequest(r *http.Request) (string, error) {
 	return "", ErrLoginNotFoundInRequest
 }
 
-func AccessAllowed(requestedRoute, requestedMethod string, routes []userroute.RouteWithGroups) bool {
+func AccessAllowed(requestedRoute, requestedMethod string, routes []UserRoute) bool {
 	for _, r := range routes {
 		if r.Method == requestedMethod {
 			routeMatched := isRouteAPartOfBaseRoutePrefix(requestedRoute, r.Route.Route)
