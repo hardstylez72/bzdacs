@@ -2,9 +2,12 @@ package system
 
 import (
 	"context"
+	"github.com/hardstylez72/bzdacs/config"
 	"github.com/hardstylez72/bzdacs/pkg/infra/storage"
 	"github.com/hardstylez72/bzdacs/pkg/namespace"
+	"github.com/hardstylez72/bzdacs/pkg/util"
 	"github.com/jmoiron/sqlx"
+	"time"
 )
 
 type repository struct {
@@ -48,7 +51,36 @@ func Update(ctx context.Context, conn *sqlx.DB, namespace *System) (*System, err
 }
 
 func (r *repository) Insert(ctx context.Context, system *System) (*System, error) {
-	return Insert(ctx, r.conn, system)
+	tx, err := r.conn.BeginTxx(ctx, nil)
+	defer func() {
+		if err != nil {
+			_ = tx.Rollback()
+		} else {
+			_ = tx.Commit()
+		}
+	}()
+
+	txx := storage.WrapSqlxTx(tx)
+
+	s, err := Insert(ctx, txx, system)
+	if err != nil {
+		return nil, err
+	}
+
+	n := &namespace.Namespace{
+		Name:      config.GetInternal().DefaultNamespaceName,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+		DeletedAt: util.JsonNullTime{},
+		SystemId:  s.Id,
+	}
+
+	_, err = namespace.Insert(ctx, txx, n)
+	if err != nil {
+		return nil, err
+	}
+
+	return s, nil
 }
 
 func Insert(ctx context.Context, driver storage.SqlDriver, system *System) (*System, error) {

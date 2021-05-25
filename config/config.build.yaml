@@ -21,6 +21,8 @@ internal:
   #defauilt, can be overwritten by $BZDACS_SESSION_LIFETIME_IN_SECONDS env
   sessionExpirationInSeconds: 600
 
+  defaultNamespaceName: default
+
   system: BZDACS
   namespace: internal
   adminGroupName: admin

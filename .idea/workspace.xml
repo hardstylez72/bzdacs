@@ -2,44 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aba8e6bc-b9e4-4bad-9cd1-3d163f0e0558" name="Default Changelist" comment="Fixes translations">
-      <change afterPath="$PROJECT_DIR$/asc/midleware.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/asc/service.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/acs/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/backend/backend.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/backend/backend.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/user/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/user/controller_session.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/controller_session.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/user/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/acs/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/acs/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/acs/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/acs/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/group/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/group/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/group/repository_list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/namespace/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/namespace/repository_insert.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/repository_insert.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/namespace/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/namespace/repository_list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/grouproute/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/grouproute/repository_list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/routetag/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/routetag/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/usergroup/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/usergroup/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/usergroup/repository_list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/repository_list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/relations/userroute/transport.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/route/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/route/repository_instert.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository_instert.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/route/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/route/repository_list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.build.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.local.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.local.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/internal.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/internal.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/system/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/system/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/tag/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/tag/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/repository_list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/tag/repository_merge.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/tag/repository_merge.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/user/repository_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/user/repository_list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/tree-menu/components/TreeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/tree-menu/components/TreeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +22,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../go1.16" />
+  <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
     <excluded-from-favorite>
       <branch-storage>
@@ -164,17 +133,6 @@
       <pattern value="^Test_tag_api$" />
       <method v="2" />
     </configuration>
-    <configuration name="Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="bzdacs" />
-      <working_directory value="$PROJECT_DIR$/tests/route" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/hardstylez72/bzdacs/tests/route" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^Test_tag_api$" />
-      <method v="2" />
-    </configuration>
     <configuration name="Test_tag_api/404 in github.com/hardstylez72/bzdacs/tests/route" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bzdacs" />
       <working_directory value="$PROJECT_DIR$/tests/route" />
@@ -186,20 +144,33 @@
       <pattern value="^Test_tag_api$/^404$" />
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgres" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend" />
-      <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" />
       <item itemvalue="Go Test.Test_tag_api/404 in github.com/hardstylez72/bzdacs/tests/route" />
       <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/group" />
       <item itemvalue="Go Test.TestPassword in github.com/hardstylez72/bzdacs/internal/user" />
+      <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build github.com/hardstylez72/bzdacs/cmd/backend" />
+        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
         <item itemvalue="Go Test.TestPassword in github.com/hardstylez72/bzdacs/internal/user" />
         <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/group" />
         <item itemvalue="Go Test.Test_tag_api/404 in github.com/hardstylez72/bzdacs/tests/route" />
-        <item itemvalue="Go Test.Test_tag_api in github.com/hardstylez72/bzdacs/tests/route" />
       </list>
     </recent_temporary>
   </component>
@@ -285,11 +256,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/config/config.go</url>
-          <line>16</line>
-          <option name="timeStamp" value="82" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/pkg/util/error.go</url>
           <line>18</line>

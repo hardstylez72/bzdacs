@@ -8,6 +8,7 @@ type internal struct {
 	SessionExpirationInSeconds int
 	System                     string
 	Namespace                  string
+	DefaultNamespaceName       string
 	AdminGroup                 Group
 	GuestGroup                 Group
 	HasGuest                   bool
@@ -33,6 +34,7 @@ func GetInternal() internal {
 			Name:        viper.GetString("internal.guestGroupName"),
 			Description: viper.GetString("internal.guestGroupDescription"),
 		},
-		HasGuest: viper.GetBool("internal.hasGuest"),
+		HasGuest:             viper.GetBool("internal.hasGuest"),
+		DefaultNamespaceName: viper.GetString("internal.defaultNamespaceName"),
 	}
 }
